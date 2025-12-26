@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import baseAxios from '../baseAxios'
 import { ActionResponse } from '../types'
+import { parseApiError } from '@/utils/helpers/parse-api-error'
 
 type Props = {
   usernameOrEmail: string
@@ -70,35 +71,26 @@ export default async function login({
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       const responseData = error.response.data
-      let errorMessage = 'Error al iniciar sesión. Verifica tus credenciales.'
-
-      if (typeof responseData === 'string') {
-        errorMessage = responseData
-      } else if (responseData?.message) {
-        errorMessage = responseData.message
-      } else if (responseData?.error) {
-        errorMessage = typeof responseData.error === 'string' 
-          ? responseData.error 
-          : responseData.error.message || JSON.stringify(responseData.error)
-      }
+      const humanizedError = parseApiError(responseData)
 
       return {
         status: 'error',
         errors: [
           {
-            title: 'Error de autenticación',
-            message: errorMessage,
+            title: humanizedError.title,
+            message: humanizedError.description,
           },
         ],
       }
     }
 
+    const humanizedError = parseApiError(error)
     return {
       status: 'error',
       errors: [
         {
-          title: 'Error interno',
-          message: 'Ocurrió un error al intentar iniciar sesión. Por favor, intenta de nuevo.',
+          title: humanizedError.title,
+          message: humanizedError.description,
         },
       ],
     }

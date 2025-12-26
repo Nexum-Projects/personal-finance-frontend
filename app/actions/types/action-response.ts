@@ -1,6 +1,8 @@
 type Error = {
   title: string
   message: string
+  code?: string
+  statusCode?: number
 }
 
 export type SuccessResponse<T> = {

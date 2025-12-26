@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { login } from "@/app/actions/auth"
+import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
 
 const loginSchema = z.object({
@@ -44,16 +46,30 @@ export default function LoginPage() {
       })
 
       if (result.status === "error") {
-        setError(result.errors[0]?.message || "Error al iniciar sesión. Verifica tus credenciales.")
+        const humanizedError = parseApiError(
+          result.errors[0] || "Error al iniciar sesión"
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
+        setError(humanizedError.description)
         return
       }
+
+      toast.success("Sesión iniciada", {
+        description: "Has iniciado sesión exitosamente.",
+      })
 
       // Redirigir al dashboard después de login exitoso
       router.push("/dashboard")
       router.refresh()
     } catch (err: any) {
       console.error("Error en login:", err)
-      setError("Ocurrió un error inesperado. Por favor, intenta de nuevo.")
+      const humanizedError = parseApiError(err)
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
+      setError(humanizedError.description)
     } finally {
       setIsLoading(false)
     }
