@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark Mode - Ultra Dark Theme */
+    /* Inspired by Resend and Notion dark mode - Very dark, minimal, elegant */
+    
+    /* Background Colors - Almost black with subtle warmth */
+    --background: 0 0% 3%; /* Very dark, almost black - Main background */
+    --foreground: 0 0% 98%; /* Almost white - Primary text */
+    
+    /* Card/Surface Colors - Slightly lighter than background */
+    --card: 0 0% 5%; /* Very dark gray - Card surfaces */
+    --card-foreground: 0 0% 98%;
+    
+    /* Primary Action - Subtle, elegant blue */
+    --primary: 217 91% 60%; /* Vibrant blue for actions */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
+    
+    /* Secondary Action - Very dark gray */
+    --secondary: 0 0% 8%; /* Dark gray for secondary elements */
+    --secondary-foreground: 0 0% 98%;
+    
+    /* Success - Income (Muted green) */
+    --success: 142 71% 45%; /* Softer green, less saturated */
+    --success-foreground: 0 0% 100%;
+    
+    /* Error/Warning - Expenses (Muted red) */
+    --destructive: 0 72% 51%; /* Soft red */
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Muted - Secondary text backgrounds */
+    --muted: 0 0% 8%; /* Very dark gray */
+    --muted-foreground: 0 0% 65%; /* Medium gray for secondary text */
+    
+    /* Accent - Subtle highlight */
+    --accent: 0 0% 8%; /* Dark gray for accents */
+    --accent-foreground: 0 0% 98%;
+    
+    /* Border and Input - Very subtle borders */
+    --border: 0 0% 12%; /* Subtle dark borders */
+    --input: 0 0% 12%;
+    --ring: 217 91% 60%; /* Focus ring matches primary */
+    
+    /* Popover */
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Border radius */
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
