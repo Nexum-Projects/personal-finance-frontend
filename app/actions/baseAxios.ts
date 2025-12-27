@@ -18,19 +18,5 @@ baseAxios.interceptors.request.use((config) => {
   return config
 })
 
-// Interceptor de respuesta para manejar errores de autenticación
-baseAxios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    // Si es un error 401 (Unauthorized) o 403 (Forbidden), cerrar sesión
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      // Eliminar cookies de sesión
-      cookies().delete('session')
-      cookies().delete('refreshToken')
-    }
-    return Promise.reject(error)
-  }
-)
-
 export default baseAxios
 

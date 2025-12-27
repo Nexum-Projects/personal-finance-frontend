@@ -5,14 +5,13 @@ import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import type {
-  Category,
-  CategoryPageResponse,
-  CategorySearchParams,
+  TransactionPageResponse,
+  TransactionSearchParams,
 } from "./types"
 
-export default async function findManyCategories(
-  params: CategorySearchParams
-): Promise<ActionResponse<CategoryPageResponse>> {
+export default async function findManyTransactions(
+  params: TransactionSearchParams
+): Promise<ActionResponse<TransactionPageResponse>> {
   try {
     // Construir query params
     const queryParams = new URLSearchParams()
@@ -39,8 +38,8 @@ export default async function findManyCategories(
       queryParams.append("pagination", params.pagination.toString())
     }
 
-    const response = await baseAxios.get<CategoryPageResponse>(
-      `/categories?${queryParams.toString()}`
+    const response = await baseAxios.get<TransactionPageResponse>(
+      `/transactions?${queryParams.toString()}`
     )
 
     return {

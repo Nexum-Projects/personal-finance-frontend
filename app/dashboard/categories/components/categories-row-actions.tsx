@@ -1,9 +1,11 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { toast } from "sonner"
 import { removeCategory } from "@/app/actions/categories"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"
+import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Category } from "@/app/actions/categories/types"
@@ -14,16 +16,29 @@ type Props = {
 
 export function CategoriesRowActions({ category }: Props) {
   const router = useRouter()
+  const { confirmationDialog } = useConfirmationDialogStore()
 
-  const handleRemove = async () => {
-    if (
-      !confirm(
-        `¿Estás seguro que deseas desactivar la categoría "${category.name}"? Esta acción no se puede deshacer.`
-      )
-    ) {
-      return
-    }
+  const handleRemove = () => {
+    confirmationDialog({
+      description: (
+        <>
+          ¿Estás seguro que deseas desactivar la categoría{" "}
+          <span className="text-foreground font-medium">
+            {category.name}
+          </span>
+          ? Esta acción no se puede deshacer.
+        </>
+      ),
+      onConfirm: onRemove,
+      actions: {
+        confirm: "Sí, desactivar categoría",
+        cancel: "Cancelar",
+      },
+      title: "¿Desactivar categoría?",
+    })
+  }
 
+  const onRemove = async () => {
     try {
       const result = await removeCategory(category.id)
 
@@ -45,8 +60,16 @@ export function CategoriesRowActions({ category }: Props) {
         return
       }
 
-      toast.success("Categoría desactivada exitosamente", {
-        description: `La categoría "${category.name}" ha sido desactivada exitosamente.`,
+      toast.success("Categoría desactivada", {
+        description: (
+          <>
+            La categoría{" "}
+            <span className="text-foreground font-medium">
+              {category.name}
+            </span>{" "}
+            ha sido desactivada exitosamente.
+          </>
+        ),
       })
       router.refresh()
     } catch (error) {
@@ -63,13 +86,13 @@ export function CategoriesRowActions({ category }: Props) {
   return (
     <DataTableRowActions>
       <DataTableRowActions.Item
-        href={`/dashboard/categorias/${category.id}`}
+        href={`/dashboard/categories/${category.id}`}
         type="link"
       >
         Ver categoría
       </DataTableRowActions.Item>
       <DataTableRowActions.Item
-        href={`/dashboard/categorias/${category.id}/editar`}
+        href={`/dashboard/categories/${category.id}/edit`}
         type="link"
       >
         Editar categoría

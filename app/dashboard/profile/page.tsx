@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { User } from "lucide-react"
 
-export default function PerfilPage() {
+export default function ProfilePage() {
   const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
 

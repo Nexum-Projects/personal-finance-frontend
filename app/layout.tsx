@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ServiceWorkerCleanup } from "@/components/ServiceWorkerCleanup"
 import { Toaster } from "@/components/ui/sonner"
+import { ConfirmationDialog } from "@/components/display/confirmation-dialog"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <ServiceWorkerCleanup />
         {children}
         <Toaster position="bottom-right" richColors />
+        <ConfirmationDialog />
       </body>
     </html>
   )

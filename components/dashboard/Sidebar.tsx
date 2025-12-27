@@ -31,17 +31,17 @@ const navigationItems = [
   },
   {
     name: "Categorías",
-    href: "/dashboard/categorias",
+    href: "/dashboard/categories",
     icon: FolderTree,
   },
   {
     name: "Gastos",
-    href: "/dashboard/gastos",
+    href: "/dashboard/expenses",
     icon: TrendingDown,
   },
   {
     name: "Ingresos",
-    href: "/dashboard/ingresos",
+    href: "/dashboard/income",
     icon: TrendingUp,
   },
 ]
@@ -136,7 +136,7 @@ export function Sidebar({ onClose }: SidebarProps) {
             className="w-full justify-start text-muted-foreground hover:text-foreground"
             asChild
           >
-            <Link href="/dashboard/perfil" onClick={() => handleLinkClick(onClose)}>
+            <Link href="/dashboard/profile" onClick={() => handleLinkClick(onClose)}>
               <Settings className="mr-2 h-4 w-4" />
               Ver Perfil
             </Link>

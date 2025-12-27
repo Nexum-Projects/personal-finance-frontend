@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    /* Page Padding */
+    --page-padding: 1rem; /* 16px */
+    
     /* Dark Mode - Ultra Dark Theme */
     /* Inspired by Resend and Notion dark mode - Very dark, minimal, elegant */
     
@@ -50,6 +53,18 @@
     
     /* Border radius */
     --radius: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --page-padding: 1.5rem; /* 24px */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --page-padding: 2rem; /* 32px */
+    }
   }
 }
 

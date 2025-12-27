@@ -12,7 +12,7 @@ export default async function removeCategory(
   try {
     await baseAxios.delete(`/categories/${categoryId}`)
 
-    revalidatePath("/dashboard/categorias")
+    revalidatePath("/dashboard/categories")
 
     return {
       status: "success",
@@ -21,7 +21,6 @@ export default async function removeCategory(
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       const responseData = error.response.data
-      const statusCode = error.response.status
       const humanizedError = parseApiError(responseData)
 
       return {
@@ -30,9 +29,6 @@ export default async function removeCategory(
           {
             title: humanizedError.title,
             message: humanizedError.description,
-            ...(statusCode === 401 || statusCode === 403
-              ? { code: "AUTH_ERROR", statusCode }
-              : {}),
           },
         ],
       }

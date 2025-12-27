@@ -4,14 +4,14 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type { Category } from "./types"
+import type { Transaction } from "./types"
 
-export default async function findCategory(
-  categoryId: string
-): Promise<ActionResponse<Category>> {
+export default async function findTransaction(
+  transactionId: string
+): Promise<ActionResponse<Transaction>> {
   try {
-    const response = await baseAxios.get<{ data: Category }>(
-      `/categories/${categoryId}`
+    const response = await baseAxios.get<{ data: Transaction }>(
+      `/transactions/${transactionId}`
     )
 
     return {

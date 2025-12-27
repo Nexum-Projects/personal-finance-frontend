@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import getSession from "@/app/actions/auth/getSession"
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -9,8 +10,8 @@ export async function middleware(request: NextRequest) {
     return new NextResponse(null, { status: 204 }) // No Content
   }
 
-  // Obtener el token de la cookie 'session'
-  const session = request.cookies.get("session")?.value
+  // Obtener la sesión usando getSession (similar a findoctor-public)
+  const session = await getSession()
 
   // Si está en login y ya tiene sesión, redirigir a dashboard
   if (pathname === "/login" && session) {

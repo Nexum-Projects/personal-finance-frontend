@@ -1,22 +1,23 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type { Category } from "./types"
 
-export default async function findCategory(
-  categoryId: string
-): Promise<ActionResponse<Category>> {
+export default async function removeTransaction(
+  transactionId: string,
+  categoryType: "INCOME" | "EXPENSE"
+): Promise<ActionResponse<null>> {
   try {
-    const response = await baseAxios.get<{ data: Category }>(
-      `/categories/${categoryId}`
-    )
+    await baseAxios.delete(`/transactions/${transactionId}`)
+
+    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`)
 
     return {
       status: "success",
-      data: response.data.data,
+      data: null,
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {

@@ -43,6 +43,21 @@ export interface HumanizedError {
   description: string
 }
 
+// Mapeo de nombres de campos a español
+const FIELD_NAME_MAP: Record<string, string> = {
+  transactionDate: "Fecha de transacción",
+  amount: "Monto",
+  amountCents: "Monto",
+  description: "Descripción",
+  categoryId: "Categoría",
+  accountId: "Cuenta",
+  name: "Nombre",
+  categoryType: "Tipo de categoría",
+  email: "Correo electrónico",
+  username: "Nombre de usuario",
+  password: "Contraseña",
+}
+
 const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   "BAD_REQUEST": {
     title: "Solicitud incorrecta",
@@ -208,6 +223,27 @@ export function humanizeError(
   const humanizedError = PLAIN_HUMANIZED_ERRORS[errorCode]
 
   if (humanizedError) {
+    // Si es un error de validación y hay fieldErrors en details, extraerlos
+    if (errorCode === "BAD_REQUEST/VALIDATION_ERROR" && details?.fieldErrors) {
+      const fieldErrors = details.fieldErrors as Record<string, string>
+      const fieldErrorMessages = Object.entries(fieldErrors)
+        .map(([field, error]) => {
+          // Usar el mapeo de nombres de campos o humanizar el nombre
+          const fieldName = FIELD_NAME_MAP[field] || 
+            field
+              .replace(/([A-Z])/g, " $1")
+              .replace(/^./, (str) => str.toUpperCase())
+              .trim()
+          return `${fieldName}: ${error}`
+        })
+        .join(". ")
+      
+      return {
+        title: humanizedError.title,
+        description: fieldErrorMessages || message || humanizedError.description,
+      }
+    }
+
     // Si hay un mensaje personalizado del servidor, usarlo como descripción
     if (message && message !== humanizedError.description) {
       return {

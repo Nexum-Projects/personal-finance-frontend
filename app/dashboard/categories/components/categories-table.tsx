@@ -73,7 +73,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
     }
 
     startTransition(() => {
-      router.push(`/dashboard/categorias?${params.toString()}`)
+      router.push(`/dashboard/categories?${params.toString()}`)
     })
   }
 

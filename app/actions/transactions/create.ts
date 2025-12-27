@@ -1,18 +1,33 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type { Category } from "./types"
+import type { Transaction } from "./types"
+import type { TransactionFormValues } from "./schema"
 
-export default async function findCategory(
-  categoryId: string
-): Promise<ActionResponse<Category>> {
+export default async function createTransaction(
+  input: TransactionFormValues,
+  categoryType: "INCOME" | "EXPENSE"
+): Promise<ActionResponse<Transaction>> {
   try {
-    const response = await baseAxios.get<{ data: Category }>(
-      `/categories/${categoryId}`
+    // Convertir el monto de decimales a centavos
+    const amountCents = Math.round(input.amount * 100)
+
+    const response = await baseAxios.post<{ data: Transaction }>(
+      "/transactions",
+      {
+        amountCents,
+        description: input.description,
+        categoryId: input.categoryId,
+        accountId: input.accountId,
+        transactionDate: input.transactionDate,
+      }
     )
+
+    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`)
 
     return {
       status: "success",
@@ -21,6 +36,7 @@ export default async function findCategory(
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       const responseData = error.response.data
+      //console.log(JSON.stringify(responseData, null, 2))
       const humanizedError = parseApiError(responseData)
 
       return {

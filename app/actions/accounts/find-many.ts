@@ -4,15 +4,11 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type { Category } from "./types"
+import type { Account } from "../transactions/types"
 
-export default async function findCategory(
-  categoryId: string
-): Promise<ActionResponse<Category>> {
+export default async function findManyAccounts(): Promise<ActionResponse<Account[]>> {
   try {
-    const response = await baseAxios.get<{ data: Category }>(
-      `/categories/${categoryId}`
-    )
+    const response = await baseAxios.get<{ data: Account[] }>("/accounts")
 
     return {
       status: "success",
