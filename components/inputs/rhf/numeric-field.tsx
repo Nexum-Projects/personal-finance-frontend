@@ -63,7 +63,7 @@ export function NumericField<
     <FormField
       control={control}
       name={name}
-      render={({ field: { onChange, value, ...field } }) => {
+      render={({ field: { onChange, value, ref, ...field } }) => {
         const handleChange: OnValueChange = ({ floatValue }) => {
           onChange(floatValue)
           onChangeAction?.(floatValue)
@@ -81,6 +81,7 @@ export function NumericField<
             <FormControl>
               <NumericFormat
                 {...field}
+                getInputRef={ref}
                 valueIsNumericString
                 autoComplete={autoComplete}
                 className="relative [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"

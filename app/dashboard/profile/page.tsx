@@ -1,90 +1,93 @@
-"use client"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import getCurrentUser from "@/app/actions/users/get-current-user"
+import { humanizeRole } from "@/utils/helpers/humanize-role"
+import { PageContainer } from "@/components/display/containers/page-container"
+import { PageHeader } from "@/components/display/page-header/page-header"
+import { PageSection } from "@/components/display/page-section/page-section"
+import { cn } from "@/lib/utils"
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { User } from "lucide-react"
-
-export default function ProfilePage() {
-  const [username, setUsername] = useState<string>("")
-  const [email, setEmail] = useState<string>("")
-
-  useEffect(() => {
-    const getUsernameFromToken = () => {
-      const cookies = document.cookie.split(";")
-      const sessionCookie = cookies.find((c) => c.trim().startsWith("session="))
-
-      if (sessionCookie) {
-        try {
-          const token = sessionCookie.split("=")[1]
-          const payload = JSON.parse(atob(token.split(".")[1]))
-          setUsername(payload?.username || payload?.sub || "")
-          setEmail(payload?.email || "")
-        } catch {
-          setUsername("")
-        }
-      }
-    }
-
-    getUsernameFromToken()
-  }, [])
-
-  return (
-    <div className="p-4 md:p-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Mi Perfil</h1>
-          <p className="text-muted-foreground mt-1">
-            Gestiona tu información personal
-          </p>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground">
-                <User className="h-8 w-8" />
-              </div>
-              <div>
-                <CardTitle>{username || "Usuario"}</CardTitle>
-                <CardDescription>{email || "No hay email disponible"}</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="username">Nombre de usuario</Label>
-              <Input
-                id="username"
-                value={username}
-                disabled
-                className="bg-muted"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                disabled
-                className="bg-muted"
-              />
-            </div>
-            <div className="pt-4">
-              <Button disabled>
-                Actualizar Perfil
-              </Button>
-              <p className="text-xs text-muted-foreground mt-2">
-                La funcionalidad de actualización de perfil estará disponible próximamente.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  )
+export const metadata: Metadata = {
+  title: "Mi perfil",
 }
 
+function formatDate(dateString: string): string {
+  try {
+    const date = new Date(dateString)
+    const day = date.getDate().toString().padStart(2, "0")
+    const month = (date.getMonth() + 1).toString().padStart(2, "0")
+    const year = date.getFullYear()
+    const hours = date.getHours().toString().padStart(2, "0")
+    const minutes = date.getMinutes().toString().padStart(2, "0")
+    return `${day}/${month}/${year} ${hours}:${minutes}`
+  } catch {
+    return dateString
+  }
+}
+
+export default async function ProfilePage() {
+  const user = await getCurrentUser()
+
+  // Si no hay usuario, mostrar 404
+  // (Si hay un error de autenticación, handleAuthErrorServer ya redirigió al login)
+  if (!user) {
+    return notFound()
+  }
+
+  return (
+    <PageContainer>
+      <PageHeader
+        backTo={{
+          href: "/dashboard",
+          label: "Regresar al dashboard",
+        }}
+        title={user.username}
+      />
+      <PageSection
+        description="Información personal del usuario"
+        fields={{
+          id: {
+            label: "Identificador",
+            value: user.id,
+            classNames: {
+              value: cn("font-mono"),
+            },
+          },
+          username: {
+            label: "Nombre de usuario",
+            value: user.username,
+          },
+          email: {
+            label: "Correo electrónico",
+            value: user.email,
+          },
+          role: {
+            label: "Rol",
+            value: humanizeRole(user.role),
+          },
+          isActive: {
+            label: "Estado",
+            value: user.isActive ? (
+              <span className="text-emerald-600 dark:text-emerald-400">
+                Activo
+              </span>
+            ) : (
+              <span className="text-red-600 dark:text-red-400">
+                Inactivo
+              </span>
+            ),
+          },
+          createdAt: {
+            label: "Fecha de creación",
+            value: formatDate(user.createdAt),
+          },
+          updatedAt: {
+            label: "Última actualización",
+            value: formatDate(user.updatedAt),
+          },
+        }}
+        title="Datos generales"
+      />
+    </PageContainer>
+  )
+}

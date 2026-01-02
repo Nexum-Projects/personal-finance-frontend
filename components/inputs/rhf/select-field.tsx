@@ -38,6 +38,7 @@ type Props<
   label?: string
   options: SelectOption[]
   placeholder?: string
+  transformValue?: (value: string) => unknown
 }
 
 export function SelectField<
@@ -52,26 +53,38 @@ export function SelectField<
   name,
   options,
   placeholder,
+  transformValue,
 }: Props<TFieldValues, TName>) {
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
-        <FormItem className={className} disabled={disabled}>
-          <FormLabel
-            className={cn({
-              "sr-only": !label,
-            })}
-          >
-            {label ?? name}
-          </FormLabel>
-          <Select
-            onValueChange={field.onChange}
-            defaultValue={field.value}
-            value={field.value}
-            disabled={disabled}
-          >
+      render={({ field }) => {
+        const handleValueChange = (value: string) => {
+          if (transformValue) {
+            field.onChange(transformValue(value))
+          } else {
+            field.onChange(value)
+          }
+        }
+
+        const displayValue = field.value?.toString() || ""
+
+        return (
+          <FormItem className={className} disabled={disabled}>
+            <FormLabel
+              className={cn({
+                "sr-only": !label,
+              })}
+            >
+              {label ?? name}
+            </FormLabel>
+            <Select
+              onValueChange={handleValueChange}
+              defaultValue={displayValue}
+              value={displayValue}
+              disabled={disabled}
+            >
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
@@ -88,7 +101,8 @@ export function SelectField<
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
-      )}
+        )
+      }}
     />
   )
 }

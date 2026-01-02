@@ -19,7 +19,7 @@ export default async function NewExpensePage() {
   const accountsResult = await findManyAccounts()
 
   const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data : []
+  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
 
   return (
     <PageContainer>

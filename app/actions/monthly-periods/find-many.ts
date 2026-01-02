@@ -4,15 +4,15 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
+import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type {
-  Account,
-  AccountPageResponse,
-  AccountSearchParams,
+  MonthlyPeriodPageResponse,
+  MonthlyPeriodSearchParams,
 } from "./types"
 
-export default async function findManyAccounts(
-  params?: AccountSearchParams
-): Promise<ActionResponse<AccountPageResponse>> {
+export default async function findManyMonthlyPeriods(
+  params?: MonthlyPeriodSearchParams
+): Promise<ActionResponse<MonthlyPeriodPageResponse>> {
   try {
     // Construir query params
     const queryParams = new URLSearchParams()
@@ -37,10 +37,10 @@ export default async function findManyAccounts(
     }
 
     const url = queryParams.toString()
-      ? `/accounts?${queryParams.toString()}`
-      : "/accounts"
+      ? `/monthly-periods?${queryParams.toString()}`
+      : "/monthly-periods"
 
-    const response = await baseAxios.get<AccountPageResponse>(url)
+    const response = await baseAxios.get<MonthlyPeriodPageResponse>(url)
 
     return {
       status: "success",
@@ -48,6 +48,13 @@ export default async function findManyAccounts(
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
+      const status = error.response.status
+
+      // Manejar errores de autenticación
+      if (status === 401 || status === 403) {
+        await handleAuthErrorServer()
+      }
+
       const responseData = error.response.data
       const humanizedError = parseApiError(responseData)
 

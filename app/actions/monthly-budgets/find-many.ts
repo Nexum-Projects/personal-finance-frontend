@@ -4,15 +4,15 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
+import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type {
-  Account,
-  AccountPageResponse,
-  AccountSearchParams,
+  MonthlyBudgetPageResponse,
+  MonthlyBudgetSearchParams,
 } from "./types"
 
-export default async function findManyAccounts(
-  params?: AccountSearchParams
-): Promise<ActionResponse<AccountPageResponse>> {
+export default async function findManyMonthlyBudgets(
+  params?: MonthlyBudgetSearchParams
+): Promise<ActionResponse<MonthlyBudgetPageResponse>> {
   try {
     // Construir query params
     const queryParams = new URLSearchParams()
@@ -32,15 +32,18 @@ export default async function findManyAccounts(
     if (params?.search) {
       queryParams.append("search", params.search)
     }
+    if (params?.monthlyPeriodId) {
+      queryParams.append("monthlyPeriodId", params.monthlyPeriodId)
+    }
     if (params?.pagination !== undefined) {
       queryParams.append("pagination", params.pagination.toString())
     }
 
     const url = queryParams.toString()
-      ? `/accounts?${queryParams.toString()}`
-      : "/accounts"
+      ? `/monthly-budgets?${queryParams.toString()}`
+      : "/monthly-budgets"
 
-    const response = await baseAxios.get<AccountPageResponse>(url)
+    const response = await baseAxios.get<MonthlyBudgetPageResponse>(url)
 
     return {
       status: "success",
@@ -48,6 +51,13 @@ export default async function findManyAccounts(
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
+      const status = error.response.status
+
+      // Manejar errores de autenticación
+      if (status === 401 || status === 403) {
+        await handleAuthErrorServer()
+      }
+
       const responseData = error.response.data
       const humanizedError = parseApiError(responseData)
 
