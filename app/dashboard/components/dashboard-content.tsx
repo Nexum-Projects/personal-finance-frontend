@@ -70,6 +70,7 @@ export function DashboardContent({
     MonthlyPeriodAnalytics[]
   >(initialMonthlyPeriodsAnalytics)
   const [analyticsYear, setAnalyticsYear] = useState(initialAnalyticsYear)
+  const [isLoadingAnalytics, setIsLoadingAnalytics] = useState(false)
 
   // Calcular fechas por defecto (último mes)
   // Usar zona horaria de Guatemala (UTC-6)
@@ -435,7 +436,7 @@ export function DashboardContent({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {isPending ? (
+          {isLoadingAnalytics ? (
             <div className="flex h-[350px] items-center justify-center text-muted-foreground">
               Cargando...
             </div>
@@ -444,24 +445,27 @@ export function DashboardContent({
               data={monthlyPeriodsAnalytics}
               currentYear={analyticsYear}
               onYearChange={async (year) => {
+                // Actualizar el año inmediatamente para feedback visual
                 setAnalyticsYear(year)
-                startTransition(async () => {
-                  try {
-                    const result = await getMonthlyPeriodsAnalytics({
-                      year,
-                      order: "DESC",
+                // Activar estado de carga solo para esta sección
+                setIsLoadingAnalytics(true)
+                try {
+                  const result = await getMonthlyPeriodsAnalytics({
+                    year,
+                    order: "DESC",
+                  })
+                  if (result.status === "success") {
+                    setMonthlyPeriodsAnalytics(result.data.data)
+                  } else {
+                    toast.error("Error al cargar períodos mensuales", {
+                      description: result.errors[0]?.message || "Error desconocido",
                     })
-                    if (result.status === "success") {
-                      setMonthlyPeriodsAnalytics(result.data.data)
-                    } else {
-                      toast.error("Error al cargar períodos mensuales", {
-                        description: result.errors[0]?.message || "Error desconocido",
-                      })
-                    }
-                  } catch (error) {
-                    toast.error("Error al cargar períodos mensuales")
                   }
-                })
+                } catch (error) {
+                  toast.error("Error al cargar períodos mensuales")
+                } finally {
+                  setIsLoadingAnalytics(false)
+                }
               }}
               availableYears={availableYears}
             />
