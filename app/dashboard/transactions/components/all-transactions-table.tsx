@@ -105,17 +105,22 @@ export function AllTransactionsTable({
 
   return (
     <div className="space-y-4">
-      {/* Filtros */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div className="flex-1 max-w-md">
+      {/* Search Bar and Filters */}
+      <div className="flex items-center gap-4">
+        <div className="w-1/4">
           <Input
-            placeholder="Buscar por descripción..."
+            placeholder="Buscar transacciones..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
           />
         </div>
-        <TransactionsFilters categories={categories} accounts={accounts} />
+        <TransactionsFilters
+          startDateParamName="startDate"
+          endDateParamName="endDate"
+          categories={categories}
+          accounts={accounts}
+        />
       </div>
 
       {/* Tabla */}

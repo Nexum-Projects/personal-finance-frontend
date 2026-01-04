@@ -16,6 +16,7 @@ import {
 import { humanizeCategoryType } from "@/utils/helpers/humanize-category-type"
 import type { Category } from "@/app/actions/categories/types"
 import { CategoriesRowActions } from "./categories-row-actions"
+import { CategoriesFilters } from "@/components/filters/categories-filters"
 // Formateo de fecha simple sin dependencias externas
 function formatDate(dateString: string): string {
   try {
@@ -67,8 +68,8 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
       }
     })
 
-    // Reset to page 1 when search or sort changes
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined) {
+    // Reset to page 1 when search, sort, or filters change
+    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined || updates.startDate !== undefined || updates.endDate !== undefined) {
       params.set("page", "1")
     }
 
@@ -109,7 +110,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
 
   return (
     <div className="space-y-4">
-      {/* Search Bar - 1/4 del ancho de la tabla */}
+      {/* Search Bar and Filters */}
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
@@ -119,6 +120,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
             className="w-full"
           />
         </div>
+        <CategoriesFilters />
       </div>
 
       {/* Table */}

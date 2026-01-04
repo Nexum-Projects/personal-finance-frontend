@@ -15,6 +15,8 @@ type Props = {
     orderBy?: string
     search?: string
     categoryType?: string
+    startDate?: string
+    endDate?: string
   }>
 }
 
@@ -36,6 +38,8 @@ export default async function CategoriesPage(props: Props) {
     orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "name" | "categoryType",
     search: parsedParams.search,
     categoryType: parsedParams.categoryType,
+    startDate: searchParams.startDate,
+    endDate: searchParams.endDate,
     pagination: true,
   })
 

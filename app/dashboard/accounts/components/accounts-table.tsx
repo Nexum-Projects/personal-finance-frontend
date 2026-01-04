@@ -17,6 +17,7 @@ import type { Account } from "@/app/actions/transactions/types"
 import { AccountsRowActions } from "./accounts-row-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
+import { AccountsFilters } from "@/components/filters/accounts-filters"
 
 // Formateo de fecha simple sin dependencias externas
 function formatDate(dateString: string): string {
@@ -69,8 +70,8 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
       }
     })
 
-    // Reset to page 1 when search or sort changes
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined) {
+    // Reset to page 1 when search, sort, or filters change
+    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined || updates.startDate !== undefined || updates.endDate !== undefined) {
       params.set("page", "1")
     }
 
@@ -110,7 +111,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
 
   return (
     <div className="space-y-4">
-      {/* Search Bar - 1/4 del ancho de la tabla */}
+      {/* Search Bar and Filters */}
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
@@ -120,6 +121,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
             className="w-full"
           />
         </div>
+        <AccountsFilters />
       </div>
 
       {/* Table */}

@@ -19,6 +19,7 @@ import {
   Settings,
   Pencil,
   Receipt,
+  ArrowLeftRight,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -56,6 +57,11 @@ const navigationItems = [
     name: "Transacciones",
     href: "/dashboard/transactions",
     icon: Receipt,
+  },
+  {
+    name: "Transferencias",
+    href: "/dashboard/transfers",
+    icon: ArrowLeftRight,
   },
   {
     name: "Períodos Mensuales",

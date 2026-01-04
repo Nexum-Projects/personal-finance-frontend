@@ -7,6 +7,8 @@ export interface AccountSearchParams {
   orderBy?: "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents"
   search?: string
   pagination?: boolean
+  startDate?: string
+  endDate?: string
 }
 
 export interface AccountPageMeta {

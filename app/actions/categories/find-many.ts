@@ -35,6 +35,12 @@ export default async function findManyCategories(
     if (params.categoryType) {
       queryParams.append("categoryType", params.categoryType)
     }
+    if (params.startDate) {
+      queryParams.append("startDate", params.startDate)
+    }
+    if (params.endDate) {
+      queryParams.append("endDate", params.endDate)
+    }
     if (params.pagination !== undefined) {
       queryParams.append("pagination", params.pagination.toString())
     }

@@ -14,6 +14,8 @@ type Props = {
     order?: string
     orderBy?: string
     search?: string
+    startDate?: string
+    endDate?: string
   }>
 }
 
@@ -34,6 +36,8 @@ export default async function MonthlyPeriodsPage(props: Props) {
     order: parsedParams.order,
     orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "year" | "month",
     search: parsedParams.search,
+    startDate: searchParams.startDate,
+    endDate: searchParams.endDate,
     pagination: true,
   })
 

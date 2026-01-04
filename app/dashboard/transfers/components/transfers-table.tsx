@@ -13,10 +13,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { MonthlyPeriod } from "@/app/actions/monthly-periods/types"
-import { MonthlyPeriodsRowActions } from "./monthly-periods-row-actions"
-import { humanizeMonth } from "@/utils/helpers/humanize-month"
-import { MonthlyPeriodsFilters } from "@/components/filters/monthly-periods-filters"
+import type { Transfer } from "@/app/actions/transfers"
+import { TransfersRowActions } from "./transfers-row-actions"
+import { formatAmount } from "@/utils/helpers/format-amount"
+import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
+import { TransfersFilters } from "@/components/filters/transfers-filters"
 
 // Formateo de fecha simple sin dependencias externas
 function formatDate(dateString: string): string {
@@ -33,11 +34,11 @@ function formatDate(dateString: string): string {
   }
 }
 
-type SortField = "year" | "month" | "updatedAt"
+type SortField = "transferDate" | "amountCents" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
 
-interface MonthlyPeriodsTableProps {
-  monthlyPeriods: MonthlyPeriod[]
+interface TransfersTableProps {
+  transfers: Transfer[]
   meta: {
     page: number
     limit: number
@@ -46,7 +47,7 @@ interface MonthlyPeriodsTableProps {
   }
 }
 
-export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTableProps) {
+export function TransfersTable({ transfers, meta }: TransfersTableProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -69,13 +70,13 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
       }
     })
 
-    // Reset to page 1 when search, sort, or filters change
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined || updates.startDate !== undefined || updates.endDate !== undefined) {
+    // Reset to page 1 when search or sort changes
+    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined) {
       params.set("page", "1")
     }
 
     startTransition(() => {
-      router.push(`/dashboard/monthly-periods?${params.toString()}`)
+      router.push(`/dashboard/transfers?${params.toString()}`)
     })
   }
 
@@ -114,13 +115,13 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar períodos mensuales..."
+            placeholder="Buscar transferencias..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
           />
         </div>
-        <MonthlyPeriodsFilters />
+        <TransfersFilters />
       </div>
 
       {/* Table */}
@@ -131,24 +132,26 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
               <TableHead>
                 <Button
                   variant="ghost"
-                  onClick={() => handleSort("year")}
+                  onClick={() => handleSort("transferDate")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Año
-                  {getSortIcon("year")}
+                  Fecha
+                  {getSortIcon("transferDate")}
                 </Button>
               </TableHead>
+              <TableHead>Cuenta Origen</TableHead>
+              <TableHead>Cuenta Destino</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
-                  onClick={() => handleSort("month")}
+                  onClick={() => handleSort("amountCents")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Mes
-                  {getSortIcon("month")}
+                  Monto
+                  {getSortIcon("amountCents")}
                 </Button>
               </TableHead>
-              <TableHead>Estado</TableHead>
+              <TableHead>Descripción</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
@@ -165,31 +168,25 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
             </TableRow>
           </TableHeader>
           <TableBody>
-            {monthlyPeriods.length === 0 ? (
+            {transfers.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="h-24 text-center">
-                  No se encontraron períodos mensuales
+                <TableCell colSpan={7} className="h-24 text-center">
+                  No se encontraron transferencias
                 </TableCell>
               </TableRow>
             ) : (
-              monthlyPeriods.map((period) => (
-                <TableRow key={period.id}>
-                  <TableCell className="font-medium">{period.year}</TableCell>
-                  <TableCell>{humanizeMonth(period.month)}</TableCell>
+              transfers.map((transfer) => (
+                <TableRow key={transfer.id}>
+                  <TableCell>{formatDateOnlyShort(transfer.transferDate)}</TableCell>
+                  <TableCell className="font-medium">{transfer.fromAccount.name}</TableCell>
+                  <TableCell className="font-medium">{transfer.toAccount.name}</TableCell>
                   <TableCell>
-                    {period.isActive ? (
-                      <span className="text-emerald-600 dark:text-emerald-400">
-                        Activo
-                      </span>
-                    ) : (
-                      <span className="text-red-600 dark:text-red-400">
-                        Inactivo
-                      </span>
-                    )}
+                    {formatAmount(transfer.amountCents, "GT")}
                   </TableCell>
-                  <TableCell>{formatDate(period.updatedAt)}</TableCell>
+                  <TableCell>{transfer.description}</TableCell>
+                  <TableCell>{formatDate(transfer.updatedAt)}</TableCell>
                   <TableCell className="text-center">
-                    <MonthlyPeriodsRowActions monthlyPeriod={period} />
+                    <TransfersRowActions transfer={transfer} />
                   </TableCell>
                 </TableRow>
               ))
@@ -201,9 +198,9 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {monthlyPeriods.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
+          Mostrando {transfers.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
           {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} períodos mensuales
+          {meta.totalObjects} transferencias
         </div>
         <div className="flex items-center gap-2">
           <Button

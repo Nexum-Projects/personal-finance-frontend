@@ -15,6 +15,8 @@ export interface MonthlyPeriodSearchParams {
   orderBy?: "createdAt" | "updatedAt" | "year" | "month"
   search?: string
   pagination?: boolean
+  startDate?: string
+  endDate?: string
 }
 
 export interface MonthlyPeriodPageMeta {

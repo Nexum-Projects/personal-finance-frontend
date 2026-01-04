@@ -32,6 +32,12 @@ export default async function findManyMonthlyPeriods(
     if (params?.search) {
       queryParams.append("search", params.search)
     }
+    if (params?.startDate) {
+      queryParams.append("startDate", params.startDate)
+    }
+    if (params?.endDate) {
+      queryParams.append("endDate", params.endDate)
+    }
     if (params?.pagination !== undefined) {
       queryParams.append("pagination", params.pagination.toString())
     }

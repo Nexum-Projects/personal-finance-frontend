@@ -17,6 +17,8 @@ export interface CategorySearchParams {
   search?: string
   categoryType?: CategoryType
   pagination?: boolean
+  startDate?: string
+  endDate?: string
 }
 
 export interface CategoryPageMeta {
