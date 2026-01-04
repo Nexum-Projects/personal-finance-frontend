@@ -1,10 +1,9 @@
 import { cookies } from 'next/headers'
 import axios from 'axios'
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api'
+import { env } from '@/utils/env'
 
 const baseAxios = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },

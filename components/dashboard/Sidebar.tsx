@@ -6,12 +6,11 @@ import { usePathname, useRouter } from "next/navigation"
 import { logout } from "@/app/actions/auth"
 import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
+import { APP_VERSION } from "@/utils/app-version"
 import type { User } from "@/app/actions/users/types"
 import {
   LayoutDashboard,
   FolderTree,
-  TrendingDown,
-  TrendingUp,
   Wallet,
   Calendar,
   User as UserIcon,
@@ -224,6 +223,10 @@ export function Sidebar({ onClose }: SidebarProps) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <div className="mt-3 text-center text-xs text-muted-foreground">
+          {APP_VERSION}
+        </div>
       </div>
     </div>
   )

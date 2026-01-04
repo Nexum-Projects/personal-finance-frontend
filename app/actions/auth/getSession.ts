@@ -13,6 +13,10 @@ type Payload = {
 function decrypt(input: string): Payload | null {
   try {
     const claims = decodeJwt<Payload>(input)
+    // Invalidar sesión si el JWT está expirado (exp en segundos)
+    if (typeof claims.exp === "number" && claims.exp * 1000 <= Date.now()) {
+      return null
+    }
     return claims
   } catch (error) {
     return null
@@ -21,8 +25,7 @@ function decrypt(input: string): Payload | null {
 
 /**
  * Obtiene la sesión del usuario decodificando el JWT
- * Similar al proyecto de referencia: no verifica expiración proactivamente,
- * el backend manejará los errores 401 cuando el token expire
+ * Verifica expiración con `exp` para que, al expirar el token, la sesión sea `null`
  * @returns El payload del JWT si la sesión existe, null si no hay sesión o no se puede decodificar
  */
 export default async function getSession(): Promise<Payload | null> {

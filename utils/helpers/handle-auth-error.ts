@@ -56,26 +56,17 @@ export function handleAuthError(
 }
 
 function performLogout(errorData: unknown, router?: any): boolean {
-  // Eliminar cookies del cliente
-  if (typeof document !== "undefined") {
-    document.cookie =
-      "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-    document.cookie =
-      "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-  }
-
   const humanizedError = parseApiError(errorData)
   toast.error(humanizedError.title, {
     description: humanizedError.description,
   })
 
-  // Redirigir a login
+  // Redirigir a /logout (Route Handler) para limpiar cookies httpOnly y luego ir a /login
   if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
     if (router) {
-      router.push("/login")
-      router.refresh()
+      router.push("/logout")
     } else {
-      window.location.href = "/login"
+      window.location.href = "/logout"
     }
   }
 

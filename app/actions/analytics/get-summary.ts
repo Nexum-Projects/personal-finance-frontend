@@ -4,6 +4,7 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
+import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type { AnalyticsSummary, AnalyticsDateParams } from "./types"
 
 export default async function getAnalyticsSummary(
@@ -31,6 +32,11 @@ export default async function getAnalyticsSummary(
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
+      const status = error.response.status
+      if (status === 401 || status === 403) {
+        await handleAuthErrorServer()
+      }
+
       const responseData = error.response.data
       const humanizedError = parseApiError(responseData)
 

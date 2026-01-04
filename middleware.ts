@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import getSession from "@/app/actions/auth/getSession"
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -10,16 +9,42 @@ export async function middleware(request: NextRequest) {
     return new NextResponse(null, { status: 204 }) // No Content
   }
 
-  // Obtener la sesión usando getSession (similar a findoctor-public)
-  const session = await getSession()
+  const session = request.cookies.get("session")?.value
+
+  const isExpired = (token: string): boolean => {
+    try {
+      const [, payloadB64] = token.split(".")
+      if (!payloadB64) return true
+      const base64 = payloadB64.replace(/-/g, "+").replace(/_/g, "/")
+      const padded =
+        base64 + "===".slice((base64.length + 3) % 4) // padding base64
+      const payloadJson = atob(padded)
+      const payload = JSON.parse(payloadJson) as { exp?: number }
+      if (!payload.exp) return false
+      return payload.exp * 1000 <= Date.now()
+    } catch {
+      // Si no se puede decodificar, tratar como inválido/expirado
+      return true
+    }
+  }
+
+  const hasValidSession = !!session && !isExpired(session)
+
+  // Si el token está expirado, limpiar cookies y redirigir a login
+  if (session && !hasValidSession) {
+    const response = NextResponse.redirect(new URL("/login", request.url))
+    response.cookies.delete("session")
+    response.cookies.delete("refreshToken")
+    return response
+  }
 
   // Si está en login y ya tiene sesión, redirigir a dashboard
-  if (pathname === "/login" && session) {
+  if (pathname === "/login" && hasValidSession) {
     return NextResponse.redirect(new URL("/dashboard", request.url))
   }
 
   // Si está en dashboard y no tiene sesión, redirigir a login
-  if (pathname.startsWith("/dashboard") && !session) {
+  if (pathname.startsWith("/dashboard") && !hasValidSession) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
 

@@ -13,6 +13,7 @@ import { redirect } from "next/navigation"
  * "Cookies can only be modified in a Server Action or Route Handler".
  */
 export async function handleAuthErrorServer(): Promise<never> {
-  redirect("/login")
+  // Pasar por /logout para limpiar cookies (Route Handler) y luego ir a /login
+  redirect("/logout")
 }
 
