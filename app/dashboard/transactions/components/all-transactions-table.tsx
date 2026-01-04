@@ -168,10 +168,9 @@ export function AllTransactionsTable({
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 }).format(decimal)
-                const currencySymbol = transaction.account.currency === "GT" ? "Q" : "$"
                 const amountDisplay = isIncome 
-                  ? `+${currencySymbol}${formattedNumber}`
-                  : `-${currencySymbol}${formattedNumber}`
+                  ? `+Q${formattedNumber}`
+                  : `-Q${formattedNumber}`
                 
                 return (
                   <TableRow key={transaction.id}>

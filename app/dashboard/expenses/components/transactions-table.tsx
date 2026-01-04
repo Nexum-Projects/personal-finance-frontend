@@ -164,7 +164,7 @@ export function TransactionsTable({
               transactions.map((transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell className="font-medium">
-                    {formatAmount(transaction.amountCents, transaction.account.currency)}
+                    {formatAmount(transaction.amountCents, "GT")}
                   </TableCell>
                   <TableCell>{transaction.description}</TableCell>
                   <TableCell>{transaction.category.name}</TableCell>

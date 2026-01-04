@@ -1,10 +1,11 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { toast } from "sonner"
 import { removeMonthlyPeriod, reactivateMonthlyPeriod } from "@/app/actions/monthly-periods"
 import { Button } from "@/components/ui/button"
-import { Trash2, RotateCcw } from "lucide-react"
+import { Trash2, RotateCcw, Pencil } from "lucide-react"
 import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
@@ -144,6 +145,12 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
 
   return (
     <div className="flex items-center gap-2">
+      <Button asChild variant="outline">
+        <Link href={`/dashboard/monthly-periods/${monthlyPeriod.id}/edit`}>
+          <Pencil className="mr-2 h-4 w-4" />
+          Editar ahorro inicial
+        </Link>
+      </Button>
       {monthlyPeriod.isActive ? (
         <Button variant="destructive" onClick={handleRemove}>
           <Trash2 className="mr-2 h-4 w-4" />

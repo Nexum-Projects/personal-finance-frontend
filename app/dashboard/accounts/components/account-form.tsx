@@ -33,7 +33,6 @@ export function AccountForm({
     defaultValues: defaultValues || {
       name: "",
       accountType: undefined,
-      currency: "GTQ",
       initialBalance: undefined,
     },
   })
@@ -71,14 +70,6 @@ export function AccountForm({
               { label: humanizeAccountType("LOAN"), value: "LOAN" },
             ]}
             placeholder="Selecciona el tipo de cuenta"
-          />
-
-          <TextField
-            control={form.control}
-            description="Ej: GTQ"
-            label="Moneda"
-            name="currency"
-            placeholder="Ingresa la moneda"
           />
 
           <NumericField

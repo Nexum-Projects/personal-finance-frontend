@@ -147,7 +147,6 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   {getSortIcon("accountType")}
                 </Button>
               </TableHead>
-              <TableHead>Moneda</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
@@ -176,7 +175,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
           <TableBody>
             {accounts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
+                <TableCell colSpan={5} className="h-24 text-center">
                   No se encontraron cuentas
                 </TableCell>
               </TableRow>
@@ -185,9 +184,8 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                 <TableRow key={account.id}>
                   <TableCell className="font-medium">{account.name}</TableCell>
                   <TableCell>{humanizeAccountType(account.accountType)}</TableCell>
-                  <TableCell>{account.currency}</TableCell>
                   <TableCell>
-                    {formatAmount(account.currentBalanceCents, account.currency)}
+                    {formatAmount(account.currentBalanceCents, "GT")}
                   </TableCell>
                   <TableCell>{formatDate(account.updatedAt)}</TableCell>
                   <TableCell className="text-center">

@@ -65,7 +65,6 @@ export function EditAccountForm({ account, backToHref }: Props) {
       defaultValues={{
         name: account.name,
         accountType: account.accountType,
-        currency: account.currency,
         initialBalance: centsToDecimal(account.currentBalanceCents),
       }}
       onSubmit={onSubmit}

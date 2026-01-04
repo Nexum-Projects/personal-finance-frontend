@@ -7,6 +7,7 @@ import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
 import { DetailMonthlyPeriodActions } from "./components/detail-monthly-period-actions"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { formatAmount } from "@/utils/helpers/format-amount"
 
 type Props = {
   params: Promise<{
@@ -91,6 +92,10 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
           month: {
             label: "Mes",
             value: humanizeMonth(monthlyPeriod.month),
+          },
+          initialSavingCents: {
+            label: "Ahorro Inicial",
+            value: formatAmount(monthlyPeriod.initialSavingCents, "GT"),
           },
           isActive: {
             label: "Estado",

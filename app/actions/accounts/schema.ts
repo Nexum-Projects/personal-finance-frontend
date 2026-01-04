@@ -9,10 +9,6 @@ export const accountSchema = z.object({
     .string()
     .min(1, "El tipo de cuenta es requerido")
     .max(50, "El tipo de cuenta debe tener máximo 50 caracteres"),
-  currency: z
-    .string()
-    .min(1, "La moneda es requerida")
-    .max(10, "La moneda debe tener máximo 10 caracteres"),
   initialBalance: z
     .number({
       invalid_type_error: "El balance inicial debe ser un número",

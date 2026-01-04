@@ -20,7 +20,6 @@ export default async function createAccount(
     const response = await baseAxios.post<{ data: Account }>("/accounts", {
       name: input.name,
       accountType: input.accountType,
-      currency: input.currency,
       initialBalanceCents,
     })
 

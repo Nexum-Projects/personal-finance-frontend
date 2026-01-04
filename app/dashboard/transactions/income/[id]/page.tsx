@@ -78,7 +78,7 @@ export default async function TransactionIncomeDetailPage(props: Props) {
           },
           amount: {
             label: "Monto",
-            value: formatAmount(trans.amountCents, trans.account.currency),
+            value: formatAmount(trans.amountCents, "GT"),
           },
           description: {
             label: "Descripción",

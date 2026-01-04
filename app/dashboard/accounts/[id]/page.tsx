@@ -83,13 +83,9 @@ export default async function AccountDetailPage(props: Props) {
             label: "Tipo",
             value: humanizeAccountType(acc.accountType),
           },
-          currency: {
-            label: "Moneda",
-            value: acc.currency,
-          },
           currentBalance: {
             label: "Balance actual",
-            value: formatAmount(acc.currentBalanceCents, acc.currency),
+            value: formatAmount(acc.currentBalanceCents, "GT"),
           },
           createdAt: {
             label: "Fecha de creación",

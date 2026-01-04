@@ -6,6 +6,8 @@ import {
   getTrends,
   getAccountBalanceBreakdown,
 } from "@/app/actions/analytics"
+import { getMonthlyPeriodsAnalytics } from "@/app/actions/monthly-periods/analytics"
+import { findManyMonthlyPeriods } from "@/app/actions/monthly-periods"
 
 // Calcular fechas por defecto (último mes)
 // Usar zona horaria de Guatemala (UTC-6)
@@ -33,30 +35,61 @@ function getDefaultDates() {
 
 export default async function DashboardPage() {
   const dateRange = getDefaultDates()
+  const currentYear = new Date().getFullYear()
+
+  // Primero obtener los períodos para determinar el año inicial
+  const periodsResult = await Promise.allSettled([
+    findManyMonthlyPeriods({
+      page: 1,
+      limit: 100,
+      pagination: false,
+    }),
+  ])
+
+  const periods =
+    periodsResult[0].status === "fulfilled" && periodsResult[0].value.status === "success"
+      ? periodsResult[0].value.data.data
+      : []
+  const availableYears = Array.from(
+    new Set(periods.map((p) => p.year))
+  ).sort((a, b) => b - a) // Ordenar de mayor a menor
+
+  // Determinar el año inicial: usar el año que tiene datos, o el año actual si no hay datos
+  const analyticsYear = availableYears.length > 0 ? availableYears[0] : currentYear
 
   // Cargar datos iniciales en paralelo
   // Usar Promise.allSettled para evitar que un error detenga toda la carga
-  const [summaryResult, expenseResult, incomeResult, trendsResult, balanceResult] =
-    await Promise.allSettled([
-      getAnalyticsSummary({
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
-      }),
-      getExpenseCategoryBreakdown({
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
-      }),
-      getIncomeCategoryBreakdown({
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
-      }),
-      getTrends({
-        startDate: dateRange.startDate,
-        endDate: dateRange.endDate,
-        groupBy: "day", // Valor por defecto, se puede cambiar desde el cliente
-      }),
-      getAccountBalanceBreakdown(),
-    ])
+  const [
+    summaryResult,
+    expenseResult,
+    incomeResult,
+    trendsResult,
+    balanceResult,
+    monthlyPeriodsResult,
+  ] = await Promise.allSettled([
+    getAnalyticsSummary({
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    }),
+    getExpenseCategoryBreakdown({
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    }),
+    getIncomeCategoryBreakdown({
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+    }),
+    getTrends({
+      startDate: dateRange.startDate,
+      endDate: dateRange.endDate,
+      groupBy: "day", // Valor por defecto, se puede cambiar desde el cliente
+    }),
+    getAccountBalanceBreakdown(),
+    getMonthlyPeriodsAnalytics({
+      year: analyticsYear,
+      order: "DESC",
+    }),
+  ])
 
   const summary =
     summaryResult.status === "fulfilled" && summaryResult.value.status === "success"
@@ -78,6 +111,11 @@ export default async function DashboardPage() {
     balanceResult.status === "fulfilled" && balanceResult.value.status === "success"
       ? balanceResult.value.data
       : []
+  const monthlyPeriodsAnalytics =
+    monthlyPeriodsResult.status === "fulfilled" &&
+    monthlyPeriodsResult.value.status === "success"
+      ? monthlyPeriodsResult.value.data.data
+      : []
   const totalAccounts = summary?.totalAccounts ?? 0
 
   return (
@@ -90,6 +128,9 @@ export default async function DashboardPage() {
           initialTrends={trends}
           initialTotalAccounts={totalAccounts}
           initialAccountBalanceBreakdown={accountBalanceBreakdown}
+          initialMonthlyPeriodsAnalytics={monthlyPeriodsAnalytics}
+          initialAnalyticsYear={analyticsYear}
+          availableYears={availableYears.length > 0 ? availableYears : [currentYear]}
         />
       </div>
     </div>

@@ -33,6 +33,7 @@ export function MonthlyPeriodForm({
     defaultValues: defaultValues || {
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
+      initialSavingCents: 0,
     },
   })
 
@@ -67,6 +68,15 @@ export function MonthlyPeriodForm({
             options={monthOptions}
             placeholder="Selecciona el mes"
             transformValue={(value) => (value ? parseInt(value, 10) : undefined)}
+          />
+
+          <NumericField
+            control={form.control}
+            decimalScale={2}
+            description="Ingresa el ahorro inicial para este período (en quetzales)"
+            label="Ahorro Inicial"
+            name="initialSavingCents"
+            placeholder="0.00"
           />
         </FormSection>
 

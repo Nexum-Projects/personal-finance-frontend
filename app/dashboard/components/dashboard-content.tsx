@@ -14,6 +14,7 @@ import { DateRangePicker } from "./date-range-picker"
 import { TrendsChart } from "./trends-chart"
 import { CategoryPieChart } from "./pie-chart"
 import { AccountBalancePieChart } from "./account-balance-pie-chart"
+import { MonthlyPeriodsAnalyticsTable } from "./monthly-periods-analytics-table"
 import {
   getAnalyticsSummary,
   getExpenseCategoryBreakdown,
@@ -25,6 +26,7 @@ import {
   type TrendData,
   type AccountBalanceBreakdown,
 } from "@/app/actions/analytics"
+import { getMonthlyPeriodsAnalytics, type MonthlyPeriodAnalytics } from "@/app/actions/monthly-periods/analytics"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { toast } from "sonner"
 
@@ -35,6 +37,9 @@ interface DashboardContentProps {
   initialTrends: TrendData[]
   initialTotalAccounts: number
   initialAccountBalanceBreakdown: AccountBalanceBreakdown[]
+  initialMonthlyPeriodsAnalytics: MonthlyPeriodAnalytics[]
+  initialAnalyticsYear: number
+  availableYears: number[]
 }
 
 export function DashboardContent({
@@ -44,6 +49,9 @@ export function DashboardContent({
   initialTrends,
   initialTotalAccounts,
   initialAccountBalanceBreakdown,
+  initialMonthlyPeriodsAnalytics,
+  initialAnalyticsYear,
+  availableYears,
 }: DashboardContentProps) {
   const [isPending, startTransition] = useTransition()
   const [summary, setSummary] = useState<AnalyticsSummary | null>(initialSummary)
@@ -58,6 +66,10 @@ export function DashboardContent({
   const [accountBalanceBreakdown, setAccountBalanceBreakdown] = useState<
     AccountBalanceBreakdown[]
   >(initialAccountBalanceBreakdown)
+  const [monthlyPeriodsAnalytics, setMonthlyPeriodsAnalytics] = useState<
+    MonthlyPeriodAnalytics[]
+  >(initialMonthlyPeriodsAnalytics)
+  const [analyticsYear, setAnalyticsYear] = useState(initialAnalyticsYear)
 
   // Calcular fechas por defecto (último mes)
   // Usar zona horaria de Guatemala (UTC-6)
@@ -413,6 +425,49 @@ export function DashboardContent({
           </CardContent>
         </Card>
       </div>
+
+      {/* Tabla de Períodos Mensuales */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Presupuesto por Período Mensual</CardTitle>
+          <CardDescription>
+            Vista detallada de ahorros, ingresos, gastos y balance por período mensual
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {isPending ? (
+            <div className="flex h-[350px] items-center justify-center text-muted-foreground">
+              Cargando...
+            </div>
+          ) : (
+            <MonthlyPeriodsAnalyticsTable
+              data={monthlyPeriodsAnalytics}
+              currentYear={analyticsYear}
+              onYearChange={async (year) => {
+                setAnalyticsYear(year)
+                startTransition(async () => {
+                  try {
+                    const result = await getMonthlyPeriodsAnalytics({
+                      year,
+                      order: "DESC",
+                    })
+                    if (result.status === "success") {
+                      setMonthlyPeriodsAnalytics(result.data.data)
+                    } else {
+                      toast.error("Error al cargar períodos mensuales", {
+                        description: result.errors[0]?.message || "Error desconocido",
+                      })
+                    }
+                  } catch (error) {
+                    toast.error("Error al cargar períodos mensuales")
+                  }
+                })
+              }}
+              availableYears={availableYears}
+            />
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }

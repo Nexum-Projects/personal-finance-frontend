@@ -13,11 +13,15 @@ export default async function createMonthlyPeriod(
   input: MonthlyPeriodFormValues
 ): Promise<ActionResponse<MonthlyPeriod>> {
   try {
+    // Convertir el ahorro inicial de decimales a centavos
+    const initialSavingCents = Math.round(input.initialSavingCents * 100)
+
     const response = await baseAxios.post<{ data: MonthlyPeriod }>(
       "/monthly-periods",
       {
         year: input.year,
         month: input.month,
+        initialSavingCents,
       }
     )
 

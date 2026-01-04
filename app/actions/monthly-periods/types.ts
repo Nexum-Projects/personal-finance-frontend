@@ -2,6 +2,7 @@ export interface MonthlyPeriod {
   id: string
   year: number
   month: number
+  initialSavingCents: number
   isActive: boolean
   createdAt: string
   updatedAt: string

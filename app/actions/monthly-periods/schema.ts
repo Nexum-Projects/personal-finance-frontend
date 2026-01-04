@@ -17,7 +17,23 @@ export const monthlyPeriodSchema = z.object({
     .int("El mes debe ser un número entero")
     .min(1, "El mes debe estar entre 1 y 12")
     .max(12, "El mes debe estar entre 1 y 12"),
+  initialSavingCents: z
+    .number({
+      required_error: "El ahorro inicial es requerido",
+      invalid_type_error: "El ahorro inicial debe ser un número",
+    })
+    .min(0, "El ahorro inicial no puede ser negativa"),
+})
+
+export const monthlyPeriodUpdateSchema = z.object({
+  initialSavingCents: z
+    .number({
+      required_error: "El ahorro inicial es requerido",
+      invalid_type_error: "El ahorro inicial debe ser un número",
+    })
+    .min(0, "El ahorro inicial no puede ser negativa"),
 })
 
 export type MonthlyPeriodFormValues = z.infer<typeof monthlyPeriodSchema>
+export type MonthlyPeriodUpdateFormValues = z.infer<typeof monthlyPeriodUpdateSchema>
 

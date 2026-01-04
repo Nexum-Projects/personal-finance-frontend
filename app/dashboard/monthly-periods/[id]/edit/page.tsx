@@ -1,10 +1,11 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { findMonthlyPeriod } from "@/app/actions/monthly-periods"
+import { EditMonthlyPeriodForm } from "../../components/edit-monthly-period-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
-import { EditMonthlyPeriodForm } from "../components/edit-monthly-period-form"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { centsToDecimal } from "@/utils/helpers/format-amount"
 
 type Props = {
   params: Promise<{
@@ -23,9 +24,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     }
   }
 
-  return {
-    title: `Editar ${humanizeMonth(period.data.month)}`,
-  }
+    return {
+      title: `Editar ahorro inicial - ${humanizeMonth(period.data.month)}`,
+    }
 }
 
 export default async function EditMonthlyPeriodPage(props: Props) {
@@ -37,19 +38,24 @@ export default async function EditMonthlyPeriodPage(props: Props) {
     return notFound()
   }
 
-  const BACK_TO_HREF = `/dashboard/monthly-periods/${id}`
+  const monthlyPeriod = period.data
 
   return (
     <PageContainer>
       <PageHeader
         backTo={{
-          href: BACK_TO_HREF,
+          href: `/dashboard/monthly-periods/${id}`,
           label: "Regresar al detalle",
         }}
-        title={`Editar ${humanizeMonth(period.data.month)}`}
+        title={`Editar ahorro inicial - ${humanizeMonth(monthlyPeriod.month)}`}
       />
-      <EditMonthlyPeriodForm monthlyPeriod={period.data} backToHref={BACK_TO_HREF} />
+      <EditMonthlyPeriodForm
+        defaultValues={{
+          initialSavingCents: centsToDecimal(monthlyPeriod.initialSavingCents),
+        }}
+        monthlyPeriodId={monthlyPeriod.id}
+        backToHref={`/dashboard/monthly-periods/${id}`}
+      />
     </PageContainer>
   )
 }
-

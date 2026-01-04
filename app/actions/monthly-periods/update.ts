@@ -7,18 +7,17 @@ import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type { MonthlyPeriod } from "./types"
-import type { MonthlyPeriodFormValues } from "./schema"
+import type { MonthlyPeriodUpdateFormValues } from "./schema"
 
 export default async function updateMonthlyPeriod(
   monthlyPeriodId: string,
-  input: MonthlyPeriodFormValues
+  input: MonthlyPeriodUpdateFormValues
 ): Promise<ActionResponse<MonthlyPeriod>> {
   try {
     const response = await baseAxios.put<{ data: MonthlyPeriod }>(
       `/monthly-periods/${monthlyPeriodId}`,
       {
-        year: input.year,
-        month: input.month,
+        initialSavingCents: input.initialSavingCents,
       }
     )
 

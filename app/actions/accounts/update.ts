@@ -19,7 +19,6 @@ export default async function updateAccount(
     const response = await baseAxios.put<{ data: Account }>(`/accounts/${accountId}`, {
       name: input.name,
       accountType: input.accountType,
-      currency: input.currency,
       ...(currentBalanceCents !== undefined ? { currentBalanceCents } : {}),
     })
 
