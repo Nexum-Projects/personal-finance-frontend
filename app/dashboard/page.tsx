@@ -1,90 +1,97 @@
-"use client"
+import { DashboardContent } from "./components/dashboard-content"
+import {
+  getAnalyticsSummary,
+  getExpenseCategoryBreakdown,
+  getIncomeCategoryBreakdown,
+  getTrends,
+  getAccountBalanceBreakdown,
+} from "@/app/actions/analytics"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+// Calcular fechas por defecto (último mes)
+// Usar zona horaria de Guatemala (UTC-6)
+function getDateInGuatemala(date: Date): string {
+  // Formatear la fecha en la zona horaria de Guatemala
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Guatemala",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+  return formatter.format(date)
+}
 
-export default function DashboardPage() {
+function getDefaultDates() {
+  const now = new Date()
+  const endDate = new Date(now)
+  const startDate = new Date(now)
+  startDate.setMonth(startDate.getMonth() - 1)
+  return {
+    startDate: getDateInGuatemala(startDate),
+    endDate: getDateInGuatemala(endDate),
+  }
+}
+
+export default async function DashboardPage() {
+  const dateRange = getDefaultDates()
+
+  // Cargar datos iniciales en paralelo
+  // Usar Promise.allSettled para evitar que un error detenga toda la carga
+  const [summaryResult, expenseResult, incomeResult, trendsResult, balanceResult] =
+    await Promise.allSettled([
+      getAnalyticsSummary({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+      }),
+      getExpenseCategoryBreakdown({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+      }),
+      getIncomeCategoryBreakdown({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+      }),
+      getTrends({
+        startDate: dateRange.startDate,
+        endDate: dateRange.endDate,
+        groupBy: "day", // Valor por defecto, se puede cambiar desde el cliente
+      }),
+      getAccountBalanceBreakdown(),
+    ])
+
+  const summary =
+    summaryResult.status === "fulfilled" && summaryResult.value.status === "success"
+      ? summaryResult.value.data
+      : null
+  const expenseCategories =
+    expenseResult.status === "fulfilled" && expenseResult.value.status === "success"
+      ? expenseResult.value.data
+      : []
+  const incomeCategories =
+    incomeResult.status === "fulfilled" && incomeResult.value.status === "success"
+      ? incomeResult.value.data
+      : []
+  const trends =
+    trendsResult.status === "fulfilled" && trendsResult.value.status === "success"
+      ? trendsResult.value.data
+      : []
+  const accountBalanceBreakdown =
+    balanceResult.status === "fulfilled" && balanceResult.value.status === "success"
+      ? balanceResult.value.data
+      : []
+  const totalAccounts = summary?.totalAccounts ?? 0
+
   return (
     <div className="p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Vista general de tus finanzas
-          </p>
-        </div>
-
-        {/* Cards Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Balance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-foreground">$0.00</div>
-              <p className="text-xs text-muted-foreground">+0% desde el mes pasado</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Ingresos</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-success">$0.00</div>
-              <p className="text-xs text-muted-foreground">Este mes</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Gastos</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-destructive">$0.00</div>
-              <p className="text-xs text-muted-foreground">Este mes</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Cuentas</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-foreground">0</div>
-              <p className="text-xs text-muted-foreground">Cuentas activas</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
-          <Card className="col-span-4">
-            <CardHeader>
-              <CardTitle>Resumen Financiero</CardTitle>
-              <CardDescription>Vista general de tus finanzas</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Aquí se mostrará el resumen de tus transacciones y balances.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="col-span-3">
-            <CardHeader>
-              <CardTitle>Actividad Reciente</CardTitle>
-              <CardDescription>Últimas transacciones</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Aquí se mostrarán tus transacciones recientes.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <DashboardContent
+          initialSummary={summary}
+          initialExpenseCategories={expenseCategories}
+          initialIncomeCategories={incomeCategories}
+          initialTrends={trends}
+          initialTotalAccounts={totalAccounts}
+          initialAccountBalanceBreakdown={accountBalanceBreakdown}
+        />
       </div>
     </div>
   )
 }
-

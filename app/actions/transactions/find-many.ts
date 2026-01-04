@@ -37,6 +37,18 @@ export default async function findManyTransactions(
     if (params.pagination !== undefined) {
       queryParams.append("pagination", params.pagination.toString())
     }
+    if (params.startDate) {
+      queryParams.append("startDate", params.startDate)
+    }
+    if (params.endDate) {
+      queryParams.append("endDate", params.endDate)
+    }
+    if (params.categoryId) {
+      queryParams.append("categoryId", params.categoryId)
+    }
+    if (params.accountId) {
+      queryParams.append("accountId", params.accountId)
+    }
 
     const response = await baseAxios.get<TransactionPageResponse>(
       `/transactions?${queryParams.toString()}`

@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
-import { DetailTransactionActions } from "./components/detail-transaction-actions"
+import { DetailTransactionActions } from "../../../expenses/[id]/components/detail-transaction-actions"
 
 type Props = {
   params: Promise<{
@@ -45,7 +45,7 @@ function formatDate(dateString: string): string {
   }
 }
 
-export default async function ExpenseDetailPage(props: Props) {
+export default async function TransactionExpenseDetailPage(props: Props) {
   const { id } = await props.params
 
   const transaction = await findTransaction(id)
@@ -61,7 +61,7 @@ export default async function ExpenseDetailPage(props: Props) {
       <PageHeader
         actions={<DetailTransactionActions transaction={trans} categoryType="EXPENSE" />}
         backTo={{
-          href: "/dashboard/expenses",
+          href: "/dashboard/transactions/expenses",
           label: "Regresar a gastos",
         }}
         title={trans.description}

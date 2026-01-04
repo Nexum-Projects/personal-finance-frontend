@@ -6,6 +6,7 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
+import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import { DetailTransactionActions } from "../../expenses/[id]/components/detail-transaction-actions"
 
 type Props = {
@@ -44,17 +45,7 @@ function formatDate(dateString: string): string {
   }
 }
 
-function formatDateOnly(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    return `${day}/${month}/${year}`
-  } catch {
-    return dateString
-  }
-}
+import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 
 export default async function IncomeDetailPage(props: Props) {
   const { id } = await props.params
@@ -105,7 +96,7 @@ export default async function IncomeDetailPage(props: Props) {
           },
           transactionDate: {
             label: "Fecha de Transacción",
-            value: formatDateOnly(trans.transactionDate),
+            value: formatDateOnlyShort(trans.transactionDate),
           },
           createdAt: {
             label: "Fecha de creación",

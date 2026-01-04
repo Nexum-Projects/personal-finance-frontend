@@ -37,6 +37,10 @@ export interface TransactionSearchParams {
   search?: string
   categoryType?: CategoryType
   pagination?: boolean
+  startDate?: string
+  endDate?: string
+  categoryId?: string
+  accountId?: string
 }
 
 export interface TransactionPageMeta {

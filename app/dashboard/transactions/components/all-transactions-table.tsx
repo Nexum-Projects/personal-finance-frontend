@@ -13,16 +13,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { formatAmount, centsToDecimal } from "@/utils/helpers/format-amount"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
-import { TransactionsRowActions } from "./transactions-row-actions"
+import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
+import { cn } from "@/lib/utils"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
 
-interface TransactionsTableProps {
+interface AllTransactionsTableProps {
   transactions: Transaction[]
   meta: {
     page: number
@@ -30,20 +30,18 @@ interface TransactionsTableProps {
     totalObjects: number
     totalPages: number
   }
-  categoryType: "INCOME" | "EXPENSE"
   basePath: string
   categories?: Category[]
   accounts?: Account[]
 }
 
-export function TransactionsTable({ 
+export function AllTransactionsTable({ 
   transactions, 
   meta, 
-  categoryType,
   basePath,
   categories = [],
   accounts = [],
-}: TransactionsTableProps) {
+}: AllTransactionsTableProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -120,7 +118,7 @@ export function TransactionsTable({
         <TransactionsFilters categories={categories} accounts={accounts} />
       </div>
 
-      {/* Table */}
+      {/* Tabla */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -128,8 +126,9 @@ export function TransactionsTable({
               <TableHead>
                 <Button
                   variant="ghost"
+                  size="sm"
+                  className="-ml-3 h-8 data-[state=open]:bg-accent"
                   onClick={() => handleSort("amountCents")}
-                  className="h-8 px-2 lg:px-3"
                 >
                   Monto
                   {getSortIcon("amountCents")}
@@ -138,60 +137,87 @@ export function TransactionsTable({
               <TableHead>Descripción</TableHead>
               <TableHead>Categoría</TableHead>
               <TableHead>Cuenta</TableHead>
+              <TableHead>Tipo</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
+                  size="sm"
+                  className="-ml-3 h-8 data-[state=open]:bg-accent"
                   onClick={() => handleSort("transactionDate")}
-                  className="h-8 px-2 lg:px-3"
                 >
-                  Fecha de Transacción
+                  Fecha
                   {getSortIcon("transactionDate")}
                 </Button>
               </TableHead>
-              <TableHead className="w-16 text-center">
-                Acciones
-              </TableHead>
+              <TableHead className="text-center">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {transactions.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
+                <TableCell colSpan={7} className="h-24 text-center">
                   No se encontraron transacciones
                 </TableCell>
               </TableRow>
             ) : (
-              transactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell className="font-medium">
-                    {formatAmount(transaction.amountCents, transaction.account.currency)}
-                  </TableCell>
-                  <TableCell>{transaction.description}</TableCell>
-                  <TableCell>{transaction.category.name}</TableCell>
-                  <TableCell>{transaction.account.name}</TableCell>
-                  <TableCell>{formatDateOnlyShort(transaction.transactionDate)}</TableCell>
-                  <TableCell className="text-center">
-                    <TransactionsRowActions 
-                      transaction={transaction} 
-                      categoryType={categoryType}
-                      basePath={basePath}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))
+              transactions.map((transaction) => {
+                const isIncome = transaction.category.categoryType === "INCOME"
+                // Formatear el monto sin el símbolo de moneda para agregar el signo
+                const decimal = transaction.amountCents / 100
+                const formattedNumber = new Intl.NumberFormat("es-GT", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }).format(decimal)
+                const currencySymbol = transaction.account.currency === "GT" ? "Q" : "$"
+                const amountDisplay = isIncome 
+                  ? `+${currencySymbol}${formattedNumber}`
+                  : `-${currencySymbol}${formattedNumber}`
+                
+                return (
+                  <TableRow key={transaction.id}>
+                    <TableCell className={cn(
+                      "font-medium",
+                      isIncome ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+                    )}>
+                      {amountDisplay}
+                    </TableCell>
+                    <TableCell>{transaction.description}</TableCell>
+                    <TableCell>{transaction.category.name}</TableCell>
+                    <TableCell>{transaction.account.name}</TableCell>
+                    <TableCell>
+                      <span className={cn(
+                        "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+                        isIncome 
+                          ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                          : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                      )}>
+                        {isIncome ? "Ingreso" : "Gasto"}
+                      </span>
+                    </TableCell>
+                    <TableCell>{formatDateOnlyShort(transaction.transactionDate)}</TableCell>
+                    <TableCell className="text-center">
+                      <TransactionsRowActions 
+                        transaction={transaction} 
+                        categoryType={transaction.category.categoryType}
+                        basePath={isIncome ? "/dashboard/transactions/income" : "/dashboard/transactions/expenses"}
+                      />
+                    </TableCell>
+                  </TableRow>
+                )
+              })
             )}
           </TableBody>
         </Table>
       </div>
 
-      {/* Pagination */}
+      {/* Paginación */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {transactions.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
+          Mostrando {((currentPage - 1) * meta.limit) + 1} a{" "}
           {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
           {meta.totalObjects} transacciones
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -200,14 +226,26 @@ export function TransactionsTable({
           >
             Anterior
           </Button>
-          <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+          <div className="flex items-center gap-1">
+            {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(
+              (page) => (
+                <Button
+                  key={page}
+                  variant={currentPage === page ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handlePageChange(page)}
+                  disabled={isPending}
+                >
+                  {page}
+                </Button>
+              )
+            )}
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= meta.totalPages || isPending}
+            disabled={currentPage === meta.totalPages || isPending}
           >
             Siguiente
           </Button>

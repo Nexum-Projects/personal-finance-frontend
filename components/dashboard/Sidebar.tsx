@@ -18,6 +18,7 @@ import {
   LogOut,
   Settings,
   Pencil,
+  Receipt,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -52,14 +53,9 @@ const navigationItems = [
     icon: FolderTree,
   },
   {
-    name: "Gastos",
-    href: "/dashboard/expenses",
-    icon: TrendingDown,
-  },
-  {
-    name: "Ingresos",
-    href: "/dashboard/income",
-    icon: TrendingUp,
+    name: "Transacciones",
+    href: "/dashboard/transactions",
+    icon: Receipt,
   },
   {
     name: "Períodos Mensuales",

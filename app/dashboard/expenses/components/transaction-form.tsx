@@ -33,6 +33,17 @@ export function TransactionForm({
   categories,
   accounts,
 }: Props) {
+  // Obtener fecha actual en zona horaria de Guatemala
+  const getCurrentDateInGuatemala = (): string => {
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Guatemala",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    return formatter.format(new Date())
+  }
+
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: defaultValues || {
@@ -40,7 +51,7 @@ export function TransactionForm({
       description: "",
       categoryId: "",
       accountId: "",
-      transactionDate: new Date().toISOString().split("T")[0],
+      transactionDate: getCurrentDateInGuatemala(),
     },
   })
 
