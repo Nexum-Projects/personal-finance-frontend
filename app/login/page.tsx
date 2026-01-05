@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { login } from "@/app/actions/auth"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
+import Link from "next/link"
 
 const loginSchema = z.object({
   usernameOrEmail: z.string().min(1, "El email o nombre de usuario es requerido"),
@@ -149,6 +150,15 @@ export default function LoginPage() {
                 "Iniciar sesión"
               )}
             </Button>
+
+            <div className="text-center text-sm">
+              <Link
+                href="/confirm-password"
+                className="text-primary underline-offset-4 hover:underline"
+              >
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
           </form>
         </CardContent>
       </Card>
