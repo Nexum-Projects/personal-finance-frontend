@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import {
   Table,
   TableBody,
@@ -14,6 +14,10 @@ import { formatPeriod } from "@/utils/helpers/humanize-month"
 import { cn } from "@/lib/utils"
 import type { MonthlyPeriodAnalytics } from "@/app/actions/monthly-periods/analytics"
 import {
+  getMonthlyBudgetsAnalyticsByMonthlyPeriod,
+  type MonthlyBudgetAnalyticsByPeriodItem,
+} from "@/app/actions/monthly-budgets/analytics"
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -22,6 +26,14 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { ChevronDown, Calendar } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 type Props = {
   data: MonthlyPeriodAnalytics[]
@@ -48,6 +60,31 @@ export function MonthlyPeriodsAnalyticsTable({
       value: isNegative ? `-${formatted}` : formatted,
       isNegative,
     }
+  }
+
+  const [isPending, startTransition] = useTransition()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [selectedPeriod, setSelectedPeriod] = useState<{
+    id: string
+    label: string
+  } | null>(null)
+  const [budgets, setBudgets] = useState<MonthlyBudgetAnalyticsByPeriodItem[]>([])
+  const [budgetsError, setBudgetsError] = useState<string | null>(null)
+
+  const openBudgetsDialog = (monthlyPeriodId: string, label: string) => {
+    setSelectedPeriod({ id: monthlyPeriodId, label })
+    setBudgets([])
+    setBudgetsError(null)
+    setIsDialogOpen(true)
+
+    startTransition(async () => {
+      const result = await getMonthlyBudgetsAnalyticsByMonthlyPeriod(monthlyPeriodId)
+      if (result.status === "error") {
+        setBudgetsError(result.errors[0]?.message || "Error al cargar presupuestos")
+        return
+      }
+      setBudgets(result.data.data)
+    })
   }
 
   const rows = [
@@ -146,8 +183,23 @@ export function MonthlyPeriodsAnalyticsTable({
                   Concepto
                 </TableHead>
                 {sortedData.map((item) => (
-                  <TableHead key={item.monthlyPeriodId} className="min-w-[120px] text-center">
-                    {formatPeriod(item.year, item.month)}
+                  <TableHead key={item.monthlyPeriodId} className="min-w-[160px] text-center">
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full rounded-md px-2 py-1 font-semibold hover:bg-accent hover:text-accent-foreground transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      )}
+                      onClick={() =>
+                        openBudgetsDialog(
+                          item.monthlyPeriodId,
+                          formatPeriod(item.year, item.month)
+                        )
+                      }
+                      title="Ver presupuestos por categoría"
+                    >
+                      {formatPeriod(item.year, item.month)}
+                    </button>
                   </TableHead>
                 ))}
               </TableRow>
@@ -192,6 +244,86 @@ export function MonthlyPeriodsAnalyticsTable({
           </Table>
         </div>
       )}
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              Presupuestos por categoría {selectedPeriod ? `- ${selectedPeriod.label}` : ""}
+            </DialogTitle>
+            <DialogDescription>
+              Presupuesto, gastado y restante por categoría para el período mensual seleccionado.
+            </DialogDescription>
+          </DialogHeader>
+
+          {budgetsError ? (
+            <div className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+              {budgetsError}
+            </div>
+          ) : null}
+
+          <div className="rounded-md border">
+            <div className="max-h-[60vh] overflow-y-auto">
+              <Table>
+                <TableHeader className="sticky top-0 bg-background">
+                  <TableRow>
+                    <TableHead>Categoría</TableHead>
+                    <TableHead className="text-right">Presupuesto</TableHead>
+                    <TableHead className="text-right">Gastado</TableHead>
+                    <TableHead className="text-right">Restante</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {isPending ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
+                        Cargando...
+                      </TableCell>
+                    </TableRow>
+                  ) : budgets.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
+                        No hay presupuestos para este período
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    budgets.map((b) => {
+                      const remainingIsNegative = b.remainingCents < 0
+                      return (
+                        <TableRow key={b.monthlyBudgetId}>
+                          <TableCell className="font-medium">{b.categoryName}</TableCell>
+                          <TableCell className="text-right">
+                            {formatAmount(b.budgetedCents, "GT")}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {formatAmount(b.spentCents, "GT")}
+                          </TableCell>
+                          <TableCell
+                            className={cn(
+                              "text-right font-semibold",
+                              remainingIsNegative
+                                ? "text-red-600 dark:text-red-400"
+                                : "text-emerald-600 dark:text-emerald-400"
+                            )}
+                          >
+                            {formatAmount(b.remainingCents, "GT")}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </div>
+
+          <div className="flex justify-end">
+            <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Cerrar
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

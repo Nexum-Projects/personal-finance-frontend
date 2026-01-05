@@ -52,7 +52,7 @@ export function MonthlyBudgetForm({
         >
           <SelectField
             control={form.control}
-            description="Selecciona la categoría para el presupuesto"
+            description="Selecciona una categoría de gastos para el presupuesto (solo categorías de tipo gasto)"
             label="Categoría"
             name="categoryId"
             options={categories.map((category) => ({

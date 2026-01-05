@@ -24,6 +24,7 @@ export default async function NewMonthlyBudgetPage(props: Props) {
     page: 1,
     limit: 100,
     pagination: false,
+    categoryType: "EXPENSE",
   })
 
   const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
