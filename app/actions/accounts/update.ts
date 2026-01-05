@@ -13,13 +13,9 @@ export default async function updateAccount(
   input: AccountFormValues
 ): Promise<ActionResponse<Account>> {
   try {
-    const currentBalanceCents =
-      input.initialBalance !== undefined ? Math.round(input.initialBalance * 100) : undefined
-
     const response = await baseAxios.put<{ data: Account }>(`/accounts/${accountId}`, {
       name: input.name,
       accountType: input.accountType,
-      ...(currentBalanceCents !== undefined ? { currentBalanceCents } : {}),
     })
 
     revalidatePath("/dashboard/accounts")

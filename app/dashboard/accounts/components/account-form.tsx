@@ -72,14 +72,16 @@ export function AccountForm({
             placeholder="Selecciona el tipo de cuenta"
           />
 
-          <NumericField
-            control={form.control}
-            decimalScale={2}
-            label="Balance inicial"
-            name="initialBalance"
-            placeholder="0.00"
-            description="Opcional. No permite valores negativos."
-          />
+          {!isOnEdit && (
+            <NumericField
+              control={form.control}
+              decimalScale={2}
+              label="Balance inicial"
+              name="initialBalance"
+              placeholder="0.00"
+              description="Opcional. No permite valores negativos."
+            />
+          )}
         </FormSection>
 
         <div className="flex flex-row-reverse items-center justify-start gap-3">

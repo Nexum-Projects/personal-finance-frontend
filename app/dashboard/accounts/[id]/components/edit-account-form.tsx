@@ -9,7 +9,6 @@ import type { AccountFormValues } from "@/app/actions/accounts/schema"
 import type { Account } from "@/app/actions/transactions/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
-import { centsToDecimal } from "@/utils/helpers/format-amount"
 
 type Props = {
   account: Account
@@ -65,7 +64,6 @@ export function EditAccountForm({ account, backToHref }: Props) {
       defaultValues={{
         name: account.name,
         accountType: account.accountType,
-        initialBalance: centsToDecimal(account.currentBalanceCents),
       }}
       onSubmit={onSubmit}
       isSubmitting={isSubmitting}
