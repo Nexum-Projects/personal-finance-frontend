@@ -6,6 +6,7 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
+import { KeyRound, Pencil } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Mi perfil",
@@ -42,6 +43,21 @@ export default async function ProfilePage() {
           label: "Regresar al dashboard",
         }}
         title={user.username}
+        actions={{
+          edit: {
+            type: "link",
+            href: "/dashboard/profile/edit",
+            label: "Editar usuario",
+            icon: Pencil,
+          },
+          changePassword: {
+            type: "link",
+            href: "/dashboard/profile/change-password",
+            label: "Cambiar contraseña",
+            icon: KeyRound,
+            variant: "outline",
+          },
+        }}
       />
       <PageSection
         description="Información personal del usuario"

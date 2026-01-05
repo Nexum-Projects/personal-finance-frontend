@@ -17,6 +17,7 @@ import {
   LogOut,
   Settings,
   Pencil,
+  KeyRound,
   Receipt,
   ArrowLeftRight,
 } from "lucide-react"
@@ -109,7 +110,7 @@ export function Sidebar({ onClose }: SidebarProps) {
     }
 
     loadUser()
-  }, [])
+  }, [pathname])
 
   const handleLogout = async () => {
     await logout()
@@ -203,9 +204,26 @@ export function Sidebar({ onClose }: SidebarProps) {
               Ver perfil
             </DropdownMenuItem>
 
-            <DropdownMenuItem disabled>
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault()
+                handleLinkClick(onClose)
+                router.push("/dashboard/profile/edit")
+              }}
+            >
               <Pencil className="mr-2 h-4 w-4" />
-              Editar perfil
+              Editar usuario
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault()
+                handleLinkClick(onClose)
+                router.push("/dashboard/profile/change-password")
+              }}
+            >
+              <KeyRound className="mr-2 h-4 w-4" />
+              Cambiar contraseña
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
