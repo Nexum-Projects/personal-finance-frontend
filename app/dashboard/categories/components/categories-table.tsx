@@ -69,7 +69,14 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
     })
 
     // Reset to page 1 when search, sort, or filters change
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined || updates.startDate !== undefined || updates.endDate !== undefined) {
+    if (
+      updates.search !== undefined ||
+      updates.orderBy !== undefined ||
+      updates.order !== undefined ||
+      updates.startDate !== undefined ||
+      updates.endDate !== undefined ||
+      updates.categoryType !== undefined
+    ) {
       params.set("page", "1")
     }
 

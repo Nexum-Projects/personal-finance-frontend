@@ -4,6 +4,14 @@ import { Filter, X, XCircle } from "lucide-react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import {
   Sheet,
@@ -20,11 +28,13 @@ import { DateRangeFilter } from "./date-range-filter"
 type Props = {
   startDateParamName?: string
   endDateParamName?: string
+  categoryTypeParamName?: string
 }
 
 export function CategoriesFilters({
   startDateParamName = "startDate",
   endDateParamName = "endDate",
+  categoryTypeParamName = "categoryType",
 }: Props) {
   const [activeFiltersCount, setActiveFiltersCount] = useState(0)
   const [open, setOpen] = useState(false)
@@ -35,11 +45,13 @@ export function CategoriesFilters({
 
   const startDate = searchParams.get(startDateParamName)
   const endDate = searchParams.get(endDateParamName)
+  const categoryType = searchParams.get(categoryTypeParamName)
 
   const handleClearFilters = () => {
     const params = new URLSearchParams(searchParams.toString())
     params.delete(startDateParamName)
     params.delete(endDateParamName)
+    params.delete(categoryTypeParamName)
     params.set("page", "1")
     router.replace(`${pathname}?${params.toString()}`)
   }
@@ -48,8 +60,9 @@ export function CategoriesFilters({
     let count = 0
     if (startDate) count++
     if (endDate) count++
+    if (categoryType) count++
     setActiveFiltersCount(count)
-  }, [startDate, endDate])
+  }, [startDate, endDate, categoryType])
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -95,6 +108,32 @@ export function CategoriesFilters({
             startDateParamName={startDateParamName}
             endDateParamName={endDateParamName}
           />
+
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">Tipo</Label>
+            <Select
+              value={categoryType ?? "ALL"}
+              onValueChange={(value) => {
+                const params = new URLSearchParams(searchParams.toString())
+                if (value === "ALL") {
+                  params.delete(categoryTypeParamName)
+                } else {
+                  params.set(categoryTypeParamName, value)
+                }
+                params.set("page", "1")
+                router.replace(`${pathname}?${params.toString()}`)
+              }}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Seleccionar tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">Todos</SelectItem>
+                <SelectItem value="EXPENSE">Gasto</SelectItem>
+                <SelectItem value="INCOME">Ingreso</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         {activeFiltersCount > 0 && (
