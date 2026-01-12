@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { logout } from "@/app/actions/auth"
 import getCurrentUser from "@/app/actions/users/get-current-user"
@@ -129,7 +130,20 @@ export function Sidebar({ onClose }: SidebarProps) {
     <div className="flex flex-col h-screen w-64 bg-card border-r border-border">
       {/* Logo/Header */}
       <div className="p-6 border-b border-border">
-        <h2 className="text-xl font-bold text-foreground">Personal Finance</h2>
+        <div className="flex items-center gap-3">
+          <Image
+            src="/images/logo_1.png"
+            alt="Nexum Finanzas Personales"
+            width={40}
+            height={40}
+            priority
+            className="h-10 w-10"
+          />
+          <div className="leading-tight">
+            <p className="text-lg font-bold text-foreground">Nexum</p>
+            <p className="text-xs text-muted-foreground">Finanzas Personales</p>
+          </div>
+        </div>
       </div>
 
       {/* Navigation */}

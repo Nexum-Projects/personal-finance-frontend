@@ -5,8 +5,9 @@ import { ActionResponse } from '../types'
 
 export default async function logout(): Promise<ActionResponse<null>> {
   try {
-    cookies().delete('session')
-    cookies().delete('refreshToken')
+    const cookieStore = await cookies()
+    cookieStore.delete('session')
+    cookieStore.delete('refreshToken')
     
     return {
       status: 'success',

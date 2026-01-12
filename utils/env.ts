@@ -17,10 +17,11 @@ const EnvSchema = z.object({
     .url("Invalid site URL"),
 })
 
-// Usar valores de process.env o defaults si no existen
-// El operador ?? asegura que siempre pasemos un string a Zod, no undefined
+// Usar valores de process.env o defaults si no existen.
+// `??` asegura que siempre pasemos un string a Zod (no undefined) y NO impide
+// que se usen los valores de `.env.local` cuando existen.
 export const env = EnvSchema.parse({
-  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-  NEXT_PUBLIC_SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME,
-  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/api",
+  NEXT_PUBLIC_SITE_NAME: process.env.NEXT_PUBLIC_SITE_NAME ?? "Nexum Finanzas Personales",
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 })

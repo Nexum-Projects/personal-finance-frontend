@@ -41,7 +41,8 @@ export default async function login({
     // Guardar el accessToken en la cookie 'session' (httpOnly para seguridad)
     const expires = new Date(Date.now() + 3600 * 1000 * 8) // 8 horas
 
-    cookies().set('session', accessToken, {
+    const cookieStore = await cookies()
+    cookieStore.set('session', accessToken, {
       expires,
       httpOnly: true,
       path: '/',
@@ -52,7 +53,7 @@ export default async function login({
     // Guardar refreshToken en otra cookie (opcional, si lo necesitas)
     if (refreshToken) {
       const refreshExpires = new Date(Date.now() + 3600 * 1000 * 24 * 30) // 30 días
-      cookies().set('refreshToken', refreshToken, {
+      cookieStore.set('refreshToken', refreshToken, {
         expires: refreshExpires,
         httpOnly: true,
         path: '/',

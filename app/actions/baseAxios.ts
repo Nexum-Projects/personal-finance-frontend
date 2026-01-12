@@ -9,8 +9,9 @@ const baseAxios = axios.create({
   },
 })
 
-baseAxios.interceptors.request.use((config) => {
-  const session = cookies().get('session')?.value
+baseAxios.interceptors.request.use(async (config) => {
+  const cookieStore = await cookies()
+  const session = cookieStore.get('session')?.value
   if (session) {
     config.headers.Authorization = `Bearer ${session}`
   }

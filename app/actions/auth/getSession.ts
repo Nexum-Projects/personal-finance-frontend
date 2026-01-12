@@ -29,7 +29,8 @@ function decrypt(input: string): Payload | null {
  * @returns El payload del JWT si la sesión existe, null si no hay sesión o no se puede decodificar
  */
 export default async function getSession(): Promise<Payload | null> {
-  const session = cookies().get('session')?.value
+  const cookieStore = await cookies()
+  const session = cookieStore.get('session')?.value
   
   if (!session) {
     return null

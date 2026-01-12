@@ -14,6 +14,7 @@ import { login } from "@/app/actions/auth"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 const loginSchema = z.object({
   usernameOrEmail: z.string().min(1, "El email o nombre de usuario es requerido"),
@@ -80,9 +81,16 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            Personal Finance
-          </CardTitle>
+          <div className="flex justify-center">
+            <Image
+              src="/images/logo_2.png"
+              alt="Nexum Finanzas Personales"
+              width={320}
+              height={140}
+              priority
+              className="h-auto w-auto"
+            />
+          </div>
           <CardDescription className="text-center">
             Inicia sesión para acceder a tu dashboard
           </CardDescription>
