@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { findTransaction } from "@/app/actions/transactions"
 import { findManyCategories } from "@/app/actions/categories"
 import { findManyAccounts } from "@/app/actions/accounts"
-import { EditTransactionForm } from "../../expenses/components/edit-transaction-form"
+import { EditTransactionForm } from "../../../expenses/components/edit-transaction-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 

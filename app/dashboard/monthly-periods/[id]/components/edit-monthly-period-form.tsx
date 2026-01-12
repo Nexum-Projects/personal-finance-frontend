@@ -9,6 +9,7 @@ import type { MonthlyPeriodFormValues } from "@/app/actions/monthly-periods/sche
 import type { MonthlyPeriod } from "@/app/actions/monthly-periods/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { centsToDecimal } from "@/utils/helpers/format-amount"
 
 type Props = {
   monthlyPeriod: MonthlyPeriod
@@ -68,6 +69,7 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
       defaultValues={{
         year: monthlyPeriod.year,
         month: monthlyPeriod.month,
+        initialSavingCents: centsToDecimal(monthlyPeriod.initialSavingCents),
       }}
       onSubmit={onSubmit}
       isSubmitting={isSubmitting}

@@ -79,7 +79,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
             border: "1px solid hsl(var(--border))",
             borderRadius: "6px",
           }}
-          formatter={(value: number) => formatCurrency(value)}
+          formatter={(value?: number) => formatCurrency(value ?? 0)}
         />
         <Legend />
         <Line

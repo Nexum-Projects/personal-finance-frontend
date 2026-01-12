@@ -28,8 +28,6 @@ export default async function TransfersPage(props: Props) {
     order: "DESC",
     orderBy: "updatedAt",
     search: "",
-    startDate: "",
-    endDate: "",
   })
 
   const result = await findManyTransfers({
@@ -38,8 +36,8 @@ export default async function TransfersPage(props: Props) {
     order: parsedParams.order,
     orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "transferDate" | "amountCents",
     search: parsedParams.search,
-    startDate: parsedParams.startDate || undefined,
-    endDate: parsedParams.endDate || undefined,
+    startDate: searchParams.startDate,
+    endDate: searchParams.endDate,
     pagination: true,
   })
 

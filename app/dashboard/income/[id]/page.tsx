@@ -45,8 +45,6 @@ function formatDate(dateString: string): string {
   }
 }
 
-import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
-
 export default async function IncomeDetailPage(props: Props) {
   const { id } = await props.params
 
