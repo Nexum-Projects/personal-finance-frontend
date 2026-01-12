@@ -4,13 +4,17 @@ import "./globals.css"
 import { ServiceWorkerCleanup } from "@/components/ServiceWorkerCleanup"
 import { Toaster } from "@/components/ui/sonner"
 import { ConfirmationDialog } from "@/components/display/confirmation-dialog"
+import { env } from "@/utils/env"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Personal Finance - Dashboard",
-  description: "Gestión de finanzas personales",
-}
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
+  title: {
+    default: env.NEXT_PUBLIC_SITE_NAME,
+    template: `%s | ${env.NEXT_PUBLIC_SITE_NAME}`,
+  },
+};
 
 export default function RootLayout({
   children,
