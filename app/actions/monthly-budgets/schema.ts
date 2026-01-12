@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 export const monthlyBudgetSchema = z.object({
-  monthlyPeriodId: z.string().min(1, "El período mensual es requerido"),
+  monthlyPeriodId: z.string().min(1, "El presupuesto mensual es requerido"),
   categoryId: z.string().min(1, "La categoría es requerida"),
   budgetedAmount: z
     .number({

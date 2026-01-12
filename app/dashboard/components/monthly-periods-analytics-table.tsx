@@ -202,6 +202,9 @@ export function MonthlyPeriodsAnalyticsTable({
                     </button>
                   </TableHead>
                 ))}
+                <TableHead className="min-w-[160px] text-center font-semibold">
+                  Total
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -238,6 +241,27 @@ export function MonthlyPeriodsAnalyticsTable({
                       </TableCell>
                     )
                   })}
+
+                  {(() => {
+                    const totalCents = sortedData.reduce((acc, item) => acc + row.getValue(item), 0)
+                    const { value, isNegative } = formatCellValue(totalCents)
+                    const isBalance = row.isBalance === true
+
+                    return (
+                      <TableCell
+                        className={cn(
+                          "text-center font-semibold",
+                          isNegative
+                            ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                            : isBalance
+                              ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                              : ""
+                        )}
+                      >
+                        {value}
+                      </TableCell>
+                    )
+                  })()}
                 </TableRow>
               ))}
             </TableBody>
@@ -252,7 +276,7 @@ export function MonthlyPeriodsAnalyticsTable({
               Presupuestos por categoría {selectedPeriod ? `- ${selectedPeriod.label}` : ""}
             </DialogTitle>
             <DialogDescription>
-              Presupuesto, gastado y restante por categoría para el período mensual seleccionado.
+              Presupuesto, gastado y restante por categoría para el presupuesto mensual seleccionado.
             </DialogDescription>
           </DialogHeader>
 
@@ -283,7 +307,7 @@ export function MonthlyPeriodsAnalyticsTable({
                   ) : budgets.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
-                        No hay presupuestos para este período
+                        No hay presupuestos para este presupuesto mensual
                       </TableCell>
                     </TableRow>
                   ) : (

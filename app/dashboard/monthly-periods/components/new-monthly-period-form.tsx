@@ -31,7 +31,7 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear el período mensual"
+          result.errors[0] || "Error al crear el presupuesto mensual"
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -40,10 +40,10 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
         return
       }
 
-      toast.success("Período mensual creado", {
+      toast.success("Presupuesto mensual creado", {
         description: (
           <>
-            El período mensual ha sido creado exitosamente.
+            El presupuesto mensual ha sido creado exitosamente.
           </>
         ),
       })

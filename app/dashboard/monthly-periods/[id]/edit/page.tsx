@@ -20,7 +20,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Período mensual no encontrado",
+      title: "Presupuesto mensual no encontrado",
     }
   }
 

@@ -32,7 +32,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Período mensual no encontrado",
+      title: "Presupuesto mensual no encontrado",
     }
   }
 
@@ -143,7 +143,7 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
         <CardHeader>
           <CardTitle>Lista de Presupuestos</CardTitle>
           <CardDescription>
-            Aquí podrás ver y gestionar todos los presupuestos de este período mensual
+            Aquí podrás ver y gestionar todos los presupuestos de este presupuesto mensual
           </CardDescription>
         </CardHeader>
         <CardContent>

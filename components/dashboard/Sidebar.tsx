@@ -64,7 +64,7 @@ const navigationItems = [
     icon: ArrowLeftRight,
   },
   {
-    name: "Períodos Mensuales",
+    name: "Presupuestos Mensuales",
     href: "/dashboard/monthly-periods",
     icon: Calendar,
   },

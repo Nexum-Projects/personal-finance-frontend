@@ -24,7 +24,7 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas desactivar el período mensual{" "}
+          ¿Estás seguro que deseas desactivar el presupuesto mensual{" "}
           <span className="text-foreground font-medium">
 {humanizeMonth(monthlyPeriod.month)}
           </span>?
@@ -33,10 +33,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
       ),
       onConfirm: onRemove,
       actions: {
-        confirm: "Sí, desactivar período",
+        confirm: "Sí, desactivar presupuesto",
         cancel: "Cancelar",
       },
-      title: "¿Desactivar período mensual?",
+      title: "¿Desactivar presupuesto mensual?",
     })
   }
 
@@ -44,7 +44,7 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas reactivar el período mensual{" "}
+          ¿Estás seguro que deseas reactivar el presupuesto mensual{" "}
           <span className="text-foreground font-medium">
 {humanizeMonth(monthlyPeriod.month)}
           </span>?
@@ -52,10 +52,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
       ),
       onConfirm: onReactivate,
       actions: {
-        confirm: "Sí, reactivar período",
+        confirm: "Sí, reactivar presupuesto",
         cancel: "Cancelar",
       },
-      title: "¿Reactivar período mensual?",
+      title: "¿Reactivar presupuesto mensual?",
     })
   }
 
@@ -70,7 +70,7 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al desactivar el período mensual"
+          result.errors[0] || "Error al desactivar el presupuesto mensual"
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -78,10 +78,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
         return
       }
 
-      toast.success("Período mensual desactivado", {
+      toast.success("Presupuesto mensual desactivado", {
         description: (
           <>
-            El período mensual{" "}
+            El presupuesto mensual{" "}
             <span className="text-foreground font-medium">
   {humanizeMonth(monthlyPeriod.month)}
             </span>{" "}
@@ -112,7 +112,7 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al reactivar el período mensual"
+          result.errors[0] || "Error al reactivar el presupuesto mensual"
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -120,10 +120,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
         return
       }
 
-      toast.success("Período mensual reactivado", {
+      toast.success("Presupuesto mensual reactivado", {
         description: (
           <>
-            El período mensual{" "}
+            El presupuesto mensual{" "}
             <span className="text-foreground font-medium">
   {humanizeMonth(monthlyPeriod.month)}
             </span>{" "}

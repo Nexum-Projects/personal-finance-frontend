@@ -33,7 +33,7 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar el período mensual"
+          result.errors[0] || "Error al actualizar el presupuesto mensual"
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -42,10 +42,10 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
         return
       }
 
-      toast.success("Período mensual actualizado", {
+      toast.success("Presupuesto mensual actualizado", {
         description: (
           <>
-            El período mensual ha sido actualizado exitosamente.
+            El presupuesto mensual ha sido actualizado exitosamente.
           </>
         ),
       })

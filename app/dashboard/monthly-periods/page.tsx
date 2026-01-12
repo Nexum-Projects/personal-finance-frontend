@@ -46,9 +46,9 @@ export default async function MonthlyPeriodsPage(props: Props) {
       <div className="p-4 md:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Períodos Mensuales</h1>
+            <h1 className="text-3xl font-bold text-foreground">Presupuestos Mensuales</h1>
             <p className="text-muted-foreground mt-1">
-              Gestiona tus períodos mensuales
+              Gestiona tus presupuestos mensuales
             </p>
           </div>
           <Card>
@@ -57,7 +57,7 @@ export default async function MonthlyPeriodsPage(props: Props) {
             </CardHeader>
             <CardContent>
               <p className="text-destructive">
-                {result.errors[0]?.message || "Error al cargar los períodos mensuales"}
+                {result.errors[0]?.message || "Error al cargar los presupuestos mensuales"}
               </p>
             </CardContent>
           </Card>
@@ -73,24 +73,24 @@ export default async function MonthlyPeriodsPage(props: Props) {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Períodos Mensuales</h1>
+            <h1 className="text-3xl font-bold text-foreground">Presupuestos Mensuales</h1>
             <p className="text-muted-foreground mt-1">
-              Gestiona tus períodos mensuales
+              Gestiona tus presupuestos mensuales
             </p>
           </div>
           <Button asChild>
             <Link href="/dashboard/monthly-periods/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nuevo período mensual
+              Nuevo presupuesto mensual
             </Link>
           </Button>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Lista de Períodos Mensuales</CardTitle>
+            <CardTitle>Lista de Presupuestos Mensuales</CardTitle>
             <CardDescription>
-              Aquí podrás ver y gestionar todos tus períodos mensuales
+              Aquí podrás ver y gestionar todos tus presupuestos mensuales
             </CardDescription>
           </CardHeader>
           <CardContent>

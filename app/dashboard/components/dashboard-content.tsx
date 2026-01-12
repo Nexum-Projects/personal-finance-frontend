@@ -427,12 +427,12 @@ export function DashboardContent({
         </Card>
       </div>
 
-      {/* Tabla de Períodos Mensuales */}
+      {/* Tabla de Presupuestos Mensuales */}
       <Card>
         <CardHeader>
-          <CardTitle>Presupuesto por Período Mensual</CardTitle>
+          <CardTitle>Analítica de Presupuesto Mensual</CardTitle>
           <CardDescription>
-            Vista detallada de ahorros, ingresos, gastos y balance por período mensual
+            Vista detallada de ahorros, ingresos, gastos y balance por presupuesto mensual
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -457,12 +457,12 @@ export function DashboardContent({
                   if (result.status === "success") {
                     setMonthlyPeriodsAnalytics(result.data.data)
                   } else {
-                    toast.error("Error al cargar períodos mensuales", {
+                    toast.error("Error al cargar presupuestos mensuales", {
                       description: result.errors[0]?.message || "Error desconocido",
                     })
                   }
                 } catch (error) {
-                  toast.error("Error al cargar períodos mensuales")
+                  toast.error("Error al cargar presupuestos mensuales")
                 } finally {
                   setIsLoadingAnalytics(false)
                 }

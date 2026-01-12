@@ -52,7 +52,7 @@ export function EditMonthlyPeriodForm({
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar el período mensual"
+          result.errors[0] || "Error al actualizar el presupuesto mensual"
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -61,7 +61,7 @@ export function EditMonthlyPeriodForm({
         return
       }
 
-      toast.success("Período mensual actualizado", {
+      toast.success("Presupuesto mensual actualizado", {
         description: "La meta de ahorro ha sido actualizada exitosamente.",
       })
 
@@ -82,7 +82,7 @@ export function EditMonthlyPeriodForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description="Actualiza el ahorro inicial para este período mensual"
+          description="Actualiza el ahorro inicial para este presupuesto mensual"
           title="Ahorro Inicial"
         >
           <NumericField

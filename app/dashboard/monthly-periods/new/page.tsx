@@ -10,9 +10,9 @@ export default function NewMonthlyPeriodPage() {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a períodos mensuales",
+          label: "Regresar a presupuestos mensuales",
         }}
-        title="Nuevo período mensual"
+        title="Nuevo presupuesto mensual"
       />
       <NewMonthlyPeriodForm backToHref={BACK_TO_HREF} />
     </PageContainer>

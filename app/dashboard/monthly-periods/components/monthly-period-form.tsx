@@ -48,7 +48,7 @@ export function MonthlyPeriodForm({
         <FormSection
           description={`Ingresa los datos generales del ${
             !isOnEdit ? "nuevo" : ""
-          } período mensual`}
+          } presupuesto mensual`}
           title="Datos generales"
         >
           <NumericField
@@ -62,7 +62,7 @@ export function MonthlyPeriodForm({
 
           <SelectField
             control={form.control}
-            description="Selecciona el mes del período"
+            description="Selecciona el mes del presupuesto"
             label="Mes"
             name="month"
             options={monthOptions}
@@ -73,7 +73,7 @@ export function MonthlyPeriodForm({
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el ahorro inicial para este período (en quetzales)"
+            description="Ingresa el ahorro inicial para este presupuesto (en quetzales)"
             label="Ahorro Inicial"
             name="initialSavingCents"
             placeholder="0.00"

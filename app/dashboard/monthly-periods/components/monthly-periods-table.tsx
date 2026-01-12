@@ -114,7 +114,7 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar períodos mensuales..."
+            placeholder="Buscar presupuestos mensuales..."
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -168,7 +168,7 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
             {monthlyPeriods.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="h-24 text-center">
-                  No se encontraron períodos mensuales
+                  No se encontraron presupuestos mensuales
                 </TableCell>
               </TableRow>
             ) : (
@@ -203,7 +203,7 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
         <div className="text-sm text-muted-foreground">
           Mostrando {monthlyPeriods.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
           {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} períodos mensuales
+          {meta.totalObjects} presupuestos mensuales
         </div>
         <div className="flex items-center gap-2">
           <Button

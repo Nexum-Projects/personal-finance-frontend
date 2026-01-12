@@ -21,7 +21,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Período mensual no encontrado",
+      title: "Presupuesto mensual no encontrado",
     }
   }
 
@@ -60,7 +60,7 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
         actions={<DetailMonthlyPeriodActions monthlyPeriod={monthlyPeriod} />}
         backTo={{
           href: "/dashboard/monthly-periods",
-          label: "Regresar a períodos mensuales",
+          label: "Regresar a presupuestos mensuales",
         }}
         tabs={{
           general: {
@@ -76,7 +76,7 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
       />
 
       <PageSection
-        description="Información general del período mensual"
+        description="Información general del presupuesto mensual"
         fields={{
           id: {
             label: "Identificador",
