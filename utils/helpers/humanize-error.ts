@@ -1,3 +1,5 @@
+import { formatAmount } from "./format-amount"
+
 export type ErrorCode =
   | "BAD_REQUEST"
   | "BAD_REQUEST/INVALID_REQUEST_BODY"
@@ -11,6 +13,7 @@ export type ErrorCode =
   | "BAD_REQUEST/INVALID_CREDENTIALS"
   | "BAD_REQUEST/ACCOUNT_INACTIVE"
   | "BAD_REQUEST/ACCOUNT_NOT_VERIFIED"
+  | "BAD_REQUEST/INSUFFICIENT_FUNDS"
   | "UNAUTHORIZED"
   | "UNAUTHORIZED/INVALID_TOKEN"
   | "UNAUTHORIZED/TOKEN_EXPIRED"
@@ -106,6 +109,10 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   "BAD_REQUEST/ACCOUNT_NOT_VERIFIED": {
     title: "Cuenta no verificada",
     description: "Tu cuenta no ha sido verificada. Por favor, verifica tu cuenta.",
+  },
+  "BAD_REQUEST/INSUFFICIENT_FUNDS": {
+    title: "Fondos insuficientes",
+    description: "No tienes saldo suficiente en la cuenta para realizar esta operación.",
   },
   "UNAUTHORIZED": {
     title: "No autorizado",
@@ -218,6 +225,24 @@ export function humanizeError(
   message?: string,
   details?: Record<string, unknown>
 ): HumanizedError {
+  if (
+    code === "BAD_REQUEST/INSUFFICIENT_FUNDS" ||
+    (typeof message === "string" && message.toLowerCase() === "insufficient funds")
+  ) {
+    const amountCents = details?.amountCents
+    const currentBalanceCents = details?.currentBalanceCents
+
+    if (typeof amountCents === "number" && typeof currentBalanceCents === "number") {
+      return {
+        title: "Fondos insuficientes",
+        description: `No tienes saldo suficiente en la cuenta. Saldo disponible: ${formatAmount(
+          currentBalanceCents,
+          "GT"
+        )}. Monto de la transacción/transferencia: ${formatAmount(amountCents, "GT")}.`,
+      }
+    }
+  }
+
   // Intentar encontrar el error en el mapa
   const errorCode = code as ErrorCode
   const humanizedError = PLAIN_HUMANIZED_ERRORS[errorCode]
