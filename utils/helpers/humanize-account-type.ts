@@ -8,6 +8,7 @@ export function humanizeAccountType(accountType: string): string {
     CREDIT: "Crédito",
     INVESTMENT: "Inversión",
     LOAN: "Préstamo",
+    OTHER: "Otro",
   }
 
   // Convertir a mayúsculas para hacer la búsqueda case-insensitive

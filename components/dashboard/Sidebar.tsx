@@ -21,6 +21,7 @@ import {
   KeyRound,
   Receipt,
   ArrowLeftRight,
+  BookOpen,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import {
@@ -68,6 +69,11 @@ const navigationItems = [
     name: "Presupuestos Mensuales",
     href: "/dashboard/monthly-periods",
     icon: Calendar,
+  },
+  {
+    name: "Documentación",
+    href: "/dashboard/docs",
+    icon: BookOpen,
   },
 ]
 

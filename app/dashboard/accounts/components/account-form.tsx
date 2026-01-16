@@ -68,6 +68,7 @@ export function AccountForm({
               { label: humanizeAccountType("CREDIT"), value: "CREDIT" },
               { label: humanizeAccountType("INVESTMENT"), value: "INVESTMENT" },
               { label: humanizeAccountType("LOAN"), value: "LOAN" },
+              { label: humanizeAccountType("OTHER"), value: "OTHER" },
             ]}
             placeholder="Selecciona el tipo de cuenta"
           />
