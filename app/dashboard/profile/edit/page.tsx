@@ -16,12 +16,16 @@ export default async function EditProfilePage() {
           label: "Regresar a mi perfil",
         }}
         title="Editar usuario"
-        description="Actualiza tu nombre de usuario"
+        description="Actualiza tu nombre de usuario y preferencias. Al guardar, se cerrará tu sesión para aplicar los cambios."
       />
 
       <EditUsernameForm
         backToHref="/dashboard/profile"
-        defaultValues={{ username: user.username }}
+        defaultValues={{
+          username: user.username,
+          preferredCurrency: user.preferredCurrency,
+          timeZone: user.timeZone,
+        }}
       />
     </PageContainer>
   )

@@ -13,6 +13,7 @@ import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatPeriod } from "@/utils/helpers/humanize-month"
 import { cn } from "@/lib/utils"
 import type { MonthlyPeriodAnalytics } from "@/app/actions/monthly-periods/analytics"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import {
   getMonthlyBudgetsAnalyticsByMonthlyPeriod,
   type MonthlyBudgetAnalyticsByPeriodItem,
@@ -48,14 +49,15 @@ export function MonthlyPeriodsAnalyticsTable({
   onYearChange,
   availableYears,
 }: Props) {
+  const { preferredCurrency } = useUserPreferences()
   // Ordenar los datos por mes (de menor a mayor) para mostrar de izquierda a derecha
   const sortedData = [...data]
     .filter((item) => item.year === currentYear) // Filtrar por año seleccionado
     .sort((a, b) => a.month - b.month)
 
-  const formatCellValue = (cents: number, currency: string = "GT") => {
+  const formatCellValue = (cents: number) => {
     const isNegative = cents < 0
-    const formatted = formatAmount(Math.abs(cents), currency)
+    const formatted = formatAmount(Math.abs(cents), preferredCurrency)
     return {
       value: isNegative ? `-${formatted}` : formatted,
       isNegative,
@@ -317,10 +319,10 @@ export function MonthlyPeriodsAnalyticsTable({
                         <TableRow key={b.monthlyBudgetId}>
                           <TableCell className="font-medium">{b.categoryName}</TableCell>
                           <TableCell className="text-right">
-                            {formatAmount(b.budgetedCents, "GT")}
+                            {formatAmount(b.budgetedCents, preferredCurrency)}
                           </TableCell>
                           <TableCell className="text-right">
-                            {formatAmount(b.spentCents, "GT")}
+                            {formatAmount(b.spentCents, preferredCurrency)}
                           </TableCell>
                           <TableCell
                             className={cn(
@@ -330,7 +332,7 @@ export function MonthlyPeriodsAnalyticsTable({
                                 : "text-emerald-600 dark:text-emerald-400"
                             )}
                           >
-                            {formatAmount(b.remainingCents, "GT")}
+                            {formatAmount(b.remainingCents, preferredCurrency)}
                           </TableCell>
                         </TableRow>
                       )

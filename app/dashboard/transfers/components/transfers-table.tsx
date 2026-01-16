@@ -18,6 +18,7 @@ import { TransfersRowActions } from "./transfers-row-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import { TransfersFilters } from "@/components/filters/transfers-filters"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 // Formateo de fecha simple sin dependencias externas
 function formatDate(dateString: string): string {
@@ -48,6 +49,7 @@ interface TransfersTableProps {
 }
 
 export function TransfersTable({ transfers, meta }: TransfersTableProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -177,11 +179,11 @@ export function TransfersTable({ transfers, meta }: TransfersTableProps) {
             ) : (
               transfers.map((transfer) => (
                 <TableRow key={transfer.id}>
-                  <TableCell>{formatDateOnlyShort(transfer.transferDate)}</TableCell>
+                  <TableCell>{formatDateOnlyShort(transfer.transferDate, timeZoneIana)}</TableCell>
                   <TableCell className="font-medium">{transfer.fromAccount.name}</TableCell>
                   <TableCell className="font-medium">{transfer.toAccount.name}</TableCell>
                   <TableCell>
-                    {formatAmount(transfer.amountCents, "GT")}
+                    {formatAmount(transfer.amountCents, preferredCurrency)}
                   </TableCell>
                   <TableCell>{transfer.description}</TableCell>
                   <TableCell>{formatDate(transfer.updatedAt)}</TableCell>

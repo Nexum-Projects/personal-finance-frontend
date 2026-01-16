@@ -2,7 +2,11 @@
  * Formatea una fecha en formato YYYY-MM-DD a formato local sin conversión de zona horaria
  * Útil para fechas que vienen del backend sin información de hora
  */
-export function formatDateOnly(dateString: string, locale: string = "es-GT"): string {
+export function formatDateOnly(
+  dateString: string,
+  locale: string = "es-GT",
+  timeZone: string = "America/Guatemala"
+): string {
   try {
     // Si la fecha viene en formato YYYY-MM-DD, parsearla directamente
     if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
@@ -17,7 +21,7 @@ export function formatDateOnly(dateString: string, locale: string = "es-GT"): st
     // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
     const date = new Date(dateString)
     return date.toLocaleDateString(locale, {
-      timeZone: "America/Guatemala",
+      timeZone,
       month: "short",
       day: "numeric",
     })
@@ -29,7 +33,10 @@ export function formatDateOnly(dateString: string, locale: string = "es-GT"): st
 /**
  * Formatea una fecha en formato YYYY-MM-DD a formato DD/MM/YYYY sin conversión de zona horaria
  */
-export function formatDateOnlyShort(dateString: string): string {
+export function formatDateOnlyShort(
+  dateString: string,
+  timeZone: string = "America/Guatemala"
+): string {
   try {
     // Si la fecha viene en formato YYYY-MM-DD, parsearla directamente
     if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
@@ -40,7 +47,7 @@ export function formatDateOnlyShort(dateString: string): string {
     // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat("en-GB", {
-      timeZone: "America/Guatemala",
+      timeZone,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",

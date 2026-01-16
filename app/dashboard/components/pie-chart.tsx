@@ -3,6 +3,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
 import type { CategoryBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 interface PieChartProps {
   data: CategoryBreakdown[]
@@ -22,6 +23,7 @@ const COLORS = [
 ]
 
 export function CategoryPieChart({ data, title }: PieChartProps) {
+  const { preferredCurrency } = useUserPreferences()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     name: item.categoryName,
@@ -31,7 +33,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
   }))
 
   const formatCurrency = (value: number) => {
-    return formatAmount(Math.round(value * 100), "GT")
+    return formatAmount(Math.round(value * 100), preferredCurrency)
   }
 
   const CustomTooltip = ({ active, payload }: any) => {

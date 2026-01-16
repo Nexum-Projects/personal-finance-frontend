@@ -29,6 +29,7 @@ import {
 import { getMonthlyPeriodsAnalytics, type MonthlyPeriodAnalytics } from "@/app/actions/monthly-periods/analytics"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { toast } from "sonner"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 interface DashboardContentProps {
   initialSummary: AnalyticsSummary | null
@@ -53,6 +54,7 @@ export function DashboardContent({
   initialAnalyticsYear,
   availableYears,
 }: DashboardContentProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const [isPending, startTransition] = useTransition()
   const [summary, setSummary] = useState<AnalyticsSummary | null>(initialSummary)
   const [expenseCategories, setExpenseCategories] = useState<CategoryBreakdown[]>(
@@ -73,11 +75,9 @@ export function DashboardContent({
   const [isLoadingAnalytics, setIsLoadingAnalytics] = useState(false)
 
   // Calcular fechas por defecto (último mes)
-  // Usar zona horaria de Guatemala (UTC-6)
-  const getDateInGuatemala = (date: Date): string => {
-    // Formatear la fecha en la zona horaria de Guatemala
+  const getDateInTimeZone = (date: Date): string => {
     const formatter = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "America/Guatemala",
+      timeZone: timeZoneIana,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -91,8 +91,8 @@ export function DashboardContent({
     const startDate = new Date(now)
     startDate.setMonth(startDate.getMonth() - 1)
     return {
-      startDate: getDateInGuatemala(startDate),
-      endDate: getDateInGuatemala(endDate),
+      startDate: getDateInTimeZone(startDate),
+      endDate: getDateInTimeZone(endDate),
     }
   }
 
@@ -235,7 +235,7 @@ export function DashboardContent({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-foreground">
-              {summary ? formatAmount(summary.totalBalanceCents, "GT") : "$0.00"}
+              {summary ? formatAmount(summary.totalBalanceCents, preferredCurrency) : "$0.00"}
             </div>
             <p className="text-xs text-muted-foreground">
               {summary && summary.growthPercentage !== null
@@ -251,7 +251,7 @@ export function DashboardContent({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-success">
-              {summary ? formatAmount(summary.totalIncomeCents, "GT") : "$0.00"}
+              {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
             </div>
             <p className="text-xs text-muted-foreground">En el rango seleccionado</p>
           </CardContent>
@@ -263,7 +263,7 @@ export function DashboardContent({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">
-              {summary ? formatAmount(summary.totalExpensesCents, "GT") : "$0.00"}
+              {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
             </div>
             <p className="text-xs text-muted-foreground">En el rango seleccionado</p>
           </CardContent>
@@ -295,10 +295,10 @@ export function DashboardContent({
                   : "text-success"
               }`}
             >
-              {summary ? formatAmount(summary.savingsCents, "GT") : "$0.00"}
+              {summary ? formatAmount(summary.savingsCents, preferredCurrency) : "$0.00"}
             </div>
             <p className="text-sm text-muted-foreground mt-2">
-              Monto neto: {summary ? formatAmount(summary.netAmountCents, "GT") : "$0.00"}
+              Monto neto: {summary ? formatAmount(summary.netAmountCents, preferredCurrency) : "$0.00"}
             </p>
           </CardContent>
         </Card>
@@ -313,19 +313,19 @@ export function DashboardContent({
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Ingresos:</span>
                 <span className="font-medium text-success">
-                  {summary ? formatAmount(summary.totalIncomeCents, "GT") : "$0.00"}
+                  {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Gastos:</span>
                 <span className="font-medium text-destructive">
-                  {summary ? formatAmount(summary.totalExpensesCents, "GT") : "$0.00"}
+                  {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Balance:</span>
                 <span className="font-medium">
-                  {summary ? formatAmount(summary.totalBalanceCents, "GT") : "$0.00"}
+                  {summary ? formatAmount(summary.totalBalanceCents, preferredCurrency) : "$0.00"}
                 </span>
               </div>
             </div>

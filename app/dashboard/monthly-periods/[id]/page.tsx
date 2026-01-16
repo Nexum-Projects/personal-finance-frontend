@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils"
 import { DetailMonthlyPeriodActions } from "./components/detail-monthly-period-actions"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { formatAmount } from "@/utils/helpers/format-amount"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { timeZoneToIana } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -30,15 +32,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     }
 }
 
-function formatDate(dateString: string): string {
+function formatDate(dateString: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
+    const formatter = new Intl.DateTimeFormat("es-GT", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    return formatter.format(date)
   } catch {
     return dateString
   }
@@ -46,6 +51,8 @@ function formatDate(dateString: string): string {
 
 export default async function MonthlyPeriodDetailPage(props: Props) {
   const { id } = await props.params
+  const preferences = await getSessionPreferences()
+  const timeZoneIana = timeZoneToIana(preferences.timeZone)
 
   const period = await findMonthlyPeriod(id)
   if (period.status === "error" || !period.data) {
@@ -95,7 +102,7 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
           },
           initialSavingCents: {
             label: "Ahorro Inicial",
-            value: formatAmount(monthlyPeriod.initialSavingCents, "GT"),
+            value: formatAmount(monthlyPeriod.initialSavingCents, preferences.preferredCurrency),
           },
           isActive: {
             label: "Estado",
@@ -111,11 +118,11 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
           },
           createdAt: {
             label: "Fecha de creación",
-            value: formatDate(monthlyPeriod.createdAt),
+            value: formatDate(monthlyPeriod.createdAt, timeZoneIana),
           },
           updatedAt: {
             label: "Última actualización",
-            value: formatDate(monthlyPeriod.updatedAt),
+            value: formatDate(monthlyPeriod.updatedAt, timeZoneIana),
           },
         }}
         title="Datos generales"

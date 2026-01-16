@@ -12,13 +12,14 @@ import {
 } from "recharts"
 import type { TrendData } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
-import { formatDateOnly } from "@/utils/helpers/format-date-only"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 interface TrendsChartProps {
   data: TrendData[]
 }
 
 export function TrendsChart({ data }: TrendsChartProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   // Formatear fecha con año para el eje X
   const formatDateWithYear = (dateString: string): string => {
     try {
@@ -36,7 +37,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
       // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
       const date = new Date(dateString)
       return date.toLocaleDateString("es-GT", {
-        timeZone: "America/Guatemala",
+        timeZone: timeZoneIana,
         month: "short",
         day: "numeric",
         year: "numeric",
@@ -56,7 +57,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
   }))
 
   const formatCurrency = (value: number) => {
-    return formatAmount(Math.round(value * 100), "GT")
+    return formatAmount(Math.round(value * 100), preferredCurrency)
   }
 
   return (
@@ -71,7 +72,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
         <YAxis
           className="text-xs"
           tick={{ fill: "hsl(var(--muted-foreground))" }}
-          tickFormatter={(value) => `Q${value.toFixed(0)}`}
+          tickFormatter={(value) => formatCurrency(value)}
         />
         <Tooltip
           contentStyle={{

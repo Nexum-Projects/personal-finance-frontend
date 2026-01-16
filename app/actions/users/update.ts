@@ -15,6 +15,8 @@ export default async function updateUser(
 
     await baseAxios.put("/users", {
       username: validated.username,
+      preferredCurrency: validated.preferredCurrency,
+      timeZone: validated.timeZone,
     })
 
     return {

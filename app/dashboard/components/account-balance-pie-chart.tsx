@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recha
 import type { AccountBalanceBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 interface AccountBalancePieChartProps {
   data: AccountBalanceBreakdown[]
@@ -25,6 +26,7 @@ const COLORS = [
 ]
 
 export function AccountBalancePieChart({ data, title }: AccountBalancePieChartProps) {
+  const { preferredCurrency } = useUserPreferences()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     name: item.accountName,
@@ -34,7 +36,7 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
   }))
 
   const formatCurrency = (value: number) => {
-    return formatAmount(Math.round(value * 100), "GT")
+    return formatAmount(Math.round(value * 100), preferredCurrency)
   }
 
   const CustomTooltip = ({ active, payload }: any) => {

@@ -15,11 +15,19 @@ export function decimalToCents(decimal: number): number {
 /**
  * Formatea un monto en centavos a string con formato de moneda
  */
-export function formatAmount(cents: number, currency: string = "GT"): string {
+export function formatAmount(
+  cents: number,
+  currency: string = "GTQ",
+  locale: string = "es-GT"
+): string {
   const decimal = centsToDecimal(cents)
-  return new Intl.NumberFormat("es-GT", {
+
+  // Compatibilidad hacia atrás: antes se usaba "GT" para Quetzal
+  const normalizedCurrency = currency === "GT" ? "GTQ" : currency
+
+  return new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: currency === "GT" ? "GTQ" : "USD",
+    currency: normalizedCurrency,
   }).format(decimal)
 }
 

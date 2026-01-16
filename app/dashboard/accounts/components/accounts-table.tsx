@@ -18,17 +18,21 @@ import { AccountsRowActions } from "./accounts-row-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
 import { AccountsFilters } from "@/components/filters/accounts-filters"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 // Formateo de fecha simple sin dependencias externas
-function formatDate(dateString: string): string {
+function formatDate(dateString: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
+    const formatter = new Intl.DateTimeFormat("es-GT", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    return formatter.format(date)
   } catch {
     return dateString
   }
@@ -48,6 +52,7 @@ interface AccountsTableProps {
 }
 
 export function AccountsTable({ accounts, meta }: AccountsTableProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -187,9 +192,9 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   <TableCell className="font-medium">{account.name}</TableCell>
                   <TableCell>{humanizeAccountType(account.accountType)}</TableCell>
                   <TableCell>
-                    {formatAmount(account.currentBalanceCents, "GT")}
+                    {formatAmount(account.currentBalanceCents, preferredCurrency)}
                   </TableCell>
-                  <TableCell>{formatDate(account.updatedAt)}</TableCell>
+                  <TableCell>{formatDate(account.updatedAt, timeZoneIana)}</TableCell>
                   <TableCell className="text-center">
                     <AccountsRowActions account={account} />
                   </TableCell>

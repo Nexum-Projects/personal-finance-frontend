@@ -18,6 +18,7 @@ import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "./transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -44,6 +45,7 @@ export function TransactionsTable({
   categories = [],
   accounts = [],
 }: TransactionsTableProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -164,12 +166,12 @@ export function TransactionsTable({
               transactions.map((transaction) => (
                 <TableRow key={transaction.id}>
                   <TableCell className="font-medium">
-                    {formatAmount(transaction.amountCents, "GT")}
+                    {formatAmount(transaction.amountCents, preferredCurrency)}
                   </TableCell>
                   <TableCell>{transaction.description}</TableCell>
                   <TableCell>{transaction.category.name}</TableCell>
                   <TableCell>{transaction.account.name}</TableCell>
-                  <TableCell>{formatDateOnlyShort(transaction.transactionDate)}</TableCell>
+                  <TableCell>{formatDateOnlyShort(transaction.transactionDate, timeZoneIana)}</TableCell>
                   <TableCell className="text-center">
                     <TransactionsRowActions 
                       transaction={transaction} 

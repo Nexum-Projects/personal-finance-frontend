@@ -7,6 +7,8 @@ import { PageSection } from "@/components/display/page-section/page-section"
 import { DetailTransferActions } from "./components/detail-transfer-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { timeZoneToIana } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -29,15 +31,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string): string {
+function formatDate(dateString: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
+    const formatter = new Intl.DateTimeFormat("es-GT", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    return formatter.format(date)
   } catch {
     return dateString
   }
@@ -45,6 +50,8 @@ function formatDate(dateString: string): string {
 
 export default async function TransferDetailPage(props: Props) {
   const { id } = await props.params
+  const preferences = await getSessionPreferences()
+  const timeZoneIana = timeZoneToIana(preferences.timeZone)
 
   const transfer = await findTransfer(id)
   if (transfer.status === "error" || !transfer.data) {
@@ -84,7 +91,7 @@ export default async function TransferDetailPage(props: Props) {
           },
           amount: {
             label: "Monto",
-            value: formatAmount(t.amountCents, "GT"),
+            value: formatAmount(t.amountCents, preferences.preferredCurrency),
           },
           description: {
             label: "Descripción",
@@ -92,15 +99,15 @@ export default async function TransferDetailPage(props: Props) {
           },
           transferDate: {
             label: "Fecha de Transferencia",
-            value: formatDateOnlyShort(t.transferDate),
+            value: formatDateOnlyShort(t.transferDate, timeZoneIana),
           },
           createdAt: {
             label: "Fecha de creación",
-            value: formatDate(t.createdAt),
+            value: formatDate(t.createdAt, timeZoneIana),
           },
           updatedAt: {
             label: "Última actualización",
-            value: formatDate(t.updatedAt),
+            value: formatDate(t.updatedAt, timeZoneIana),
           },
         }}
         title="Datos generales"

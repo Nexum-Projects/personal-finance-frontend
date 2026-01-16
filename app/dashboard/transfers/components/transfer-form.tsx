@@ -12,6 +12,8 @@ import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
 import { transferSchema, type TransferFormValues } from "@/app/actions/transfers/schema"
 import type { Account } from "@/app/actions/transactions/types"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
 
 type Props = {
   defaultValues?: TransferFormValues
@@ -30,10 +32,12 @@ export function TransferForm({
   isOnEdit = false,
   accounts,
 }: Props) {
-  // Obtener fecha actual en zona horaria de Guatemala
-  const getCurrentDateInGuatemala = (): string => {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
+
+  // Obtener fecha actual en zona horaria configurada
+  const getCurrentDateInTimeZone = (): string => {
     const formatter = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "America/Guatemala",
+      timeZone: timeZoneIana,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -46,7 +50,7 @@ export function TransferForm({
     defaultValues: defaultValues || {
       amountCents: undefined,
       description: "",
-      transferDate: getCurrentDateInGuatemala(),
+      transferDate: getCurrentDateInTimeZone(),
       fromAccountId: "",
       toAccountId: "",
     },
@@ -102,7 +106,7 @@ export function TransferForm({
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el monto a transferir (en quetzales)"
+            description={`Ingresa el monto a transferir (en ${PREFERRED_CURRENCY_LABEL[preferredCurrency]})`}
             label="Monto"
             name="amountCents"
             placeholder="0.00"

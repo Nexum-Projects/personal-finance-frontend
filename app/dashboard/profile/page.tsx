@@ -2,6 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
+import { PREFERRED_CURRENCY_LABEL, timeZoneToIana } from "@/utils/user-preferences"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
@@ -12,15 +13,18 @@ export const metadata: Metadata = {
   title: "Mi perfil",
 }
 
-function formatDate(dateString: string): string {
+function formatDate(dateString: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
+    const formatter = new Intl.DateTimeFormat("es-GT", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+    return formatter.format(date)
   } catch {
     return dateString
   }
@@ -34,6 +38,8 @@ export default async function ProfilePage() {
   if (!user) {
     return notFound()
   }
+
+  const timeZoneIana = timeZoneToIana(user.timeZone)
 
   return (
     <PageContainer>
@@ -81,6 +87,14 @@ export default async function ProfilePage() {
             label: "Rol",
             value: humanizeRole(user.role),
           },
+          preferredCurrency: {
+            label: "Moneda preferida",
+            value: PREFERRED_CURRENCY_LABEL[user.preferredCurrency],
+          },
+          timeZone: {
+            label: "Zona horaria",
+            value: timeZoneIana,
+          },
           isActive: {
             label: "Estado",
             value: user.isActive ? (
@@ -95,11 +109,11 @@ export default async function ProfilePage() {
           },
           createdAt: {
             label: "Fecha de creación",
-            value: formatDate(user.createdAt),
+            value: formatDate(user.createdAt, timeZoneIana),
           },
           updatedAt: {
             label: "Última actualización",
-            value: formatDate(user.updatedAt),
+            value: formatDate(user.updatedAt, timeZoneIana),
           },
         }}
         title="Datos generales"

@@ -13,6 +13,8 @@ import { SelectField } from "@/components/inputs/rhf/select-field"
 import { transactionSchema, type TransactionFormValues } from "@/app/actions/transactions/schema"
 import type { Category } from "@/app/actions/transactions/types"
 import type { Account } from "@/app/actions/transactions/types"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
 
 type Props = {
   defaultValues?: TransactionFormValues
@@ -33,10 +35,12 @@ export function TransactionForm({
   categories,
   accounts,
 }: Props) {
-  // Obtener fecha actual en zona horaria de Guatemala
-  const getCurrentDateInGuatemala = (): string => {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
+
+  // Obtener fecha actual en zona horaria configurada
+  const getCurrentDateInTimeZone = (): string => {
     const formatter = new Intl.DateTimeFormat("en-CA", {
-      timeZone: "America/Guatemala",
+      timeZone: timeZoneIana,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
@@ -51,7 +55,7 @@ export function TransactionForm({
       description: "",
       categoryId: "",
       accountId: "",
-      transactionDate: getCurrentDateInGuatemala(),
+      transactionDate: getCurrentDateInTimeZone(),
     },
   })
 
@@ -67,7 +71,7 @@ export function TransactionForm({
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el monto de la transacción (debe ser mayor a 0)"
+            description={`Ingresa el monto de la transacción en ${PREFERRED_CURRENCY_LABEL[preferredCurrency]} (debe ser mayor a 0)`}
             label="Monto"
             name="amount"
             placeholder="0.00"

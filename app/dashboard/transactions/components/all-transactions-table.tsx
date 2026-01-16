@@ -14,10 +14,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
+import { formatAmount } from "@/utils/helpers/format-amount"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
 import { cn } from "@/lib/utils"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -42,6 +44,7 @@ export function AllTransactionsTable({
   categories = [],
   accounts = [],
 }: AllTransactionsTableProps) {
+  const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -167,15 +170,9 @@ export function AllTransactionsTable({
             ) : (
               transactions.map((transaction) => {
                 const isIncome = transaction.category.categoryType === "INCOME"
-                // Formatear el monto sin el símbolo de moneda para agregar el signo
-                const decimal = transaction.amountCents / 100
-                const formattedNumber = new Intl.NumberFormat("es-GT", {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }).format(decimal)
-                const amountDisplay = isIncome 
-                  ? `+Q${formattedNumber}`
-                  : `-Q${formattedNumber}`
+                const amountDisplay = isIncome
+                  ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
+                  : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
                 
                 return (
                   <TableRow key={transaction.id}>
@@ -198,7 +195,7 @@ export function AllTransactionsTable({
                         {isIncome ? "Ingreso" : "Gasto"}
                       </span>
                     </TableCell>
-                    <TableCell>{formatDateOnlyShort(transaction.transactionDate)}</TableCell>
+                    <TableCell>{formatDateOnlyShort(transaction.transactionDate, timeZoneIana)}</TableCell>
                     <TableCell className="text-center">
                       <TransactionsRowActions 
                         transaction={transaction} 

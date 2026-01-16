@@ -12,10 +12,17 @@ import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { FormSection } from "@/components/display/form/form-section"
 import { TextField } from "@/components/inputs/rhf/text-field"
+import { SelectField } from "@/components/inputs/rhf/select-field"
 import { updateUser } from "@/app/actions/users"
 import { userUpdateSchema, type UserUpdateFormValues } from "@/app/actions/users/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import {
+  PREFERRED_CURRENCIES,
+  PREFERRED_CURRENCY_LABEL,
+  TIME_ZONES,
+  TIME_ZONE_TO_IANA,
+} from "@/utils/user-preferences"
 
 type Props = {
   defaultValues: UserUpdateFormValues
@@ -46,11 +53,13 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
       }
 
       toast.success("Usuario actualizado", {
-        description: "Tu nombre de usuario fue actualizado correctamente.",
+        description:
+          "Guardamos tus cambios. Se cerrará tu sesión para aplicar moneda y zona horaria.",
       })
 
-      router.push(backToHref)
-      router.refresh()
+      // Cerrar sesión para que el usuario vuelva a iniciar sesión y reciba un JWT nuevo
+      // con los claims actualizados (preferredCurrency, timeZone).
+      window.location.assign("/logout")
     } catch (error) {
       handleAuthError(error, router)
       const humanizedError = parseApiError(error)
@@ -64,9 +73,14 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          title="Datos del usuario"
-          description="Recuerda: este cambio solo actualiza tu nombre de usuario"
+          title="Preferencias y datos del usuario"
+          description="Actualiza tu nombre de usuario y tus preferencias de moneda y zona horaria"
         >
+          <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/40 dark:text-amber-100">
+            Al guardar estos cambios, se cerrará tu sesión automáticamente para aplicar la moneda y la
+            zona horaria. Luego tendrás que iniciar sesión de nuevo.
+          </div>
+
           <TextField
             control={form.control}
             description="El nombre de usuario debe tener entre 1 y 255 caracteres"
@@ -74,6 +88,34 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
             name="username"
             placeholder="Ingresa tu nombre de usuario"
             disabled={isSubmitting}
+          />
+
+          <SelectField
+            control={form.control}
+            description="La moneda se usa para formatear montos en toda la aplicación"
+            label="Moneda preferida"
+            name="preferredCurrency"
+            options={PREFERRED_CURRENCIES.map((c) => ({
+              value: c,
+              label: PREFERRED_CURRENCY_LABEL[c],
+            }))}
+            placeholder="Selecciona una moneda"
+            disabled={isSubmitting}
+            transformValue={(value) => (value ? value : undefined)}
+          />
+
+          <SelectField
+            control={form.control}
+            description="La zona horaria se usa para mostrar fechas y horas"
+            label="Zona horaria"
+            name="timeZone"
+            options={TIME_ZONES.map((tz) => ({
+              value: tz,
+              label: TIME_ZONE_TO_IANA[tz],
+            }))}
+            placeholder="Selecciona una zona horaria"
+            disabled={isSubmitting}
+            transformValue={(value) => (value ? value : undefined)}
           />
         </FormSection>
 

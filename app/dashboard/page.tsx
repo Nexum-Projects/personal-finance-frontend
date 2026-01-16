@@ -8,13 +8,13 @@ import {
 } from "@/app/actions/analytics"
 import { getMonthlyPeriodsAnalytics } from "@/app/actions/monthly-periods/analytics"
 import { findManyMonthlyPeriods } from "@/app/actions/monthly-periods"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { timeZoneToIana } from "@/utils/user-preferences"
 
 // Calcular fechas por defecto (último mes)
-// Usar zona horaria de Guatemala (UTC-6)
-function getDateInGuatemala(date: Date): string {
-  // Formatear la fecha en la zona horaria de Guatemala
+function getDateInTimeZone(date: Date, timeZone: string): string {
   const formatter = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Guatemala",
+    timeZone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -22,19 +22,21 @@ function getDateInGuatemala(date: Date): string {
   return formatter.format(date)
 }
 
-function getDefaultDates() {
+function getDefaultDates(timeZone: string) {
   const now = new Date()
   const endDate = new Date(now)
   const startDate = new Date(now)
   startDate.setMonth(startDate.getMonth() - 1)
   return {
-    startDate: getDateInGuatemala(startDate),
-    endDate: getDateInGuatemala(endDate),
+    startDate: getDateInTimeZone(startDate, timeZone),
+    endDate: getDateInTimeZone(endDate, timeZone),
   }
 }
 
 export default async function DashboardPage() {
-  const dateRange = getDefaultDates()
+  const preferences = await getSessionPreferences()
+  const timeZoneIana = timeZoneToIana(preferences.timeZone)
+  const dateRange = getDefaultDates(timeZoneIana)
   const currentYear = new Date().getFullYear()
 
   // Primero obtener los períodos para determinar el año inicial
