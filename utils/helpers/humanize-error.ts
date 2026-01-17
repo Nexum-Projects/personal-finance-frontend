@@ -225,6 +225,16 @@ export function humanizeError(
   message?: string,
   details?: Record<string, unknown>
 ): HumanizedError {
+  // Caso especial: backend lanza RuntimeException con este mensaje al intentar login
+  // cuando el usuario aún no ha confirmado su email.
+  if (typeof message === "string" && message.trim() === "User account is not verified") {
+    return {
+      title: "Cuenta no verificada",
+      description:
+        "Tu cuenta aún no ha sido verificada. Revisa tu correo o reenvía el correo de confirmación para poder iniciar sesión.",
+    }
+  }
+
   if (
     code === "BAD_REQUEST/INSUFFICIENT_FUNDS" ||
     (typeof message === "string" && message.toLowerCase() === "insufficient funds")

@@ -73,6 +73,10 @@ export default async function login({
     if (isAxiosError(error) && error.response) {
       const responseData = error.response.data
       const humanizedError = parseApiError(responseData)
+      const responseCode =
+        responseData && typeof responseData === "object" && "code" in responseData
+          ? String((responseData as { code?: unknown }).code ?? "")
+          : undefined
 
       return {
         status: 'error',
@@ -80,6 +84,8 @@ export default async function login({
           {
             title: humanizedError.title,
             message: humanizedError.description,
+            code: responseCode || undefined,
+            statusCode: error.response.status,
           },
         ],
       }

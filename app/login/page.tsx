@@ -28,18 +28,23 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmEmailLink, setShowConfirmEmailLink] = useState(false)
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   })
 
+  const usernameOrEmailValue = watch("usernameOrEmail")
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true)
     setError(null)
+    setShowConfirmEmailLink(false)
 
     try {
       const result = await login({
@@ -48,13 +53,32 @@ export default function LoginPage() {
       })
 
       if (result.status === "error") {
-        const humanizedError = parseApiError(
-          result.errors[0] || "Error al iniciar sesión"
-        )
+        const rawError = result.errors[0] || "Error al iniciar sesión"
+        const humanizedError = parseApiError(rawError)
         toast.error(humanizedError.title, {
           description: humanizedError.description,
         })
         setError(humanizedError.description)
+
+        // Mostrar CTA para reenviar confirmación cuando el backend indique que la cuenta
+        // no está verificada (idealmente por code, y como fallback por mensajes/título).
+        const rawMessage =
+          rawError && typeof rawError === "object" && "message" in rawError
+            ? String((rawError as { message?: unknown }).message ?? "")
+            : ""
+        const rawCode =
+          rawError && typeof rawError === "object" && "code" in rawError
+            ? String((rawError as { code?: unknown }).code ?? "")
+            : ""
+
+        const shouldShow =
+          rawCode === "BAD_REQUEST/ACCOUNT_NOT_VERIFIED" ||
+          humanizedError.title === "Cuenta no verificada" ||
+          rawMessage === "User account is not verified" ||
+          /no\s+ha\s+sido\s+verificada/i.test(humanizedError.description) ||
+          /not\s+verified/i.test(humanizedError.description)
+
+        setShowConfirmEmailLink(shouldShow)
         return
       }
 
@@ -100,6 +124,22 @@ export default function LoginPage() {
             {error && (
               <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
                 {error}
+              </div>
+            )}
+
+            {showConfirmEmailLink && (
+              <div className="text-sm text-muted-foreground">
+                ¿Necesitas confirmar tu email?{" "}
+                <Link
+                  href={`/confirm-email/request${
+                    typeof usernameOrEmailValue === "string" && usernameOrEmailValue.includes("@")
+                      ? `?email=${encodeURIComponent(usernameOrEmailValue)}`
+                      : ""
+                  }`}
+                  className="text-primary underline-offset-4 hover:underline"
+                >
+                  Reenviar correo de confirmación
+                </Link>
               </div>
             )}
 
@@ -165,6 +205,13 @@ export default function LoginPage() {
                 className="text-primary underline-offset-4 hover:underline"
               >
                 ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+
+            <div className="text-center text-sm text-muted-foreground">
+              ¿No tienes cuenta?{" "}
+              <Link href="/register" className="text-primary underline-offset-4 hover:underline">
+                Crear cuenta
               </Link>
             </div>
           </form>
