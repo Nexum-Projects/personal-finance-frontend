@@ -19,7 +19,7 @@ export function DashboardShell({
 
   return (
     <UserPreferencesProvider preferences={preferences}>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-[100dvh] overflow-x-hidden">
         {/* Overlay para móvil */}
         {sidebarOpen && (
           <div

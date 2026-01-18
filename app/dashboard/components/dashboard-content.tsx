@@ -334,8 +334,8 @@ export function DashboardContent({
       </div>
 
       {/* Gráficas */}
-      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <Card className="col-span-1 lg:col-span-2">
           <CardHeader>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>

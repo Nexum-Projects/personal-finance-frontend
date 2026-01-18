@@ -133,7 +133,7 @@ export function Sidebar({ onClose }: SidebarProps) {
       : "Usuario"
 
   return (
-    <div className="flex flex-col h-screen w-64 bg-card border-r border-border">
+    <div className="flex flex-col h-[100dvh] w-64 bg-card border-r border-border">
       {/* Logo/Header */}
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
