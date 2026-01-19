@@ -3,8 +3,10 @@ import { findManyAccounts } from "@/app/actions/accounts"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { NewTransferForm } from "../components/new-transfer-form"
+import { getServerI18n } from "@/utils/i18n/server"
 
 export default async function NewTransferPage() {
+  const { t } = await getServerI18n()
   // Obtener todas las cuentas para los selectores
   const accountsResult = await findManyAccounts({
     page: 1,
@@ -24,13 +26,13 @@ export default async function NewTransferPage() {
         <PageHeader
           backTo={{
             href: "/dashboard/transfers",
-            label: "Regresar a transferencias",
+            label: t("transfers.backToList"),
           }}
-          title="Nueva Transferencia"
+          title={t("transfers.newTitle")}
         />
         <div className="p-6">
           <p className="text-muted-foreground">
-            Necesitas al menos 2 cuentas para realizar una transferencia.
+            {t("transfers.new.needTwoAccounts")}
           </p>
         </div>
       </PageContainer>
@@ -42,9 +44,9 @@ export default async function NewTransferPage() {
       <PageHeader
         backTo={{
           href: "/dashboard/transfers",
-          label: "Regresar a transferencias",
+          label: t("transfers.backToList"),
         }}
-        title="Nueva Transferencia"
+        title={t("transfers.newTitle")}
       />
       <NewTransferForm accounts={accounts} backToHref="/dashboard/transfers" />
     </PageContainer>

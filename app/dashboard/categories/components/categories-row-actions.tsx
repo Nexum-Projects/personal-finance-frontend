@@ -9,6 +9,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Category } from "@/app/actions/categories/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   category: Category
@@ -17,6 +18,7 @@ type Props = {
 export function CategoriesRowActions({ category }: Props) {
   const router = useRouter()
   const { confirmationDialog } = useConfirmationDialogStore()
+  const { t } = useI18n()
 
   const handleRemove = () => {
     confirmationDialog({
@@ -31,10 +33,10 @@ export function CategoriesRowActions({ category }: Props) {
       ),
       onConfirm: onRemove,
       actions: {
-        confirm: "Sí, desactivar categoría",
-        cancel: "Cancelar",
+        confirm: t("categories.confirmDeactivate.confirm"),
+        cancel: t("categories.confirmDeactivate.cancel"),
       },
-      title: "¿Desactivar categoría?",
+      title: t("categories.confirmDeactivate.title"),
     })
   }
 
@@ -60,16 +62,8 @@ export function CategoriesRowActions({ category }: Props) {
         return
       }
 
-      toast.success("Categoría desactivada", {
-        description: (
-          <>
-            La categoría{" "}
-            <span className="text-foreground font-medium">
-              {category.name}
-            </span>{" "}
-            ha sido desactivada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.category.deactivated"), {
+        description: t("toast.category.deactivated.desc", { name: category.name }),
       })
       router.refresh()
     } catch (error) {
@@ -89,13 +83,13 @@ export function CategoriesRowActions({ category }: Props) {
         href={`/dashboard/categories/${category.id}`}
         type="link"
       >
-        Ver categoría
+        {t("categories.actions.view")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Item
         href={`/dashboard/categories/${category.id}/edit`}
         type="link"
       >
-        Editar categoría
+        {t("categories.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       <DataTableRowActions.Item
@@ -103,7 +97,7 @@ export function CategoriesRowActions({ category }: Props) {
         variant="destructive"
         onClick={handleRemove}
       >
-        Desactivar categoría
+        {t("categories.actions.deactivate")}
       </DataTableRowActions.Item>
     </DataTableRowActions>
   )

@@ -9,7 +9,8 @@ import { DetailMonthlyPeriodActions } from "./components/detail-monthly-period-a
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
-import { timeZoneToIana } from "@/utils/user-preferences"
+import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -19,23 +20,27 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const period = await findMonthlyPeriod(id)
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Presupuesto mensual no encontrado",
+      title: t("monthlyPeriods.detail.notFound"),
     }
   }
 
-    return {
-      title: humanizeMonth(period.data.month),
-    }
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
+
+  return {
+    title: humanizeMonth(period.data.month, locale),
+  }
 }
 
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, timeZone: string, locale: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -51,8 +56,10 @@ function formatDate(dateString: string, timeZone: string): string {
 
 export default async function MonthlyPeriodDetailPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const preferences = await getSessionPreferences()
   const timeZoneIana = timeZoneToIana(preferences.timeZone)
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const period = await findMonthlyPeriod(id)
   if (period.status === "error" || !period.data) {
@@ -67,65 +74,65 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
         actions={<DetailMonthlyPeriodActions monthlyPeriod={monthlyPeriod} />}
         backTo={{
           href: "/dashboard/monthly-periods",
-          label: "Regresar a presupuestos mensuales",
+          label: t("monthlyPeriods.backToList"),
         }}
         tabs={{
           general: {
             href: `/dashboard/monthly-periods/${id}`,
-            label: "General",
+            label: t("monthlyPeriods.tabs.general"),
           },
           budgets: {
             href: `/dashboard/monthly-periods/${id}/budgets`,
-            label: "Presupuestos",
+            label: t("monthlyPeriods.tabs.budgets"),
           },
         }}
-        title={humanizeMonth(monthlyPeriod.month)}
+        title={humanizeMonth(monthlyPeriod.month, locale)}
       />
 
       <PageSection
-        description="Información general del presupuesto mensual"
+        description={t("monthlyPeriods.detail.subtitle")}
         fields={{
           id: {
-            label: "Identificador",
+            label: t("monthlyPeriods.detail.id"),
             value: monthlyPeriod.id,
             classNames: {
               value: cn("font-mono"),
             },
           },
           year: {
-            label: "Año",
+            label: t("monthlyPeriods.detail.year"),
             value: monthlyPeriod.year.toString(),
           },
           month: {
-            label: "Mes",
-            value: humanizeMonth(monthlyPeriod.month),
+            label: t("monthlyPeriods.detail.month"),
+            value: humanizeMonth(monthlyPeriod.month, locale),
           },
           initialSavingCents: {
-            label: "Ahorro Inicial",
+            label: t("monthlyPeriods.detail.initialSaving"),
             value: formatAmount(monthlyPeriod.initialSavingCents, preferences.preferredCurrency),
           },
           isActive: {
-            label: "Estado",
+            label: t("monthlyPeriods.detail.status"),
             value: monthlyPeriod.isActive ? (
               <span className="text-emerald-600 dark:text-emerald-400">
-                Activo
+                {t("monthlyPeriods.status.active")}
               </span>
             ) : (
               <span className="text-red-600 dark:text-red-400">
-                Inactivo
+                {t("monthlyPeriods.status.inactive")}
               </span>
             ),
           },
           createdAt: {
-            label: "Fecha de creación",
-            value: formatDate(monthlyPeriod.createdAt, timeZoneIana),
+            label: t("monthlyPeriods.detail.createdAt"),
+            value: formatDate(monthlyPeriod.createdAt, timeZoneIana, locale),
           },
           updatedAt: {
-            label: "Última actualización",
-            value: formatDate(monthlyPeriod.updatedAt, timeZoneIana),
+            label: t("monthlyPeriods.detail.updatedAt"),
+            value: formatDate(monthlyPeriod.updatedAt, timeZoneIana, locale),
           },
         }}
-        title="Datos generales"
+        title={t("monthlyPeriods.detail.sectionTitle")}
       />
     </PageContainer>
   )

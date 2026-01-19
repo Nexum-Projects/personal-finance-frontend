@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { Account } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   accounts: Account[]
@@ -20,8 +21,9 @@ type Props = {
 export function AccountFilter({
   accounts,
   searchParamName = "accountId",
-  label = "Cuenta",
+  label,
 }: Props) {
+  const { t } = useI18n()
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -44,13 +46,13 @@ export function AccountFilter({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={searchParamName}>{label}</Label>
+      <Label htmlFor={searchParamName}>{label ?? t("filters.account.label")}</Label>
       <Select value={value || "all"} onValueChange={handleChange}>
         <SelectTrigger id={searchParamName}>
-          <SelectValue placeholder="Selecciona una cuenta" />
+          <SelectValue placeholder={t("filters.account.placeholder")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todas las cuentas</SelectItem>
+          <SelectItem value="all">{t("filters.account.all")}</SelectItem>
           {accounts.map((account) => (
             <SelectItem key={account.id} value={account.id}>
               {account.name}

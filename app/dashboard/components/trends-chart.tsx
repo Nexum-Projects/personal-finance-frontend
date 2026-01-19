@@ -13,13 +13,15 @@ import {
 import type { TrendData } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 interface TrendsChartProps {
   data: TrendData[]
 }
 
 export function TrendsChart({ data }: TrendsChartProps) {
-  const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
+  const { t } = useI18n()
   // Formatear fecha con año para el eje X
   const formatDateWithYear = (dateString: string): string => {
     try {
@@ -27,7 +29,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
       if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
         const [year, month, day] = dateString.split("-").map(Number)
         const date = new Date(year, month - 1, day)
-        return date.toLocaleDateString("es-GT", {
+        return date.toLocaleDateString(locale, {
           month: "short",
           day: "numeric",
           year: "numeric",
@@ -36,7 +38,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
       
       // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
       const date = new Date(dateString)
-      return date.toLocaleDateString("es-GT", {
+      return date.toLocaleDateString(locale, {
         timeZone: timeZoneIana,
         month: "short",
         day: "numeric",
@@ -50,10 +52,10 @@ export function TrendsChart({ data }: TrendsChartProps) {
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     date: formatDateWithYear(item.date),
-    Ingresos: item.incomeCents / 100,
-    Gastos: item.expensesCents / 100,
-    Neto: item.netAmountCents / 100,
-    Ahorros: item.savingsCents / 100,
+    income: item.incomeCents / 100,
+    expenses: item.expensesCents / 100,
+    net: item.netAmountCents / 100,
+    savings: item.savingsCents / 100,
   }))
 
   const formatCurrency = (value: number) => {
@@ -85,7 +87,8 @@ export function TrendsChart({ data }: TrendsChartProps) {
         <Legend />
         <Line
           type="monotone"
-          dataKey="Ingresos"
+          dataKey="income"
+          name={t("dashboard.trends.series.income")}
           stroke="hsl(142, 76%, 36%)"
           strokeWidth={2}
           dot={{ r: 4 }}
@@ -93,7 +96,8 @@ export function TrendsChart({ data }: TrendsChartProps) {
         />
         <Line
           type="monotone"
-          dataKey="Gastos"
+          dataKey="expenses"
+          name={t("dashboard.trends.series.expenses")}
           stroke="hsl(0, 72%, 51%)"
           strokeWidth={2}
           dot={{ r: 4 }}
@@ -101,7 +105,8 @@ export function TrendsChart({ data }: TrendsChartProps) {
         />
         <Line
           type="monotone"
-          dataKey="Neto"
+          dataKey="net"
+          name={t("dashboard.trends.series.net")}
           stroke="hsl(217, 91%, 60%)"
           strokeWidth={2}
           dot={{ r: 4 }}
@@ -109,7 +114,8 @@ export function TrendsChart({ data }: TrendsChartProps) {
         />
         <Line
           type="monotone"
-          dataKey="Ahorros"
+          dataKey="savings"
+          name={t("dashboard.trends.series.savings")}
           stroke="hsl(38, 92%, 50%)"
           strokeWidth={2}
           dot={{ r: 4 }}

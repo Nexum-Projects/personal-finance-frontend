@@ -8,7 +8,8 @@ import { DetailTransferActions } from "./components/detail-transfer-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
-import { timeZoneToIana } from "@/utils/user-preferences"
+import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -18,23 +19,27 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const transfer = await findTransfer(id)
 
   if (transfer.status === "error" || !transfer.data) {
     return {
-      title: "Transferencia no encontrada",
+      title: t("transfers.detail.notFound"),
     }
   }
 
   return {
-    title: `Transferencia: ${transfer.data.fromAccount.name} → ${transfer.data.toAccount.name}`,
+    title: t("transfers.detail.title", {
+      from: transfer.data.fromAccount.name,
+      to: transfer.data.toAccount.name,
+    }),
   }
 }
 
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, timeZone: string, locale: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -50,67 +55,69 @@ function formatDate(dateString: string, timeZone: string): string {
 
 export default async function TransferDetailPage(props: Props) {
   const { id } = await props.params
+  const { t: i18n } = await getServerI18n()
   const preferences = await getSessionPreferences()
   const timeZoneIana = timeZoneToIana(preferences.timeZone)
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const transfer = await findTransfer(id)
   if (transfer.status === "error" || !transfer.data) {
     return notFound()
   }
 
-  const t = transfer.data
+  const transferData = transfer.data
 
   return (
     <PageContainer>
       <PageHeader
-        actions={<DetailTransferActions transfer={t} />}
+        actions={<DetailTransferActions transfer={transferData} />}
         backTo={{
           href: "/dashboard/transfers",
-          label: "Regresar a transferencias",
+          label: i18n("transfers.backToList"),
         }}
-        title={`${t.fromAccount.name} → ${t.toAccount.name}`}
+        title={`${transferData.fromAccount.name} → ${transferData.toAccount.name}`}
       />
 
       <PageSection
-        description="Información general de la transferencia"
+        description={i18n("transfers.detail.subtitle")}
         fields={{
           id: {
-            label: "Identificador",
-            value: t.id,
+            label: i18n("transfers.detail.id"),
+            value: transferData.id,
             classNames: {
               value: "font-mono",
             },
           },
           fromAccount: {
-            label: "Cuenta de Origen",
-            value: t.fromAccount.name,
+            label: i18n("transfers.detail.fromAccount"),
+            value: transferData.fromAccount.name,
           },
           toAccount: {
-            label: "Cuenta de Destino",
-            value: t.toAccount.name,
+            label: i18n("transfers.detail.toAccount"),
+            value: transferData.toAccount.name,
           },
           amount: {
-            label: "Monto",
-            value: formatAmount(t.amountCents, preferences.preferredCurrency),
+            label: i18n("transfers.detail.amount"),
+            value: formatAmount(transferData.amountCents, preferences.preferredCurrency),
           },
           description: {
-            label: "Descripción",
-            value: t.description,
+            label: i18n("transfers.detail.description"),
+            value: transferData.description,
           },
           transferDate: {
-            label: "Fecha de Transferencia",
-            value: formatDateOnlyShort(t.transferDate, timeZoneIana),
+            label: i18n("transfers.detail.transferDate"),
+            value: formatDateOnlyShort(transferData.transferDate, timeZoneIana),
           },
           createdAt: {
-            label: "Fecha de creación",
-            value: formatDate(t.createdAt, timeZoneIana),
+            label: i18n("transfers.detail.createdAt"),
+            value: formatDate(transferData.createdAt, timeZoneIana, locale),
           },
           updatedAt: {
-            label: "Última actualización",
-            value: formatDate(t.updatedAt, timeZoneIana),
+            label: i18n("transfers.detail.updatedAt"),
+            value: formatDate(transferData.updatedAt, timeZoneIana, locale),
           },
         }}
-        title="Datos generales"
+        title={i18n("transfers.detail.sectionTitle")}
       />
     </PageContainer>
   )

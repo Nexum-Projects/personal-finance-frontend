@@ -30,6 +30,7 @@ import { getMonthlyPeriodsAnalytics, type MonthlyPeriodAnalytics } from "@/app/a
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { toast } from "sonner"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 interface DashboardContentProps {
   initialSummary: AnalyticsSummary | null
@@ -55,6 +56,7 @@ export function DashboardContent({
   availableYears,
 }: DashboardContentProps) {
   const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { t } = useI18n()
   const [isPending, startTransition] = useTransition()
   const [summary, setSummary] = useState<AnalyticsSummary | null>(initialSummary)
   const [expenseCategories, setExpenseCategories] = useState<CategoryBreakdown[]>(
@@ -212,9 +214,9 @@ export function DashboardContent({
       {/* Header con selector de fechas */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
           <p className="text-muted-foreground mt-1">
-            Vista general de tus finanzas
+            {t("dashboard.subtitle")}
           </p>
         </div>
         <div className="w-full md:w-auto">
@@ -231,7 +233,7 @@ export function DashboardContent({
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Balance Total</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("dashboard.cards.totalBalance")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-foreground">
@@ -239,43 +241,45 @@ export function DashboardContent({
             </div>
             <p className="text-xs text-muted-foreground">
               {summary && summary.growthPercentage !== null
-                ? `${summary.growthPercentage >= 0 ? "+" : ""}${summary.growthPercentage.toFixed(1)}% desde el período anterior`
-                : "Sin datos comparativos"}
+                ? t("dashboard.cards.growthFromPrev", {
+                    value: `${summary.growthPercentage >= 0 ? "+" : ""}${summary.growthPercentage.toFixed(1)}`,
+                  })
+                : t("dashboard.cards.noComparative")}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ingresos</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("dashboard.cards.income")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-success">
               {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
             </div>
-            <p className="text-xs text-muted-foreground">En el rango seleccionado</p>
+            <p className="text-xs text-muted-foreground">{t("dashboard.cards.inRange")}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Gastos</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("dashboard.cards.expenses")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">
               {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
             </div>
-            <p className="text-xs text-muted-foreground">En el rango seleccionado</p>
+            <p className="text-xs text-muted-foreground">{t("dashboard.cards.inRange")}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Cuentas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("dashboard.cards.accounts")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-foreground">{totalAccounts}</div>
-            <p className="text-xs text-muted-foreground">Cuentas activas</p>
+            <p className="text-xs text-muted-foreground">{t("dashboard.cards.activeAccounts")}</p>
           </CardContent>
         </Card>
       </div>
@@ -284,8 +288,8 @@ export function DashboardContent({
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Ahorros</CardTitle>
-            <CardDescription>Ingresos - Gastos</CardDescription>
+            <CardTitle>{t("dashboard.savings.title")}</CardTitle>
+            <CardDescription>{t("dashboard.savings.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div
@@ -298,32 +302,34 @@ export function DashboardContent({
               {summary ? formatAmount(summary.savingsCents, preferredCurrency) : "$0.00"}
             </div>
             <p className="text-sm text-muted-foreground mt-2">
-              Monto neto: {summary ? formatAmount(summary.netAmountCents, preferredCurrency) : "$0.00"}
+              {t("dashboard.savings.netAmount", {
+                value: summary ? formatAmount(summary.netAmountCents, preferredCurrency) : "$0.00",
+              })}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Resumen</CardTitle>
-            <CardDescription>Métricas financieras</CardDescription>
+            <CardTitle>{t("dashboard.summary.title")}</CardTitle>
+            <CardDescription>{t("dashboard.summary.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Ingresos:</span>
+                <span className="text-muted-foreground">{t("dashboard.summary.income")}</span>
                 <span className="font-medium text-success">
                   {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Gastos:</span>
+                <span className="text-muted-foreground">{t("dashboard.summary.expenses")}</span>
                 <span className="font-medium text-destructive">
                   {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Balance:</span>
+                <span className="text-muted-foreground">{t("dashboard.summary.balance")}</span>
                 <span className="font-medium">
                   {summary ? formatAmount(summary.totalBalanceCents, preferredCurrency) : "$0.00"}
                 </span>
@@ -339,12 +345,12 @@ export function DashboardContent({
           <CardHeader>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <CardTitle>Tendencias Financieras</CardTitle>
-                <CardDescription>Evolución de ingresos, gastos y ahorros en el tiempo</CardDescription>
+                <CardTitle>{t("dashboard.trends.title")}</CardTitle>
+                <CardDescription>{t("dashboard.trends.subtitle")}</CardDescription>
               </div>
               <div className="flex items-center gap-2">
                 <Label htmlFor="groupBy" className="text-sm whitespace-nowrap">
-                  Agrupar por:
+                  {t("dashboard.trends.groupBy")}
                 </Label>
                 <Select
                   value={groupBy}
@@ -354,10 +360,10 @@ export function DashboardContent({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="day">Día</SelectItem>
-                    <SelectItem value="week">Semana</SelectItem>
-                    <SelectItem value="month">Mes</SelectItem>
-                    <SelectItem value="year">Año</SelectItem>
+                    <SelectItem value="day">{t("dashboard.trends.groupBy.day")}</SelectItem>
+                    <SelectItem value="week">{t("dashboard.trends.groupBy.week")}</SelectItem>
+                    <SelectItem value="month">{t("dashboard.trends.groupBy.month")}</SelectItem>
+                    <SelectItem value="year">{t("dashboard.trends.groupBy.year")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -366,11 +372,11 @@ export function DashboardContent({
           <CardContent>
             {isPending ? (
               <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-                Cargando...
+                {t("common.loading")}
               </div>
             ) : trends.length === 0 ? (
               <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-                No hay datos disponibles para el rango seleccionado
+                {t("dashboard.trends.noData")}
               </div>
             ) : (
               <TrendsChart data={trends} />
@@ -380,13 +386,13 @@ export function DashboardContent({
 
         <Card>
           <CardHeader>
-            <CardTitle>Gastos por Categoría</CardTitle>
-            <CardDescription>Distribución de gastos</CardDescription>
+            <CardTitle>{t("dashboard.pies.expensesByCategory")}</CardTitle>
+            <CardDescription>{t("dashboard.pies.expensesByCategory.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
               <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-                Cargando...
+                {t("common.loading")}
               </div>
             ) : (
               <CategoryPieChart data={expenseCategories} title="" />
@@ -396,13 +402,13 @@ export function DashboardContent({
 
         <Card>
           <CardHeader>
-            <CardTitle>Ingresos por Categoría</CardTitle>
-            <CardDescription>Distribución de ingresos</CardDescription>
+            <CardTitle>{t("dashboard.pies.incomeByCategory")}</CardTitle>
+            <CardDescription>{t("dashboard.pies.incomeByCategory.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
               <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-                Cargando...
+                {t("common.loading")}
               </div>
             ) : (
               <CategoryPieChart data={incomeCategories} title="" />
@@ -412,13 +418,13 @@ export function DashboardContent({
 
         <Card>
           <CardHeader>
-            <CardTitle>Balance por Cuenta</CardTitle>
-            <CardDescription>Distribución del balance total por cuenta</CardDescription>
+            <CardTitle>{t("dashboard.pies.balanceByAccount")}</CardTitle>
+            <CardDescription>{t("dashboard.pies.balanceByAccount.subtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
               <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-                Cargando...
+                {t("common.loading")}
               </div>
             ) : (
               <AccountBalancePieChart data={accountBalanceBreakdown} title="" />
@@ -430,15 +436,15 @@ export function DashboardContent({
       {/* Tabla de Presupuestos Mensuales */}
       <Card>
         <CardHeader>
-          <CardTitle>Analítica de Presupuesto Mensual</CardTitle>
+          <CardTitle>{t("dashboard.monthlyAnalytics.title")}</CardTitle>
           <CardDescription>
-            Vista detallada de ahorros, ingresos, gastos y balance por presupuesto mensual
+            {t("dashboard.monthlyAnalytics.subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {isLoadingAnalytics ? (
             <div className="flex h-[350px] items-center justify-center text-muted-foreground">
-              Cargando...
+              {t("common.loading")}
             </div>
           ) : (
             <MonthlyPeriodsAnalyticsTable

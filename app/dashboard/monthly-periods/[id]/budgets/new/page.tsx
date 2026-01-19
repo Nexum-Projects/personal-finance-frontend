@@ -5,6 +5,9 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { NewMonthlyBudgetForm } from "../components/new-monthly-budget-form"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { getServerI18n } from "@/utils/i18n/server"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { languageToLocale } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -14,6 +17,9 @@ type Props = {
 
 export default async function NewMonthlyBudgetPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const period = await findMonthlyPeriod(id)
   if (period.status === "error" || !period.data) {
@@ -36,19 +42,21 @@ export default async function NewMonthlyBudgetPage(props: Props) {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a presupuestos",
+          label: t("monthlyPeriods.budgets.backToBudgets"),
         }}
         tabs={{
           general: {
             href: `/dashboard/monthly-periods/${id}`,
-            label: "General",
+            label: t("monthlyPeriods.tabs.general"),
           },
           budgets: {
             href: `/dashboard/monthly-periods/${id}/budgets`,
-            label: "Presupuestos",
+            label: t("monthlyPeriods.tabs.budgets"),
           },
         }}
-        title={`Nuevo presupuesto - ${humanizeMonth(period.data.month)}`}
+        title={t("monthlyPeriods.budgets.newTitle", {
+          month: humanizeMonth(period.data.month, locale),
+        })}
       />
       <NewMonthlyBudgetForm
         backToHref={BACK_TO_HREF}

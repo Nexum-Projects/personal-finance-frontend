@@ -13,12 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { formatAmount, centsToDecimal } from "@/utils/helpers/format-amount"
-import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
+import { formatAmount } from "@/utils/helpers/format-amount"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "./transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -45,7 +45,8 @@ export function TransactionsTable({
   categories = [],
   accounts = [],
 }: TransactionsTableProps) {
-  const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
+  const { t } = useI18n()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -107,13 +108,27 @@ export function TransactionsTable({
     )
   }
 
+  const formatDateShort = (dateString: string): string => {
+    try {
+      const d = new Date(dateString)
+      return new Intl.DateTimeFormat(locale, {
+        timeZone: timeZoneIana,
+        year: "2-digit",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(d)
+    } catch {
+      return dateString
+    }
+  }
+
   return (
     <div className="space-y-4">
       {/* Search Bar and Filters */}
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar por descripción..."
+            placeholder={t("transactions.search.byDescription")}
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -133,25 +148,25 @@ export function TransactionsTable({
                   onClick={() => handleSort("amountCents")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Monto
+                  {t("transactions.table.amount")}
                   {getSortIcon("amountCents")}
                 </Button>
               </TableHead>
-              <TableHead>Descripción</TableHead>
-              <TableHead>Categoría</TableHead>
-              <TableHead>Cuenta</TableHead>
+              <TableHead>{t("transactions.table.description")}</TableHead>
+              <TableHead>{t("transactions.table.category")}</TableHead>
+              <TableHead>{t("transactions.table.account")}</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("transactionDate")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Fecha de Transacción
+                  {t("transactions.table.transactionDate")}
                   {getSortIcon("transactionDate")}
                 </Button>
               </TableHead>
               <TableHead className="w-16 text-center">
-                Acciones
+                {t("transactions.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -159,7 +174,7 @@ export function TransactionsTable({
             {transactions.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center">
-                  No se encontraron transacciones
+                  {t("transactions.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -171,7 +186,7 @@ export function TransactionsTable({
                   <TableCell>{transaction.description}</TableCell>
                   <TableCell>{transaction.category.name}</TableCell>
                   <TableCell>{transaction.account.name}</TableCell>
-                  <TableCell>{formatDateOnlyShort(transaction.transactionDate, timeZoneIana)}</TableCell>
+                  <TableCell>{formatDateShort(transaction.transactionDate)}</TableCell>
                   <TableCell className="text-center">
                     <TransactionsRowActions 
                       transaction={transaction} 
@@ -189,9 +204,12 @@ export function TransactionsTable({
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {transactions.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
-          {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} transacciones
+          {t("pagination.showing", {
+            from: transactions.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
+            to: Math.min(currentPage * meta.limit, meta.totalObjects),
+            total: meta.totalObjects,
+            entity: t("transactions.title").toLowerCase(),
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -200,10 +218,10 @@ export function TransactionsTable({
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || isPending}
           >
-            Anterior
+            {t("pagination.prev")}
           </Button>
           <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
@@ -211,7 +229,7 @@ export function TransactionsTable({
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= meta.totalPages || isPending}
           >
-            Siguiente
+            {t("pagination.next")}
           </Button>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { CategoryForm } from "./category-form"
 import type { CategoryFormValues } from "@/app/actions/categories/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   backToHref: string
@@ -16,6 +17,7 @@ type Props = {
 export function NewCategoryForm({ backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: CategoryFormValues) => {
     setIsSubmitting(true)
@@ -43,16 +45,8 @@ export function NewCategoryForm({ backToHref }: Props) {
         return
       }
 
-      toast.success("Categoría creada", {
-        description: (
-          <>
-            La categoría{" "}
-            <span className="text-foreground font-medium">
-              {result.data.name}
-            </span>{" "}
-            ha sido creada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.category.created"), {
+        description: t("toast.category.created.desc", { name: result.data.name }),
       })
 
       router.push(backToHref)

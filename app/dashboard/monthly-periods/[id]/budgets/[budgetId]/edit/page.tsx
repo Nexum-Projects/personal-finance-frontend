@@ -7,6 +7,9 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { EditMonthlyBudgetForm } from "../../components/edit-monthly-budget-form"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { getServerI18n } from "@/utils/i18n/server"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { languageToLocale } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -17,23 +20,30 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id, budgetId } = await props.params
+  const { t } = await getServerI18n()
 
   const period = await findMonthlyPeriod(id)
   const budget = await findMonthlyBudget(budgetId)
 
   if (period.status === "error" || !period.data || budget.status === "error" || !budget.data) {
     return {
-      title: "Presupuesto no encontrado",
+      title: t("monthlyPeriods.budgets.notFound"),
     }
   }
 
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
+
   return {
-    title: `Editar presupuesto - ${humanizeMonth(period.data.month)}`,
+    title: t("monthlyPeriods.budgets.editTitle", { month: humanizeMonth(period.data.month, locale) }),
   }
 }
 
 export default async function EditMonthlyBudgetPage(props: Props) {
   const { id, budgetId } = await props.params
+  const { t } = await getServerI18n()
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const period = await findMonthlyPeriod(id)
   const budget = await findMonthlyBudget(budgetId)
@@ -57,19 +67,21 @@ export default async function EditMonthlyBudgetPage(props: Props) {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a presupuestos",
+          label: t("monthlyPeriods.budgets.backToBudgets"),
         }}
         tabs={{
           general: {
             href: `/dashboard/monthly-periods/${id}`,
-            label: "General",
+            label: t("monthlyPeriods.tabs.general"),
           },
           budgets: {
             href: `/dashboard/monthly-periods/${id}/budgets`,
-            label: "Presupuestos",
+            label: t("monthlyPeriods.tabs.budgets"),
           },
         }}
-        title={`Editar presupuesto - ${humanizeMonth(period.data.month)}`}
+        title={t("monthlyPeriods.budgets.editTitle", {
+          month: humanizeMonth(period.data.month, locale),
+        })}
       />
       <EditMonthlyBudgetForm
         budget={budget.data}

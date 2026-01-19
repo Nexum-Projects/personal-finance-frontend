@@ -12,6 +12,7 @@ import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import { centsToDecimal } from "@/utils/helpers/format-amount"
 import type { Category } from "@/app/actions/transactions/types"
 import type { Account } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   transaction: Transaction
@@ -30,6 +31,7 @@ export function EditTransactionForm({
 }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: TransactionFormValues) => {
     setIsSubmitting(true)
@@ -48,7 +50,7 @@ export function EditTransactionForm({
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar la transacción"
+          result.errors[0] || t("transactions.errorUpdate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -57,8 +59,8 @@ export function EditTransactionForm({
         return
       }
 
-      toast.success("Transacción actualizada", {
-        description: "La transacción ha sido actualizada exitosamente",
+      toast.success(t("toast.transaction.updated"), {
+        description: t("toast.transaction.updated.desc"),
       })
 
       router.push(backToHref)

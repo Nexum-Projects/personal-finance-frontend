@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Edit, Trash2 } from "lucide-react"
@@ -10,6 +10,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import type { Transaction } from "@/app/actions/transactions/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   transaction: Transaction
@@ -20,26 +21,34 @@ export function DetailTransactionActions({ transaction, categoryType }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { confirmationDialog } = useConfirmationDialogStore()
   const router = useRouter()
+  const pathname = usePathname()
+  const { t } = useI18n()
 
-  const basePath = categoryType === "INCOME" ? "/dashboard/income" : "/dashboard/expenses"
+  const basePath = pathname.startsWith("/dashboard/transactions/")
+    ? categoryType === "INCOME"
+      ? "/dashboard/transactions/income"
+      : "/dashboard/transactions/expenses"
+    : categoryType === "INCOME"
+      ? "/dashboard/income"
+      : "/dashboard/expenses"
 
   const handleDelete = () => {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas eliminar la transacción{" "}
+          {t("transactions.confirmDelete.title")}{" "}
           <span className="text-foreground font-medium">
             {transaction.description}
           </span>
-          ? Esta acción no se puede deshacer.
+          ? {t("transactions.confirmDelete.description")}
         </>
       ),
       onConfirm: onDelete,
       actions: {
-        confirm: "Sí, eliminar transacción",
-        cancel: "Cancelar",
+        confirm: t("transactions.confirmDelete.confirm"),
+        cancel: t("transactions.confirmDelete.cancel"),
       },
-      title: "¿Eliminar transacción?",
+      title: t("transactions.confirmDelete.title"),
     })
   }
 
@@ -60,7 +69,7 @@ export function DetailTransactionActions({ transaction, categoryType }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al eliminar la transacción"
+          result.errors[0] || t("transactions.errorDelete")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -69,15 +78,9 @@ export function DetailTransactionActions({ transaction, categoryType }: Props) {
         return
       }
 
-      toast.success("Transacción eliminada", {
+      toast.success(t("toast.transaction.deleted"), {
         description: (
-          <>
-            La transacción{" "}
-            <span className="text-foreground font-medium">
-              {transaction.description}
-            </span>{" "}
-            ha sido eliminada exitosamente.
-          </>
+          <>{t("toast.transaction.deleted.desc", { description: transaction.description })}</>
         ),
       })
 
@@ -101,14 +104,14 @@ export function DetailTransactionActions({ transaction, categoryType }: Props) {
         edit: {
           icon: Edit,
           isLoading: loading,
-          label: "Editar transacción",
+          label: t("transactions.actions.edit"),
           type: "link",
           href: `${basePath}/${transaction.id}/edit`,
         },
         delete: {
           icon: Trash2,
           isLoading: loading,
-          label: "Eliminar transacción",
+          label: t("transactions.actions.delete"),
           type: "button",
           variant: "destructive",
           onClick: handleDelete,

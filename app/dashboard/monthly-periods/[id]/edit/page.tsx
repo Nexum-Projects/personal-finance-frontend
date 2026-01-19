@@ -6,6 +6,9 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { centsToDecimal } from "@/utils/helpers/format-amount"
+import { getServerI18n } from "@/utils/i18n/server"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { languageToLocale } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -15,22 +18,30 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
 
   const period = await findMonthlyPeriod(id)
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Presupuesto mensual no encontrado",
+      title: t("monthlyPeriods.detail.notFound"),
     }
   }
 
-    return {
-      title: `Editar ahorro inicial - ${humanizeMonth(period.data.month)}`,
-    }
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
+  return {
+    title: t("monthlyPeriods.editInitialSaving.title", {
+      month: humanizeMonth(period.data.month, locale),
+    }),
+  }
 }
 
 export default async function EditMonthlyPeriodPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const period = await findMonthlyPeriod(id)
 
@@ -45,9 +56,11 @@ export default async function EditMonthlyPeriodPage(props: Props) {
       <PageHeader
         backTo={{
           href: `/dashboard/monthly-periods/${id}`,
-          label: "Regresar al detalle",
+          label: t("monthlyPeriods.editInitialSaving.backToDetail"),
         }}
-        title={`Editar ahorro inicial - ${humanizeMonth(monthlyPeriod.month)}`}
+        title={t("monthlyPeriods.editInitialSaving.title", {
+          month: humanizeMonth(monthlyPeriod.month, locale),
+        })}
       />
       <EditMonthlyPeriodForm
         defaultValues={{

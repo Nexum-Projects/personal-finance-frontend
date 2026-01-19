@@ -11,7 +11,7 @@ import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
 import { monthlyBudgetSchema, type MonthlyBudgetFormValues } from "@/app/actions/monthly-budgets/schema"
 import type { Category } from "@/app/actions/categories/types"
-import { centsToDecimal } from "@/utils/helpers/format-amount"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   defaultValues?: MonthlyBudgetFormValues
@@ -32,6 +32,7 @@ export function MonthlyBudgetForm({
   monthlyPeriodId,
   categories,
 }: Props) {
+  const { t } = useI18n()
   const form = useForm<MonthlyBudgetFormValues>({
     resolver: zodResolver(monthlyBudgetSchema),
     defaultValues: defaultValues || {
@@ -45,28 +46,30 @@ export function MonthlyBudgetForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description={`Ingresa los datos del ${
-            !isOnEdit ? "nuevo" : ""
-          } presupuesto mensual`}
-          title="Datos del presupuesto"
+          description={
+            !isOnEdit
+              ? t("monthlyPeriods.budgets.form.sectionDescNew")
+              : t("monthlyPeriods.budgets.form.sectionDescEdit")
+          }
+          title={t("monthlyPeriods.budgets.form.sectionTitle")}
         >
           <SelectField
             control={form.control}
-            description="Selecciona una categoría de gastos para el presupuesto (solo categorías de tipo gasto)"
-            label="Categoría"
+            description={t("monthlyPeriods.budgets.form.category.desc")}
+            label={t("monthlyPeriods.budgets.form.category.label")}
             name="categoryId"
             options={categories.map((category) => ({
               label: category.name,
               value: category.id,
             }))}
-            placeholder="Selecciona una categoría"
+            placeholder={t("monthlyPeriods.budgets.form.category.placeholder")}
           />
 
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el monto presupuestado (debe ser mayor a 0)"
-            label="Monto Presupuestado"
+            description={t("monthlyPeriods.budgets.form.budgeted.desc")}
+            label={t("monthlyPeriods.budgets.form.budgeted.label")}
             name="budgetedAmount"
             placeholder="0.00"
           />
@@ -79,10 +82,10 @@ export function MonthlyBudgetForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

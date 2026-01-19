@@ -3,10 +3,12 @@ import { findManyAccounts } from "@/app/actions/accounts"
 import { NewTransactionForm } from "../../../expenses/components/new-transaction-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
+import { getServerI18n } from "@/utils/i18n/server"
 
 const BACK_TO_HREF = "/dashboard/transactions/income"
 
 export default async function NewTransactionIncomePage() {
+  const { t } = await getServerI18n()
   // Cargar categorías de tipo INCOME
   const categoriesResult = await findManyCategories({
     page: 1,
@@ -26,9 +28,9 @@ export default async function NewTransactionIncomePage() {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a ingresos",
+          label: t("transactions.backToIncome"),
         }}
-        title="Nuevo ingreso"
+        title={t("transactions.newIncomeTitle")}
       />
       <NewTransactionForm
         backToHref={BACK_TO_HREF}

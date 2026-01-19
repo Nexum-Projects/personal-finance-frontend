@@ -8,6 +8,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Transfer } from "@/app/actions/transfers"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   transfer: Transfer
@@ -16,23 +17,24 @@ type Props = {
 export function TransfersRowActions({ transfer }: Props) {
   const router = useRouter()
   const { confirmationDialog } = useConfirmationDialogStore()
+  const { t } = useI18n()
 
   const handleRemove = () => {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas eliminar la transferencia de{" "}
-          <span className="text-foreground font-medium">{transfer.fromAccount.name}</span> a{" "}
-          <span className="text-foreground font-medium">{transfer.toAccount.name}</span>?
-          Esta acción no se puede deshacer.
+          {t("transfers.confirmDelete.title")}{" "}
+          <span className="text-foreground font-medium">{transfer.fromAccount.name}</span> →{" "}
+          <span className="text-foreground font-medium">{transfer.toAccount.name}</span>.{" "}
+          {t("transfers.confirmDelete.description")}
         </>
       ),
       onConfirm: onRemove,
       actions: {
-        confirm: "Sí, eliminar transferencia",
-        cancel: "Cancelar",
+        confirm: t("transfers.confirmDelete.confirm"),
+        cancel: t("transfers.confirmDelete.cancel"),
       },
-      title: "¿Eliminar transferencia?",
+      title: t("transfers.confirmDelete.title"),
     })
   }
 
@@ -47,7 +49,7 @@ export function TransfersRowActions({ transfer }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al eliminar la transferencia"
+          result.errors[0] || t("transfers.errorDelete")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -55,8 +57,8 @@ export function TransfersRowActions({ transfer }: Props) {
         return
       }
 
-      toast.success("Transferencia eliminada", {
-        description: "La transferencia ha sido eliminada exitosamente.",
+      toast.success(t("toast.transfer.deleted"), {
+        description: t("toast.transfer.deleted.desc"),
       })
       router.refresh()
     } catch (error) {
@@ -72,14 +74,14 @@ export function TransfersRowActions({ transfer }: Props) {
   return (
     <DataTableRowActions>
       <DataTableRowActions.Item href={`/dashboard/transfers/${transfer.id}`} type="link">
-        Ver transferencia
+        {t("transfers.actions.view")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Item href={`/dashboard/transfers/${transfer.id}/edit`} type="link">
-        Editar transferencia
+        {t("transfers.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
-        Eliminar transferencia
+        {t("transfers.actions.delete")}
       </DataTableRowActions.Item>
     </DataTableRowActions>
   )

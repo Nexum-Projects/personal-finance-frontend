@@ -9,6 +9,7 @@ import type { TransferFormValues } from "@/app/actions/transfers/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Account } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   accounts: Account[]
@@ -18,6 +19,7 @@ type Props = {
 export function NewTransferForm({ accounts, backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: TransferFormValues) => {
     setIsSubmitting(true)
@@ -33,7 +35,7 @@ export function NewTransferForm({ accounts, backToHref }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear la transferencia"
+          result.errors[0] || t("transfers.errorCreate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -42,11 +44,11 @@ export function NewTransferForm({ accounts, backToHref }: Props) {
         return
       }
 
-      toast.success("Transferencia creada", {
-        description: "La transferencia ha sido creada exitosamente",
+      toast.success(t("toast.transfer.created"), {
+        description: t("toast.transfer.created.desc"),
       })
 
-      router.push("/dashboard/transfers")
+      router.push(backToHref)
       router.refresh()
     } catch (error) {
       handleAuthError(error, router)

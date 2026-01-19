@@ -19,12 +19,13 @@ import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
 import { AccountsFilters } from "@/components/filters/accounts-filters"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 // Formateo de fecha simple sin dependencias externas
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, locale: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -52,7 +53,8 @@ interface AccountsTableProps {
 }
 
 export function AccountsTable({ accounts, meta }: AccountsTableProps) {
-  const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { preferredCurrency, timeZoneIana, preferredLanguage, locale } = useUserPreferences()
+  const { t } = useI18n()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -120,7 +122,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar cuentas..."
+            placeholder={t("accounts.searchPlaceholder")}
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -140,7 +142,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   onClick={() => handleSort("name")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Nombre
+                  {t("accounts.table.name")}
                   {getSortIcon("name")}
                 </Button>
               </TableHead>
@@ -150,7 +152,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   onClick={() => handleSort("accountType")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Tipo
+                  {t("accounts.table.type")}
                   {getSortIcon("accountType")}
                 </Button>
               </TableHead>
@@ -160,7 +162,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   onClick={() => handleSort("currentBalanceCents")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Balance
+                  {t("accounts.table.balance")}
                   {getSortIcon("currentBalanceCents")}
                 </Button>
               </TableHead>
@@ -170,12 +172,12 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
                   onClick={() => handleSort("updatedAt")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Última Actualización
+                  {t("accounts.table.updatedAt")}
                   {getSortIcon("updatedAt")}
                 </Button>
               </TableHead>
               <TableHead className="w-16 text-center">
-                Acciones
+                {t("accounts.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -183,18 +185,18 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
             {accounts.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="h-24 text-center">
-                  No se encontraron cuentas
+                  {t("accounts.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (
               accounts.map((account) => (
                 <TableRow key={account.id}>
                   <TableCell className="font-medium">{account.name}</TableCell>
-                  <TableCell>{humanizeAccountType(account.accountType)}</TableCell>
+                  <TableCell>{humanizeAccountType(account.accountType, preferredLanguage)}</TableCell>
                   <TableCell>
                     {formatAmount(account.currentBalanceCents, preferredCurrency)}
                   </TableCell>
-                  <TableCell>{formatDate(account.updatedAt, timeZoneIana)}</TableCell>
+                  <TableCell>{formatDate(account.updatedAt, locale, timeZoneIana)}</TableCell>
                   <TableCell className="text-center">
                     <AccountsRowActions account={account} />
                   </TableCell>
@@ -208,9 +210,12 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {accounts.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
-          {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} cuentas
+          {t("pagination.showing", {
+            from: accounts.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
+            to: Math.min(currentPage * meta.limit, meta.totalObjects),
+            total: meta.totalObjects,
+            entity: t("accounts.title").toLowerCase(),
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -219,10 +224,10 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || isPending}
           >
-            Anterior
+            {t("pagination.prev")}
           </Button>
           <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
@@ -230,7 +235,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= meta.totalPages || isPending}
           >
-            Siguiente
+            {t("pagination.next")}
           </Button>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Transaction } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   transaction: Transaction
@@ -19,24 +20,25 @@ type Props = {
 export function TransactionsRowActions({ transaction, categoryType, basePath }: Props) {
   const router = useRouter()
   const { confirmationDialog } = useConfirmationDialogStore()
+  const { t } = useI18n()
 
   const handleRemove = () => {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas eliminar la transacción{" "}
+          {t("transactions.confirmDelete.title")}{" "}
           <span className="text-foreground font-medium">
             {transaction.description}
           </span>
-          ? Esta acción no se puede deshacer.
+          ? {t("transactions.confirmDelete.description")}
         </>
       ),
       onConfirm: onRemove,
       actions: {
-        confirm: "Sí, eliminar transacción",
-        cancel: "Cancelar",
+        confirm: t("transactions.confirmDelete.confirm"),
+        cancel: t("transactions.confirmDelete.cancel"),
       },
-      title: "¿Eliminar transacción?",
+      title: t("transactions.confirmDelete.title"),
     })
   }
 
@@ -54,7 +56,7 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al eliminar la transacción"
+          result.errors[0] || t("transactions.errorDelete")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -62,14 +64,10 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
         return
       }
 
-      toast.success("Transacción eliminada", {
+      toast.success(t("toast.transaction.deleted"), {
         description: (
           <>
-            La transacción{" "}
-            <span className="text-foreground font-medium">
-              {transaction.description}
-            </span>{" "}
-            ha sido eliminada exitosamente.
+            {t("toast.transaction.deleted.desc", { description: transaction.description })}
           </>
         ),
       })
@@ -91,13 +89,13 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
         href={`${basePath}/${transaction.id}`}
         type="link"
       >
-        Ver transacción
+        {t("transactions.actions.view")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Item
         href={`${basePath}/${transaction.id}/edit`}
         type="link"
       >
-        Editar transacción
+        {t("transactions.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       <DataTableRowActions.Item
@@ -105,7 +103,7 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
         variant="destructive"
         onClick={handleRemove}
       >
-        Eliminar transacción
+        {t("transactions.actions.delete")}
       </DataTableRowActions.Item>
     </DataTableRowActions>
   )

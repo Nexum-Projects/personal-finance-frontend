@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recha
 import type { CategoryBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 interface PieChartProps {
   data: CategoryBreakdown[]
@@ -24,6 +25,7 @@ const COLORS = [
 
 export function CategoryPieChart({ data, title }: PieChartProps) {
   const { preferredCurrency } = useUserPreferences()
+  const { t } = useI18n()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     name: item.categoryName,
@@ -46,7 +48,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
             {formatCurrency(data.value)} ({data.payload.percentage.toFixed(1)}%)
           </p>
           <p className="text-xs text-muted-foreground">
-            {data.payload.count} transacciones
+            {t("common.transactionsCount", { count: data.payload.count })}
           </p>
         </div>
       )
@@ -107,7 +109,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
                           {formatCurrency(entry.value)} ({entry.percentage.toFixed(1)}%)
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          {entry.count} transacciones
+                          {t("common.transactionsCount", { count: entry.count })}
                         </div>
                       </div>
                     </div>

@@ -6,6 +6,7 @@ import { findManyAccounts } from "@/app/actions/accounts"
 import { EditTransactionForm } from "../../../../expenses/components/edit-transaction-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -15,17 +16,18 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
 
   const transaction = await findTransaction(id)
 
   if (transaction.status === "error" || !transaction.data) {
     return {
-      title: "Transacción no encontrada",
+      title: t("transactions.detail.notFound"),
     }
   }
 
   return {
-    title: `Editar ${transaction.data.description}`,
+    title: t("transactions.editTitle", { description: transaction.data.description }),
   }
 }
 
@@ -33,6 +35,7 @@ const BACK_TO_HREF = "/dashboard/transactions/expenses"
 
 export default async function EditTransactionExpensePage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
 
   const transaction = await findTransaction(id)
 
@@ -61,9 +64,9 @@ export default async function EditTransactionExpensePage(props: Props) {
       <PageHeader
         backTo={{
           href: `${BACK_TO_HREF}/${id}`,
-          label: "Regresar al detalle",
+          label: t("transactions.backToDetail"),
         }}
-        title={`Editar ${trans.description}`}
+        title={t("transactions.editTitle", { description: trans.description })}
       />
       <EditTransactionForm
         transaction={trans}

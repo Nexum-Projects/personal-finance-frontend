@@ -24,6 +24,7 @@ export default async function registerUser(
       email: payload.email,
       password: payload.password,
       preferredCurrency: payload.preferredCurrency,
+      preferredLanguage: payload.preferredLanguage,
       timeZone: payload.timeZone,
     })
 

@@ -12,6 +12,9 @@ import { MonthlyBudgetsTable } from "./components/monthly-budgets-table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { getServerI18n } from "@/utils/i18n/server"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { languageToLocale } from "@/utils/user-preferences"
 
 type Props = {
   params: Promise<{
@@ -28,22 +31,29 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const period = await findMonthlyPeriod(id)
 
   if (period.status === "error" || !period.data) {
     return {
-      title: "Presupuesto mensual no encontrado",
+      title: t("monthlyPeriods.detail.notFound"),
     }
   }
 
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
+
   return {
-    title: `Presupuestos - ${humanizeMonth(period.data.month)}`,
+    title: t("monthlyPeriods.budgets.metaTitle", { month: humanizeMonth(period.data.month, locale) }),
   }
 }
 
 export default async function MonthlyPeriodBudgetsPage(props: Props) {
   const { id } = await props.params
   const searchParams = await props.searchParams
+  const { t } = await getServerI18n()
+  const preferences = await getSessionPreferences()
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const period = await findMonthlyPeriod(id)
   if (period.status === "error" || !period.data) {
@@ -74,27 +84,27 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
         <PageHeader
           backTo={{
             href: `/dashboard/monthly-periods/${id}`,
-            label: "Regresar al detalle",
+            label: t("monthlyPeriods.budgets.backToDetail"),
           }}
           tabs={{
             general: {
               href: `/dashboard/monthly-periods/${id}`,
-              label: "General",
+              label: t("monthlyPeriods.tabs.general"),
             },
             budgets: {
               href: `/dashboard/monthly-periods/${id}/budgets`,
-              label: "Presupuestos",
+              label: t("monthlyPeriods.tabs.budgets"),
             },
           }}
-          title={humanizeMonth(period.data.month)}
+          title={humanizeMonth(period.data.month, locale)}
         />
         <Card>
           <CardHeader>
-            <CardTitle>Error</CardTitle>
+            <CardTitle>{t("monthlyPeriods.errorTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-destructive">
-              {budgetsResult.errors[0]?.message || "Error al cargar los presupuestos"}
+              {budgetsResult.errors[0]?.message || t("monthlyPeriods.budgets.errorLoad")}
             </p>
           </CardContent>
         </Card>
@@ -109,45 +119,47 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
       <PageHeader
         backTo={{
           href: `/dashboard/monthly-periods/${id}`,
-          label: "Regresar al detalle",
+          label: t("monthlyPeriods.budgets.backToDetail"),
         }}
         tabs={{
           general: {
             href: `/dashboard/monthly-periods/${id}`,
-            label: "General",
+            label: t("monthlyPeriods.tabs.general"),
           },
           budgets: {
             href: `/dashboard/monthly-periods/${id}/budgets`,
-            label: "Presupuestos",
+            label: t("monthlyPeriods.tabs.budgets"),
           },
         }}
-        title={humanizeMonth(period.data.month)}
+        title={humanizeMonth(period.data.month, locale)}
       />
 
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground">Presupuestos por Categoría</h2>
+          <h2 className="text-2xl font-bold text-foreground">
+            {t("monthlyPeriods.budgets.sectionTitle")}
+          </h2>
           <p className="text-muted-foreground mt-1">
-            Gestiona los presupuestos mensuales por categoría
+            {t("monthlyPeriods.budgets.sectionSubtitle")}
           </p>
         </div>
         <Button asChild>
           <Link href={`/dashboard/monthly-periods/${id}/budgets/new`}>
             <Plus className="mr-2 h-4 w-4" />
-            Nuevo presupuesto
+            {t("monthlyPeriods.budgets.actions.new")}
           </Link>
         </Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Presupuestos</CardTitle>
+          <CardTitle>{t("monthlyPeriods.budgets.listTitle")}</CardTitle>
           <CardDescription>
-            Aquí podrás ver y gestionar todos los presupuestos de este presupuesto mensual
+            {t("monthlyPeriods.budgets.listSubtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense fallback={<div>Cargando...</div>}>
+          <Suspense fallback={<div>{t("common.loading")}</div>}>
             <MonthlyBudgetsTable
               monthlyPeriodId={id}
               budgets={budgets}

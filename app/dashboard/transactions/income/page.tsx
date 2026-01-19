@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   searchParams: Promise<{
@@ -26,6 +27,7 @@ type Props = {
 }
 
 export default async function TransactionsIncomePage(props: Props) {
+  const { t } = await getServerI18n()
   const searchParams = await props.searchParams
 
   const parsedParams = parseSearchParams(searchParams, {
@@ -63,16 +65,16 @@ export default async function TransactionsIncomePage(props: Props) {
     return (
       <PageContainer>
         <PageHeader
-          title="Ingresos"
-          description="Gestiona tus ingresos"
+          title={t("transactions.income.title")}
+          description={t("transactions.income.subtitle")}
         />
         <Card>
           <CardHeader>
-            <CardTitle>Error</CardTitle>
+            <CardTitle>{t("transactions.errorTitle")}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-destructive">
-              {result.errors[0]?.message || "Error al cargar los ingresos"}
+              {result.errors[0]?.message || t("transactions.income.errorLoad")}
             </p>
           </CardContent>
         </Card>
@@ -85,27 +87,27 @@ export default async function TransactionsIncomePage(props: Props) {
   return (
     <PageContainer>
       <PageHeader
-        title="Ingresos"
-        description="Gestiona tus ingresos"
+        title={t("transactions.income.title")}
+        description={t("transactions.income.subtitle")}
         tabs={{
           all: {
             href: "/dashboard/transactions",
-            label: "Todas",
+            label: t("transactions.tabs.all"),
           },
           income: {
             href: "/dashboard/transactions/income",
-            label: "Ingresos",
+            label: t("transactions.tabs.income"),
           },
           expenses: {
             href: "/dashboard/transactions/expenses",
-            label: "Gastos",
+            label: t("transactions.tabs.expenses"),
           },
         }}
         actions={
           <Button asChild>
             <Link href="/dashboard/transactions/income/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nuevo ingreso
+              {t("transactions.actions.newIncome")}
             </Link>
           </Button>
         }
@@ -113,13 +115,13 @@ export default async function TransactionsIncomePage(props: Props) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Ingresos</CardTitle>
+          <CardTitle>{t("transactions.income.listTitle")}</CardTitle>
           <CardDescription>
-            Aquí podrás ver y gestionar todos tus ingresos
+            {t("transactions.income.listSubtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense fallback={<div>Cargando...</div>}>
+          <Suspense fallback={<div>{t("common.loading")}</div>}>
             <TransactionsTable 
               transactions={transactions} 
               meta={meta} 

@@ -8,6 +8,7 @@ import { MonthlyPeriodForm } from "./monthly-period-form"
 import type { MonthlyPeriodFormValues } from "@/app/actions/monthly-periods/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   backToHref: string
@@ -16,6 +17,7 @@ type Props = {
 export function NewMonthlyPeriodForm({ backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: MonthlyPeriodFormValues) => {
     setIsSubmitting(true)
@@ -31,7 +33,7 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear el presupuesto mensual"
+          result.errors[0] || t("monthlyPeriods.errorCreate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -40,11 +42,9 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
         return
       }
 
-      toast.success("Presupuesto mensual creado", {
+      toast.success(t("toast.monthlyPeriod.created"), {
         description: (
-          <>
-            El presupuesto mensual ha sido creado exitosamente.
-          </>
+          <>{t("toast.monthlyPeriod.created.desc")}</>
         ),
       })
 

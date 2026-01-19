@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { Category } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   categories: Category[]
@@ -20,8 +21,9 @@ type Props = {
 export function CategoryFilter({
   categories,
   searchParamName = "categoryId",
-  label = "Categoría",
+  label,
 }: Props) {
+  const { t } = useI18n()
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -44,13 +46,13 @@ export function CategoryFilter({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={searchParamName}>{label}</Label>
+      <Label htmlFor={searchParamName}>{label ?? t("filters.category.label")}</Label>
       <Select value={value || "all"} onValueChange={handleChange}>
         <SelectTrigger id={searchParamName}>
-          <SelectValue placeholder="Selecciona una categoría" />
+          <SelectValue placeholder={t("filters.category.placeholder")} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">Todas las categorías</SelectItem>
+          <SelectItem value="all">{t("filters.category.all")}</SelectItem>
           {categories.map((category) => (
             <SelectItem key={category.id} value={category.id}>
               {category.name}

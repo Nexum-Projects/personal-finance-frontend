@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Eye, EyeOff, Loader2, Save } from "lucide-react"
@@ -20,13 +20,7 @@ import {
 } from "@/app/actions/auth/change-password-schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
-
-const formSchema = changePasswordSchema.extend({
-  confirmNewPassword: z.string().min(8, "Confirma tu nueva contraseña"),
-}).refine((data) => data.newPassword === data.confirmNewPassword, {
-  message: "Las contraseñas no coinciden",
-  path: ["confirmNewPassword"],
-})
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type FormValues = ChangePasswordFormValues & { confirmNewPassword: string }
 
@@ -38,6 +32,18 @@ export function ChangePasswordForm({ backToHref }: Props) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const { t } = useI18n()
+
+  const formSchema = useMemo(() => {
+    return changePasswordSchema
+      .extend({
+        confirmNewPassword: z.string().min(8, t("profile.password.validation.confirmRequired")),
+      })
+      .refine((data) => data.newPassword === data.confirmNewPassword, {
+        message: t("profile.password.validation.mismatch"),
+        path: ["confirmNewPassword"],
+      })
+  }, [t])
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -60,13 +66,15 @@ export function ChangePasswordForm({ backToHref }: Props) {
         const isAuthError = handleAuthError(result.errors[0], router)
         if (isAuthError) return
 
-        const humanizedError = parseApiError(result.errors[0] || "Error al cambiar contraseña")
+        const humanizedError = parseApiError(
+          result.errors[0] || t("profile.password.error.changePassword")
+        )
         toast.error(humanizedError.title, { description: humanizedError.description })
         return
       }
 
-      toast.success("Contraseña actualizada", {
-        description: "Tu contraseña fue actualizada correctamente.",
+      toast.success(t("profile.password.toast.updated.title"), {
+        description: t("profile.password.toast.updated.description"),
       })
 
       router.push(backToHref)
@@ -84,15 +92,15 @@ export function ChangePasswordForm({ backToHref }: Props) {
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          title="Seguridad"
-          description="Tu nueva contraseña debe ser diferente a la anterior"
+          title={t("profile.password.form.sectionTitle")}
+          description={t("profile.password.form.sectionDescription")}
         >
           <div className="relative">
             <TextField
               control={form.control}
-              label="Contraseña actual"
+              label={t("profile.password.form.current.label")}
               name="currentPassword"
-              placeholder="Ingresa tu contraseña actual"
+              placeholder={t("profile.password.form.current.placeholder")}
               type={showPassword ? "text" : "password"}
               disabled={isSubmitting}
               autoComplete="current-password"
@@ -102,9 +110,9 @@ export function ChangePasswordForm({ backToHref }: Props) {
           <div className="relative">
             <TextField
               control={form.control}
-              label="Nueva contraseña"
+              label={t("profile.password.form.new.label")}
               name="newPassword"
-              placeholder="Ingresa tu nueva contraseña"
+              placeholder={t("profile.password.form.new.placeholder")}
               type={showPassword ? "text" : "password"}
               disabled={isSubmitting}
               autoComplete="new-password"
@@ -114,9 +122,9 @@ export function ChangePasswordForm({ backToHref }: Props) {
           <div className="relative">
             <TextField
               control={form.control}
-              label="Confirmar nueva contraseña"
+              label={t("profile.password.form.confirm.label")}
               name="confirmNewPassword"
-              placeholder="Confirma tu nueva contraseña"
+              placeholder={t("profile.password.form.confirm.placeholder")}
               type={showPassword ? "text" : "password"}
               disabled={isSubmitting}
               autoComplete="new-password"
@@ -131,11 +139,11 @@ export function ChangePasswordForm({ backToHref }: Props) {
           >
             {showPassword ? (
               <span className="inline-flex items-center gap-2">
-                <EyeOff className="h-4 w-4" /> Ocultar contraseñas
+                <EyeOff className="h-4 w-4" /> {t("profile.password.form.toggle.hide")}
               </span>
             ) : (
               <span className="inline-flex items-center gap-2">
-                <Eye className="h-4 w-4" /> Mostrar contraseñas
+                <Eye className="h-4 w-4" /> {t("profile.password.form.toggle.show")}
               </span>
             )}
           </button>
@@ -148,10 +156,10 @@ export function ChangePasswordForm({ backToHref }: Props) {
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

@@ -1,11 +1,13 @@
 import type { UserRole } from "@/app/actions/users/types"
+import type { PreferredLanguage } from "@/utils/user-preferences"
 
-export function humanizeRole(role: UserRole): string {
-  const ROLE_MAP: Record<UserRole, string> = {
-    USER: "Usuario",
-    ADMIN: "Administrador",
-  }
+const ROLE_MAP: Record<PreferredLanguage, Record<UserRole, string>> = {
+  ES: { USER: "Usuario", ADMIN: "Administrador" },
+  EN: { USER: "User", ADMIN: "Administrator" },
+  PT: { USER: "Usuário", ADMIN: "Administrador" },
+}
 
-  return ROLE_MAP[role] || role
+export function humanizeRole(role: UserRole, language: PreferredLanguage = "ES"): string {
+  return ROLE_MAP[language]?.[role] || role
 }
 

@@ -3,6 +3,7 @@ import { findTransfer } from "@/app/actions/transfers"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { EditTransferForm } from "../components/edit-transfer-form"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -12,6 +13,7 @@ type Props = {
 
 export default async function EditTransferPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
 
   const transferResult = await findTransfer(id)
 
@@ -26,9 +28,9 @@ export default async function EditTransferPage(props: Props) {
       <PageHeader
         backTo={{
           href: `/dashboard/transfers/${id}`,
-          label: "Regresar a transferencia",
+          label: t("transfers.edit.backToDetail"),
         }}
-        title="Editar Transferencia"
+        title={t("transfers.edit.title")}
       />
       <EditTransferForm
         transfer={transfer}

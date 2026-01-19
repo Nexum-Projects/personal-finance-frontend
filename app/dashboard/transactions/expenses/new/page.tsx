@@ -3,10 +3,12 @@ import findManyAccounts from "@/app/actions/accounts/find-many"
 import { NewTransactionForm } from "../../../expenses/components/new-transaction-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
+import { getServerI18n } from "@/utils/i18n/server"
 
 const BACK_TO_HREF = "/dashboard/transactions/expenses"
 
 export default async function NewTransactionExpensePage() {
+  const { t } = await getServerI18n()
   // Cargar categorías de tipo EXPENSE
   const categoriesResult = await findManyCategories({
     page: 1,
@@ -26,9 +28,9 @@ export default async function NewTransactionExpensePage() {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a gastos",
+          label: t("transactions.backToExpenses"),
         }}
-        title="Nuevo gasto"
+        title={t("transactions.newExpenseTitle")}
       />
       <NewTransactionForm
         backToHref={BACK_TO_HREF}

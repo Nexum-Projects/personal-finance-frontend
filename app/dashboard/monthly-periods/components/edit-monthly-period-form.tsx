@@ -15,6 +15,9 @@ import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { monthlyPeriodUpdateSchema, type MonthlyPeriodUpdateFormValues } from "@/app/actions/monthly-periods/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
 
 type Props = {
   defaultValues: MonthlyPeriodUpdateFormValues
@@ -29,6 +32,8 @@ export function EditMonthlyPeriodForm({
 }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
+  const { preferredCurrency } = useUserPreferences()
 
   const form = useForm<MonthlyPeriodUpdateFormValues>({
     resolver: zodResolver(monthlyPeriodUpdateSchema),
@@ -52,7 +57,7 @@ export function EditMonthlyPeriodForm({
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar el presupuesto mensual"
+          result.errors[0] || t("monthlyPeriods.errorUpdate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -61,8 +66,8 @@ export function EditMonthlyPeriodForm({
         return
       }
 
-      toast.success("Presupuesto mensual actualizado", {
-        description: "La meta de ahorro ha sido actualizada exitosamente.",
+      toast.success(t("monthlyPeriods.editInitialSaving.toast.updatedTitle"), {
+        description: t("monthlyPeriods.editInitialSaving.toast.updatedDesc"),
       })
 
       router.push(backToHref)
@@ -82,14 +87,16 @@ export function EditMonthlyPeriodForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description="Actualiza el ahorro inicial para este presupuesto mensual"
-          title="Ahorro Inicial"
+          description={t("monthlyPeriods.editInitialSaving.form.subtitle")}
+          title={t("monthlyPeriods.editInitialSaving.form.title")}
         >
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el ahorro inicial para este período (en quetzales)"
-            label="Ahorro Inicial"
+            description={t("monthlyPeriods.editInitialSaving.form.amount.desc", {
+              currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
+            })}
+            label={t("monthlyPeriods.editInitialSaving.form.title")}
             name="initialSavingCents"
             placeholder="0.00"
           />
@@ -102,10 +109,10 @@ export function EditMonthlyPeriodForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

@@ -1,22 +1,24 @@
-import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
-import { PREFERRED_CURRENCY_LABEL, timeZoneToIana } from "@/utils/user-preferences"
+import { PREFERRED_CURRENCY_LABEL, PREFERRED_LANGUAGE_LABEL, languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
 import { KeyRound, Pencil } from "lucide-react"
+import { getServerI18n } from "@/utils/i18n/server"
+import type { Metadata } from "next"
 
-export const metadata: Metadata = {
-  title: "Mi perfil",
+export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await getServerI18n()
+  return { title: t("profile.meta.title") }
 }
 
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, locale: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -31,6 +33,7 @@ function formatDate(dateString: string, timeZone: string): string {
 }
 
 export default async function ProfilePage() {
+  const { t, language } = await getServerI18n()
   const user = await getCurrentUser()
 
   // Si no hay usuario, mostrar 404
@@ -40,83 +43,88 @@ export default async function ProfilePage() {
   }
 
   const timeZoneIana = timeZoneToIana(user.timeZone)
+  const locale = languageToLocale(user.preferredLanguage)
 
   return (
     <PageContainer>
       <PageHeader
         backTo={{
           href: "/dashboard",
-          label: "Regresar al dashboard",
+          label: t("profile.backToDashboard"),
         }}
         title={user.username}
         actions={{
           edit: {
             type: "link",
             href: "/dashboard/profile/edit",
-            label: "Editar usuario",
+            label: t("profile.actions.editUser"),
             icon: Pencil,
           },
           changePassword: {
             type: "link",
             href: "/dashboard/profile/change-password",
-            label: "Cambiar contraseña",
+            label: t("profile.actions.changePassword"),
             icon: KeyRound,
             variant: "outline",
           },
         }}
       />
       <PageSection
-        description="Información personal del usuario"
+        description={t("profile.section.description")}
         fields={{
           id: {
-            label: "Identificador",
+            label: t("profile.fields.id"),
             value: user.id,
             classNames: {
               value: cn("font-mono"),
             },
           },
           username: {
-            label: "Nombre de usuario",
+            label: t("profile.fields.username"),
             value: user.username,
           },
           email: {
-            label: "Correo electrónico",
+            label: t("profile.fields.email"),
             value: user.email,
           },
           role: {
-            label: "Rol",
-            value: humanizeRole(user.role),
+            label: t("profile.fields.role"),
+            value: humanizeRole(user.role, language),
           },
           preferredCurrency: {
-            label: "Moneda preferida",
+            label: t("profile.fields.preferredCurrency"),
             value: PREFERRED_CURRENCY_LABEL[user.preferredCurrency],
           },
           timeZone: {
-            label: "Zona horaria",
+            label: t("profile.fields.timeZone"),
             value: timeZoneIana,
           },
+          preferredLanguage: {
+            label: t("profile.fields.preferredLanguage"),
+            value: PREFERRED_LANGUAGE_LABEL[user.preferredLanguage],
+          },
           isActive: {
-            label: "Estado",
+            label: t("profile.fields.status"),
             value: user.isActive ? (
               <span className="text-emerald-600 dark:text-emerald-400">
-                Activo
+                {t("profile.status.active")}
               </span>
             ) : (
               <span className="text-red-600 dark:text-red-400">
-                Inactivo
+                {t("profile.status.inactive")}
               </span>
             ),
           },
           createdAt: {
-            label: "Fecha de creación",
-            value: formatDate(user.createdAt, timeZoneIana),
+            label: t("profile.fields.createdAt"),
+            value: formatDate(user.createdAt, locale, timeZoneIana),
           },
           updatedAt: {
-            label: "Última actualización",
-            value: formatDate(user.updatedAt, timeZoneIana),
+            label: t("profile.fields.updatedAt"),
+            value: formatDate(user.updatedAt, locale, timeZoneIana),
           },
         }}
-        title="Datos generales"
+        title={t("profile.section.title")}
       />
     </PageContainer>
   )

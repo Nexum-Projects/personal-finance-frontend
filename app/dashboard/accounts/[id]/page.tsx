@@ -9,7 +9,8 @@ import { DetailAccountActions } from "./components/detail-account-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
-import { timeZoneToIana } from "@/utils/user-preferences"
+import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
+import { getMessages } from "@/utils/i18n/messages"
 
 type Props = {
   params: Promise<{
@@ -19,11 +20,13 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const preferences = await getSessionPreferences()
+  const messages = getMessages(preferences.preferredLanguage)
   const account = await findAccount(id)
 
   if (account.status === "error" || !account.data) {
     return {
-      title: "Cuenta no encontrada",
+      title: messages["accounts.detail.notFound"],
     }
   }
 
@@ -32,10 +35,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, locale: string, timeZone: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -53,6 +56,9 @@ export default async function AccountDetailPage(props: Props) {
   const { id } = await props.params
   const preferences = await getSessionPreferences()
   const timeZoneIana = timeZoneToIana(preferences.timeZone)
+  const locale = languageToLocale(preferences.preferredLanguage)
+  const messages = getMessages(preferences.preferredLanguage)
+  const t = (key: keyof typeof messages) => messages[key]
 
   const account = await findAccount(id)
   if (account.status === "error" || !account.data) {
@@ -67,43 +73,43 @@ export default async function AccountDetailPage(props: Props) {
         actions={<DetailAccountActions account={acc} />}
         backTo={{
           href: "/dashboard/accounts",
-          label: "Regresar a cuentas",
+          label: t("accounts.backToList"),
         }}
         title={acc.name}
       />
 
       <PageSection
-        description="Información general de la cuenta"
+        description={t("accounts.detail.sectionSubtitle")}
         fields={{
           id: {
-            label: "Identificador",
+            label: t("accounts.detail.id"),
             value: acc.id,
             classNames: {
               value: cn("font-mono"),
             },
           },
           name: {
-            label: "Nombre",
+            label: t("accounts.detail.name"),
             value: acc.name,
           },
           accountType: {
-            label: "Tipo",
-            value: humanizeAccountType(acc.accountType),
+            label: t("accounts.detail.type"),
+            value: humanizeAccountType(acc.accountType, preferences.preferredLanguage),
           },
           currentBalance: {
-            label: "Balance actual",
+            label: t("accounts.detail.currentBalance"),
             value: formatAmount(acc.currentBalanceCents, preferences.preferredCurrency),
           },
           createdAt: {
-            label: "Fecha de creación",
-            value: formatDate(acc.createdAt, timeZoneIana),
+            label: t("accounts.detail.createdAt"),
+            value: formatDate(acc.createdAt, locale, timeZoneIana),
           },
           updatedAt: {
-            label: "Última actualización",
-            value: formatDate(acc.updatedAt, timeZoneIana),
+            label: t("accounts.detail.updatedAt"),
+            value: formatDate(acc.updatedAt, locale, timeZoneIana),
           },
         }}
-        title="Datos generales"
+        title={t("accounts.detail.sectionTitle")}
       />
     </PageContainer>
   )

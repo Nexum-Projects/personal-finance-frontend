@@ -7,6 +7,8 @@ import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
 import { DetailCategoryActions } from "./components/detail-category-actions"
+import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
+import { getMessages } from "@/utils/i18n/messages"
 
 type Props = {
   params: Promise<{
@@ -16,12 +18,14 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const preferences = await getSessionPreferences()
+  const messages = getMessages(preferences.preferredLanguage)
 
   const category = await findCategory(id)
 
   if (category.status === "error" || !category.data) {
     return {
-      title: "Categoría no encontrada",
+      title: messages["categories.detail.notFound"],
     }
   }
 
@@ -46,6 +50,9 @@ function formatDate(dateString: string): string {
 
 export default async function CategoryDetailPage(props: Props) {
   const { id } = await props.params
+  const preferences = await getSessionPreferences()
+  const messages = getMessages(preferences.preferredLanguage)
+  const t = (key: keyof typeof messages) => messages[key]
 
   const category = await findCategory(id)
 
@@ -63,50 +70,50 @@ export default async function CategoryDetailPage(props: Props) {
         actions={<DetailCategoryActions category={cat} />}
         backTo={{
           href: "/dashboard/categories",
-          label: "Regresar a categorías",
+          label: t("categories.backToList"),
         }}
         title={cat.name}
       />
       <PageSection
-        description="Información general de la categoría"
+        description={t("categories.detail.sectionSubtitle")}
         fields={{
           id: {
-            label: "Identificador",
+            label: t("categories.detail.id"),
             value: cat.id,
             classNames: {
               value: cn("font-mono"),
             },
           },
           name: {
-            label: "Nombre",
+            label: t("categories.detail.name"),
             value: cat.name,
           },
           categoryType: {
-            label: "Tipo de Categoría",
-            value: humanizeCategoryType(cat.categoryType),
+            label: t("categories.detail.type"),
+            value: humanizeCategoryType(cat.categoryType, preferences.preferredLanguage),
           },
           isActive: {
-            label: "Estado",
+            label: t("categories.detail.status"),
             value: cat.isActive ? (
               <span className="text-emerald-600 dark:text-emerald-400">
-                Activa
+                {t("categories.detail.active")}
               </span>
             ) : (
               <span className="text-red-600 dark:text-red-400">
-                Inactiva
+                {t("categories.detail.inactive")}
               </span>
             ),
           },
           createdAt: {
-            label: "Fecha de creación",
+            label: t("categories.detail.createdAt"),
             value: formatDate(cat.createdAt),
           },
           updatedAt: {
-            label: "Última actualización",
+            label: t("categories.detail.updatedAt"),
             value: formatDate(cat.updatedAt),
           },
         }}
-        title="Datos generales"
+        title={t("categories.detail.sectionTitle")}
       />
     </PageContainer>
   )

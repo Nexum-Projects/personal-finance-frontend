@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import { PREFERRED_CURRENCIES, TIME_ZONES } from "@/utils/user-preferences"
+import { PREFERRED_CURRENCIES, PREFERRED_LANGUAGES, TIME_ZONES } from "@/utils/user-preferences"
 
 export const registerSchema = z.object({
   username: z.string().min(1, "El nombre de usuario es requerido").max(255, "Máximo 255 caracteres"),
@@ -15,6 +15,9 @@ export const registerSchema = z.object({
     .max(255, "Máximo 255 caracteres"),
   preferredCurrency: z.enum(PREFERRED_CURRENCIES, {
     message: "Selecciona una moneda válida",
+  }),
+  preferredLanguage: z.enum(PREFERRED_LANGUAGES, {
+    message: "Selecciona un idioma válido",
   }),
   timeZone: z.enum(TIME_ZONES, {
     message: "Selecciona una zona horaria válida",

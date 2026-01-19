@@ -10,6 +10,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import type { Category } from "@/app/actions/categories/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   category: Category
@@ -19,6 +20,7 @@ export function DetailCategoryActions({ category }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { confirmationDialog } = useConfirmationDialogStore()
   const router = useRouter()
+  const { t } = useI18n()
 
   const handleDeactivate = () => {
     confirmationDialog({
@@ -33,10 +35,10 @@ export function DetailCategoryActions({ category }: Props) {
       ),
       onConfirm: onDeactivate,
       actions: {
-        confirm: "Sí, desactivar categoría",
-        cancel: "Cancelar",
+        confirm: t("categories.confirmDeactivate.confirm"),
+        cancel: t("categories.confirmDeactivate.cancel"),
       },
-      title: "¿Desactivar categoría?",
+      title: t("categories.confirmDeactivate.title"),
     })
   }
 
@@ -66,16 +68,8 @@ export function DetailCategoryActions({ category }: Props) {
         return
       }
 
-      toast.success("Categoría desactivada", {
-        description: (
-          <>
-            La categoría{" "}
-            <span className="text-foreground font-medium">
-              {category.name}
-            </span>{" "}
-            ha sido desactivada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.category.deactivated"), {
+        description: t("toast.category.deactivated.desc", { name: category.name }),
       })
 
       router.push("/dashboard/categories")
@@ -98,14 +92,14 @@ export function DetailCategoryActions({ category }: Props) {
         edit: {
           icon: Edit,
           isLoading: loading,
-          label: "Editar categoría",
+          label: t("categories.actions.edit"),
           type: "link",
           href: `/dashboard/categories/${category.id}/edit`,
         },
         deactivate: {
           icon: Trash2,
           isLoading: loading,
-          label: "Desactivar categoría",
+          label: t("categories.actions.deactivate"),
           type: "button",
           variant: "destructive",
           onClick: handleDeactivate,

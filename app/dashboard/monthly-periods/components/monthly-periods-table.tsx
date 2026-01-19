@@ -17,21 +17,8 @@ import type { MonthlyPeriod } from "@/app/actions/monthly-periods/types"
 import { MonthlyPeriodsRowActions } from "./monthly-periods-row-actions"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { MonthlyPeriodsFilters } from "@/components/filters/monthly-periods-filters"
-
-// Formateo de fecha simple sin dependencias externas
-function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
-  } catch {
-    return dateString
-  }
-}
+import { useI18n } from "@/components/i18n/i18n-provider"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 
 type SortField = "year" | "month" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -47,6 +34,8 @@ interface MonthlyPeriodsTableProps {
 }
 
 export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTableProps) {
+  const { t } = useI18n()
+  const { locale, timeZoneIana } = useUserPreferences()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -108,13 +97,29 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
     )
   }
 
+  const formatDateTime = (dateString: string): string => {
+    try {
+      const d = new Date(dateString)
+      return new Intl.DateTimeFormat(locale, {
+        timeZone: timeZoneIana,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(d)
+    } catch {
+      return dateString
+    }
+  }
+
   return (
     <div className="space-y-4">
       {/* Search Bar and Filters */}
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar presupuestos mensuales..."
+            placeholder={t("monthlyPeriods.search.placeholder")}
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -134,7 +139,7 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
                   onClick={() => handleSort("year")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Año
+                  {t("monthlyPeriods.table.year")}
                   {getSortIcon("year")}
                 </Button>
               </TableHead>
@@ -144,23 +149,23 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
                   onClick={() => handleSort("month")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Mes
+                  {t("monthlyPeriods.table.month")}
                   {getSortIcon("month")}
                 </Button>
               </TableHead>
-              <TableHead>Estado</TableHead>
+              <TableHead>{t("monthlyPeriods.table.status")}</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("updatedAt")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Última Actualización
+                  {t("monthlyPeriods.table.updatedAt")}
                   {getSortIcon("updatedAt")}
                 </Button>
               </TableHead>
               <TableHead className="w-16 text-center">
-                Acciones
+                {t("monthlyPeriods.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -168,26 +173,26 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
             {monthlyPeriods.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={5} className="h-24 text-center">
-                  No se encontraron presupuestos mensuales
+                  {t("monthlyPeriods.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (
               monthlyPeriods.map((period) => (
                 <TableRow key={period.id}>
                   <TableCell className="font-medium">{period.year}</TableCell>
-                  <TableCell>{humanizeMonth(period.month)}</TableCell>
+                  <TableCell>{humanizeMonth(period.month, locale)}</TableCell>
                   <TableCell>
                     {period.isActive ? (
                       <span className="text-emerald-600 dark:text-emerald-400">
-                        Activo
+                        {t("monthlyPeriods.status.active")}
                       </span>
                     ) : (
                       <span className="text-red-600 dark:text-red-400">
-                        Inactivo
+                        {t("monthlyPeriods.status.inactive")}
                       </span>
                     )}
                   </TableCell>
-                  <TableCell>{formatDate(period.updatedAt)}</TableCell>
+                  <TableCell>{formatDateTime(period.updatedAt)}</TableCell>
                   <TableCell className="text-center">
                     <MonthlyPeriodsRowActions monthlyPeriod={period} />
                   </TableCell>
@@ -201,9 +206,12 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {monthlyPeriods.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
-          {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} presupuestos mensuales
+          {t("pagination.showing", {
+            from: monthlyPeriods.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
+            to: Math.min(currentPage * meta.limit, meta.totalObjects),
+            total: meta.totalObjects,
+            entity: t("monthlyPeriods.title").toLowerCase(),
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -212,10 +220,10 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || isPending}
           >
-            Anterior
+            {t("pagination.prev")}
           </Button>
           <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
@@ -223,7 +231,7 @@ export function MonthlyPeriodsTable({ monthlyPeriods, meta }: MonthlyPeriodsTabl
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= meta.totalPages || isPending}
           >
-            Siguiente
+            {t("pagination.next")}
           </Button>
         </div>
       </div>

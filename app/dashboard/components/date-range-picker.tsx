@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 interface DateRangePickerProps {
   startDate: string
@@ -16,10 +17,11 @@ export function DateRangePicker({
   onStartDateChange,
   onEndDateChange,
 }: DateRangePickerProps) {
+  const { t } = useI18n()
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
       <div className="flex-1">
-        <Label htmlFor="start-date">Fecha de inicio</Label>
+        <Label htmlFor="start-date">{t("dateRange.start")}</Label>
         <Input
           id="start-date"
           type="date"
@@ -29,7 +31,7 @@ export function DateRangePicker({
         />
       </div>
       <div className="flex-1">
-        <Label htmlFor="end-date">Fecha de fin</Label>
+        <Label htmlFor="end-date">{t("dateRange.end")}</Label>
         <Input
           id="end-date"
           type="date"

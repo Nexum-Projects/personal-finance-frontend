@@ -9,6 +9,7 @@ import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
 import { APP_VERSION } from "@/utils/app-version"
 import type { User } from "@/app/actions/users/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import {
   LayoutDashboard,
   FolderTree,
@@ -41,37 +42,37 @@ const handleLinkClick = (onClose?: () => void) => {
 
 const navigationItems = [
   {
-    name: "Dashboard",
+    nameKey: "nav.dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
   {
-    name: "Cuentas",
+    nameKey: "nav.accounts",
     href: "/dashboard/accounts",
     icon: Wallet,
   },
   {
-    name: "Categorías",
+    nameKey: "nav.categories",
     href: "/dashboard/categories",
     icon: FolderTree,
   },
   {
-    name: "Transacciones",
+    nameKey: "nav.transactions",
     href: "/dashboard/transactions",
     icon: Receipt,
   },
   {
-    name: "Transferencias",
+    nameKey: "nav.transfers",
     href: "/dashboard/transfers",
     icon: ArrowLeftRight,
   },
   {
-    name: "Presupuestos Mensuales",
+    nameKey: "nav.monthlyBudgets",
     href: "/dashboard/monthly-periods",
     icon: Calendar,
   },
   {
-    name: "Documentación",
+    nameKey: "nav.docs",
     href: "/dashboard/docs",
     icon: BookOpen,
   },
@@ -84,6 +85,7 @@ interface SidebarProps {
 export function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
+  const { t, language } = useI18n()
   const [user, setUser] = useState<User | null>(null)
   const [fallbackUsername, setFallbackUsername] = useState<string | null>(null)
   const [fallbackRole, setFallbackRole] = useState<string | null>(null)
@@ -125,12 +127,12 @@ export function Sidebar({ onClose }: SidebarProps) {
     router.refresh()
   }
 
-  const displayUsername = user?.username || fallbackUsername || "Usuario"
+  const displayUsername = user?.username || fallbackUsername || t("common.user")
   const displayRole = user?.role
-    ? humanizeRole(user.role)
+    ? humanizeRole(user.role, language)
     : fallbackRole
-      ? humanizeRole(fallbackRole as any)
-      : "Usuario"
+      ? humanizeRole(fallbackRole as any, language)
+      : t("common.user")
 
   return (
     <div className="flex flex-col h-[100dvh] w-64 bg-card border-r border-border">
@@ -175,7 +177,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               )}
             >
               <Icon className="h-5 w-5" />
-              {item.name}
+              {t(item.nameKey as any)}
             </Link>
           )
         })}
@@ -221,7 +223,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               }}
             >
               <Settings className="mr-2 h-4 w-4" />
-              Ver perfil
+              {t("nav.profile.view")}
             </DropdownMenuItem>
 
             <DropdownMenuItem
@@ -232,7 +234,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               }}
             >
               <Pencil className="mr-2 h-4 w-4" />
-              Editar usuario
+              {t("nav.profile.edit")}
             </DropdownMenuItem>
 
             <DropdownMenuItem
@@ -243,7 +245,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               }}
             >
               <KeyRound className="mr-2 h-4 w-4" />
-              Cambiar contraseña
+              {t("nav.profile.changePassword")}
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
@@ -257,7 +259,7 @@ export function Sidebar({ onClose }: SidebarProps) {
               }}
             >
               <LogOut className="mr-2 h-4 w-4" />
-              Cerrar sesión
+              {t("nav.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

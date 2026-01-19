@@ -10,6 +10,7 @@ import type { MonthlyPeriod } from "@/app/actions/monthly-periods/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import { centsToDecimal } from "@/utils/helpers/format-amount"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   monthlyPeriod: MonthlyPeriod
@@ -19,6 +20,7 @@ type Props = {
 export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: MonthlyPeriodFormValues) => {
     setIsSubmitting(true)
@@ -34,7 +36,7 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar el presupuesto mensual"
+          result.errors[0] || t("monthlyPeriods.errorUpdate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -43,11 +45,9 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
         return
       }
 
-      toast.success("Presupuesto mensual actualizado", {
+      toast.success(t("toast.monthlyPeriod.updated"), {
         description: (
-          <>
-            El presupuesto mensual ha sido actualizado exitosamente.
-          </>
+          <>{t("toast.monthlyPeriod.updated.desc")}</>
         ),
       })
 

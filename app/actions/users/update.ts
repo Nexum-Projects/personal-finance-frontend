@@ -17,6 +17,7 @@ export default async function updateUser(
       username: validated.username,
       preferredCurrency: validated.preferredCurrency,
       timeZone: validated.timeZone,
+      preferredLanguage: validated.preferredLanguage,
     })
 
     return {

@@ -8,10 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
-import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
 import { monthlyPeriodSchema, type MonthlyPeriodFormValues } from "@/app/actions/monthly-periods/schema"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { useI18n } from "@/components/i18n/i18n-provider"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
 
 type Props = {
   defaultValues?: MonthlyPeriodFormValues
@@ -28,6 +30,8 @@ export function MonthlyPeriodForm({
   backToHref,
   isOnEdit = false,
 }: Props) {
+  const { t } = useI18n()
+  const { locale, preferredCurrency } = useUserPreferences()
   const form = useForm<MonthlyPeriodFormValues>({
     resolver: zodResolver(monthlyPeriodSchema),
     defaultValues: defaultValues || {
@@ -38,7 +42,7 @@ export function MonthlyPeriodForm({
   })
 
   const monthOptions = Array.from({ length: 12 }, (_, i) => i + 1).map((month) => ({
-    label: humanizeMonth(month),
+    label: humanizeMonth(month, locale),
     value: month.toString(),
   }))
 
@@ -46,35 +50,39 @@ export function MonthlyPeriodForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description={`Ingresa los datos generales del ${
-            !isOnEdit ? "nuevo" : ""
-          } presupuesto mensual`}
-          title="Datos generales"
+          description={
+            !isOnEdit
+              ? t("monthlyPeriods.form.sectionDescNew")
+              : t("monthlyPeriods.form.sectionDescEdit")
+          }
+          title={t("monthlyPeriods.form.sectionTitle")}
         >
           <NumericField
             control={form.control}
             decimalScale={0}
-            description="El año debe estar entre 1900 y 9999"
-            label="Año"
+            description={t("monthlyPeriods.form.year.desc")}
+            label={t("monthlyPeriods.form.year.label")}
             name="year"
             placeholder="2024"
           />
 
           <SelectField
             control={form.control}
-            description="Selecciona el mes del presupuesto"
-            label="Mes"
+            description={t("monthlyPeriods.form.month.desc")}
+            label={t("monthlyPeriods.form.month.label")}
             name="month"
             options={monthOptions}
-            placeholder="Selecciona el mes"
+            placeholder={t("monthlyPeriods.form.month.placeholder")}
             transformValue={(value) => (value ? parseInt(value, 10) : undefined)}
           />
 
           <NumericField
             control={form.control}
             decimalScale={2}
-            description="Ingresa el ahorro inicial para este presupuesto (en quetzales)"
-            label="Ahorro Inicial"
+            description={t("monthlyPeriods.form.initialSaving.desc", {
+              currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
+            })}
+            label={t("monthlyPeriods.form.initialSaving.label")}
             name="initialSavingCents"
             placeholder="0.00"
           />
@@ -87,10 +95,10 @@ export function MonthlyPeriodForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

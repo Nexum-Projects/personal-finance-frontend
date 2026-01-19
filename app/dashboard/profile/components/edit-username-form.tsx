@@ -13,13 +13,17 @@ import { Button } from "@/components/ui/button"
 import { FormSection } from "@/components/display/form/form-section"
 import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
+import { SearchableSelectField } from "@/components/inputs/rhf/searchable-select-field"
 import { updateUser } from "@/app/actions/users"
 import { userUpdateSchema, type UserUpdateFormValues } from "@/app/actions/users/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import {
   PREFERRED_CURRENCIES,
   PREFERRED_CURRENCY_LABEL,
+  PREFERRED_LANGUAGES,
+  PREFERRED_LANGUAGE_LABEL,
   TIME_ZONES,
   TIME_ZONE_TO_IANA,
 } from "@/utils/user-preferences"
@@ -32,6 +36,7 @@ type Props = {
 export function EditUsernameForm({ defaultValues, backToHref }: Props) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { t } = useI18n()
 
   const form = useForm<UserUpdateFormValues>({
     resolver: zodResolver(userUpdateSchema),
@@ -47,14 +52,13 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
         const isAuthError = handleAuthError(result.errors[0], router)
         if (isAuthError) return
 
-        const humanizedError = parseApiError(result.errors[0] || "Error al actualizar usuario")
+        const humanizedError = parseApiError(result.errors[0] || t("profile.edit.error.updateUser"))
         toast.error(humanizedError.title, { description: humanizedError.description })
         return
       }
 
-      toast.success("Usuario actualizado", {
-        description:
-          "Guardamos tus cambios. Se cerrará tu sesión para aplicar moneda y zona horaria.",
+      toast.success(t("profile.edit.toast.updated.title"), {
+        description: t("profile.edit.toast.updated.description"),
       })
 
       // Cerrar sesión para que el usuario vuelva a iniciar sesión y reciba un JWT nuevo
@@ -73,47 +77,61 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          title="Preferencias y datos del usuario"
-          description="Actualiza tu nombre de usuario y tus preferencias de moneda y zona horaria"
+          title={t("profile.edit.form.title")}
+          description={t("profile.edit.form.description")}
         >
           <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:border-amber-900/40 dark:bg-amber-950/40 dark:text-amber-100">
-            Al guardar estos cambios, se cerrará tu sesión automáticamente para aplicar la moneda y la
-            zona horaria. Luego tendrás que iniciar sesión de nuevo.
+            {t("profile.edit.form.warning")}
           </div>
 
           <TextField
             control={form.control}
-            description="El nombre de usuario debe tener entre 1 y 255 caracteres"
-            label="Nombre de usuario"
+            description={t("profile.edit.username.desc")}
+            label={t("profile.edit.username.label")}
             name="username"
-            placeholder="Ingresa tu nombre de usuario"
+            placeholder={t("profile.edit.username.placeholder")}
             disabled={isSubmitting}
           />
 
           <SelectField
             control={form.control}
-            description="La moneda se usa para formatear montos en toda la aplicación"
-            label="Moneda preferida"
+            description={t("profile.edit.currency.desc")}
+            label={t("profile.edit.currency.label")}
             name="preferredCurrency"
             options={PREFERRED_CURRENCIES.map((c) => ({
               value: c,
               label: PREFERRED_CURRENCY_LABEL[c],
             }))}
-            placeholder="Selecciona una moneda"
+            placeholder={t("profile.edit.currency.placeholder")}
             disabled={isSubmitting}
             transformValue={(value) => (value ? value : undefined)}
           />
 
           <SelectField
             control={form.control}
-            description="La zona horaria se usa para mostrar fechas y horas"
-            label="Zona horaria"
+            description={t("profile.edit.language.desc")}
+            label={t("profile.edit.language.label")}
+            name="preferredLanguage"
+            options={PREFERRED_LANGUAGES.map((lang) => ({
+              value: lang,
+              label: PREFERRED_LANGUAGE_LABEL[lang],
+            }))}
+            placeholder={t("profile.edit.language.placeholder")}
+            disabled={isSubmitting}
+            transformValue={(value) => (value ? value : undefined)}
+          />
+
+          <SearchableSelectField
+            control={form.control}
+            description={t("profile.edit.timeZone.desc")}
+            label={t("profile.edit.timeZone.label")}
             name="timeZone"
             options={TIME_ZONES.map((tz) => ({
               value: tz,
               label: TIME_ZONE_TO_IANA[tz],
             }))}
-            placeholder="Selecciona una zona horaria"
+            placeholder={t("profile.edit.timeZone.placeholder")}
+            searchPlaceholder={t("profile.edit.timeZone.searchPlaceholder")}
             disabled={isSubmitting}
             transformValue={(value) => (value ? value : undefined)}
           />
@@ -126,10 +144,10 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

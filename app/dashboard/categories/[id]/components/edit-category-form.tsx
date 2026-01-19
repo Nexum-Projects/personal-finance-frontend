@@ -9,6 +9,7 @@ import type { CategoryFormValues } from "@/app/actions/categories/schema"
 import type { Category } from "@/app/actions/categories/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   category: Category
@@ -18,6 +19,7 @@ type Props = {
 export function EditCategoryForm({ category, backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: CategoryFormValues) => {
     setIsSubmitting(true)
@@ -45,8 +47,8 @@ export function EditCategoryForm({ category, backToHref }: Props) {
         return
       }
 
-      toast.success("Categoría actualizada", {
-        description: "La categoría ha sido actualizada exitosamente",
+      toast.success(t("toast.category.updated"), {
+        description: t("toast.category.updated.desc"),
       })
 
       router.push("/dashboard/categories")

@@ -14,6 +14,7 @@ import { transferSchema, type TransferFormValues } from "@/app/actions/transfers
 import type { Account } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   defaultValues?: TransferFormValues
@@ -33,6 +34,7 @@ export function TransferForm({
   accounts,
 }: Props) {
   const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { t } = useI18n()
 
   // Obtener fecha actual en zona horaria configurada
   const getCurrentDateInTimeZone = (): string => {
@@ -78,55 +80,57 @@ export function TransferForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description={`Ingresa los datos de la ${
-            !isOnEdit ? "nueva" : ""
-          } transferencia`}
-          title="Datos de la transferencia"
+          description={
+            !isOnEdit ? t("transfers.form.sectionDescNew") : t("transfers.form.sectionDescEdit")
+          }
+          title={t("transfers.form.sectionTitle")}
         >
           <SelectField
             control={form.control}
-            description="Selecciona la cuenta de origen"
-            label="Cuenta de Origen"
+            description={t("transfers.form.fromAccount.desc")}
+            label={t("transfers.form.fromAccount.label")}
             name="fromAccountId"
             options={fromAccountOptions}
-            placeholder="Selecciona la cuenta de origen"
+            placeholder={t("transfers.form.fromAccount.placeholder")}
             transformValue={(value) => (value ? value : undefined)}
           />
 
           <SelectField
             control={form.control}
-            description="Selecciona la cuenta de destino"
-            label="Cuenta de Destino"
+            description={t("transfers.form.toAccount.desc")}
+            label={t("transfers.form.toAccount.label")}
             name="toAccountId"
             options={toAccountOptions}
-            placeholder="Selecciona la cuenta de destino"
+            placeholder={t("transfers.form.toAccount.placeholder")}
             transformValue={(value) => (value ? value : undefined)}
           />
 
           <NumericField
             control={form.control}
             decimalScale={2}
-            description={`Ingresa el monto a transferir (en ${PREFERRED_CURRENCY_LABEL[preferredCurrency]})`}
-            label="Monto"
+            description={t("transfers.form.amount.desc", {
+              currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
+            })}
+            label={t("transfers.form.amount.label")}
             name="amountCents"
             placeholder="0.00"
           />
 
           <TextField
             control={form.control}
-            description="Describe el propósito de la transferencia"
-            label="Descripción"
+            description={t("transfers.form.description.desc")}
+            label={t("transfers.form.description.label")}
             name="description"
-            placeholder="Ingresa una descripción"
+            placeholder={t("transfers.form.description.placeholder")}
             type="text"
           />
 
           <TextField
             control={form.control}
-            description="Fecha en que se realiza la transferencia"
-            label="Fecha de Transferencia"
+            description={t("transfers.form.transferDate.desc")}
+            label={t("transfers.form.transferDate.label")}
             name="transferDate"
-            placeholder="YYYY-MM-DD"
+            placeholder={t("transfers.form.transferDate.placeholder")}
             type="date"
           />
         </FormSection>
@@ -138,10 +142,10 @@ export function TransferForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

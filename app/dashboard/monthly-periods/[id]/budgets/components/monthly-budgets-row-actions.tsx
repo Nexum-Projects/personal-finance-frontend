@@ -8,6 +8,7 @@ import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { MonthlyBudget } from "@/app/actions/monthly-budgets/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   monthlyPeriodId: string
@@ -17,22 +18,23 @@ type Props = {
 export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
   const router = useRouter()
   const { confirmationDialog } = useConfirmationDialogStore()
+  const { t } = useI18n()
 
   const handleRemove = () => {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas desactivar el presupuesto de{" "}
+          {t("monthlyPeriods.budgets.confirmDeactivate.title")}{" "}
           <span className="text-foreground font-medium">{budget.category.name}</span>?
-          Esta acción no se puede deshacer.
+          {t("monthlyPeriods.budgets.confirmDeactivate.description")}
         </>
       ),
       onConfirm: onRemove,
       actions: {
-        confirm: "Sí, desactivar presupuesto",
-        cancel: "Cancelar",
+        confirm: t("monthlyPeriods.budgets.confirmDeactivate.confirm"),
+        cancel: t("monthlyPeriods.budgets.confirmDeactivate.cancel"),
       },
-      title: "¿Desactivar presupuesto?",
+      title: t("monthlyPeriods.budgets.confirmDeactivate.title"),
     })
   }
 
@@ -40,16 +42,16 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
     confirmationDialog({
       description: (
         <>
-          ¿Estás seguro que deseas reactivar el presupuesto de{" "}
+          {t("monthlyPeriods.budgets.confirmReactivate.title")}{" "}
           <span className="text-foreground font-medium">{budget.category.name}</span>?
         </>
       ),
       onConfirm: onReactivate,
       actions: {
-        confirm: "Sí, reactivar presupuesto",
-        cancel: "Cancelar",
+        confirm: t("monthlyPeriods.budgets.confirmReactivate.confirm"),
+        cancel: t("monthlyPeriods.budgets.confirmReactivate.cancel"),
       },
-      title: "¿Reactivar presupuesto?",
+      title: t("monthlyPeriods.budgets.confirmReactivate.title"),
     })
   }
 
@@ -64,7 +66,7 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al eliminar el presupuesto"
+          result.errors[0] || t("monthlyPeriods.budgets.errorDeactivate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -72,12 +74,10 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
         return
       }
 
-      toast.success("Presupuesto desactivado", {
+      toast.success(t("toast.monthlyBudget.deactivated"), {
         description: (
           <>
-            El presupuesto de{" "}
-            <span className="text-foreground font-medium">{budget.category.name}</span>{" "}
-            ha sido desactivado exitosamente.
+            {t("toast.monthlyBudget.deactivated.desc", { category: budget.category.name })}
           </>
         ),
       })
@@ -103,7 +103,7 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al reactivar el presupuesto"
+          result.errors[0] || t("monthlyPeriods.budgets.errorReactivate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -111,12 +111,10 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
         return
       }
 
-      toast.success("Presupuesto reactivado", {
+      toast.success(t("toast.monthlyBudget.reactivated"), {
         description: (
           <>
-            El presupuesto de{" "}
-            <span className="text-foreground font-medium">{budget.category.name}</span>{" "}
-            ha sido reactivado exitosamente.
+            {t("toast.monthlyBudget.reactivated.desc", { category: budget.category.name })}
           </>
         ),
       })
@@ -137,16 +135,16 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
         href={`/dashboard/monthly-periods/${monthlyPeriodId}/budgets/${budget.id}/edit`}
         type="link"
       >
-        Editar presupuesto
+        {t("monthlyPeriods.budgets.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       {budget.isActive ? (
         <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
-          Desactivar presupuesto
+          {t("monthlyPeriods.budgets.actions.deactivate")}
         </DataTableRowActions.Item>
       ) : (
         <DataTableRowActions.Item type="button" onClick={handleReactivate}>
-          Reactivar presupuesto
+          {t("monthlyPeriods.budgets.actions.reactivate")}
         </DataTableRowActions.Item>
       )}
     </DataTableRowActions>

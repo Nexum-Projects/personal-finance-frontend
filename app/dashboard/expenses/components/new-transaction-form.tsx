@@ -10,6 +10,7 @@ import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import type { Category } from "@/app/actions/transactions/types"
 import type { Account } from "@/app/actions/transactions/types"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   backToHref: string
@@ -21,6 +22,7 @@ type Props = {
 export function NewTransactionForm({ backToHref, categories, accounts, categoryType }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: TransactionFormValues) => {
     setIsSubmitting(true)
@@ -39,7 +41,7 @@ export function NewTransactionForm({ backToHref, categories, accounts, categoryT
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear la transacción"
+          result.errors[0] || t("transactions.errorCreate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -48,14 +50,10 @@ export function NewTransactionForm({ backToHref, categories, accounts, categoryT
         return
       }
 
-      toast.success("Transacción creada", {
+      toast.success(t("toast.transaction.created"), {
         description: (
           <>
-            La transacción{" "}
-            <span className="text-foreground font-medium">
-              {result.data.description}
-            </span>{" "}
-            ha sido creada exitosamente.
+            {t("toast.transaction.created.desc", { description: result.data.description })}
           </>
         ),
       })

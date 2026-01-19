@@ -6,6 +6,9 @@ import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { TransfersTable } from "./components/transfers-table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { getServerI18n } from "@/utils/i18n/server"
+import { PageContainer } from "@/components/display/containers/page-container"
+import { PageHeader } from "@/components/display/page-header/page-header"
 
 type Props = {
   searchParams: Promise<{
@@ -20,6 +23,7 @@ type Props = {
 }
 
 export default async function TransfersPage(props: Props) {
+  const { t } = await getServerI18n()
   const searchParams = await props.searchParams
 
   const parsedParams = parseSearchParams(searchParams, {
@@ -43,64 +47,51 @@ export default async function TransfersPage(props: Props) {
 
   if (result.status === "error") {
     return (
-      <div className="p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Transferencias</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus transferencias entre cuentas
+      <PageContainer>
+        <PageHeader title={t("transfers.title")} description={t("transfers.subtitle")} />
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("transfers.errorTitle")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-destructive">
+              {result.errors[0]?.message || t("transfers.errorLoad")}
             </p>
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Error</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-destructive">
-                {result.errors[0]?.message || "Error al cargar las transferencias"}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
+      </PageContainer>
     )
   }
 
   const { data: transfers, meta } = result.data
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Transferencias</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus transferencias entre cuentas
-            </p>
-          </div>
+    <PageContainer>
+      <PageHeader
+        title={t("transfers.title")}
+        description={t("transfers.subtitle")}
+        actions={
           <Button asChild>
             <Link href="/dashboard/transfers/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nueva transferencia
+              {t("transfers.actions.new")}
             </Link>
           </Button>
-        </div>
+        }
+      />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Lista de Transferencias</CardTitle>
-            <CardDescription>
-              Aquí podrás ver y gestionar todas tus transferencias
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Suspense fallback={<div>Cargando...</div>}>
-              <TransfersTable transfers={transfers} meta={meta} />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("transfers.listTitle")}</CardTitle>
+          <CardDescription>{t("transfers.listSubtitle")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Suspense fallback={<div>{t("common.loading")}</div>}>
+            <TransfersTable transfers={transfers} meta={meta} />
+          </Suspense>
+        </CardContent>
+      </Card>
+    </PageContainer>
   )
 }
 

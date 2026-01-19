@@ -13,25 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { formatAmount, centsToDecimal } from "@/utils/helpers/format-amount"
+import { formatAmount } from "@/utils/helpers/format-amount"
 import type { MonthlyBudget } from "@/app/actions/monthly-budgets/types"
 import { MonthlyBudgetsRowActions } from "./monthly-budgets-row-actions"
 import { humanizeCategoryType } from "@/utils/helpers/humanize-category-type"
-
-// Formateo de fecha simple sin dependencias externas
-function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
-  } catch {
-    return dateString
-  }
-}
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type SortField = "budgetedCents" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -52,6 +39,8 @@ export function MonthlyBudgetsTable({
   budgets,
   meta,
 }: MonthlyBudgetsTableProps) {
+  const { preferredCurrency, preferredLanguage, locale, timeZoneIana } = useUserPreferences()
+  const { t } = useI18n()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -113,6 +102,22 @@ export function MonthlyBudgetsTable({
     )
   }
 
+  const formatDateTime = (dateString: string): string => {
+    try {
+      const d = new Date(dateString)
+      return new Intl.DateTimeFormat(locale, {
+        timeZone: timeZoneIana,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      }).format(d)
+    } catch {
+      return dateString
+    }
+  }
+
 
   return (
     <div className="space-y-4">
@@ -120,7 +125,7 @@ export function MonthlyBudgetsTable({
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar presupuestos..."
+            placeholder={t("monthlyPeriods.budgets.search.placeholder")}
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -133,31 +138,31 @@ export function MonthlyBudgetsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Categoría</TableHead>
-              <TableHead>Tipo</TableHead>
+              <TableHead>{t("monthlyPeriods.budgets.table.category")}</TableHead>
+              <TableHead>{t("monthlyPeriods.budgets.table.type")}</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("budgetedCents")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Presupuestado
+                  {t("monthlyPeriods.budgets.table.budgeted")}
                   {getSortIcon("budgetedCents")}
                 </Button>
               </TableHead>
-              <TableHead>Estado</TableHead>
+              <TableHead>{t("monthlyPeriods.budgets.table.status")}</TableHead>
               <TableHead>
                 <Button
                   variant="ghost"
                   onClick={() => handleSort("updatedAt")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Última Actualización
+                  {t("monthlyPeriods.budgets.table.updatedAt")}
                   {getSortIcon("updatedAt")}
                 </Button>
               </TableHead>
               <TableHead className="w-16 text-center">
-                Acciones
+                {t("monthlyPeriods.budgets.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -165,31 +170,32 @@ export function MonthlyBudgetsTable({
             {budgets.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center">
-                  No se encontraron presupuestos
+                  {t("monthlyPeriods.budgets.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (
               budgets.map((budget) => {
-                const currency = "GT" // Asumimos GTQ por defecto, ajustar según necesidad
                 return (
                   <TableRow key={budget.id}>
                     <TableCell className="font-medium">{budget.category.name}</TableCell>
-                    <TableCell>{humanizeCategoryType(budget.category.categoryType)}</TableCell>
                     <TableCell>
-                      {formatAmount(budget.budgetedCents, currency)}
+                      {humanizeCategoryType(budget.category.categoryType, preferredLanguage)}
+                    </TableCell>
+                    <TableCell>
+                      {formatAmount(budget.budgetedCents, preferredCurrency)}
                     </TableCell>
                     <TableCell>
                       {budget.isActive ? (
                         <span className="text-emerald-600 dark:text-emerald-400">
-                          Activo
+                          {t("monthlyPeriods.budgets.status.active")}
                         </span>
                       ) : (
                         <span className="text-red-600 dark:text-red-400">
-                          Inactivo
+                          {t("monthlyPeriods.budgets.status.inactive")}
                         </span>
                       )}
                     </TableCell>
-                    <TableCell>{formatDate(budget.updatedAt)}</TableCell>
+                    <TableCell>{formatDateTime(budget.updatedAt)}</TableCell>
                     <TableCell className="text-center">
                       <MonthlyBudgetsRowActions
                         monthlyPeriodId={monthlyPeriodId}
@@ -207,9 +213,12 @@ export function MonthlyBudgetsTable({
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {budgets.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
-          {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} presupuestos
+          {t("pagination.showing", {
+            from: budgets.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
+            to: Math.min(currentPage * meta.limit, meta.totalObjects),
+            total: meta.totalObjects,
+            entity: t("monthlyPeriods.tabs.budgets").toLowerCase(),
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -218,10 +227,10 @@ export function MonthlyBudgetsTable({
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || isPending}
           >
-            Anterior
+            {t("pagination.prev")}
           </Button>
           <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
@@ -229,7 +238,7 @@ export function MonthlyBudgetsTable({
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= meta.totalPages || isPending}
           >
-            Siguiente
+            {t("pagination.next")}
           </Button>
         </div>
       </div>

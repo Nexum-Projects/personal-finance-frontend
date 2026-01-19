@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import { DetailTransactionActions } from "../../../expenses/[id]/components/detail-transaction-actions"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
-import { timeZoneToIana } from "@/utils/user-preferences"
+import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -19,12 +20,13 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
 
   const transaction = await findTransaction(id)
 
   if (transaction.status === "error" || !transaction.data) {
     return {
-      title: "Transacción no encontrada",
+      title: t("transactions.detail.notFound"),
     }
   }
 
@@ -33,10 +35,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, timeZone: string): string {
+function formatDate(dateString: string, timeZone: string, locale: string): string {
   try {
     const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat("es-GT", {
+    const formatter = new Intl.DateTimeFormat(locale, {
       timeZone,
       year: "numeric",
       month: "2-digit",
@@ -52,8 +54,10 @@ function formatDate(dateString: string, timeZone: string): string {
 
 export default async function TransactionIncomeDetailPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const preferences = await getSessionPreferences()
   const timeZoneIana = timeZoneToIana(preferences.timeZone)
+  const locale = languageToLocale(preferences.preferredLanguage)
 
   const transaction = await findTransaction(id)
 
@@ -69,50 +73,50 @@ export default async function TransactionIncomeDetailPage(props: Props) {
         actions={<DetailTransactionActions transaction={trans} categoryType="INCOME" />}
         backTo={{
           href: "/dashboard/transactions/income",
-          label: "Regresar a ingresos",
+          label: t("transactions.backToIncome"),
         }}
         title={trans.description}
       />
       <PageSection
-        description="Información general del ingreso"
+        description={t("transactions.detail.income.subtitle")}
         fields={{
           id: {
-            label: "Identificador",
+            label: t("transactions.detail.id"),
             value: trans.id,
             classNames: {
               value: cn("font-mono"),
             },
           },
           amount: {
-            label: "Monto",
+            label: t("transactions.detail.amount"),
             value: formatAmount(trans.amountCents, preferences.preferredCurrency),
           },
           description: {
-            label: "Descripción",
+            label: t("transactions.detail.description"),
             value: trans.description,
           },
           category: {
-            label: "Categoría",
+            label: t("transactions.detail.category"),
             value: trans.category.name,
           },
           account: {
-            label: "Cuenta",
+            label: t("transactions.detail.account"),
             value: trans.account.name,
           },
           transactionDate: {
-            label: "Fecha de Transacción",
+            label: t("transactions.detail.transactionDate"),
             value: formatDateOnlyShort(trans.transactionDate, timeZoneIana),
           },
           createdAt: {
-            label: "Fecha de creación",
-            value: formatDate(trans.createdAt, timeZoneIana),
+            label: t("transactions.detail.createdAt"),
+            value: formatDate(trans.createdAt, timeZoneIana, locale),
           },
           updatedAt: {
-            label: "Última actualización",
-            value: formatDate(trans.updatedAt, timeZoneIana),
+            label: t("transactions.detail.updatedAt"),
+            value: formatDate(trans.updatedAt, timeZoneIana, locale),
           },
         }}
-        title="Datos generales"
+        title={t("transactions.detail.sectionTitle")}
       />
     </PageContainer>
   )

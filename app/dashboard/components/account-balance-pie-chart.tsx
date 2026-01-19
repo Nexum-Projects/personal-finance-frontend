@@ -26,7 +26,7 @@ const COLORS = [
 ]
 
 export function AccountBalancePieChart({ data, title }: AccountBalancePieChartProps) {
-  const { preferredCurrency } = useUserPreferences()
+  const { preferredCurrency, preferredLanguage } = useUserPreferences()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     name: item.accountName,
@@ -46,7 +46,7 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
         <div className="rounded-lg border bg-card p-3 shadow-md">
           <p className="font-medium">{data.name}</p>
           <p className="text-xs text-muted-foreground">
-            {humanizeAccountType(data.payload.accountType)}
+            {humanizeAccountType(data.payload.accountType, preferredLanguage)}
           </p>
           <p className="text-sm text-muted-foreground">
             {formatCurrency(data.value)} ({data.payload.percentage.toFixed(1)}%)

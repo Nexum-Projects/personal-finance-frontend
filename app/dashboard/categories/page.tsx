@@ -6,6 +6,7 @@ import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { CategoriesTable } from "./components/categories-table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   searchParams: Promise<{
@@ -21,6 +22,7 @@ type Props = {
 }
 
 export default async function CategoriesPage(props: Props) {
+  const { t } = await getServerI18n()
   const searchParams = await props.searchParams
 
   const parsedParams = parseSearchParams(searchParams, {
@@ -48,18 +50,18 @@ export default async function CategoriesPage(props: Props) {
       <div className="p-4 md:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Categorías</h1>
+            <h1 className="text-3xl font-bold text-foreground">{t("categories.title")}</h1>
             <p className="text-muted-foreground mt-1">
-              Gestiona tus categorías de gastos e ingresos
+              {t("categories.subtitle")}
             </p>
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>Error</CardTitle>
+              <CardTitle>{t("categories.errorTitle")}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-destructive">
-                {result.errors[0]?.message || "Error al cargar las categorías"}
+                {result.errors[0]?.message || t("categories.errorLoad")}
               </p>
             </CardContent>
           </Card>
@@ -75,28 +77,28 @@ export default async function CategoriesPage(props: Props) {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Categorías</h1>
+            <h1 className="text-3xl font-bold text-foreground">{t("categories.title")}</h1>
             <p className="text-muted-foreground mt-1">
-              Gestiona tus categorías de gastos e ingresos
+              {t("categories.subtitle")}
             </p>
           </div>
           <Button asChild>
             <Link href="/dashboard/categories/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nueva categoría
+              {t("categories.new")}
             </Link>
           </Button>
         </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Lista de Categorías</CardTitle>
+            <CardTitle>{t("categories.listTitle")}</CardTitle>
             <CardDescription>
-              Aquí podrás ver y gestionar todas tus categorías
+              {t("categories.listSubtitle")}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<div>Cargando...</div>}>
+            <Suspense fallback={<div>{t("common.loading")}</div>}>
               <CategoriesTable categories={categories} meta={meta} />
             </Suspense>
           </CardContent>

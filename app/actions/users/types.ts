@@ -1,17 +1,7 @@
 export type UserRole = "USER" | "ADMIN"
 
-export type PreferredCurrency = "USD" | "GTQ" | "MXN"
-export type TimeZone =
-  | "AMERICA_GUATEMALA"
-  | "AMERICA_MEXICO_CITY"
-  | "AMERICA_MONTERREY"
-  | "AMERICA_TIJUANA"
-  | "AMERICA_CANCUN"
-  | "AMERICA_NEW_YORK"
-  | "AMERICA_CHICAGO"
-  | "AMERICA_DENVER"
-  | "AMERICA_LOS_ANGELES"
-  | "AMERICA_PHOENIX"
+import type { PreferredCurrency, TimeZone, PreferredLanguage } from "@/utils/user-preferences"
+export type { PreferredCurrency, TimeZone, PreferredLanguage } from "@/utils/user-preferences"
 
 export interface User {
   id: string
@@ -20,6 +10,7 @@ export interface User {
   role: UserRole
   preferredCurrency: PreferredCurrency
   timeZone: TimeZone
+  preferredLanguage: PreferredLanguage
   isActive: boolean
   createdAt: string
   updatedAt: string

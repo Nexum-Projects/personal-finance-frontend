@@ -15,6 +15,7 @@ import type { Category } from "@/app/actions/transactions/types"
 import type { Account } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   defaultValues?: TransactionFormValues
@@ -36,6 +37,7 @@ export function TransactionForm({
   accounts,
 }: Props) {
   const { preferredCurrency, timeZoneIana } = useUserPreferences()
+  const { t } = useI18n()
 
   // Obtener fecha actual en zona horaria configurada
   const getCurrentDateInTimeZone = (): string => {
@@ -63,56 +65,60 @@ export function TransactionForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description={`Ingresa los datos generales de la ${
-            !isOnEdit ? "nueva" : ""
-          } transacción`}
-          title="Datos generales"
+          description={
+            !isOnEdit
+              ? t("transactions.form.sectionDescNew")
+              : t("transactions.form.sectionDescEdit")
+          }
+          title={t("transactions.form.sectionTitle")}
         >
           <NumericField
             control={form.control}
             decimalScale={2}
-            description={`Ingresa el monto de la transacción en ${PREFERRED_CURRENCY_LABEL[preferredCurrency]} (debe ser mayor a 0)`}
-            label="Monto"
+            description={t("transactions.form.amount.desc", {
+              currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
+            })}
+            label={t("transactions.form.amount.label")}
             name="amount"
             placeholder="0.00"
           />
 
           <TextField
             control={form.control}
-            description="La descripción debe tener entre 1 y 255 caracteres"
-            label="Descripción"
+            description={t("transactions.form.description.desc")}
+            label={t("transactions.form.description.label")}
             name="description"
-            placeholder="Ingresa la descripción de la transacción"
+            placeholder={t("transactions.form.description.placeholder")}
           />
 
           <SelectField
             control={form.control}
-            description="Selecciona la categoría de la transacción"
-            label="Categoría"
+            description={t("transactions.form.category.desc")}
+            label={t("transactions.form.category.label")}
             name="categoryId"
             options={categories.map((category) => ({
               label: category.name,
               value: category.id,
             }))}
-            placeholder="Selecciona una categoría"
+            placeholder={t("filters.category.placeholder")}
           />
 
           <SelectField
             control={form.control}
-            description="Selecciona la cuenta de la transacción"
-            label="Cuenta"
+            description={t("transactions.form.account.desc")}
+            label={t("transactions.form.account.label")}
             name="accountId"
             options={accounts.map((account) => ({
               label: account.name,
               value: account.id,
             }))}
-            placeholder="Selecciona una cuenta"
+            placeholder={t("filters.account.placeholder")}
           />
 
           <TextField
             control={form.control}
-            description="Selecciona la fecha de la transacción"
-            label="Fecha de Transacción"
+            description={t("transactions.form.transactionDate.desc")}
+            label={t("transactions.form.transactionDate.label")}
             name="transactionDate"
             type="date"
           />
@@ -125,10 +131,10 @@ export function TransactionForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

@@ -9,6 +9,7 @@ import type { MonthlyBudgetFormValues } from "@/app/actions/monthly-budgets/sche
 import type { Category } from "@/app/actions/categories/types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   backToHref: string
@@ -19,6 +20,7 @@ type Props = {
 export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: MonthlyBudgetFormValues) => {
     setIsSubmitting(true)
@@ -37,7 +39,7 @@ export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }
         }
 
         const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear el presupuesto"
+          result.errors[0] || t("monthlyPeriods.budgets.errorCreate")
         )
         toast.error(humanizedError.title, {
           description: humanizedError.description,
@@ -46,11 +48,9 @@ export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }
         return
       }
 
-      toast.success("Presupuesto creado", {
+      toast.success(t("toast.monthlyBudget.created"), {
         description: (
-          <>
-            El presupuesto ha sido creado exitosamente.
-          </>
+          <>{t("toast.monthlyBudget.created.desc")}</>
         ),
       })
 

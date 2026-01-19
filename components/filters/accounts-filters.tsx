@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import {
   Sheet,
   SheetClose,
@@ -26,6 +27,7 @@ export function AccountsFilters({
   startDateParamName = "startDate",
   endDateParamName = "endDate",
 }: Props) {
+  const { t } = useI18n()
   const [activeFiltersCount, setActiveFiltersCount] = useState(0)
   const [open, setOpen] = useState(false)
 
@@ -56,7 +58,7 @@ export function AccountsFilters({
       <SheetTrigger asChild>
         <Button className="w-full md:w-fit" variant="outline">
           <Filter className="h-4 w-4" />
-          Filtros
+          {t("filters.button")}
           {activeFiltersCount > 0 && (
             <>
               <Separator
@@ -65,7 +67,9 @@ export function AccountsFilters({
               />
               <div className="bg-primary/10 text-primary grid h-5 w-fit shrink-0 place-items-center rounded-xs px-1.5">
                 <span className="text-xs leading-none">
-                  {activeFiltersCount} activo{activeFiltersCount > 1 ? "s" : ""}
+                  {activeFiltersCount === 1
+                    ? t("filters.active.singular", { count: activeFiltersCount })
+                    : t("filters.active.plural", { count: activeFiltersCount })}
                 </span>
               </div>
             </>
@@ -74,9 +78,9 @@ export function AccountsFilters({
       </SheetTrigger>
       <SheetContent className="w-full border-none sm:max-w-md flex flex-col">
         <SheetHeader className="relative flex-shrink-0">
-          <SheetTitle className="text-xl leading-6">Filtros</SheetTitle>
+          <SheetTitle className="text-xl leading-6">{t("filters.title")}</SheetTitle>
           <SheetDescription className="mr-11">
-            Aplica filtros para refinar los resultados mostrados en la tabla
+            {t("filters.description")}
           </SheetDescription>
           <SheetClose asChild>
             <Button
@@ -86,7 +90,7 @@ export function AccountsFilters({
               variant="ghost"
             >
               <X className="size-4" />
-              <span className="sr-only">Cerrar</span>
+              <span className="sr-only">{t("filters.close")}</span>
             </Button>
           </SheetClose>
         </SheetHeader>
@@ -109,7 +113,7 @@ export function AccountsFilters({
               }}
             >
               <XCircle className="h-4 w-4 mr-2" />
-              Limpiar filtros
+              {t("filters.clear")}
             </Button>
           </SheetFooter>
         )}

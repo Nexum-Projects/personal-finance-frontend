@@ -17,6 +17,8 @@ import { humanizeCategoryType } from "@/utils/helpers/humanize-category-type"
 import type { Category } from "@/app/actions/categories/types"
 import { CategoriesRowActions } from "./categories-row-actions"
 import { CategoriesFilters } from "@/components/filters/categories-filters"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 // Formateo de fecha simple sin dependencias externas
 function formatDate(dateString: string): string {
   try {
@@ -46,6 +48,8 @@ interface CategoriesTableProps {
 }
 
 export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
+  const { preferredLanguage } = useUserPreferences()
+  const { t } = useI18n()
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
@@ -121,7 +125,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
       <div className="flex items-center gap-4">
         <div className="w-1/4">
           <Input
-            placeholder="Buscar categorías..."
+            placeholder={t("categories.searchPlaceholder")}
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full"
@@ -141,7 +145,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
                   onClick={() => handleSort("name")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Nombre
+                  {t("categories.table.name")}
                   {getSortIcon("name")}
                 </Button>
               </TableHead>
@@ -151,7 +155,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
                   onClick={() => handleSort("categoryType")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Tipo de Categoría
+                  {t("categories.table.type")}
                   {getSortIcon("categoryType")}
                 </Button>
               </TableHead>
@@ -161,12 +165,12 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
                   onClick={() => handleSort("updatedAt")}
                   className="h-8 px-2 lg:px-3"
                 >
-                  Última Actualización
+                  {t("categories.table.updatedAt")}
                   {getSortIcon("updatedAt")}
                 </Button>
               </TableHead>
               <TableHead className="w-16 text-center">
-                Acciones
+                {t("categories.table.actions")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -174,7 +178,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
             {categories.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={4} className="h-24 text-center">
-                  No se encontraron categorías
+                  {t("categories.table.empty")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -182,7 +186,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
                 <TableRow key={category.id}>
                   <TableCell className="font-medium">{category.name}</TableCell>
                   <TableCell>
-                    {humanizeCategoryType(category.categoryType)}
+                    {humanizeCategoryType(category.categoryType, preferredLanguage)}
                   </TableCell>
                   <TableCell>{formatDate(category.updatedAt)}</TableCell>
                   <TableCell className="text-center">
@@ -198,9 +202,12 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
-          Mostrando {categories.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0} a{" "}
-          {Math.min(currentPage * meta.limit, meta.totalObjects)} de{" "}
-          {meta.totalObjects} categorías
+          {t("pagination.showing", {
+            from: categories.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
+            to: Math.min(currentPage * meta.limit, meta.totalObjects),
+            total: meta.totalObjects,
+            entity: t("categories.title").toLowerCase(),
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -209,10 +216,10 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || isPending}
           >
-            Anterior
+            {t("pagination.prev")}
           </Button>
           <div className="text-sm text-foreground">
-            Página {currentPage} de {meta.totalPages}
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
@@ -220,7 +227,7 @@ export function CategoriesTable({ categories, meta }: CategoriesTableProps) {
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= meta.totalPages || isPending}
           >
-            Siguiente
+            {t("pagination.next")}
           </Button>
         </div>
       </div>

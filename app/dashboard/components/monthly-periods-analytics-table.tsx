@@ -35,6 +35,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   data: MonthlyPeriodAnalytics[]
@@ -49,7 +50,8 @@ export function MonthlyPeriodsAnalyticsTable({
   onYearChange,
   availableYears,
 }: Props) {
-  const { preferredCurrency } = useUserPreferences()
+  const { preferredCurrency, locale } = useUserPreferences()
+  const { t } = useI18n()
   // Ordenar los datos por mes (de menor a mayor) para mostrar de izquierda a derecha
   const sortedData = [...data]
     .filter((item) => item.year === currentYear) // Filtrar por año seleccionado
@@ -91,40 +93,40 @@ export function MonthlyPeriodsAnalyticsTable({
 
   const rows = [
     {
-      label: "Ahorro Inicial",
+      label: t("dashboard.monthlyAnalytics.rows.initialSaving"),
       getValue: (item: MonthlyPeriodAnalytics) => item.initialSavingCents,
       isBalance: false,
       description: undefined,
     },
     {
-      label: "Ingresos",
+      label: t("dashboard.monthlyAnalytics.rows.income"),
       getValue: (item: MonthlyPeriodAnalytics) => item.incomeCents,
       isBalance: false,
       description: undefined,
     },
     {
-      label: "Gastos",
+      label: t("dashboard.monthlyAnalytics.rows.expenses"),
       getValue: (item: MonthlyPeriodAnalytics) => item.expensesCents,
       isBalance: false,
       description: undefined,
     },
     {
-      label: "Balance",
+      label: t("dashboard.monthlyAnalytics.rows.balance"),
       getValue: (item: MonthlyPeriodAnalytics) => item.balanceCents,
       isBalance: true, // Solo esta fila muestra verde cuando es positivo
-      description: "Ingresos - Gastos - Ahorro inicial",
+      description: t("dashboard.monthlyAnalytics.rows.balance.desc"),
     },
     {
-      label: "Ahorro final",
+      label: t("dashboard.monthlyAnalytics.rows.finalSaving"),
       getValue: (item: MonthlyPeriodAnalytics) => item.finalSavingCents,
       isBalance: false,
-      description: "Balance + Ahorro inicial",
+      description: t("dashboard.monthlyAnalytics.rows.finalSaving.desc"),
     },
     {
-      label: "Ahorro acumulado",
+      label: t("dashboard.monthlyAnalytics.rows.accumulatedSaving"),
       getValue: (item: MonthlyPeriodAnalytics) => item.accumulatedSavingCents,
       isBalance: false,
-      description: "Ahorro final + Ahorro acumulado del período anterior",
+      description: t("dashboard.monthlyAnalytics.rows.accumulatedSaving.desc"),
     },
   ]
 
@@ -143,7 +145,7 @@ export function MonthlyPeriodsAnalyticsTable({
       {/* Filtro de año */}
       <div className="flex items-center gap-4">
         <Label htmlFor="year-filter" className="text-sm font-medium">
-          Año
+          {t("common.year")}
         </Label>
         <Select
           value={currentYear.toString()}
@@ -154,7 +156,7 @@ export function MonthlyPeriodsAnalyticsTable({
             className="w-40 h-10 font-semibold"
           >
             <Calendar className="mr-2 h-4 w-4" />
-            <SelectValue placeholder="Seleccionar año" />
+            <SelectValue placeholder={t("common.selectYear")} />
             <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
           </SelectTrigger>
           <SelectContent className="max-h-[300px]">
@@ -174,7 +176,7 @@ export function MonthlyPeriodsAnalyticsTable({
       {/* Tabla */}
       {sortedData.length === 0 ? (
         <div className="rounded-md border p-8 text-center text-muted-foreground">
-          No hay datos disponibles para el año {currentYear}
+          {t("dashboard.monthlyAnalytics.emptyForYear", { year: currentYear })}
         </div>
       ) : (
         <div className="rounded-md border overflow-x-auto">
@@ -182,7 +184,7 @@ export function MonthlyPeriodsAnalyticsTable({
             <TableHeader>
               <TableRow>
                 <TableHead className="sticky left-0 bg-background z-10 min-w-[150px]">
-                  Concepto
+                  {t("common.concept")}
                 </TableHead>
                 {sortedData.map((item) => (
                   <TableHead key={item.monthlyPeriodId} className="min-w-[160px] text-center">
@@ -195,17 +197,17 @@ export function MonthlyPeriodsAnalyticsTable({
                       onClick={() =>
                         openBudgetsDialog(
                           item.monthlyPeriodId,
-                          formatPeriod(item.year, item.month)
+                          formatPeriod(item.year, item.month, locale)
                         )
                       }
-                      title="Ver presupuestos por categoría"
+                      title={t("dashboard.monthlyAnalytics.viewBudgetsTooltip")}
                     >
-                      {formatPeriod(item.year, item.month)}
+                      {formatPeriod(item.year, item.month, locale)}
                     </button>
                   </TableHead>
                 ))}
                 <TableHead className="min-w-[160px] text-center font-semibold">
-                  Total
+                  {t("common.total")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -275,10 +277,12 @@ export function MonthlyPeriodsAnalyticsTable({
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              Presupuestos por categoría {selectedPeriod ? `- ${selectedPeriod.label}` : ""}
+              {t("dashboard.monthlyAnalytics.dialog.title", {
+                period: selectedPeriod ? `- ${selectedPeriod.label}` : "",
+              })}
             </DialogTitle>
             <DialogDescription>
-              Presupuesto, gastado y restante por categoría para el presupuesto mensual seleccionado.
+              {t("dashboard.monthlyAnalytics.dialog.subtitle")}
             </DialogDescription>
           </DialogHeader>
 
@@ -293,23 +297,23 @@ export function MonthlyPeriodsAnalyticsTable({
               <Table>
                 <TableHeader className="sticky top-0 bg-background">
                   <TableRow>
-                    <TableHead>Categoría</TableHead>
-                    <TableHead className="text-right">Presupuesto</TableHead>
-                    <TableHead className="text-right">Gastado</TableHead>
-                    <TableHead className="text-right">Restante</TableHead>
+                    <TableHead>{t("common.category")}</TableHead>
+                    <TableHead className="text-right">{t("common.budgeted")}</TableHead>
+                    <TableHead className="text-right">{t("common.spent")}</TableHead>
+                    <TableHead className="text-right">{t("common.remaining")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {isPending ? (
                     <TableRow>
                       <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
-                        Cargando...
+                        {t("common.loading")}
                       </TableCell>
                     </TableRow>
                   ) : budgets.length === 0 ? (
                     <TableRow>
                       <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
-                        No hay presupuestos para este presupuesto mensual
+                        {t("dashboard.monthlyAnalytics.dialog.empty")}
                       </TableCell>
                     </TableRow>
                   ) : (
@@ -345,7 +349,7 @@ export function MonthlyPeriodsAnalyticsTable({
 
           <div className="flex justify-end">
             <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-              Cerrar
+              {t("common.close")}
             </Button>
           </div>
         </DialogContent>

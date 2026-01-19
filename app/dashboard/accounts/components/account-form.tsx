@@ -12,6 +12,8 @@ import { SelectField } from "@/components/inputs/rhf/select-field"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { accountSchema, type AccountFormValues } from "@/app/actions/accounts/schema"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
+import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 type Props = {
   defaultValues?: AccountFormValues
@@ -28,6 +30,8 @@ export function AccountForm({
   backToHref,
   isOnEdit = false,
 }: Props) {
+  const { preferredLanguage } = useUserPreferences()
+  const { t } = useI18n()
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountSchema),
     defaultValues: defaultValues || {
@@ -41,46 +45,46 @@ export function AccountForm({
     <Form {...form}>
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
-          description={`Ingresa los datos generales de la ${
-            !isOnEdit ? "nueva" : ""
-          } cuenta`}
-          title="Datos generales"
+          description={
+            isOnEdit ? t("accounts.form.sectionDescEdit") : t("accounts.form.sectionDescNew")
+          }
+          title={t("accounts.form.sectionTitle")}
         >
           <TextField
             control={form.control}
-            description="El nombre debe tener entre 1 y 255 caracteres"
-            label="Nombre"
+            description={t("accounts.form.name.desc")}
+            label={t("accounts.form.name.label")}
             name="name"
-            placeholder="Ingresa el nombre de la cuenta"
+            placeholder={t("accounts.form.name.placeholder")}
           />
 
           <SelectField
             control={form.control}
-            description="Selecciona el tipo de cuenta"
-            label="Tipo de cuenta"
+            description={t("accounts.form.type.desc")}
+            label={t("accounts.form.type.label")}
             name="accountType"
             options={[
-              { label: humanizeAccountType("CASH"), value: "CASH" },
-              { label: humanizeAccountType("BANK"), value: "BANK" },
-              { label: humanizeAccountType("SAVINGS"), value: "SAVINGS" },
-              { label: humanizeAccountType("CHECKING"), value: "CHECKING" },
-              { label: humanizeAccountType("CREDIT_CARD"), value: "CREDIT_CARD" },
-              { label: humanizeAccountType("CREDIT"), value: "CREDIT" },
-              { label: humanizeAccountType("INVESTMENT"), value: "INVESTMENT" },
-              { label: humanizeAccountType("LOAN"), value: "LOAN" },
-              { label: humanizeAccountType("OTHER"), value: "OTHER" },
+              { label: humanizeAccountType("CASH", preferredLanguage), value: "CASH" },
+              { label: humanizeAccountType("BANK", preferredLanguage), value: "BANK" },
+              { label: humanizeAccountType("SAVINGS", preferredLanguage), value: "SAVINGS" },
+              { label: humanizeAccountType("CHECKING", preferredLanguage), value: "CHECKING" },
+              { label: humanizeAccountType("CREDIT_CARD", preferredLanguage), value: "CREDIT_CARD" },
+              { label: humanizeAccountType("CREDIT", preferredLanguage), value: "CREDIT" },
+              { label: humanizeAccountType("INVESTMENT", preferredLanguage), value: "INVESTMENT" },
+              { label: humanizeAccountType("LOAN", preferredLanguage), value: "LOAN" },
+              { label: humanizeAccountType("OTHER", preferredLanguage), value: "OTHER" },
             ]}
-            placeholder="Selecciona el tipo de cuenta"
+            placeholder={t("accounts.form.type.placeholder")}
           />
 
           {!isOnEdit && (
             <NumericField
               control={form.control}
               decimalScale={2}
-              label="Balance inicial"
+              label={t("accounts.form.initialBalance.label")}
               name="initialBalance"
               placeholder="0.00"
-              description="Opcional. No permite valores negativos."
+              description={t("accounts.form.initialBalance.desc")}
             />
           )}
         </FormSection>
@@ -92,10 +96,10 @@ export function AccountForm({
             ) : (
               <Save className="mr-2 h-4 w-4" />
             )}
-            Guardar
+            {t("common.save")}
           </Button>
           <Button asChild variant="outline" disabled={isSubmitting}>
-            <Link href={backToHref}>Cancelar</Link>
+            <Link href={backToHref}>{t("common.cancel")}</Link>
           </Button>
         </div>
       </form>

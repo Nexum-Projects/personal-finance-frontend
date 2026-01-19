@@ -6,6 +6,9 @@ import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { MonthlyPeriodsTable } from "./components/monthly-periods-table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { getServerI18n } from "@/utils/i18n/server"
+import { PageContainer } from "@/components/display/containers/page-container"
+import { PageHeader } from "@/components/display/page-header/page-header"
 
 type Props = {
   searchParams: Promise<{
@@ -20,6 +23,7 @@ type Props = {
 }
 
 export default async function MonthlyPeriodsPage(props: Props) {
+  const { t } = await getServerI18n()
   const searchParams = await props.searchParams
 
   const parsedParams = parseSearchParams(searchParams, {
@@ -43,64 +47,51 @@ export default async function MonthlyPeriodsPage(props: Props) {
 
   if (result.status === "error") {
     return (
-      <div className="p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">Presupuestos Mensuales</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus presupuestos mensuales
+      <PageContainer>
+        <PageHeader title={t("monthlyPeriods.title")} description={t("monthlyPeriods.subtitle")} />
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("monthlyPeriods.errorTitle")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-destructive">
+              {result.errors[0]?.message || t("monthlyPeriods.errorLoad")}
             </p>
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Error</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-destructive">
-                {result.errors[0]?.message || "Error al cargar los presupuestos mensuales"}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
+      </PageContainer>
     )
   }
 
   const { data: monthlyPeriods, meta } = result.data
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Presupuestos Mensuales</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus presupuestos mensuales
-            </p>
-          </div>
+    <PageContainer>
+      <PageHeader
+        title={t("monthlyPeriods.title")}
+        description={t("monthlyPeriods.subtitle")}
+        actions={
           <Button asChild>
             <Link href="/dashboard/monthly-periods/new">
               <Plus className="mr-2 h-4 w-4" />
-              Nuevo presupuesto mensual
+              {t("monthlyPeriods.actions.new")}
             </Link>
           </Button>
-        </div>
+        }
+      />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Lista de Presupuestos Mensuales</CardTitle>
-            <CardDescription>
-              Aquí podrás ver y gestionar todos tus presupuestos mensuales
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Suspense fallback={<div>Cargando...</div>}>
-              <MonthlyPeriodsTable monthlyPeriods={monthlyPeriods} meta={meta} />
-            </Suspense>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("monthlyPeriods.listTitle")}</CardTitle>
+          <CardDescription>{t("monthlyPeriods.listSubtitle")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Suspense fallback={<div>{t("common.loading")}</div>}>
+            <MonthlyPeriodsTable monthlyPeriods={monthlyPeriods} meta={meta} />
+          </Suspense>
+        </CardContent>
+      </Card>
+    </PageContainer>
   )
 }
 

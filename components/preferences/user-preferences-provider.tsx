@@ -3,10 +3,11 @@
 import * as React from "react"
 
 import type { UserPreferences } from "@/utils/user-preferences"
-import { timeZoneToIana } from "@/utils/user-preferences"
+import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
 
 type UserPreferencesContextValue = UserPreferences & {
   timeZoneIana: string
+  locale: string
 }
 
 const UserPreferencesContext = React.createContext<UserPreferencesContextValue | null>(null)
@@ -22,6 +23,7 @@ export function UserPreferencesProvider({
     return {
       ...preferences,
       timeZoneIana: timeZoneToIana(preferences.timeZone),
+      locale: languageToLocale(preferences.preferredLanguage),
     }
   }, [preferences])
 

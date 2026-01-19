@@ -15,6 +15,7 @@ import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 const loginSchema = z.object({
   usernameOrEmail: z.string().min(1, "El email o nombre de usuario es requerido"),
@@ -25,6 +26,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const router = useRouter()
+  const { t } = useI18n()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [showPassword, setShowPassword] = useState(false)
@@ -116,7 +118,7 @@ export default function LoginPage() {
             />
           </div>
           <CardDescription className="text-center">
-            Inicia sesión para acceder a tu dashboard
+            {t("auth.login.subtitle")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -129,7 +131,7 @@ export default function LoginPage() {
 
             {showConfirmEmailLink && (
               <div className="text-sm text-muted-foreground">
-                ¿Necesitas confirmar tu email?{" "}
+                {t("auth.login.confirmEmail.cta")}{" "}
                 <Link
                   href={`/confirm-email/request${
                     typeof usernameOrEmailValue === "string" && usernameOrEmailValue.includes("@")
@@ -138,17 +140,17 @@ export default function LoginPage() {
                   }`}
                   className="text-primary underline-offset-4 hover:underline"
                 >
-                  Reenviar correo de confirmación
+                  {t("auth.login.confirmEmail.link")}
                 </Link>
               </div>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="usernameOrEmail">Email o Nombre de usuario</Label>
+              <Label htmlFor="usernameOrEmail">{t("auth.login.usernameOrEmail.label")}</Label>
               <Input
                 id="usernameOrEmail"
                 type="text"
-                placeholder="Ingresa tu email o nombre de usuario"
+                placeholder={t("auth.login.usernameOrEmail.placeholder")}
                 {...register("usernameOrEmail")}
                 disabled={isLoading}
                 className={errors.usernameOrEmail ? "border-destructive" : ""}
@@ -159,12 +161,12 @@ export default function LoginPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">{t("auth.login.password.label")}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Ingresa tu contraseña"
+                  placeholder={t("auth.login.password.placeholder")}
                   {...register("password")}
                   disabled={isLoading}
                   className={errors.password ? "border-destructive pr-10" : "pr-10"}
@@ -192,10 +194,10 @@ export default function LoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Iniciando sesión...
+                  {t("auth.login.submitting")}
                 </>
               ) : (
-                "Iniciar sesión"
+                t("auth.login.submit")
               )}
             </Button>
 
@@ -204,14 +206,14 @@ export default function LoginPage() {
                 href="/confirm-password"
                 className="text-primary underline-offset-4 hover:underline"
               >
-                ¿Olvidaste tu contraseña?
+                {t("auth.login.forgotPassword")}
               </Link>
             </div>
 
             <div className="text-center text-sm text-muted-foreground">
-              ¿No tienes cuenta?{" "}
+              {t("auth.login.noAccount")}{" "}
               <Link href="/register" className="text-primary underline-offset-4 hover:underline">
-                Crear cuenta
+                {t("auth.login.createAccount")}
               </Link>
             </div>
           </form>

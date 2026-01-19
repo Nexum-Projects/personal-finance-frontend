@@ -8,6 +8,7 @@ import { type SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Loader2, UserPlus } from "lucide-react"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 import { Form } from "@/components/ui/form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -15,14 +16,18 @@ import { Button } from "@/components/ui/button"
 import { FormSection } from "@/components/display/form/form-section"
 import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
+import { SearchableSelectField } from "@/components/inputs/rhf/searchable-select-field"
 import { PasswordField } from "@/components/inputs/rhf/password-field"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { registerUser } from "@/app/actions/auth"
 import {
   DEFAULT_PREFERRED_CURRENCY,
+  DEFAULT_PREFERRED_LANGUAGE,
   DEFAULT_TIME_ZONE,
   PREFERRED_CURRENCIES,
   PREFERRED_CURRENCY_LABEL,
+  PREFERRED_LANGUAGES,
+  PREFERRED_LANGUAGE_LABEL,
   TIME_ZONES,
   TIME_ZONE_TO_IANA,
 } from "@/utils/user-preferences"
@@ -30,6 +35,7 @@ import { registerSchema, type RegisterFormValues } from "@/app/actions/auth/regi
 
 export default function RegisterPage() {
   const router = useRouter()
+  const { t } = useI18n()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<RegisterFormValues>({
@@ -40,6 +46,7 @@ export default function RegisterPage() {
       password: "",
       confirmPassword: "",
       preferredCurrency: DEFAULT_PREFERRED_CURRENCY,
+      preferredLanguage: DEFAULT_PREFERRED_LANGUAGE,
       timeZone: DEFAULT_TIME_ZONE,
     },
   })
@@ -83,9 +90,11 @@ export default function RegisterPage() {
               className="h-auto w-auto"
             />
           </div>
-          <CardTitle className="text-xl font-bold text-center">Crear cuenta</CardTitle>
+          <CardTitle className="text-xl font-bold text-center">
+            {t("auth.register.title")}
+          </CardTitle>
           <CardDescription className="text-center">
-            Completa tus datos. Te enviaremos un correo para confirmar tu email.
+            {t("auth.register.subtitle")}
           </CardDescription>
         </CardHeader>
 
@@ -93,8 +102,8 @@ export default function RegisterPage() {
           <Form {...form}>
             <form className="grid gap-6" onSubmit={form.handleSubmit(onSubmit)}>
               <FormSection
-                title="Datos de acceso"
-                description="Estos datos se usarán para iniciar sesión en el sistema"
+                title={t("auth.register.access.title")}
+                description={t("auth.register.access.subtitle")}
                 orientation="vertical"
               >
                 <div className="grid gap-6 md:grid-cols-2">
@@ -133,8 +142,8 @@ export default function RegisterPage() {
               </FormSection>
 
               <FormSection
-                title="Preferencias"
-                description="Se usarán para formatear montos y fechas en tu dashboard"
+                title={t("auth.register.prefs.title")}
+                description={t("auth.register.prefs.subtitle")}
                 orientation="vertical"
               >
                 <div className="grid gap-6 md:grid-cols-2">
@@ -152,6 +161,18 @@ export default function RegisterPage() {
 
                   <SelectField
                     control={form.control}
+                    name="preferredLanguage"
+                    label="Idioma"
+                    placeholder="Selecciona un idioma"
+                    disabled={isSubmitting}
+                    options={PREFERRED_LANGUAGES.map((lang) => ({
+                      value: lang,
+                      label: PREFERRED_LANGUAGE_LABEL[lang],
+                    }))}
+                  />
+
+                  <SearchableSelectField
+                    control={form.control}
                     name="timeZone"
                     label="Zona horaria"
                     placeholder="Selecciona una zona horaria"
@@ -160,6 +181,7 @@ export default function RegisterPage() {
                       value: tz,
                       label: TIME_ZONE_TO_IANA[tz],
                     }))}
+                    searchPlaceholder="Buscar zona horaria (ej. Guatemala, Lima, Bogotá...)"
                   />
                 </div>
               </FormSection>
@@ -168,20 +190,20 @@ export default function RegisterPage() {
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Creando cuenta...
+                    {t("auth.register.submitting")}
                   </>
                 ) : (
                   <>
                     <UserPlus className="mr-2 h-4 w-4" />
-                    Crear cuenta
+                    {t("auth.register.submit")}
                   </>
                 )}
               </Button>
 
               <div className="text-center text-sm text-muted-foreground">
-                ¿Ya tienes cuenta?{" "}
+                {t("auth.register.haveAccount")}{" "}
                 <Link href="/login" className="text-primary underline-offset-4 hover:underline">
-                  Inicia sesión
+                  {t("auth.register.login")}
                 </Link>
               </div>
             </form>
