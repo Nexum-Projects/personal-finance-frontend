@@ -1,6 +1,13 @@
-# Personal Finance Frontend
+# Nexum Finanzas Personales — Frontend
 
-Frontend de la aplicación de gestión de finanzas personales desarrollado con Next.js, TypeScript, Tailwind CSS y Shadcn UI.
+Frontend de **Nexum Finanzas Personales**, una aplicación de gestión de finanzas personales (cuentas, categorías, transacciones, transferencias y presupuestos mensuales), desarrollada con **Next.js (App Router)**, **TypeScript**, **Tailwind CSS** y **shadcn/ui**.
+
+Incluye:
+- **Autenticación** (login/registro), confirmación de email y recuperación de contraseña.
+- **Dashboard** con gráficas (Recharts) y analítica por períodos/presupuestos.
+- **Preferencias de usuario** (moneda, zona horaria, idioma ES/EN/PT).
+- **i18n** en la UI (progresivamente aplicado en módulos clave).
+- **Documentación interna** para usuarios dentro del dashboard.
 
 ## 🎨 Paleta de Colores
 
@@ -17,11 +24,12 @@ El diseño utiliza un modo oscuro premium inspirado en Stripe, Notion y Linear:
 
 Ver documentación completa de colores en [`docs/COLOR_PALETTE.md`](docs/COLOR_PALETTE.md)
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio rápido (desarrollo)
 
 ### Requisitos
-- Node.js 18+
-- Yarn
+- **Node.js 18+**
+- **Yarn**
+- Backend/API corriendo (Spring Boot)
 
 ### Instalación
 
@@ -39,30 +47,56 @@ yarn build
 yarn start
 ```
 
-### Configuración
+### Configuración (.env.local)
 
-Crea un archivo `.env.local` en la raíz del proyecto:
+Crea un archivo `.env.local` en la raíz del proyecto con **las variables definidas en `utils/env.ts`**:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8080/api
+NEXT_PUBLIC_SITE_NAME="Nexum Finanzas Personales"
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-## 📁 Estructura del Proyecto
+> Nota: este proyecto usa **Next.js App Router** (carpeta `app/`) y Server Actions para comunicarse con la API.
+
+### Flujo recomendado para probar el sistema
+- **1) Registrar usuario** en `/register`
+- **2) Confirmar email** desde el link recibido (página `/confirm-email?token=...`)
+- **3) Iniciar sesión** en `/login`
+- **4) (Opcional) Ajustar preferencias** en `/dashboard/profile/edit`:
+  - **Moneda**, **zona horaria** e **idioma**
+  - Al guardar, el sistema **cierra sesión automáticamente** para aplicar los cambios del token.
+- **5) Crear datos base**:
+  - **Cuentas** → `/dashboard/accounts`
+  - **Categorías** → `/dashboard/categories`
+  - **Transacciones** → `/dashboard/transactions`
+  - **Transferencias** → `/dashboard/transfers`
+  - **Presupuestos mensuales** → `/dashboard/monthly-periods`
+
+## 📁 Estructura del proyecto (resumen)
 
 ```
 personal-finance-frontend/
 ├── app/
-│   ├── dashboard/      # Dashboard principal
-│   ├── login/          # Página de login
-│   ├── globals.css     # Estilos globales y variables CSS
-│   ├── layout.tsx      # Layout principal
-│   └── page.tsx        # Página de inicio (redirige a login)
+│   ├── actions/        # Server Actions (API calls, auth, módulos)
+│   ├── dashboard/      # App interna (módulos + docs)
+│   ├── login/          # Login
+│   ├── register/       # Registro
+│   ├── confirm-email/  # Confirmación email + reenvío
+│   ├── reset-password/ # Reset de contraseña
+│   ├── globals.css     # Estilos globales (incl. fixes iOS)
+│   ├── layout.tsx      # Layout principal + i18n provider
+│   └── page.tsx        # Landing / redirects
 ├── components/
-│   └── ui/             # Componentes de Shadcn UI
+│   ├── ui/             # Componentes shadcn/ui
+│   ├── filters/        # Filtros (Sheets, date-range, etc.)
+│   ├── inputs/         # Inputs RHF (incl. searchable select / password toggle)
+│   └── preferences/    # Contexto de preferencias (moneda/zona/idioma)
 ├── lib/
-│   ├── api.ts          # Configuración de Axios
-│   ├── auth.ts         # Servicios de autenticación
-│   └── utils.ts        # Utilidades
+│   └── utils.ts        # Utilidades compartidas
+├── utils/
+│   ├── helpers/        # Format/humanize/parse errors, etc.
+│   └── i18n/           # Mensajes ES/EN/PT + helpers server/client
 ├── docs/
 │   └── COLOR_PALETTE.md # Documentación de colores
 └── public/             # Archivos estáticos
@@ -70,14 +104,15 @@ personal-finance-frontend/
 
 ## 🛠️ Tecnologías
 
-- **Next.js 14** - Framework React
+- **Next.js (App Router)** - Framework React
 - **TypeScript** - Tipado estático
 - **Tailwind CSS** - Estilos utility-first
-- **Shadcn UI** - Componentes UI
+- **shadcn/ui** - Componentes UI
 - **React Hook Form** - Manejo de formularios
 - **Zod** - Validación de esquemas
 - **Axios** - Cliente HTTP
 - **Lucide React** - Iconos
+- **Recharts** - Gráficas
 
 ## 📝 Scripts Disponibles
 
@@ -101,18 +136,25 @@ NEXT_PUBLIC_API_URL=http://tu-servidor:8080/api
 ## 🎯 Características Implementadas
 
 - ✅ Sistema de autenticación con JWT
-- ✅ Página de login con validación
-- ✅ Dashboard básico con diseño premium
-- ✅ Sistema de colores en modo oscuro
-- ✅ Componentes UI con Shadcn
+- ✅ Login / Registro / Confirmación de email / Reset de contraseña
+- ✅ Dashboard con métricas, gráficas y analítica
+- ✅ Preferencias de usuario (moneda, zona horaria, idioma)
+- ✅ i18n (ES/EN/PT) aplicado en módulos principales
+- ✅ Documentación interna (manual de uso) dentro del dashboard
+- ✅ Diseño premium modo oscuro + fixes responsive (iPhone)
+- ✅ Componentes UI con shadcn/ui
 - ✅ Integración con API de Spring Boot
 - ✅ Prettier y ESLint configurados
 
-## 🎯 Próximos Pasos
+## 🧭 ¿En qué consiste el proyecto?
 
-- [ ] Implementar gestión de cuentas
-- [ ] Implementar gestión de categorías
-- [ ] Implementar gestión de transacciones
-- [ ] Implementar gestión de transferencias
-- [ ] Implementar gestión de presupuestos mensuales
-- [ ] Gráficos y visualizaciones financieras
+Este frontend se encarga de:
+- Proveer una **UI moderna** para administrar finanzas personales.
+- Consumir la API del backend mediante **Server Actions** (Axios).
+- Centralizar **humanización de errores** (mensajes amigables).
+- Aplicar **preferencias** del usuario para formateo (moneda, zona horaria) e idioma.
+
+Rutas relevantes:
+- **Públicas**: `/login`, `/register`, `/confirm-email`, `/confirm-email/request`, `/reset-password`
+- **Privadas (dashboard)**: `/dashboard/*`
+
