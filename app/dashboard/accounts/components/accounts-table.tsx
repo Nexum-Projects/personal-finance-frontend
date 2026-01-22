@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/table"
 import type { Account } from "@/app/actions/transactions/types"
 import { AccountsRowActions } from "./accounts-row-actions"
+import { AccountsExportAction } from "./accounts-export-action"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
 import { AccountsFilters } from "@/components/filters/accounts-filters"
@@ -129,6 +130,7 @@ export function AccountsTable({ accounts, meta }: AccountsTableProps) {
           />
         </div>
         <AccountsFilters />
+        <AccountsExportAction />
       </div>
 
       {/* Table */}

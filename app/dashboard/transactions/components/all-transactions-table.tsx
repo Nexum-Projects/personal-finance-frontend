@@ -17,6 +17,7 @@ import { formatAmount } from "@/utils/helpers/format-amount"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
+import { TransactionsExportAction } from "./transactions-export-action"
 import { cn } from "@/lib/utils"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
@@ -139,6 +140,7 @@ export function AllTransactionsTable({
           categories={categories}
           accounts={accounts}
         />
+        <TransactionsExportAction />
       </div>
 
       {/* Tabla */}

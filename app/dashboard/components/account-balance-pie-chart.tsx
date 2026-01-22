@@ -5,6 +5,7 @@ import type { AccountBalanceBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { humanizeAccountType } from "@/utils/helpers/humanize-account-type"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 interface AccountBalancePieChartProps {
   data: AccountBalanceBreakdown[]
@@ -27,6 +28,7 @@ const COLORS = [
 
 export function AccountBalancePieChart({ data, title }: AccountBalancePieChartProps) {
   const { preferredCurrency, preferredLanguage } = useUserPreferences()
+  const { t } = useI18n()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
     name: item.accountName,
