@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { formatAmount } from "@/utils/helpers/format-amount"
+import { formatTransactionDateAsIs } from "@/utils/helpers/format-date-only"
 import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
@@ -108,20 +109,6 @@ export function AllTransactionsTable({
     )
   }
 
-  const formatDateShort = (dateString: string): string => {
-    try {
-      const d = new Date(dateString)
-      return new Intl.DateTimeFormat(locale, {
-        timeZone: timeZoneIana,
-        year: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(d)
-    } catch {
-      return dateString
-    }
-  }
-
   return (
     <div className="space-y-4">
       {/* Search Bar and Filters */}
@@ -212,7 +199,7 @@ export function AllTransactionsTable({
                         {isIncome ? t("transactions.type.income") : t("transactions.type.expense")}
                       </span>
                     </TableCell>
-                    <TableCell>{formatDateShort(transaction.transactionDate)}</TableCell>
+                    <TableCell>{formatTransactionDateAsIs(transaction.transactionDate)}</TableCell>
                     <TableCell className="text-center">
                       <TransactionsRowActions 
                         transaction={transaction} 

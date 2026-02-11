@@ -9,6 +9,7 @@ import { PagePrint } from "@/components/display/page-print"
 import { useExportAction } from "@/hooks/use-export-action"
 import { exportXLSX } from "@/utils/helpers/export-xlsx"
 import { formatAmount } from "@/utils/helpers/format-amount"
+import { formatTransactionDateAsIs } from "@/utils/helpers/format-date-only"
 import type { Transaction } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
@@ -81,20 +82,6 @@ export function TransactionsExportAction() {
     pageSize: limit,
     sort: { direction: order, field: orderBy },
   })
-
-  const formatDateShort = (dateString: string): string => {
-    try {
-      const d = new Date(dateString)
-      return new Intl.DateTimeFormat(locale, {
-        timeZone: timeZoneIana,
-        year: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(d)
-    } catch {
-      return dateString
-    }
-  }
 
   const fetchTransactions = useCallback(async () => {
     if (fullData) {
@@ -193,7 +180,7 @@ export function TransactionsExportAction() {
         category: transaction.category.name,
         account: transaction.account.name,
         type: isIncome ? t("transactions.type.income") : t("transactions.type.expense"),
-        transactionDate: formatDateShort(transaction.transactionDate),
+        transactionDate: formatTransactionDateAsIs(transaction.transactionDate),
       }
     })
 
@@ -250,31 +237,32 @@ export function TransactionsExportAction() {
         title={t("export.title")}
         onOpenChange={handleOpenChange}
       />
-      <PagePrint
-        ref={contentRef}
-        columns={REPORT_COLUMNS.map((column) => ({
-          id: column.id,
-          label: column.label,
-          align: "left" as const,
-        }))}
-        rows={transactions.map((transaction): ReportRecord & { id: string } => {
-          const isIncome = transaction.category.categoryType === "INCOME"
-          const amountDisplay = isIncome
-            ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
-            : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
+      <div ref={contentRef}>
+        <PagePrint
+          columns={REPORT_COLUMNS.map((column) => ({
+            id: column.id,
+            label: column.label,
+            align: "left" as const,
+          }))}
+          rows={transactions.map((transaction): ReportRecord & { id: string } => {
+            const isIncome = transaction.category.categoryType === "INCOME"
+            const amountDisplay = isIncome
+              ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
+              : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
 
-          return {
-            id: transaction.id,
-            amountCents: amountDisplay,
-            description: transaction.description,
-            category: transaction.category.name,
-            account: transaction.account.name,
-            type: isIncome ? t("transactions.type.income") : t("transactions.type.expense"),
-            transactionDate: formatDateShort(transaction.transactionDate),
-          }
-        })}
-        title={REPORT_NAME}
-      />
+            return {
+              id: transaction.id,
+              amountCents: amountDisplay,
+              description: transaction.description,
+              category: transaction.category.name,
+              account: transaction.account.name,
+              type: isIncome ? t("transactions.type.income") : t("transactions.type.expense"),
+              transactionDate: formatTransactionDateAsIs(transaction.transactionDate),
+            }
+          })}
+          title={REPORT_NAME}
+        />
+      </div>
     </>
   )
 }

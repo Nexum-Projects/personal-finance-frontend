@@ -18,7 +18,6 @@ import { TransfersRowActions } from "./transfers-row-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import { TransfersFilters } from "@/components/filters/transfers-filters"
-import { TransfersExportAction } from "./transfers-export-action"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
@@ -109,6 +108,7 @@ export function TransfersTable({ transfers, meta }: TransfersTableProps) {
         day: "2-digit",
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
       }).format(d)
     } catch {
       return dateString
@@ -128,7 +128,6 @@ export function TransfersTable({ transfers, meta }: TransfersTableProps) {
           />
         </div>
         <TransfersFilters />
-        <TransfersExportAction />
       </div>
 
       {/* Table */}

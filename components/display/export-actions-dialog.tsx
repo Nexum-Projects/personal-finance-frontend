@@ -1,9 +1,10 @@
 "use client"
 
-import { Download, FileSpreadsheet, FileText, Loader2, ArrowDown } from "lucide-react"
+import { Download, FileSpreadsheet, FileText, Loader2, ArrowDown, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -77,13 +78,24 @@ export function ExportActionsDialog({
         </Button>
       </DialogTrigger>
       <DialogContent className="rounded-3xl p-4 lg:p-6 max-w-2xl">
-        <DialogHeader className="text-left">
+        <DialogHeader className="grid grid-cols-[1fr_32px] gap-2 text-left">
           <div className="space-y-1.5">
             <DialogTitle>{title || t("export.title")}</DialogTitle>
             <DialogDescription className="text-pretty">
               {description || t("export.description")}
             </DialogDescription>
           </div>
+          <DialogClose asChild>
+            <Button
+              className="size-8"
+              size="icon"
+              type="button"
+              variant="ghost"
+            >
+              <X className="size-4" />
+              <span className="sr-only">{t("common.close")}</span>
+            </Button>
+          </DialogClose>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-1">

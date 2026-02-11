@@ -31,6 +31,17 @@ export function formatDateOnly(
 }
 
 /**
+ * Muestra la fecha de transacción tal cual viene (ej. "2026-02-11" → "11/02/2026").
+ * Solo extrae año, mes y día del string; no usa Date ni zona horaria.
+ */
+export function formatTransactionDateAsIs(dateString: string): string {
+  const match = dateString.match(/^(\d{4})-(\d{2})-(\d{2})/)
+  if (!match) return dateString
+  const [, year, month, day] = match
+  return `${day}/${month}/${year}`
+}
+
+/**
  * Formatea una fecha en formato YYYY-MM-DD a formato DD/MM/YYYY sin conversión de zona horaria
  */
 export function formatDateOnlyShort(

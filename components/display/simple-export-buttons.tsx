@@ -110,16 +110,17 @@ export function SimpleExportButtons<K extends string>({
           {t("export.toPDF")}
         </Button>
       </div>
-      <PagePrint
-        ref={contentRef}
-        columns={columns.map((col) => ({
-          id: col.id,
-          label: col.label,
-          align: "left" as const,
-        }))}
-        rows={rows}
-        title={title}
-      />
+      <div ref={contentRef}>
+        <PagePrint
+          columns={columns.map((col) => ({
+            id: col.id,
+            label: col.label,
+            align: "left" as const,
+          }))}
+          rows={rows}
+          title={title}
+        />
+      </div>
     </>
   )
 }

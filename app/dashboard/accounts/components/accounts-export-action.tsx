@@ -235,23 +235,24 @@ export function AccountsExportAction() {
         title={t("export.title")}
         onOpenChange={handleOpenChange}
       />
-      <PagePrint
-        ref={contentRef}
-        columns={REPORT_COLUMNS.map((column) => ({
-          id: column.id,
-          label: column.label,
-          align: "left" as const,
-        }))}
-        rows={accounts.map((account): ReportRecord & { id: string } => ({
-          id: account.id,
-          name: account.name,
-          accountType: humanizeAccountType(account.accountType, preferredLanguage),
-          currentBalanceCents: formatAmount(account.currentBalanceCents, account.currency),
-          currency: account.currency,
-          updatedAt: formatDateShort(account.updatedAt),
-        }))}
-        title={REPORT_NAME}
-      />
+      <div ref={contentRef}>
+        <PagePrint
+          columns={REPORT_COLUMNS.map((column) => ({
+            id: column.id,
+            label: column.label,
+            align: "left" as const,
+          }))}
+          rows={accounts.map((account): ReportRecord & { id: string } => ({
+            id: account.id,
+            name: account.name,
+            accountType: humanizeAccountType(account.accountType, preferredLanguage),
+            currentBalanceCents: formatAmount(account.currentBalanceCents, account.currency),
+            currency: account.currency,
+            updatedAt: formatDateShort(account.updatedAt),
+          }))}
+          title={REPORT_NAME}
+        />
+      </div>
     </>
   )
 }

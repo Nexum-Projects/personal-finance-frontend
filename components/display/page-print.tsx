@@ -25,22 +25,19 @@ type Props<K extends string> = {
   title: React.ReactNode
 }
 
-const PagePrintContainer = React.forwardRef<
-  HTMLDivElement,
-  React.PropsWithChildren & React.HTMLAttributes<HTMLDivElement>
->(({ children, ...props }, ref) => {
+function PagePrintContainer({
+  children,
+  ...props
+}: React.PropsWithChildren & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      ref={ref}
       className="font-sans hidden flex-col text-[10pt] print:flex print:min-h-screen print:bg-white print:text-black"
       {...props}
     >
       {children}
     </div>
   )
-})
-
-PagePrintContainer.displayName = "PagePrintContainer"
+}
 
 function PagePrintHeader({ title }: { title: React.ReactNode }) {
   return (
@@ -103,29 +100,20 @@ function PagePrintTable<K extends string>({
   )
 }
 
-const PagePrintComponent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & Props<string>
->(({ title, columns, rows, ...props }, ref) => {
+export function PagePrint<K extends string>({
+  title,
+  columns,
+  rows,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & Props<K>) {
   return (
-    <PagePrintContainer ref={ref} {...props}>
+    <PagePrintContainer {...props}>
       <PagePrintHeader title={title} />
       <PagePrintTable columns={columns} rows={rows} />
     </PagePrintContainer>
   )
-})
+}
 
-PagePrintComponent.displayName = "PagePrint"
-
-type PagePrintType = <K extends string>(
-  props: React.HTMLAttributes<HTMLDivElement> & Props<K> & { ref?: React.Ref<HTMLDivElement> }
-) => JSX.Element
-
-export const PagePrint = Object.assign(
-  PagePrintComponent as PagePrintType,
-  {
-    Container: PagePrintContainer,
-    Header: PagePrintHeader,
-    Table: PagePrintTable,
-  }
-)
+PagePrint.Container = PagePrintContainer
+PagePrint.Header = PagePrintHeader
+PagePrint.Table = PagePrintTable
