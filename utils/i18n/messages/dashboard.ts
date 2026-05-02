@@ -40,6 +40,8 @@ export const ES_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory.subtitle": "Distribución de ingresos",
   "dashboard.pies.balanceByAccount": "Balance por Cuenta",
   "dashboard.pies.balanceByAccount.subtitle": "Distribución del balance total por cuenta",
+  "dashboard.pies.balanceByAccount.selectedTotal": "Total seleccionado: {value}",
+  "dashboard.pies.balanceByAccount.noneSelected": "Selecciona al menos una cuenta para ver la gráfica.",
 
   "dashboard.monthlyAnalytics.title": "Analítica de Presupuesto Mensual",
   "dashboard.monthlyAnalytics.subtitle":
@@ -104,6 +106,8 @@ export const EN_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory.subtitle": "Income distribution",
   "dashboard.pies.balanceByAccount": "Balance by Account",
   "dashboard.pies.balanceByAccount.subtitle": "Total balance distribution by account",
+  "dashboard.pies.balanceByAccount.selectedTotal": "Selected total: {value}",
+  "dashboard.pies.balanceByAccount.noneSelected": "Select at least one account to see the chart.",
 
   "dashboard.monthlyAnalytics.title": "Monthly Budget Analytics",
   "dashboard.monthlyAnalytics.subtitle":
@@ -168,6 +172,8 @@ export const PT_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory.subtitle": "Distribuição de receitas",
   "dashboard.pies.balanceByAccount": "Saldo por Conta",
   "dashboard.pies.balanceByAccount.subtitle": "Distribuição do saldo total por conta",
+  "dashboard.pies.balanceByAccount.selectedTotal": "Total selecionado: {value}",
+  "dashboard.pies.balanceByAccount.noneSelected": "Selecione pelo menos uma conta para ver o gráfico.",
 
   "dashboard.monthlyAnalytics.title": "Análise de Orçamento Mensal",
   "dashboard.monthlyAnalytics.subtitle":
