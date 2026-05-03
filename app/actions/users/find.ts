@@ -6,6 +6,7 @@ import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type { User } from "./types"
+import { normalizeUserFromApi } from "./normalize-user-from-api"
 
 export default async function findUser(userId: string): Promise<ActionResponse<User>> {
   try {
@@ -13,7 +14,7 @@ export default async function findUser(userId: string): Promise<ActionResponse<U
 
     return {
       status: "success",
-      data: response.data.data,
+      data: normalizeUserFromApi(response.data.data),
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {
@@ -33,6 +34,7 @@ export default async function findUser(userId: string): Promise<ActionResponse<U
           {
             title: humanizedError.title,
             message: humanizedError.description,
+            statusCode: status,
           },
         ],
       }

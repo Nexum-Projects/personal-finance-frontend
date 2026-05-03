@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { Sidebar } from "@/components/dashboard/Sidebar"
+import { AdminSidebar } from "@/components/dashboard/AdminSidebar"
 import { Button } from "@/components/ui/button"
 import { UserPreferencesProvider } from "@/components/preferences/user-preferences-provider"
 import type { UserPreferences } from "@/utils/user-preferences"
@@ -16,6 +18,8 @@ export function DashboardShell({
   preferences: UserPreferences
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const pathname = usePathname()
+  const isAdminRoute = pathname?.startsWith("/dashboard/admin") ?? false
 
   return (
     <UserPreferencesProvider preferences={preferences}>
@@ -36,7 +40,11 @@ export function DashboardShell({
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
         >
-          <Sidebar onClose={() => setSidebarOpen(false)} />
+          {isAdminRoute ? (
+            <AdminSidebar onClose={() => setSidebarOpen(false)} />
+          ) : (
+            <Sidebar onClose={() => setSidebarOpen(false)} />
+          )}
         </aside>
 
         {/* Main content */}

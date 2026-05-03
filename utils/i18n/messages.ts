@@ -17,6 +17,7 @@ import {
   PT_MONTHLY_PERIODS_MESSAGES,
 } from "./messages/monthly-periods"
 import { ES_PROFILE_MESSAGES, EN_PROFILE_MESSAGES, PT_PROFILE_MESSAGES } from "./messages/profile"
+import { ES_ADMIN_MESSAGES, EN_ADMIN_MESSAGES, PT_ADMIN_MESSAGES } from "./messages/admin"
 
 export const ES_MESSAGES = {
   ...ES_COMMON_MESSAGES,
@@ -28,6 +29,7 @@ export const ES_MESSAGES = {
   ...ES_TRANSFERS_MESSAGES,
   ...ES_MONTHLY_PERIODS_MESSAGES,
   ...ES_PROFILE_MESSAGES,
+  ...ES_ADMIN_MESSAGES,
 } as const
 
 export type I18nKey = keyof typeof ES_MESSAGES
@@ -43,6 +45,7 @@ export const EN_MESSAGES: Messages = {
   ...EN_TRANSFERS_MESSAGES,
   ...EN_MONTHLY_PERIODS_MESSAGES,
   ...EN_PROFILE_MESSAGES,
+  ...EN_ADMIN_MESSAGES,
 }
 
 export const PT_MESSAGES: Messages = {
@@ -55,6 +58,7 @@ export const PT_MESSAGES: Messages = {
   ...PT_TRANSFERS_MESSAGES,
   ...PT_MONTHLY_PERIODS_MESSAGES,
   ...PT_PROFILE_MESSAGES,
+  ...PT_ADMIN_MESSAGES,
 }
 
 export function getMessages(language: PreferredLanguage): Messages {

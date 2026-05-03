@@ -5,6 +5,7 @@ import baseAxios from "../baseAxios"
 import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import getSession from "../auth/getSession"
 import type { User } from "./types"
+import { normalizeUserFromApi } from "./normalize-user-from-api"
 
 function isUuid(value: string): boolean {
   return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(
@@ -53,7 +54,7 @@ export default async function getCurrentUser(): Promise<User | null> {
 async function fetchUser(userId: string): Promise<User | null> {
   try {
     const response = await baseAxios.get<{ data: User }>(`/users/${userId}`)
-    return response.data.data
+    return normalizeUserFromApi(response.data.data)
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       const status = error.response.status
