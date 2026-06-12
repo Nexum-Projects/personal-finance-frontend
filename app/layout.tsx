@@ -7,7 +7,7 @@ import { ConfirmationDialog } from "@/components/display/confirmation-dialog"
 import { env } from "@/utils/env"
 import getSession from "@/app/actions/auth/getSession"
 import { getLanguageFromSession } from "@/utils/i18n/get-language-from-session"
-import { getMessages } from "@/utils/i18n/messages"
+import { getPublicMessages } from "@/utils/i18n/messages"
 import { I18nProvider } from "@/components/i18n/i18n-provider"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     shortcut: "/images/logo_1.png",
     apple: "/images/logo_1.png",
   },
-};
+}
 
 export default async function RootLayout({
   children,
@@ -31,8 +31,10 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const session = await getSession()
-  const language = getLanguageFromSession(session as Record<string, unknown> | null)
-  const messages = getMessages(language)
+  const language = getLanguageFromSession(
+    session as Record<string, unknown> | null
+  )
+  const messages = getPublicMessages(language)
 
   return (
     <html lang={language.toLowerCase()} className="dark">
@@ -47,4 +49,3 @@ export default async function RootLayout({
     </html>
   )
 }
-

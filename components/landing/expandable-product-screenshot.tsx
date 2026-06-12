@@ -44,6 +44,7 @@ export function ExpandableProductScreenshot({
             src={image}
             alt={alt}
             priority={priority}
+            loading={priority ? "eager" : "lazy"}
             unoptimized={unoptimized}
             sizes={sizes}
             className="h-auto w-full object-cover object-top transition duration-500 group-hover:scale-[1.015]"

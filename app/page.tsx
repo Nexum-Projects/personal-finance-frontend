@@ -26,7 +26,6 @@ import categoriesScreenshot from "@/utils/images/categories-1.png"
 import dashboardScreenshot from "@/utils/images/dashboard-4.png"
 import dashboardDetailScreenshot from "@/utils/images/dashboard-1.png"
 import dashboardAnalyticsScreenshot from "@/utils/images/dashboard-3.png"
-import systemDemoGif from "@/utils/images/video-sistem.gif"
 import transactionsScreenshot from "@/utils/images/transactions-1.png"
 import { ExpandableProductScreenshot } from "@/components/landing/expandable-product-screenshot"
 import {
@@ -252,10 +251,12 @@ export default function Home() {
 
           <div className="flex items-center gap-2">
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
-              <Link href="/login">Iniciar sesión</Link>
+              <Link href="/login" prefetch>
+                Iniciar sesión
+              </Link>
             </Button>
             <Button asChild>
-              <Link href="/register">
+              <Link href="/register" prefetch>
                 Crear cuenta
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -302,7 +303,7 @@ export default function Home() {
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12">
-                <Link href="/register">
+                <Link href="/register" prefetch>
                   Comenzar gratis
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -313,7 +314,7 @@ export default function Home() {
                 variant="outline"
                 className="h-12 border-primary/20 bg-background/70"
               >
-                <Link href="#demostracion">Ver demostración</Link>
+                <Link href="#producto">Ver demostración</Link>
               </Button>
             </div>
           </div>
@@ -328,39 +329,6 @@ export default function Home() {
               image={dashboardScreenshot}
               alt="Dashboard financiero real de Personal Finance con balances, ingresos, gastos, presupuestos y tendencias"
               priority
-            />
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="demostracion"
-        className="border-b border-border bg-card/30 py-16 sm:py-20"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-medium text-primary">Demostración</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Mira el sistema en acción
-            </h2>
-            <p className="mt-4 text-lg leading-8 text-muted-foreground">
-              Recorre el dashboard real: balances, ingresos, gastos, ahorros y
-              tendencias financieras en un solo lugar.
-            </p>
-          </div>
-
-          <div className="relative mx-auto mt-10 max-w-5xl">
-            <div
-              className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-3xl"
-              aria-hidden="true"
-            />
-            <ProductScreenshot
-              title="Demostración del sistema"
-              image={systemDemoGif}
-              alt="Demostración animada del dashboard de Personal Finance mostrando balances, métricas y tendencias financieras"
-              unoptimized
-              expandLabel="Ampliar demostración"
-              description="Demostración ampliada del dashboard de Personal Finance."
             />
           </div>
         </div>
@@ -633,13 +601,13 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12">
-                <Link href="/register">
+                <Link href="/register" prefetch>
                   Crear cuenta gratuita
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="h-12">
-                <Link href="/login">
+                <Link href="/login" prefetch>
                   <LockKeyhole className="mr-2 h-4 w-4" />
                   Iniciar sesión
                 </Link>
