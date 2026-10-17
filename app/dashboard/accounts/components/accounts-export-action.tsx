@@ -47,8 +47,7 @@ const REPORT_NAME = "Reporte de Cuentas"
 
 export function AccountsExportAction() {
   const searchParams = useSearchParams()
-  const { preferredCurrency, timeZoneIana, preferredLanguage, locale } =
-    useUserPreferences()
+  const { timeZoneIana, preferredLanguage, locale } = useUserPreferences()
   const { t } = useI18n()
 
   const { page, limit, order, orderBy, search, startDate, endDate } = useMemo(
@@ -80,7 +79,7 @@ export function AccountsExportAction() {
     sortDirection,
     sortedBy,
     onFullDataChange,
-    onIsExportingChange,
+    loadForXlsx,
     loadBeforePrint,
     onReset,
     onRowsQtyChange,
@@ -137,7 +136,7 @@ export function AccountsExportAction() {
           }
           currentPage++
         } else {
-          break
+          throw new Error(result.errors[0]?.message)
         }
       }
 
@@ -162,7 +161,7 @@ export function AccountsExportAction() {
       if (result.status === "success") {
         return result.data.data
       }
-      return []
+      throw new Error(result.errors[0]?.message)
     }
   }, [
     fullData,
@@ -193,9 +192,8 @@ export function AccountsExportAction() {
   })
 
   const handleXLSXClick = async () => {
-    onIsExportingChange("XLSX")
-
-    const fetchedAccounts = await fetchAccounts()
+    const fetchedAccounts = await loadForXlsx(fetchAccounts)
+    if (!fetchedAccounts) return
 
     const rows: ReportRecord[] = fetchedAccounts.map((account) => ({
       name: account.name,
@@ -213,8 +211,6 @@ export function AccountsExportAction() {
       rows,
       documentName: REPORT_NAME,
     })
-
-    onIsExportingChange(null)
   }
 
   return (

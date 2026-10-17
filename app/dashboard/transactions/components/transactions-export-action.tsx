@@ -50,7 +50,7 @@ const REPORT_NAME = "Reporte de Transacciones"
 
 export function TransactionsExportAction() {
   const searchParams = useSearchParams()
-  const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
+  const { preferredCurrency } = useUserPreferences()
   const { t } = useI18n()
 
   const {
@@ -93,7 +93,7 @@ export function TransactionsExportAction() {
     sortDirection,
     sortedBy,
     onFullDataChange,
-    onIsExportingChange,
+    loadForXlsx,
     loadBeforePrint,
     onReset,
     onRowsQtyChange,
@@ -137,7 +137,7 @@ export function TransactionsExportAction() {
           }
           currentPage++
         } else {
-          break
+          throw new Error(result.errors[0]?.message)
         }
       }
 
@@ -163,7 +163,7 @@ export function TransactionsExportAction() {
       if (result.status === "success") {
         return result.data.data
       }
-      return []
+      throw new Error(result.errors[0]?.message)
     }
   }, [
     fullData,
@@ -196,9 +196,8 @@ export function TransactionsExportAction() {
   })
 
   const handleXLSXClick = async () => {
-    onIsExportingChange("XLSX")
-
-    const fetchedTransactions = await fetchTransactions()
+    const fetchedTransactions = await loadForXlsx(fetchTransactions)
+    if (!fetchedTransactions) return
 
     const rows: ReportRecord[] = fetchedTransactions.map((transaction) => {
       const isIncome = transaction.category.categoryType === "INCOME"
@@ -223,8 +222,6 @@ export function TransactionsExportAction() {
       rows,
       documentName: REPORT_NAME,
     })
-
-    onIsExportingChange(null)
   }
 
   return (
