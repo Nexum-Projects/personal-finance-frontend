@@ -19,7 +19,7 @@ vi.mock("@/components/filters/transactions-filters", () => ({
 vi.mock("./transactions-export-action", () => ({
   TransactionsExportAction: () => null,
 }))
-vi.mock("../../expenses/components/transactions-row-actions", () => ({
+vi.mock("./transactions-row-actions", () => ({
   TransactionsRowActions: () => null,
 }))
 

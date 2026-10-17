@@ -5,7 +5,7 @@ import { findManyTransactions } from "@/app/actions/transactions"
 import { findManyCategories } from "@/app/actions/categories"
 import { findManyAccounts } from "@/app/actions/accounts"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
-import { TransactionsTable } from "../../expenses/components/transactions-table"
+import { TransactionsTable } from "../components/transactions-table"
 import {
   Card,
   CardContent,
