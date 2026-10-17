@@ -81,6 +81,7 @@ export function AccountsExportAction() {
     sortedBy,
     onFullDataChange,
     onIsExportingChange,
+    loadBeforePrint,
     onReset,
     onRowsQtyChange,
     onSortDirectionChange,
@@ -188,17 +189,7 @@ export function AccountsExportAction() {
     onAfterPrint: () => {
       promiseResolveRef.current = null
     },
-    onBeforePrint: () => {
-      return new Promise(async (resolve) => {
-        onIsExportingChange("PDF")
-
-        const fetchedAccounts = await fetchAccounts()
-
-        setAccounts(fetchedAccounts)
-
-        promiseResolveRef.current = resolve
-      })
-    },
+    onBeforePrint: () => loadBeforePrint(fetchAccounts, setAccounts),
   })
 
   const handleXLSXClick = async () => {

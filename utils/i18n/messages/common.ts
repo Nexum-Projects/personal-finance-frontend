@@ -68,6 +68,7 @@ export const ES_COMMON_MESSAGES = {
   "export.sortBy": "Ordenar por",
   "export.sortByDesc": "Define el orden en el que se exportarán los datos",
   "export.selectField": "Selecciona un campo",
+  "export.loadError": "No se pudieron cargar los datos para exportar",
 } as const
 
 export const EN_COMMON_MESSAGES = {
@@ -141,6 +142,7 @@ export const EN_COMMON_MESSAGES = {
   "export.sortBy": "Sort by",
   "export.sortByDesc": "Define the order in which data will be exported",
   "export.selectField": "Select a field",
+  "export.loadError": "Could not load the data to export",
 } as const
 
 export const PT_COMMON_MESSAGES = {
@@ -213,4 +215,5 @@ export const PT_COMMON_MESSAGES = {
   "export.sortBy": "Ordenar por",
   "export.sortByDesc": "Define a ordem em que os dados serão exportados",
   "export.selectField": "Selecione um campo",
+  "export.loadError": "Não foi possível carregar os dados para exportar",
 } as const

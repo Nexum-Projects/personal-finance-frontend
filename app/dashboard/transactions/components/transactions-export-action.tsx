@@ -94,6 +94,7 @@ export function TransactionsExportAction() {
     sortedBy,
     onFullDataChange,
     onIsExportingChange,
+    loadBeforePrint,
     onReset,
     onRowsQtyChange,
     onSortDirectionChange,
@@ -191,17 +192,7 @@ export function TransactionsExportAction() {
     onAfterPrint: () => {
       promiseResolveRef.current = null
     },
-    onBeforePrint: () => {
-      return new Promise(async (resolve) => {
-        onIsExportingChange("PDF")
-
-        const fetchedTransactions = await fetchTransactions()
-
-        setTransactions(fetchedTransactions)
-
-        promiseResolveRef.current = resolve
-      })
-    },
+    onBeforePrint: () => loadBeforePrint(fetchTransactions, setTransactions),
   })
 
   const handleXLSXClick = async () => {

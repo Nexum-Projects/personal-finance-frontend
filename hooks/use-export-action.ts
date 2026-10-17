@@ -1,6 +1,8 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import { useI18n } from "@/components/i18n/i18n-provider"
 
 export type ExportType = "PDF" | "XLSX"
 
@@ -26,6 +28,7 @@ export function useExportAction<K extends string, T>({
   const [sortDirection, setSortDirection] = useState<SortDirection>(direction)
   const [sortedBy, setSortedBy] = useState<K | null>(field)
 
+  const { t } = useI18n()
   const contentRef = useRef<HTMLDivElement>(null)
   const promiseResolveRef = useRef<
     ((value?: PromiseLike<void> | void) => void) | null
@@ -34,6 +37,27 @@ export function useExportAction<K extends string, T>({
   const onIsExportingChange = useCallback((value: ExportType | null) => {
     setIsExporting(value)
   }, [])
+
+  // `onBeforePrint` de react-to-print: carga los datos y espera a que se rendericen.
+  // Si la carga falla, rechaza para cancelar la impresión y limpia el estado.
+  const loadBeforePrint = useCallback(
+    async (fetchData: () => Promise<T[]>, setData: (data: T[]) => void) => {
+      setIsExporting("PDF")
+      try {
+        const fetched = await fetchData()
+        await new Promise<void>((resolve) => {
+          promiseResolveRef.current = resolve
+          setData(fetched)
+        })
+      } catch (error) {
+        promiseResolveRef.current = null
+        setIsExporting(null)
+        toast.error(t("export.loadError"))
+        throw error
+      }
+    },
+    [t]
+  )
 
   const onFullDataChange = useCallback((value: boolean) => {
     setFullData(value)
@@ -86,6 +110,7 @@ export function useExportAction<K extends string, T>({
     sortedBy,
     sortDirection,
     onIsExportingChange,
+    loadBeforePrint,
     onFullDataChange,
     onSortedByChange,
     onSortDirectionChange,
