@@ -59,11 +59,12 @@ export function DashboardShell({
         )}
 
         {/* Sidebar */}
-        {/* Cerrado en móvil queda `invisible`: fuera de pantalla y fuera del orden de tabulación */}
+        {/* Cerrado en móvil queda `invisible`: fuera de pantalla y fuera del orden de tabulación.
+            `visibility` solo se anima al cerrar; al abrir cambia al instante para poder recibir el foco. */}
         <aside
           id="dashboard-sidebar"
           ref={asideRef}
-          className={`fixed inset-y-0 left-0 z-50 transform transition-[transform,visibility] duration-300 ease-in-out lg:visible lg:static ${sidebarOpen ? "visible translate-x-0" : "invisible -translate-x-full lg:translate-x-0"} `}
+          className={`fixed inset-y-0 left-0 z-50 transform duration-300 ease-in-out lg:visible lg:static ${sidebarOpen ? "visible translate-x-0 transition-transform" : "invisible -translate-x-full transition-[transform,visibility] lg:translate-x-0"} `}
         >
           {isAdminRoute ? (
             <AdminSidebar onClose={() => setSidebarOpen(false)} />
