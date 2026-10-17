@@ -73,3 +73,47 @@ describe("useExportAction.loadBeforePrint", () => {
     expect(toast.error).toHaveBeenCalledWith(ES_MESSAGES["export.noData"])
   })
 })
+
+describe("useExportAction.loadForXlsx", () => {
+  it("devuelve las filas cargadas", async () => {
+    const { result } = renderHook(useExportWithData, { wrapper })
+
+    let rows: string[] | null = null
+    await act(async () => {
+      rows = await result.current.loadForXlsx(async () => ["a", "b"])
+    })
+
+    expect(rows).toEqual(["a", "b"])
+    expect(result.current.isExporting).toBeNull()
+  })
+
+  it("devuelve null y avisa si la carga falla", async () => {
+    const { result } = renderHook(useExportWithData, { wrapper })
+
+    let rows: string[] | null = []
+    await act(async () => {
+      rows = await result.current.loadForXlsx(async () => {
+        throw new Error("network")
+      })
+    })
+
+    expect(rows).toBeNull()
+    expect(result.current.isExporting).toBeNull()
+    expect(toast.error).toHaveBeenLastCalledWith(
+      ES_MESSAGES["export.loadError"]
+    )
+  })
+
+  it("devuelve null y avisa si no hay datos", async () => {
+    const { result } = renderHook(useExportWithData, { wrapper })
+
+    let rows: string[] | null = []
+    await act(async () => {
+      rows = await result.current.loadForXlsx(async () => [])
+    })
+
+    expect(rows).toBeNull()
+    expect(result.current.isExporting).toBeNull()
+    expect(toast.error).toHaveBeenLastCalledWith(ES_MESSAGES["export.noData"])
+  })
+})
