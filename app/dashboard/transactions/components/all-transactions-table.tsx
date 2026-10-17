@@ -26,6 +26,7 @@ import { TransactionsExportAction } from "./transactions-export-action"
 import { cn } from "@/lib/utils"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import { TablePagination } from "@/components/display/table-pagination"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -49,7 +50,7 @@ export function AllTransactionsTable({
   basePath,
   categories = [],
   accounts = [],
-}: AllTransactionsTableProps) {
+}: Readonly<AllTransactionsTableProps>) {
   const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
   const { t } = useI18n()
   const router = useRouter()
@@ -240,42 +241,16 @@ export function AllTransactionsTable({
         </Table>
       </div>
 
-      {/* Paginación */}
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          {t("pagination.showing", {
-            from:
-              transactions.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
-            to: Math.min(currentPage * meta.limit, meta.totalObjects),
-            total: meta.totalObjects,
-            entity: t("transactions.title").toLowerCase(),
-          })}
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1 || isPending}
-          >
-            {t("pagination.prev")}
-          </Button>
-          <div className="text-sm text-foreground">
-            {t("pagination.pageOf", {
-              page: currentPage,
-              totalPages: meta.totalPages,
-            })}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= meta.totalPages || isPending}
-          >
-            {t("pagination.next")}
-          </Button>
-        </div>
-      </div>
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={meta.totalPages}
+        limit={meta.limit}
+        totalObjects={meta.totalObjects}
+        itemCount={transactions.length}
+        entity={t("transactions.title").toLowerCase()}
+        disabled={isPending}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

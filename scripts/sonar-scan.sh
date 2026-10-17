@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Analyzes the repo with sonar-scanner-cli (Docker) against a SonarQube instance.
+# Runs tests with coverage, then analyzes the repo with sonar-scanner-cli (Docker) against a SonarQube instance.
 # Creates the SonarQube project on first run if it does not exist.
 # Required env vars: SONAR_HOST_URL, SONAR_TOKEN
 # Optional: SONAR_PROJECT_VERSION (defaults to package.json version)
@@ -25,6 +25,9 @@ if ! curl -s -u "$SONAR_TOKEN:" "$SONAR_HOST_URL/api/projects/search?projects=$P
     --data-urlencode "name=$PROJECT_NAME" \
     --data-urlencode "mainBranch=main" > /dev/null
 fi
+
+echo "==> Running tests with coverage..."
+yarn -s test:coverage
 
 echo "==> Running SonarQube analysis (version $VERSION)..."
 docker run --rm \
