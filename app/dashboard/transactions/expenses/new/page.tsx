@@ -1,6 +1,6 @@
 import { findManyCategories } from "@/app/actions/categories"
 import findManyAccounts from "@/app/actions/accounts/find-many"
-import { NewTransactionForm } from "../../../expenses/components/new-transaction-form"
+import { NewTransactionForm } from "../../components/new-transaction-form"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { getServerI18n } from "@/utils/i18n/server"

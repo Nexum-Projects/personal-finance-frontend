@@ -17,7 +17,7 @@ import type {
   Category,
   Account,
 } from "@/app/actions/transactions/types"
-import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
+import { TransactionsRowActions } from "./transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
 import { TransactionsExportAction } from "./transactions-export-action"
 import { cn } from "@/lib/utils"

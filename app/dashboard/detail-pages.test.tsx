@@ -42,7 +42,7 @@ vi.mock(
   "./monthly-periods/[id]/components/detail-monthly-period-actions",
   () => ({ DetailMonthlyPeriodActions: () => null })
 )
-vi.mock("./expenses/[id]/components/detail-transaction-actions", () => ({
+vi.mock("./transactions/components/detail-transaction-actions", () => ({
   DetailTransactionActions: () => null,
 }))
 vi.mock("./transfers/[id]/components/detail-transfer-actions", () => ({
