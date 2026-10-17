@@ -37,9 +37,13 @@ export function useExportAction<K extends string, T>({
     ((value?: PromiseLike<void> | void) => void) | null
   >(null)
 
-  const onIsExportingChange = useCallback((value: ExportType | null) => {
-    setIsExporting(value)
-  }, [])
+  const notifyLoadError = useCallback(
+    (error: unknown) =>
+      toast.error(
+        t(error === NO_DATA_ERROR ? "export.noData" : "export.loadError")
+      ),
+    [t]
+  )
 
   // `onBeforePrint` de react-to-print: carga los datos y espera a que se rendericen.
   // Si la carga falla o no trae filas, rechaza para cancelar la impresión y limpia el estado.
@@ -56,13 +60,29 @@ export function useExportAction<K extends string, T>({
       } catch (error) {
         promiseResolveRef.current = null
         setIsExporting(null)
-        toast.error(
-          t(error === NO_DATA_ERROR ? "export.noData" : "export.loadError")
-        )
+        notifyLoadError(error)
         throw error
       }
     },
-    [t]
+    [notifyLoadError]
+  )
+
+  // Carga las filas del Excel. Si la carga falla o no trae filas, avisa y devuelve null para no descargar nada.
+  const loadForXlsx = useCallback(
+    async (fetchData: () => Promise<T[]>) => {
+      setIsExporting("XLSX")
+      try {
+        const fetched = await fetchData()
+        if (fetched.length === 0) throw NO_DATA_ERROR
+        return fetched
+      } catch (error) {
+        notifyLoadError(error)
+        return null
+      } finally {
+        setIsExporting(null)
+      }
+    },
+    [notifyLoadError]
   )
 
   const onFullDataChange = useCallback((value: boolean) => {
@@ -115,8 +135,8 @@ export function useExportAction<K extends string, T>({
     rowsQuantity,
     sortedBy,
     sortDirection,
-    onIsExportingChange,
     loadBeforePrint,
+    loadForXlsx,
     onFullDataChange,
     onSortedByChange,
     onSortDirectionChange,
