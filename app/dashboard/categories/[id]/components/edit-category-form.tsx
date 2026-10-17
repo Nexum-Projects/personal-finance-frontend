@@ -37,9 +37,7 @@ export function EditCategoryForm({ category, backToHref }: Props) {
           return
         }
 
-        const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar la categoría"
-        )
+        const humanizedError = parseApiError(result.errors[0])
         toast.error(humanizedError.title, {
           description: humanizedError.description,
         })

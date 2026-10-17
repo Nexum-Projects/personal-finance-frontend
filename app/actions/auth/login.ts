@@ -6,7 +6,7 @@ import { z } from "zod"
 
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
-import { parseApiError } from "@/utils/helpers/parse-api-error"
+import { parseSessionApiError } from "@/app/actions/helpers/parse-session-api-error"
 
 type Props = {
   usernameOrEmail: string
@@ -73,7 +73,7 @@ export default async function login({
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       const responseData = error.response.data
-      const humanizedError = parseApiError(responseData)
+      const humanizedError = await parseSessionApiError(responseData)
       const responseCode =
         responseData &&
         typeof responseData === "object" &&
@@ -94,7 +94,7 @@ export default async function login({
       }
     }
 
-    const humanizedError = parseApiError(error)
+    const humanizedError = await parseSessionApiError(error)
     return {
       status: "error",
       errors: [

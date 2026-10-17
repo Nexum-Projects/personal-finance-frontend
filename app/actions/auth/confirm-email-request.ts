@@ -1,11 +1,10 @@
 "use server"
 
-import { isAxiosError } from "axios"
+import { actionError } from "@/app/actions/helpers/action-error"
 import { z } from "zod"
 
 import baseAxios from "../baseAxios"
 import type { ActionResponse } from "../types"
-import { parseApiError } from "@/utils/helpers/parse-api-error"
 
 const schema = z.object({
   email: z.string().email("El correo electrónico no es válido"),
@@ -26,22 +25,6 @@ export default async function confirmEmailRequest({
       data: { ok: true },
     }
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      const humanizedError = parseApiError(error.response.data)
-      return {
-        status: "error",
-        errors: [
-          { title: humanizedError.title, message: humanizedError.description },
-        ],
-      }
-    }
-
-    const humanizedError = parseApiError(error)
-    return {
-      status: "error",
-      errors: [
-        { title: humanizedError.title, message: humanizedError.description },
-      ],
-    }
+    return actionError(error)
   }
 }

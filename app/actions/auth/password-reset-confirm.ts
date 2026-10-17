@@ -1,11 +1,10 @@
 "use server"
 
-import { isAxiosError } from "axios"
+import { actionError } from "@/app/actions/helpers/action-error"
 import { z } from "zod"
 
 import baseAxios from "../baseAxios"
 import type { ActionResponse } from "../types"
-import { parseApiError } from "@/utils/helpers/parse-api-error"
 
 const passwordResetConfirmSchema = z.object({
   token: z.string().min(1, "El token es requerido"),
@@ -34,30 +33,6 @@ export default async function passwordResetConfirm(
       data: null,
     }
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      const responseData = error.response.data
-      const humanizedError = parseApiError(responseData)
-
-      return {
-        status: "error",
-        errors: [
-          {
-            title: humanizedError.title,
-            message: humanizedError.description,
-          },
-        ],
-      }
-    }
-
-    const humanizedError = parseApiError(error)
-    return {
-      status: "error",
-      errors: [
-        {
-          title: humanizedError.title,
-          message: humanizedError.description,
-        },
-      ],
-    }
+    return actionError(error)
   }
 }

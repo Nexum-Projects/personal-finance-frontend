@@ -50,6 +50,11 @@ import {
   EN_ADMIN_MESSAGES,
   PT_ADMIN_MESSAGES,
 } from "./messages/admin"
+import {
+  ES_ERRORS_MESSAGES,
+  EN_ERRORS_MESSAGES,
+  PT_ERRORS_MESSAGES,
+} from "./messages/errors"
 
 export const ES_MESSAGES = {
   ...ES_COMMON_MESSAGES,
@@ -62,6 +67,7 @@ export const ES_MESSAGES = {
   ...ES_MONTHLY_PERIODS_MESSAGES,
   ...ES_PROFILE_MESSAGES,
   ...ES_ADMIN_MESSAGES,
+  ...ES_ERRORS_MESSAGES,
 } as const
 
 export type I18nKey = keyof typeof ES_MESSAGES
@@ -78,6 +84,7 @@ export const EN_MESSAGES: Messages = {
   ...EN_MONTHLY_PERIODS_MESSAGES,
   ...EN_PROFILE_MESSAGES,
   ...EN_ADMIN_MESSAGES,
+  ...EN_ERRORS_MESSAGES,
 }
 
 export const PT_MESSAGES: Messages = {
@@ -91,6 +98,7 @@ export const PT_MESSAGES: Messages = {
   ...PT_MONTHLY_PERIODS_MESSAGES,
   ...PT_PROFILE_MESSAGES,
   ...PT_ADMIN_MESSAGES,
+  ...PT_ERRORS_MESSAGES,
 }
 
 export function getMessages(language: PreferredLanguage): Messages {
