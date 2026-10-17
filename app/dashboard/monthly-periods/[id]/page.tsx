@@ -7,6 +7,7 @@ import { PageSection } from "@/components/display/page-section/page-section"
 import { cn } from "@/lib/utils"
 import { DetailMonthlyPeriodActions } from "./components/detail-monthly-period-actions"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
 import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
@@ -34,27 +35,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   return {
     title: humanizeMonth(period.data.month, locale),
-  }
-}
-
-function formatDate(
-  dateString: string,
-  timeZone: string,
-  locale: string
-): string {
-  try {
-    const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat(locale, {
-      timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    return formatter.format(date)
-  } catch {
-    return dateString
   }
 }
 
@@ -132,11 +112,19 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
           },
           createdAt: {
             label: t("monthlyPeriods.detail.createdAt"),
-            value: formatDate(monthlyPeriod.createdAt, timeZoneIana, locale),
+            value: formatDateTime(
+              monthlyPeriod.createdAt,
+              locale,
+              timeZoneIana
+            ),
           },
           updatedAt: {
             label: t("monthlyPeriods.detail.updatedAt"),
-            value: formatDate(monthlyPeriod.updatedAt, timeZoneIana, locale),
+            value: formatDateTime(
+              monthlyPeriod.updatedAt,
+              locale,
+              timeZoneIana
+            ),
           },
         }}
         title={t("monthlyPeriods.detail.sectionTitle")}
