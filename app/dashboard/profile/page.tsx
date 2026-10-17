@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 import {
   PREFERRED_CURRENCY_LABEL,
   PREFERRED_LANGUAGE_LABEL,
@@ -18,27 +19,6 @@ import type { Metadata } from "next"
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getServerI18n()
   return { title: t("profile.meta.title") }
-}
-
-function formatDate(
-  dateString: string,
-  locale: string,
-  timeZone: string
-): string {
-  try {
-    const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat(locale, {
-      timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    return formatter.format(date)
-  } catch {
-    return dateString
-  }
 }
 
 export default async function ProfilePage() {
@@ -126,11 +106,11 @@ export default async function ProfilePage() {
           },
           createdAt: {
             label: t("profile.fields.createdAt"),
-            value: formatDate(user.createdAt, locale, timeZoneIana),
+            value: formatDateTime(user.createdAt, locale, timeZoneIana),
           },
           updatedAt: {
             label: t("profile.fields.updatedAt"),
-            value: formatDate(user.updatedAt, locale, timeZoneIana),
+            value: formatDateTime(user.updatedAt, locale, timeZoneIana),
           },
         }}
         title={t("profile.section.title")}

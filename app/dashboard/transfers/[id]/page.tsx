@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
 import { DetailTransferActions } from "./components/detail-transfer-actions"
 import { formatAmount } from "@/utils/helpers/format-amount"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 import { formatDateOnlyShort } from "@/utils/helpers/format-date-only"
 import getSessionPreferences from "@/app/actions/auth/get-session-preferences"
 import { languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
@@ -33,27 +34,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       from: transfer.data.fromAccount.name,
       to: transfer.data.toAccount.name,
     }),
-  }
-}
-
-function formatDate(
-  dateString: string,
-  timeZone: string,
-  locale: string
-): string {
-  try {
-    const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat(locale, {
-      timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    return formatter.format(date)
-  } catch {
-    return dateString
   }
 }
 
@@ -117,11 +97,11 @@ export default async function TransferDetailPage(props: Props) {
           },
           createdAt: {
             label: i18n("transfers.detail.createdAt"),
-            value: formatDate(transferData.createdAt, timeZoneIana, locale),
+            value: formatDateTime(transferData.createdAt, locale, timeZoneIana),
           },
           updatedAt: {
             label: i18n("transfers.detail.updatedAt"),
-            value: formatDate(transferData.updatedAt, timeZoneIana, locale),
+            value: formatDateTime(transferData.updatedAt, locale, timeZoneIana),
           },
         }}
         title={i18n("transfers.detail.sectionTitle")}
