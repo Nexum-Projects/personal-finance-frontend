@@ -48,7 +48,7 @@ export function AllTransactionsTable({
   categories = [],
   accounts = [],
 }: Readonly<AllTransactionsTableProps>) {
-  const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
+  const { preferredCurrency } = useUserPreferences()
   const { t } = useI18n()
   const {
     isPending,

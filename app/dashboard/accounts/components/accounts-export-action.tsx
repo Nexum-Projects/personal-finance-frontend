@@ -47,8 +47,7 @@ const REPORT_NAME = "Reporte de Cuentas"
 
 export function AccountsExportAction() {
   const searchParams = useSearchParams()
-  const { preferredCurrency, timeZoneIana, preferredLanguage, locale } =
-    useUserPreferences()
+  const { timeZoneIana, preferredLanguage, locale } = useUserPreferences()
   const { t } = useI18n()
 
   const { page, limit, order, orderBy, search, startDate, endDate } = useMemo(

@@ -50,7 +50,7 @@ const REPORT_NAME = "Reporte de Transacciones"
 
 export function TransactionsExportAction() {
   const searchParams = useSearchParams()
-  const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
+  const { preferredCurrency } = useUserPreferences()
   const { t } = useI18n()
 
   const {
