@@ -11,10 +11,7 @@ import { isAxiosError } from "axios"
  * - Un objeto de error de ActionResponse
  * - Un código de error de la API
  */
-export function handleAuthError(
-  error: unknown,
-  router?: any
-): boolean {
+export function handleAuthError(error: unknown, router?: any): boolean {
   // Si es un error de axios con respuesta 401/403
   if (isAxiosError(error) && error.response) {
     const status = error.response.status
@@ -24,11 +21,7 @@ export function handleAuthError(
   }
 
   // Si es un objeto de error de ActionResponse con código AUTH_ERROR
-  if (
-    error &&
-    typeof error === "object" &&
-    "code" in error
-  ) {
+  if (error && typeof error === "object" && "code" in error) {
     const err = error as { code?: string; statusCode?: number }
     if (
       err.code === "AUTH_ERROR" ||
@@ -44,10 +37,10 @@ export function handleAuthError(
     error &&
     typeof error === "object" &&
     "code" in error &&
-    (typeof error.code === "string" &&
-      (error.code.includes("UNAUTHORIZED") ||
-        error.code.includes("FORBIDDEN") ||
-        error.code.includes("TOKEN_EXPIRED")))
+    typeof error.code === "string" &&
+    (error.code.includes("UNAUTHORIZED") ||
+      error.code.includes("FORBIDDEN") ||
+      error.code.includes("TOKEN_EXPIRED"))
   ) {
     return performLogout(error, router)
   }
@@ -62,7 +55,10 @@ function performLogout(errorData: unknown, router?: any): boolean {
   })
 
   // Redirigir a /logout (Route Handler) para limpiar cookies httpOnly y luego ir a /login
-  if (typeof window !== "undefined" && !window.location.pathname.includes("/login")) {
+  if (
+    typeof window !== "undefined" &&
+    !window.location.pathname.includes("/login")
+  ) {
     if (router) {
       router.push("/logout")
     } else {
@@ -72,4 +68,3 @@ function performLogout(errorData: unknown, router?: any): boolean {
 
   return true
 }
-

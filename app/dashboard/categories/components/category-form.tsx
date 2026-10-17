@@ -9,7 +9,10 @@ import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
 import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
-import { categorySchema, type CategoryFormValues } from "@/app/actions/categories/schema"
+import {
+  categorySchema,
+  type CategoryFormValues,
+} from "@/app/actions/categories/schema"
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { humanizeCategoryType } from "@/utils/helpers/humanize-category-type"
@@ -44,7 +47,9 @@ export function CategoryForm({
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
           description={
-            isOnEdit ? t("categories.form.sectionDescEdit") : t("categories.form.sectionDescNew")
+            isOnEdit
+              ? t("categories.form.sectionDescEdit")
+              : t("categories.form.sectionDescNew")
           }
           title={t("categories.form.sectionTitle")}
         >
@@ -62,8 +67,14 @@ export function CategoryForm({
             label={t("categories.form.type.label")}
             name="categoryType"
             options={[
-              { label: humanizeCategoryType("INCOME", preferredLanguage), value: "INCOME" },
-              { label: humanizeCategoryType("EXPENSE", preferredLanguage), value: "EXPENSE" },
+              {
+                label: humanizeCategoryType("INCOME", preferredLanguage),
+                value: "INCOME",
+              },
+              {
+                label: humanizeCategoryType("EXPENSE", preferredLanguage),
+                value: "EXPENSE",
+              },
             ]}
             placeholder={t("categories.form.type.placeholder")}
           />
@@ -86,4 +97,3 @@ export function CategoryForm({
     </Form>
   )
 }
-

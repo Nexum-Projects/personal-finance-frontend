@@ -9,7 +9,8 @@ export const ES_ADMIN_MESSAGES = {
   "admin.meta.title": "Administración",
 
   "admin.users.title": "Usuarios",
-  "admin.users.subtitle": "Listado de usuarios del sistema (solo super administradores)",
+  "admin.users.subtitle":
+    "Listado de usuarios del sistema (solo super administradores)",
   "admin.users.search": "Buscar por usuario o correo…",
   "admin.users.entity": "usuarios",
   "admin.users.table.username": "Usuario",
@@ -37,12 +38,14 @@ export const ES_ADMIN_MESSAGES = {
     "Información registrada en el sistema para esta cuenta.",
   "admin.users.fields.emailVerifiedAt": "Correo verificado",
   "admin.users.emailNotVerified": "No verificado",
-  "admin.users.detail.notFoundMessage": "No se encontró ese usuario o ya no existe.",
+  "admin.users.detail.notFoundMessage":
+    "No se encontró ese usuario o ya no existe.",
 
   "admin.error.forbidden.title": "Acceso denegado",
   "admin.error.forbidden.message": "No tienes permisos para esta sección.",
   "admin.error.invalid.title": "Respuesta inválida",
-  "admin.error.invalid.message": "El servidor devolvió un formato de datos no reconocido.",
+  "admin.error.invalid.message":
+    "El servidor devolvió un formato de datos no reconocido.",
 } as const
 
 export const EN_ADMIN_MESSAGES = {
@@ -80,15 +83,18 @@ export const EN_ADMIN_MESSAGES = {
   "admin.users.detail.metaNotFound": "User · Administration",
   "admin.users.detail.backToList": "Back to list",
   "admin.users.detail.section.title": "User details",
-  "admin.users.detail.section.description": "Information stored in the system for this account.",
+  "admin.users.detail.section.description":
+    "Information stored in the system for this account.",
   "admin.users.fields.emailVerifiedAt": "Email verified",
   "admin.users.emailNotVerified": "Not verified",
   "admin.users.detail.notFoundMessage": "That user could not be found.",
 
   "admin.error.forbidden.title": "Access denied",
-  "admin.error.forbidden.message": "You do not have permission for this section.",
+  "admin.error.forbidden.message":
+    "You do not have permission for this section.",
   "admin.error.invalid.title": "Invalid response",
-  "admin.error.invalid.message": "The server returned an unrecognized data format.",
+  "admin.error.invalid.message":
+    "The server returned an unrecognized data format.",
 } as const
 
 export const PT_ADMIN_MESSAGES = {
@@ -102,7 +108,8 @@ export const PT_ADMIN_MESSAGES = {
   "admin.meta.title": "Administração",
 
   "admin.users.title": "Usuários",
-  "admin.users.subtitle": "Lista de usuários do sistema (apenas super administradores)",
+  "admin.users.subtitle":
+    "Lista de usuários do sistema (apenas super administradores)",
   "admin.users.search": "Buscar por usuário ou e-mail…",
   "admin.users.entity": "usuários",
   "admin.users.table.username": "Usuário",
@@ -121,7 +128,8 @@ export const PT_ADMIN_MESSAGES = {
   "admin.users.actions.deactivate": "Desativar",
   "admin.users.actions.successActivated": "Usuário ativado.",
   "admin.users.actions.successDeactivated": "Usuário desativado.",
-  "admin.users.actions.error": "Não foi possível atualizar o estado do usuário.",
+  "admin.users.actions.error":
+    "Não foi possível atualizar o estado do usuário.",
 
   "admin.users.detail.metaNotFound": "Usuário · Administração",
   "admin.users.detail.backToList": "Voltar à lista",
@@ -135,5 +143,6 @@ export const PT_ADMIN_MESSAGES = {
   "admin.error.forbidden.title": "Acesso negado",
   "admin.error.forbidden.message": "Você não tem permissão para esta seção.",
   "admin.error.invalid.title": "Resposta inválida",
-  "admin.error.invalid.message": "O servidor retornou um formato de dados não reconhecido.",
+  "admin.error.invalid.message":
+    "O servidor retornou um formato de dados não reconhecido.",
 } as const

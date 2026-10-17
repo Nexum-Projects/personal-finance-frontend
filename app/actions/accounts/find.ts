@@ -10,7 +10,9 @@ export default async function findAccount(
   accountId: string
 ): Promise<ActionResponse<Account>> {
   try {
-    const response = await baseAxios.get<{ data: Account }>(`/accounts/${accountId}`)
+    const response = await baseAxios.get<{ data: Account }>(
+      `/accounts/${accountId}`
+    )
 
     return {
       status: "success",
@@ -44,5 +46,3 @@ export default async function findAccount(
     }
   }
 }
-
-

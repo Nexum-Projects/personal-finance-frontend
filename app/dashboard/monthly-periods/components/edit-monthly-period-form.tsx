@@ -12,7 +12,10 @@ import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
-import { monthlyPeriodUpdateSchema, type MonthlyPeriodUpdateFormValues } from "@/app/actions/monthly-periods/schema"
+import {
+  monthlyPeriodUpdateSchema,
+  type MonthlyPeriodUpdateFormValues,
+} from "@/app/actions/monthly-periods/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import { useI18n } from "@/components/i18n/i18n-provider"
@@ -40,7 +43,9 @@ export function EditMonthlyPeriodForm({
     defaultValues,
   })
 
-  const onSubmit: SubmitHandler<MonthlyPeriodUpdateFormValues> = async (formValues) => {
+  const onSubmit: SubmitHandler<MonthlyPeriodUpdateFormValues> = async (
+    formValues
+  ) => {
     setIsSubmitting(true)
 
     try {
@@ -93,9 +98,12 @@ export function EditMonthlyPeriodForm({
           <NumericField
             control={form.control}
             decimalScale={2}
-            description={t("monthlyPeriods.editInitialSaving.form.amount.desc", {
-              currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
-            })}
+            description={t(
+              "monthlyPeriods.editInitialSaving.form.amount.desc",
+              {
+                currency: PREFERRED_CURRENCY_LABEL[preferredCurrency],
+              }
+            )}
             label={t("monthlyPeriods.editInitialSaving.form.title")}
             name="initialSavingCents"
             placeholder="0.00"
@@ -119,4 +127,3 @@ export function EditMonthlyPeriodForm({
     </Form>
   )
 }
-

@@ -41,8 +41,7 @@ export default async function DocsMonthlyBudgetsPage() {
       ? {
           back: "Back to Documentation",
           title: "Module: Monthly budgets",
-          desc:
-            "Manage monthly periods and category budgets, plus analytics.",
+          desc: "Manage monthly periods and category budgets, plus analytics.",
           placeholderList: "[IMAGE / GIF] Monthly periods list",
           purposeTitle: "Purpose",
           purposeP1:
@@ -57,7 +56,8 @@ export default async function DocsMonthlyBudgetsPage() {
             "Row actions: view details, edit, deactivate/reactivate (if available).",
             "Reactivate: if a period is inactive, you may see an option to reactivate it.",
           ],
-          placeholderControls: "[IMAGE / GIF] Search + filters + row actions menu",
+          placeholderControls:
+            "[IMAGE / GIF] Search + filters + row actions menu",
           detailTitle: "Monthly period details",
           detailP1:
             "In a monthly period detail you will typically see tabs like General and Budgets.",
@@ -90,9 +90,9 @@ export default async function DocsMonthlyBudgetsPage() {
         ? {
             back: "Voltar para Documentação",
             title: "Módulo: Orçamentos mensais",
-            desc:
-              "Gerencie períodos mensais e orçamentos por categoria, com análises.",
-            placeholderList: "[IMAGEM / GIF] Lista de orçamentos mensais (períodos)",
+            desc: "Gerencie períodos mensais e orçamentos por categoria, com análises.",
+            placeholderList:
+              "[IMAGEM / GIF] Lista de orçamentos mensais (períodos)",
             purposeTitle: "Propósito",
             purposeP1:
               "Este módulo permite organizar finanças por mês, definindo um “orçamento mensal” (período) e seus orçamentos por categoria (principalmente despesas), além de consultar análises.",
@@ -106,10 +106,10 @@ export default async function DocsMonthlyBudgetsPage() {
               "Ações por linha: ver detalhe, editar, desativar/reativar (se disponível).",
               "Reativar: se um período estiver inativo, pode existir a ação de reativação.",
             ],
-            placeholderControls: "[IMAGEM / GIF] Busca + filtros + menu de ações",
+            placeholderControls:
+              "[IMAGEM / GIF] Busca + filtros + menu de ações",
             detailTitle: "Detalhe de um orçamento mensal",
-            detailP1:
-              "No detalhe você verá abas como Geral e Orçamentos.",
+            detailP1: "No detalhe você verá abas como Geral e Orçamentos.",
             detailBullets: [
               "Geral: ano, mês, poupança inicial, status e datas.",
               "Orçamentos: lista de orçamentos por categoria do período.",
@@ -122,7 +122,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "Cada orçamento acompanha: orçado, gasto e restante.",
               "Se restante for negativo, significa que o orçamento foi excedido.",
             ],
-            placeholderCategory: "[IMAGEM / GIF] Formulário de orçamento por categoria",
+            placeholderCategory:
+              "[IMAGEM / GIF] Formulário de orçamento por categoria",
             analyticsTitle: "Análise mensal (no Painel)",
             analyticsP1:
               "No Painel existe uma tabela analítica mensal com coluna Total e um diálogo por mês para ver orçamentos por categoria.",
@@ -130,7 +131,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "A coluna Total ajuda a ver acumulados anuais por linha.",
               "O diálogo do mês mostra por categoria: orçado, gasto e restante.",
             ],
-            placeholderAnalytics: "[IMAGEM / GIF] Tabela analítica + diálogo por mês",
+            placeholderAnalytics:
+              "[IMAGEM / GIF] Tabela analítica + diálogo por mês",
             seeMorePrefix: "Ver mais em ",
             seeMoreLink: "Painel",
             seeMoreSuffix: ".",
@@ -138,9 +140,9 @@ export default async function DocsMonthlyBudgetsPage() {
         : {
             back: "Regresar a Documentación",
             title: "Módulo: Presupuestos mensuales",
-            desc:
-              "Gestiona presupuestos por mes (períodos) y presupuestos por categoría, con analítica.",
-            placeholderList: "[IMAGEN / GIF] Lista de presupuestos mensuales (períodos)",
+            desc: "Gestiona presupuestos por mes (períodos) y presupuestos por categoría, con analítica.",
+            placeholderList:
+              "[IMAGEN / GIF] Lista de presupuestos mensuales (períodos)",
             purposeTitle: "Propósito",
             purposeP1:
               "Este módulo te permite organizar tus finanzas por mes, definiendo un “presupuesto mensual” y sus presupuestos por categoría (principalmente para gastos), además de consultar analíticas.",
@@ -154,7 +156,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "Acciones por fila: ver detalle, editar, eliminar/reactivar (según disponibilidad).",
               "Reactivar: si un período fue desactivado, puede existir la acción de reactivarlo.",
             ],
-            placeholderControls: "[IMAGEN / GIF] Barra de búsqueda + filtros + menú de acciones",
+            placeholderControls:
+              "[IMAGEN / GIF] Barra de búsqueda + filtros + menú de acciones",
             detailTitle: "Detalle de un presupuesto mensual",
             detailP1:
               "Al entrar al detalle de un presupuesto mensual, se muestran pestañas como General y Presupuestos.",
@@ -162,7 +165,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "General: muestra datos del período (año, mes, ahorro inicial, estado, fechas).",
               "Presupuestos: lista de presupuestos por categoría ligados a ese período.",
             ],
-            placeholderDetail: "[IMAGEN / GIF] Vista de detalle + pestañas General/Presupuestos",
+            placeholderDetail:
+              "[IMAGEN / GIF] Vista de detalle + pestañas General/Presupuestos",
             categoryTitle: "Presupuestos por categoría",
             categoryBullets: [
               "Se crean presupuestos por categoría ligados al presupuesto mensual.",
@@ -170,7 +174,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "Cada presupuesto por categoría maneja: presupuestado, gastado y restante.",
               "Si restante es negativo, significa que ya se excedió el presupuesto.",
             ],
-            placeholderCategory: "[IMAGEN / GIF] Formulario de presupuesto por categoría",
+            placeholderCategory:
+              "[IMAGEN / GIF] Formulario de presupuesto por categoría",
             analyticsTitle: "Analítica mensual (desde el Dashboard)",
             analyticsP1:
               "En el Dashboard existe una tabla de analítica por mes con una columna Total y un diálogo por mes para ver presupuestos por categoría.",
@@ -178,7 +183,8 @@ export default async function DocsMonthlyBudgetsPage() {
               "La columna Total ayuda a ver acumulados anuales por fila (ahorro inicial, ingresos, gastos, etc.).",
               "El diálogo por mes muestra, por categoría: presupuestado, gastado y restante.",
             ],
-            placeholderAnalytics: "[IMAGEN / GIF] Tabla analítica + diálogo por mes",
+            placeholderAnalytics:
+              "[IMAGEN / GIF] Tabla analítica + diálogo por mes",
             seeMorePrefix: "Ver más en ",
             seeMoreLink: "Dashboard",
             seeMoreSuffix: ".",
@@ -209,7 +215,7 @@ export default async function DocsMonthlyBudgetsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.listP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.listBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -224,7 +230,7 @@ export default async function DocsMonthlyBudgetsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.detailP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.detailBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -238,7 +244,7 @@ export default async function DocsMonthlyBudgetsPage() {
           <CardTitle>{copy.categoryTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.categoryBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -253,7 +259,7 @@ export default async function DocsMonthlyBudgetsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.analyticsP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.analyticsBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -261,7 +267,10 @@ export default async function DocsMonthlyBudgetsPage() {
           <DocImagePlaceholder title={copy.placeholderAnalytics} />
           <div className="text-sm text-muted-foreground">
             {copy.seeMorePrefix}
-            <Link className="underline underline-offset-4" href="/dashboard/docs/dashboard">
+            <Link
+              className="underline underline-offset-4"
+              href="/dashboard/docs/dashboard"
+            >
               {copy.seeMoreLink}
             </Link>
             {copy.seeMoreSuffix}
@@ -271,4 +280,3 @@ export default async function DocsMonthlyBudgetsPage() {
     </PageContainer>
   )
 }
-

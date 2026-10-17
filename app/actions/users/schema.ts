@@ -1,5 +1,9 @@
 import { z } from "zod"
-import { PREFERRED_CURRENCIES, PREFERRED_LANGUAGES, TIME_ZONES } from "@/utils/user-preferences"
+import {
+  PREFERRED_CURRENCIES,
+  PREFERRED_LANGUAGES,
+  TIME_ZONES,
+} from "@/utils/user-preferences"
 
 export const userUpdateSchema = z.object({
   username: z
@@ -16,5 +20,3 @@ export const userUpdateSchema = z.object({
 })
 
 export type UserUpdateFormValues = z.infer<typeof userUpdateSchema>
-
-

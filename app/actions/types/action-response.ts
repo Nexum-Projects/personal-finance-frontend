@@ -6,14 +6,13 @@ type Error = {
 }
 
 export type SuccessResponse<T> = {
-  status: 'success'
+  status: "success"
   data: T
 }
 
 export type ErrorResponse = {
-  status: 'error'
+  status: "error"
   errors: Error[]
 }
 
 export type ActionResponse<T> = Promise<SuccessResponse<T> | ErrorResponse>
-

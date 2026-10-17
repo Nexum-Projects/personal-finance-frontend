@@ -1,6 +1,13 @@
 "use client"
 
-import { Download, FileSpreadsheet, FileText, Loader2, ArrowDown, X } from "lucide-react"
+import {
+  Download,
+  FileSpreadsheet,
+  FileText,
+  Loader2,
+  ArrowDown,
+  X,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -77,7 +84,7 @@ export function ExportActionsDialog({
           {t("export.title")}
         </Button>
       </DialogTrigger>
-      <DialogContent className="rounded-3xl p-4 lg:p-6 max-w-2xl">
+      <DialogContent className="max-w-2xl rounded-3xl p-4 lg:p-6">
         <DialogHeader className="grid grid-cols-[1fr_32px] gap-2 text-left">
           <div className="space-y-1.5">
             <DialogTitle>{title || t("export.title")}</DialogTitle>
@@ -103,12 +110,12 @@ export function ExportActionsDialog({
           <div className="flex flex-row items-center gap-3">
             <div className="grid flex-1 gap-0.5">
               <Label
-                className="text-sm leading-4 font-medium"
+                className="text-sm font-medium leading-4"
                 htmlFor="full-data"
               >
                 {t("export.fullData")}
               </Label>
-              <p className="text-xs text-muted-foreground leading-4 text-pretty">
+              <p className="text-pretty text-xs leading-4 text-muted-foreground">
                 {t("export.fullDataDesc")}
               </p>
             </div>
@@ -123,10 +130,10 @@ export function ExportActionsDialog({
           {/* Sorting Select */}
           <div className="flex flex-col gap-2 md:flex-row md:items-center">
             <div className="grid flex-1 gap-0.5">
-              <Label className="text-sm leading-4 font-medium">
+              <Label className="text-sm font-medium leading-4">
                 {t("export.sortBy")}
               </Label>
-              <p className="text-xs text-muted-foreground leading-4 text-pretty">
+              <p className="text-pretty text-xs leading-4 text-muted-foreground">
                 {t("export.sortByDesc")}
               </p>
             </div>
@@ -172,10 +179,10 @@ export function ExportActionsDialog({
                 "pointer-events-none opacity-50": fullData.value,
               })}
             >
-              <Label className="text-sm leading-4 font-medium">
+              <Label className="text-sm font-medium leading-4">
                 {t("export.rowsQuantity")}
               </Label>
-              <p className="text-xs text-muted-foreground leading-4 text-pretty">
+              <p className="text-pretty text-xs leading-4 text-muted-foreground">
                 {t("export.rowsQuantityDesc")}
               </p>
             </div>
@@ -215,7 +222,7 @@ export function ExportActionsDialog({
                 <Button
                   key={key}
                   className={cn(
-                    "bg-surface text-muted-foreground grid h-32 cursor-pointer place-items-center content-center gap-2 rounded-lg border transition-colors duration-500",
+                    "bg-surface grid h-32 cursor-pointer place-items-center content-center gap-2 rounded-lg border text-muted-foreground transition-colors duration-500",
                     isPDF
                       ? "hover:border-rose-600/30 hover:bg-rose-600/10 hover:text-rose-600 dark:hover:border-rose-500/30 dark:hover:bg-rose-600/10 dark:hover:text-rose-400"
                       : "hover:border-green-600/30 hover:bg-green-600/10 hover:text-green-600 dark:hover:border-green-600/30 dark:hover:bg-green-600/10 dark:hover:text-green-500"
@@ -230,7 +237,7 @@ export function ExportActionsDialog({
                   ) : (
                     <Icon className="size-5" />
                   )}
-                  <p className="text-center leading-5 whitespace-pre-line text-sm">
+                  <p className="whitespace-pre-line text-center text-sm leading-5">
                     {isPDF ? t("export.toPDF") : t("export.toExcel")}
                   </p>
                 </Button>

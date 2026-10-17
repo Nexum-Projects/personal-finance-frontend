@@ -66,7 +66,9 @@ export default async function IncomeDetailPage(props: Props) {
   return (
     <PageContainer>
       <PageHeader
-        actions={<DetailTransactionActions transaction={trans} categoryType="INCOME" />}
+        actions={
+          <DetailTransactionActions transaction={trans} categoryType="INCOME" />
+        }
         backTo={{
           href: "/dashboard/income",
           label: "Regresar a ingresos",
@@ -85,7 +87,10 @@ export default async function IncomeDetailPage(props: Props) {
           },
           amount: {
             label: "Monto",
-            value: formatAmount(trans.amountCents, preferences.preferredCurrency),
+            value: formatAmount(
+              trans.amountCents,
+              preferences.preferredCurrency
+            ),
           },
           description: {
             label: "Descripción",
@@ -117,4 +122,3 @@ export default async function IncomeDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

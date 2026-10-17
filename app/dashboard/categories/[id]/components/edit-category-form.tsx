@@ -30,7 +30,7 @@ export function EditCategoryForm({ category, backToHref }: Props) {
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           setIsSubmitting(false)
@@ -78,4 +78,3 @@ export function EditCategoryForm({ category, backToHref }: Props) {
     />
   )
 }
-

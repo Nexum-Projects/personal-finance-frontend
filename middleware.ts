@@ -16,8 +16,7 @@ export async function middleware(request: NextRequest) {
       const [, payloadB64] = token.split(".")
       if (!payloadB64) return true
       const base64 = payloadB64.replace(/-/g, "+").replace(/_/g, "/")
-      const padded =
-        base64 + "===".slice((base64.length + 3) % 4) // padding base64
+      const padded = base64 + "===".slice((base64.length + 3) % 4) // padding base64
       const payloadJson = atob(padded)
       const payload = JSON.parse(payloadJson) as { exp?: number }
       if (!payload.exp) return false
@@ -54,4 +53,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/dashboard/:path*", "/login", "/sw.js", "/workbox-:path*"],
 }
-

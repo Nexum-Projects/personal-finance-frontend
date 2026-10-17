@@ -33,13 +33,16 @@ export const ES_CATEGORIES_MESSAGES = {
   "categories.detail.createdAt": "Fecha de creación",
   "categories.detail.updatedAt": "Última actualización",
   "categories.form.sectionTitle": "Datos generales",
-  "categories.form.sectionDescNew": "Ingresa los datos generales de la nueva categoría",
-  "categories.form.sectionDescEdit": "Ingresa los datos generales de la categoría",
+  "categories.form.sectionDescNew":
+    "Ingresa los datos generales de la nueva categoría",
+  "categories.form.sectionDescEdit":
+    "Ingresa los datos generales de la categoría",
   "categories.form.name.label": "Nombre",
   "categories.form.name.desc": "El nombre debe tener entre 1 y 255 caracteres",
   "categories.form.name.placeholder": "Ingresa el nombre de la categoría",
   "categories.form.type.label": "Tipo de categoría",
-  "categories.form.type.desc": "Selecciona si esta categoría es para ingresos o gastos",
+  "categories.form.type.desc":
+    "Selecciona si esta categoría es para ingresos o gastos",
   "categories.form.type.placeholder": "Selecciona el tipo de categoría",
   "categories.filters.type": "Tipo",
   "categories.filters.selectType": "Seleccionar tipo",
@@ -47,9 +50,12 @@ export const ES_CATEGORIES_MESSAGES = {
   "toast.category.created": "Categoría creada",
   "toast.category.updated": "Categoría actualizada",
   "toast.category.deactivated": "Categoría desactivada",
-  "toast.category.created.desc": "La categoría {name} ha sido creada exitosamente.",
-  "toast.category.updated.desc": "La categoría ha sido actualizada exitosamente.",
-  "toast.category.deactivated.desc": "La categoría {name} ha sido desactivada exitosamente.",
+  "toast.category.created.desc":
+    "La categoría {name} ha sido creada exitosamente.",
+  "toast.category.updated.desc":
+    "La categoría ha sido actualizada exitosamente.",
+  "toast.category.deactivated.desc":
+    "La categoría {name} ha sido desactivada exitosamente.",
 } as const
 
 export const EN_CATEGORIES_MESSAGES = {
@@ -87,13 +93,16 @@ export const EN_CATEGORIES_MESSAGES = {
   "categories.detail.createdAt": "Created at",
   "categories.detail.updatedAt": "Last update",
   "categories.form.sectionTitle": "General details",
-  "categories.form.sectionDescNew": "Enter the general details for the new category",
-  "categories.form.sectionDescEdit": "Enter the general details for the category",
+  "categories.form.sectionDescNew":
+    "Enter the general details for the new category",
+  "categories.form.sectionDescEdit":
+    "Enter the general details for the category",
   "categories.form.name.label": "Name",
   "categories.form.name.desc": "Name must be between 1 and 255 characters",
   "categories.form.name.placeholder": "Enter the category name",
   "categories.form.type.label": "Category type",
-  "categories.form.type.desc": "Choose whether this category is for income or expenses",
+  "categories.form.type.desc":
+    "Choose whether this category is for income or expenses",
   "categories.form.type.placeholder": "Select a category type",
   "categories.filters.type": "Type",
   "categories.filters.selectType": "Select type",
@@ -103,7 +112,8 @@ export const EN_CATEGORIES_MESSAGES = {
   "toast.category.deactivated": "Category deactivated",
   "toast.category.created.desc": "Category {name} was created successfully.",
   "toast.category.updated.desc": "The category was updated successfully.",
-  "toast.category.deactivated.desc": "Category {name} was deactivated successfully.",
+  "toast.category.deactivated.desc":
+    "Category {name} was deactivated successfully.",
 } as const
 
 export const PT_CATEGORIES_MESSAGES = {
@@ -147,7 +157,8 @@ export const PT_CATEGORIES_MESSAGES = {
   "categories.form.name.desc": "O nome deve ter entre 1 e 255 caracteres",
   "categories.form.name.placeholder": "Digite o nome da categoria",
   "categories.form.type.label": "Tipo de categoria",
-  "categories.form.type.desc": "Selecione se esta categoria é para receitas ou despesas",
+  "categories.form.type.desc":
+    "Selecione se esta categoria é para receitas ou despesas",
   "categories.form.type.placeholder": "Selecione o tipo de categoria",
   "categories.filters.type": "Tipo",
   "categories.filters.selectType": "Selecionar tipo",
@@ -157,6 +168,6 @@ export const PT_CATEGORIES_MESSAGES = {
   "toast.category.deactivated": "Categoria desativada",
   "toast.category.created.desc": "A categoria {name} foi criada com sucesso.",
   "toast.category.updated.desc": "A categoria foi atualizada com sucesso.",
-  "toast.category.deactivated.desc": "A categoria {name} foi desativada com sucesso.",
+  "toast.category.deactivated.desc":
+    "A categoria {name} foi desativada com sucesso.",
 } as const
-

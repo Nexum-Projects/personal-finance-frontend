@@ -33,7 +33,8 @@ export default async function NewMonthlyBudgetPage(props: Props) {
     categoryType: "EXPENSE",
   })
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
 
   const BACK_TO_HREF = `/dashboard/monthly-periods/${id}/budgets`
 
@@ -66,4 +67,3 @@ export default async function NewMonthlyBudgetPage(props: Props) {
     </PageContainer>
   )
 }
-

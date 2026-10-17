@@ -97,14 +97,18 @@ export function languageToLocale(language: PreferredLanguage): string {
   return LANGUAGE_TO_LOCALE[language]
 }
 
-export function parsePreferredCurrency(value: unknown): PreferredCurrency | null {
+export function parsePreferredCurrency(
+  value: unknown
+): PreferredCurrency | null {
   if (typeof value !== "string") return null
   return (PREFERRED_CURRENCIES as readonly string[]).includes(value)
     ? (value as PreferredCurrency)
     : null
 }
 
-export function parsePreferredLanguage(value: unknown): PreferredLanguage | null {
+export function parsePreferredLanguage(
+  value: unknown
+): PreferredLanguage | null {
   if (typeof value !== "string") return null
   return (PREFERRED_LANGUAGES as readonly string[]).includes(value)
     ? (value as PreferredLanguage)
@@ -113,16 +117,20 @@ export function parsePreferredLanguage(value: unknown): PreferredLanguage | null
 
 export function parseTimeZone(value: unknown): TimeZone | null {
   if (typeof value !== "string") return null
-  return (TIME_ZONES as readonly string[]).includes(value) ? (value as TimeZone) : null
+  return (TIME_ZONES as readonly string[]).includes(value)
+    ? (value as TimeZone)
+    : null
 }
 
 export function getPreferencesFromClaims(
   claims: Record<string, unknown> | null | undefined
 ): UserPreferences {
-  const preferredCurrency = parsePreferredCurrency(claims?.preferredCurrency) ?? DEFAULT_PREFERRED_CURRENCY
+  const preferredCurrency =
+    parsePreferredCurrency(claims?.preferredCurrency) ??
+    DEFAULT_PREFERRED_CURRENCY
   const timeZone = parseTimeZone(claims?.timeZone) ?? DEFAULT_TIME_ZONE
   const preferredLanguage =
-    parsePreferredLanguage(claims?.preferredLanguage) ?? DEFAULT_PREFERRED_LANGUAGE
+    parsePreferredLanguage(claims?.preferredLanguage) ??
+    DEFAULT_PREFERRED_LANGUAGE
   return { preferredCurrency, timeZone, preferredLanguage }
 }
-

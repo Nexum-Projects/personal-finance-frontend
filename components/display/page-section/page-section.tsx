@@ -38,7 +38,7 @@ export function PageSection({
         <Typography variant="h4">{title}</Typography>
         {description && (
           <Typography
-            className="text-muted-foreground leading-5 text-pretty"
+            className="text-pretty leading-5 text-muted-foreground"
             variant="p"
           >
             {description}
@@ -53,4 +53,3 @@ export function PageSection({
     </div>
   )
 }
-

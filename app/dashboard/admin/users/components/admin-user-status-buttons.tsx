@@ -34,13 +34,15 @@ export function AdminUserStatusButtons({
     setPending(true)
     try {
       const result =
-        action === "activate" ? await activateUser(userId) : await deactivateUser(userId)
+        action === "activate"
+          ? await activateUser(userId)
+          : await deactivateUser(userId)
 
       if (result.status === "success") {
         toast.success(
           action === "activate"
             ? t("admin.users.actions.successActivated")
-            : t("admin.users.actions.successDeactivated"),
+            : t("admin.users.actions.successDeactivated")
         )
         router.refresh()
       } else {
@@ -58,7 +60,7 @@ export function AdminUserStatusButtons({
       className={cn(
         "flex flex-wrap items-center gap-2",
         layout === "table" && "justify-end",
-        className,
+        className
       )}
     >
       {!isActive ? (

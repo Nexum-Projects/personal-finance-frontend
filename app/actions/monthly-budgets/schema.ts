@@ -13,4 +13,3 @@ export const monthlyBudgetSchema = z.object({
 })
 
 export type MonthlyBudgetFormValues = z.infer<typeof monthlyBudgetSchema>
-

@@ -11,14 +11,22 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
 import { passwordResetConfirm } from "@/app/actions/auth"
 
 const schema = z
   .object({
-    newPassword: z.string().min(8, "La nueva contraseña debe tener al menos 8 caracteres"),
+    newPassword: z
+      .string()
+      .min(8, "La nueva contraseña debe tener al menos 8 caracteres"),
     confirmPassword: z.string().min(8, "Confirma tu nueva contraseña"),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
@@ -51,7 +59,8 @@ export function ResetPasswordClient() {
 
     try {
       if (!token) {
-        const message = "El link no contiene token. Solicita un nuevo correo de recuperación."
+        const message =
+          "El link no contiene token. Solicita un nuevo correo de recuperación."
         toast.error("Token inválido", { description: message })
         setError(message)
         return
@@ -63,8 +72,12 @@ export function ResetPasswordClient() {
       })
 
       if (result.status === "error") {
-        const humanizedError = parseApiError(result.errors[0] || "Error al restablecer contraseña")
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        const humanizedError = parseApiError(
+          result.errors[0] || "Error al restablecer contraseña"
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         setError(humanizedError.description)
         return
       }
@@ -77,7 +90,9 @@ export function ResetPasswordClient() {
       router.refresh()
     } catch (err: any) {
       const humanizedError = parseApiError(err)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
       setError(humanizedError.description)
     } finally {
       setIsLoading(false)
@@ -85,10 +100,12 @@ export function ResetPasswordClient() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Restablecer contraseña</CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">
+            Restablecer contraseña
+          </CardTitle>
           <CardDescription className="text-center">
             Ingresa tu nueva contraseña. Este link expira pronto.
           </CardDescription>
@@ -96,14 +113,15 @@ export function ResetPasswordClient() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
 
             {!token && (
-              <div className="p-3 rounded-md bg-yellow-500/10 border border-yellow-500/20 text-yellow-700 dark:text-yellow-300 text-sm">
-                No se encontró token en la URL. Solicita nuevamente el correo de recuperación.
+              <div className="rounded-md border border-yellow-500/20 bg-yellow-500/10 p-3 text-sm text-yellow-700 dark:text-yellow-300">
+                No se encontró token en la URL. Solicita nuevamente el correo de
+                recuperación.
               </div>
             )}
 
@@ -116,20 +134,30 @@ export function ResetPasswordClient() {
                   placeholder="Ingresa tu nueva contraseña"
                   {...register("newPassword")}
                   disabled={isLoading}
-                  className={errors.newPassword ? "border-destructive pr-10" : "pr-10"}
+                  className={
+                    errors.newPassword ? "border-destructive pr-10" : "pr-10"
+                  }
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={isLoading}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors focus:outline-none disabled:opacity-50"
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground focus:outline-none disabled:opacity-50"
+                  aria-label={
+                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                  }
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
                 </button>
               </div>
               {errors.newPassword && (
-                <p className="text-sm text-destructive">{errors.newPassword.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.newPassword.message}
+                </p>
               )}
             </div>
 
@@ -144,11 +172,17 @@ export function ResetPasswordClient() {
                 className={errors.confirmPassword ? "border-destructive" : ""}
               />
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
 
-            <Button type="submit" className="w-full" disabled={isLoading || !token}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading || !token}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -160,11 +194,17 @@ export function ResetPasswordClient() {
             </Button>
 
             <div className="flex items-center justify-center gap-4 text-sm">
-              <Link href="/confirm-password" className="text-primary underline-offset-4 hover:underline">
+              <Link
+                href="/confirm-password"
+                className="text-primary underline-offset-4 hover:underline"
+              >
                 Solicitar nuevo link
               </Link>
               <span className="text-muted-foreground">|</span>
-              <Link href="/login" className="text-muted-foreground underline-offset-4 hover:underline">
+              <Link
+                href="/login"
+                className="text-muted-foreground underline-offset-4 hover:underline"
+              >
                 Volver al login
               </Link>
             </div>
@@ -174,5 +214,3 @@ export function ResetPasswordClient() {
     </div>
   )
 }
-
-

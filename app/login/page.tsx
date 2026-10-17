@@ -9,7 +9,13 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { login } from "@/app/actions/auth"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2, Eye, EyeOff } from "lucide-react"
@@ -18,7 +24,9 @@ import Image from "next/image"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
 const loginSchema = z.object({
-  usernameOrEmail: z.string().min(1, "El email o nombre de usuario es requerido"),
+  usernameOrEmail: z
+    .string()
+    .min(1, "El email o nombre de usuario es requerido"),
   password: z.string().min(1, "La contraseña es requerida"),
 })
 
@@ -104,7 +112,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex justify-center">
@@ -124,7 +132,7 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -134,7 +142,8 @@ export default function LoginPage() {
                 {t("auth.login.confirmEmail.cta")}{" "}
                 <Link
                   href={`/confirm-email/request${
-                    typeof usernameOrEmailValue === "string" && usernameOrEmailValue.includes("@")
+                    typeof usernameOrEmailValue === "string" &&
+                    usernameOrEmailValue.includes("@")
                       ? `?email=${encodeURIComponent(usernameOrEmailValue)}`
                       : ""
                   }`}
@@ -146,7 +155,9 @@ export default function LoginPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="usernameOrEmail">{t("auth.login.usernameOrEmail.label")}</Label>
+              <Label htmlFor="usernameOrEmail">
+                {t("auth.login.usernameOrEmail.label")}
+              </Label>
               <Input
                 id="usernameOrEmail"
                 type="text"
@@ -156,7 +167,9 @@ export default function LoginPage() {
                 className={errors.usernameOrEmail ? "border-destructive" : ""}
               />
               {errors.usernameOrEmail && (
-                <p className="text-sm text-destructive">{errors.usernameOrEmail.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.usernameOrEmail.message}
+                </p>
               )}
             </div>
 
@@ -169,14 +182,18 @@ export default function LoginPage() {
                   placeholder={t("auth.login.password.placeholder")}
                   {...register("password")}
                   disabled={isLoading}
-                  className={errors.password ? "border-destructive pr-10" : "pr-10"}
+                  className={
+                    errors.password ? "border-destructive pr-10" : "pr-10"
+                  }
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={isLoading}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors focus:outline-none disabled:opacity-50"
-                  aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground focus:outline-none disabled:opacity-50"
+                  aria-label={
+                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                  }
                 >
                   {showPassword ? (
                     <EyeOff className="h-4 w-4" />
@@ -186,7 +203,9 @@ export default function LoginPage() {
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-destructive">{errors.password.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -212,7 +231,10 @@ export default function LoginPage() {
 
             <div className="text-center text-sm text-muted-foreground">
               {t("auth.login.noAccount")}{" "}
-              <Link href="/register" className="text-primary underline-offset-4 hover:underline">
+              <Link
+                href="/register"
+                className="text-primary underline-offset-4 hover:underline"
+              >
                 {t("auth.login.createAccount")}
               </Link>
             </div>
@@ -222,4 +244,3 @@ export default function LoginPage() {
     </div>
   )
 }
-

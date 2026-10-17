@@ -44,7 +44,7 @@ export function NewAccountForm({ backToHref }: Props) {
         description: (
           <>
             La cuenta{" "}
-            <span className="text-foreground font-medium">
+            <span className="font-medium text-foreground">
               {result.data.name}
             </span>{" "}
             ha sido creada exitosamente.
@@ -73,5 +73,3 @@ export function NewAccountForm({ backToHref }: Props) {
     />
   )
 }
-
-

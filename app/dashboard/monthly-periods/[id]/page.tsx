@@ -37,7 +37,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, timeZone: string, locale: string): string {
+function formatDate(
+  dateString: string,
+  timeZone: string,
+  locale: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -109,7 +113,10 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
           },
           initialSavingCents: {
             label: t("monthlyPeriods.detail.initialSaving"),
-            value: formatAmount(monthlyPeriod.initialSavingCents, preferences.preferredCurrency),
+            value: formatAmount(
+              monthlyPeriod.initialSavingCents,
+              preferences.preferredCurrency
+            ),
           },
           isActive: {
             label: t("monthlyPeriods.detail.status"),
@@ -137,4 +144,3 @@ export default async function MonthlyPeriodDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

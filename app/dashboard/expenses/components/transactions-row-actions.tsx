@@ -17,7 +17,11 @@ type Props = {
   basePath: string
 }
 
-export function TransactionsRowActions({ transaction, categoryType, basePath }: Props) {
+export function TransactionsRowActions({
+  transaction,
+  categoryType,
+  basePath,
+}: Props) {
   const router = useRouter()
   const { confirmationDialog } = useConfirmationDialogStore()
   const { t } = useI18n()
@@ -27,7 +31,7 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
       description: (
         <>
           {t("transactions.confirmDelete.title")}{" "}
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {transaction.description}
           </span>
           ? {t("transactions.confirmDelete.description")}
@@ -49,7 +53,7 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           return
@@ -67,7 +71,9 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
       toast.success(t("toast.transaction.deleted"), {
         description: (
           <>
-            {t("toast.transaction.deleted.desc", { description: transaction.description })}
+            {t("toast.transaction.deleted.desc", {
+              description: transaction.description,
+            })}
           </>
         ),
       })
@@ -108,4 +114,3 @@ export function TransactionsRowActions({ transaction, categoryType, basePath }: 
     </DataTableRowActions>
   )
 }
-

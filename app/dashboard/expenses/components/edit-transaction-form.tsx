@@ -22,12 +22,12 @@ type Props = {
   categoryType: "INCOME" | "EXPENSE"
 }
 
-export function EditTransactionForm({ 
-  transaction, 
-  backToHref, 
+export function EditTransactionForm({
+  transaction,
+  backToHref,
   categories,
   accounts,
-  categoryType 
+  categoryType,
 }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
@@ -37,12 +37,16 @@ export function EditTransactionForm({
     setIsSubmitting(true)
 
     try {
-      const result = await updateTransaction(transaction.id, formValues, categoryType)
+      const result = await updateTransaction(
+        transaction.id,
+        formValues,
+        categoryType
+      )
 
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           setIsSubmitting(false)
@@ -95,4 +99,3 @@ export function EditTransactionForm({
     />
   )
 }
-

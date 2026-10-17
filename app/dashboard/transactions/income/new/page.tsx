@@ -20,8 +20,10 @@ export default async function NewTransactionIncomePage() {
   // Cargar cuentas
   const accountsResult = await findManyAccounts()
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const accounts =
+    accountsResult.status === "success" ? accountsResult.data.data : []
 
   return (
     <PageContainer>
@@ -41,4 +43,3 @@ export default async function NewTransactionIncomePage() {
     </PageContainer>
   )
 }
-

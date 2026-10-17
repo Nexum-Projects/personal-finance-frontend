@@ -5,7 +5,10 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import type { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import { changePasswordSchema, type ChangePasswordFormValues } from "./change-password-schema"
+import {
+  changePasswordSchema,
+  type ChangePasswordFormValues,
+} from "./change-password-schema"
 
 export default async function changePassword(
   input: ChangePasswordFormValues
@@ -51,5 +54,3 @@ export default async function changePassword(
     }
   }
 }
-
-

@@ -6,7 +6,13 @@ import { findManyCategories } from "@/app/actions/categories"
 import { findManyAccounts } from "@/app/actions/accounts"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { AllTransactionsTable } from "./components/all-transactions-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
@@ -44,14 +50,20 @@ export default async function TransactionsPage(props: Props) {
     findManyAccounts({ page: 1, limit: 5, pagination: false }),
   ])
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const accounts =
+    accountsResult.status === "success" ? accountsResult.data.data : []
 
   const result = await findManyTransactions({
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "transactionDate"
+      | "amountCents",
     search: parsedParams.search,
     startDate: searchParams.startDate,
     endDate: searchParams.endDate,
@@ -123,15 +135,13 @@ export default async function TransactionsPage(props: Props) {
       <Card>
         <CardHeader>
           <CardTitle>{t("transactions.listTitle")}</CardTitle>
-          <CardDescription>
-            {t("transactions.listSubtitle")}
-          </CardDescription>
+          <CardDescription>{t("transactions.listSubtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Suspense fallback={<div>{t("common.loading")}</div>}>
-            <AllTransactionsTable 
-              transactions={transactions} 
-              meta={meta} 
+            <AllTransactionsTable
+              transactions={transactions}
+              meta={meta}
               basePath="/dashboard/transactions"
               categories={categories}
               accounts={accounts}
@@ -142,4 +152,3 @@ export default async function TransactionsPage(props: Props) {
     </PageContainer>
   )
 }
-

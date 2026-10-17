@@ -4,11 +4,7 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type {
-  Account,
-  AccountPageResponse,
-  AccountSearchParams,
-} from "./types"
+import type { Account, AccountPageResponse, AccountSearchParams } from "./types"
 
 export default async function findManyAccounts(
   params?: AccountSearchParams
@@ -80,4 +76,3 @@ export default async function findManyAccounts(
     }
   }
 }
-

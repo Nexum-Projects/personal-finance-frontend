@@ -11,4 +11,3 @@ export type {
 } from "./types"
 export { monthlyBudgetSchema } from "./schema"
 export type { MonthlyBudgetFormValues } from "./schema"
-

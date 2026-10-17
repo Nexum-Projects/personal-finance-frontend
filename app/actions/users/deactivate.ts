@@ -11,7 +11,9 @@ import type { User } from "./types"
 import { normalizeUserFromApi } from "./normalize-user-from-api"
 import { getServerI18n } from "@/utils/i18n/server"
 
-export default async function deactivateUser(userId: string): Promise<ActionResponse<User>> {
+export default async function deactivateUser(
+  userId: string
+): Promise<ActionResponse<User>> {
   try {
     const [{ t }, me] = await Promise.all([getServerI18n(), getCurrentUser()])
     if (!me || me.role !== "SYSADMIN") {
@@ -26,10 +28,14 @@ export default async function deactivateUser(userId: string): Promise<ActionResp
       }
     }
 
-    const response = await baseAxios.patch<{ data?: User }>(`/users/${userId}/deactivate`)
+    const response = await baseAxios.patch<{ data?: User }>(
+      `/users/${userId}/deactivate`
+    )
 
     let user =
-      response.data?.data != null ? normalizeUserFromApi(response.data.data) : undefined
+      response.data?.data != null
+        ? normalizeUserFromApi(response.data.data)
+        : undefined
     if (!user) {
       const again = await findUser(userId)
       if (again.status === "success") {

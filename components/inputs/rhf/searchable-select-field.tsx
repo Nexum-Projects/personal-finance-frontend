@@ -1,7 +1,11 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import type { FieldPath, FieldValues, UseControllerProps } from "react-hook-form"
+import type {
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form"
 
 import {
   FormControl,
@@ -137,4 +141,3 @@ export function SearchableSelectField<
     />
   )
 }
-

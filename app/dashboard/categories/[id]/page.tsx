@@ -90,7 +90,10 @@ export default async function CategoryDetailPage(props: Props) {
           },
           categoryType: {
             label: t("categories.detail.type"),
-            value: humanizeCategoryType(cat.categoryType, preferences.preferredLanguage),
+            value: humanizeCategoryType(
+              cat.categoryType,
+              preferences.preferredLanguage
+            ),
           },
           isActive: {
             label: t("categories.detail.status"),
@@ -118,4 +121,3 @@ export default async function CategoryDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

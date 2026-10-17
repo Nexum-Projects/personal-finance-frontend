@@ -1,7 +1,12 @@
 import { notFound } from "next/navigation"
 import getCurrentUser from "@/app/actions/users/get-current-user"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
-import { PREFERRED_CURRENCY_LABEL, PREFERRED_LANGUAGE_LABEL, languageToLocale, timeZoneToIana } from "@/utils/user-preferences"
+import {
+  PREFERRED_CURRENCY_LABEL,
+  PREFERRED_LANGUAGE_LABEL,
+  languageToLocale,
+  timeZoneToIana,
+} from "@/utils/user-preferences"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
@@ -15,7 +20,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("profile.meta.title") }
 }
 
-function formatDate(dateString: string, locale: string, timeZone: string): string {
+function formatDate(
+  dateString: string,
+  locale: string,
+  timeZone: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {

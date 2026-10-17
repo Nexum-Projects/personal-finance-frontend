@@ -11,7 +11,13 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { Loader2 } from "lucide-react"
 import { passwordReset } from "@/app/actions/auth"
@@ -43,21 +49,28 @@ export default function ConfirmPasswordPage() {
       const result = await passwordReset({ email: data.email })
 
       if (result.status === "error") {
-        const humanizedError = parseApiError(result.errors[0] || "Error al solicitar recuperación")
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        const humanizedError = parseApiError(
+          result.errors[0] || "Error al solicitar recuperación"
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         setError(humanizedError.description)
         return
       }
 
       toast.success("Correo enviado", {
-        description: "Si el correo existe, recibirás un link para restablecer tu contraseña.",
+        description:
+          "Si el correo existe, recibirás un link para restablecer tu contraseña.",
       })
 
       router.push("/login")
       router.refresh()
     } catch (err: any) {
       const humanizedError = parseApiError(err)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
       setError(humanizedError.description)
     } finally {
       setIsLoading(false)
@@ -65,20 +78,21 @@ export default function ConfirmPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
+          <CardTitle className="text-center text-2xl font-bold">
             Recuperar contraseña
           </CardTitle>
           <CardDescription className="text-center">
-            Ingresa tu correo electrónico y te enviaremos un link para restablecer tu contraseña.
+            Ingresa tu correo electrónico y te enviaremos un link para
+            restablecer tu contraseña.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -94,7 +108,9 @@ export default function ConfirmPasswordPage() {
                 className={errors.email ? "border-destructive" : ""}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -123,5 +139,3 @@ export default function ConfirmPasswordPage() {
     </div>
   )
 }
-
-

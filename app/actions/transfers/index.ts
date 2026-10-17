@@ -10,4 +10,3 @@ export type {
   TransferPageResponse,
 } from "./types"
 export type { TransferFormValues, TransferUpdateFormValues } from "./schema"
-

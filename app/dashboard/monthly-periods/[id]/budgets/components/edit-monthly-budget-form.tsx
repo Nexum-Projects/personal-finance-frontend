@@ -57,9 +57,7 @@ export function EditMonthlyBudgetForm({
       }
 
       toast.success(t("toast.monthlyBudget.updated"), {
-        description: (
-          <>{t("toast.monthlyBudget.updated.desc")}</>
-        ),
+        description: <>{t("toast.monthlyBudget.updated.desc")}</>,
       })
 
       router.push(backToHref)
@@ -91,4 +89,3 @@ export function EditMonthlyBudgetForm({
     />
   )
 }
-

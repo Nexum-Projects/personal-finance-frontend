@@ -80,7 +80,8 @@ export default async function DocsTransfersPage() {
             back: "Voltar para Documentação",
             title: "Módulo: Transferências",
             desc: "Mova dinheiro entre contas (origem e destino) com data e descrição.",
-            placeholderList: "[IMAGEM / GIF] Lista de transferências + filtros de data",
+            placeholderList:
+              "[IMAGEM / GIF] Lista de transferências + filtros de data",
             purposeTitle: "Propósito",
             purposeP1:
               "Uma transferência move saldo de uma conta para outra. É útil para movimentos internos (ex.: Banco → Dinheiro) e não deve ser registrada como receita/despesa.",
@@ -93,7 +94,8 @@ export default async function DocsTransfersPage() {
               "Ações por linha: ver detalhe, editar, excluir/desativar.",
               "Dica: use o filtro de datas para conciliar uma semana ou quinzena.",
             ],
-            placeholderFilters: "[IMAGEM / GIF] Painel de filtros + ações por linha",
+            placeholderFilters:
+              "[IMAGEM / GIF] Painel de filtros + ações por linha",
             createTitle: "Criar transferência",
             createP1:
               "Use transferências quando o dinheiro se move entre contas próprias (não é receita/despesa).",
@@ -105,14 +107,16 @@ export default async function DocsTransfersPage() {
               "Data: data da transferência.",
               "Saldo insuficiente: se não houver saldo, o sistema mostra mensagem com saldo atual e valor solicitado.",
             ],
-            placeholderCreate: "[IMAGEM / GIF] Formulário de transferência (criar)",
+            placeholderCreate:
+              "[IMAGEM / GIF] Formulário de transferência (criar)",
             editTitle: "Editar transferência",
             editP1:
               "Na edição normalmente se ajusta o valor e/ou descrição (conforme regras do sistema).",
             editBullets: [
               "Se precisar mudar origem/destino, normalmente é melhor criar uma nova e excluir a anterior (conforme seu fluxo).",
             ],
-            placeholderEdit: "[IMAGEM / GIF] Formulário de transferência (editar)",
+            placeholderEdit:
+              "[IMAGEM / GIF] Formulário de transferência (editar)",
             tipPrefix: "Dica: para ver o impacto em relatórios, veja ",
             tipDashboard: "Painel",
             tipSuffix: ".",
@@ -121,7 +125,8 @@ export default async function DocsTransfersPage() {
             back: "Regresar a Documentación",
             title: "Módulo: Transferencias",
             desc: "Mueve dinero entre cuentas (origen y destino) con fecha y descripción.",
-            placeholderList: "[IMAGEN / GIF] Lista de transferencias + filtros de fecha",
+            placeholderList:
+              "[IMAGEN / GIF] Lista de transferencias + filtros de fecha",
             purposeTitle: "Propósito",
             purposeP1:
               "Una transferencia mueve saldo de una cuenta a otra. Es útil cuando el movimiento no es un ingreso/gasto sino un traspaso interno (por ejemplo, de Banco a Efectivo).",
@@ -134,7 +139,8 @@ export default async function DocsTransfersPage() {
               "Acciones por fila: ver detalle, editar, eliminar.",
               "Consejo: usa el filtro de fechas para conciliar movimientos de una semana o quincena.",
             ],
-            placeholderFilters: "[IMAGEN / GIF] Sheet/Panel de filtros + acciones por fila",
+            placeholderFilters:
+              "[IMAGEN / GIF] Sheet/Panel de filtros + acciones por fila",
             createTitle: "Crear transferencia",
             createP1:
               "Las transferencias se usan cuando el dinero se mueve entre cuentas propias (no es un gasto/ingreso).",
@@ -146,14 +152,16 @@ export default async function DocsTransfersPage() {
               "Fecha: fecha de la transferencia.",
               "Fondos insuficientes: si no hay saldo, el sistema mostrará un mensaje humanizado indicando saldo y monto.",
             ],
-            placeholderCreate: "[IMAGEN / GIF] Formulario de transferencia (crear)",
+            placeholderCreate:
+              "[IMAGEN / GIF] Formulario de transferencia (crear)",
             editTitle: "Editar transferencia",
             editP1:
               "En la edición normalmente se ajusta el monto y/o descripción (según reglas del sistema).",
             editBullets: [
               "Si necesitas cambiar origen/destino, lo recomendado es crear una nueva transferencia y eliminar la anterior (según tu flujo).",
             ],
-            placeholderEdit: "[IMAGEN / GIF] Formulario de transferencia (editar)",
+            placeholderEdit:
+              "[IMAGEN / GIF] Formulario de transferencia (editar)",
             tipPrefix: "Tip: para ver el impacto en reportes, revisa ",
             tipDashboard: "Dashboard",
             tipSuffix: ".",
@@ -183,7 +191,7 @@ export default async function DocsTransfersPage() {
           <CardTitle>{copy.listTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.listBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -198,7 +206,7 @@ export default async function DocsTransfersPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.createP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.createBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -213,7 +221,7 @@ export default async function DocsTransfersPage() {
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           <p>{copy.editP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.editBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -224,7 +232,10 @@ export default async function DocsTransfersPage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/dashboard">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/dashboard"
+        >
           {copy.tipDashboard}
         </Link>
         {copy.tipSuffix}
@@ -232,4 +243,3 @@ export default async function DocsTransfersPage() {
     </PageContainer>
   )
 }
-

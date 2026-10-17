@@ -22,7 +22,11 @@ type Props = {
 const SHOW_DOC_MEDIA_PLACEHOLDERS =
   process.env.NEXT_PUBLIC_SHOW_DOC_MEDIA_PLACEHOLDERS === "true"
 
-export function DocImagePlaceholder({ title, description, className = "" }: Props) {
+export function DocImagePlaceholder({
+  title,
+  description,
+  className = "",
+}: Props) {
   if (!SHOW_DOC_MEDIA_PLACEHOLDERS) return null
 
   return (
@@ -40,4 +44,3 @@ export function DocImagePlaceholder({ title, description, className = "" }: Prop
     </div>
   )
 }
-

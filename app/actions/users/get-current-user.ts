@@ -13,7 +13,10 @@ function isUuid(value: string): boolean {
   )
 }
 
-function readStringClaim(session: Record<string, unknown>, key: string): string | null {
+function readStringClaim(
+  session: Record<string, unknown>,
+  key: string
+): string | null {
   const val = session[key]
   if (typeof val !== "string") return null
   const trimmed = val.trim()
@@ -33,7 +36,16 @@ export default async function getCurrentUser(): Promise<User | null> {
   const claims = session as Record<string, unknown>
 
   // 1) Preferir claims explícitos que típicamente son UUID
-  const preferredIdFields = ["jti","id", "userId", "user_id", "user-id", "uid", "userUuid", "user_uuid"]
+  const preferredIdFields = [
+    "jti",
+    "id",
+    "userId",
+    "user_id",
+    "user-id",
+    "uid",
+    "userUuid",
+    "user_uuid",
+  ]
   for (const field of preferredIdFields) {
     const candidate = readStringClaim(claims, field)
     if (candidate && isUuid(candidate)) {
@@ -65,5 +77,3 @@ async function fetchUser(userId: string): Promise<User | null> {
     return null
   }
 }
-
-

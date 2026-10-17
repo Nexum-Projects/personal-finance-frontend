@@ -1,7 +1,7 @@
-'use server'
+"use server"
 
-import { cookies } from 'next/headers'
-import { decodeJwt } from 'jose'
+import { cookies } from "next/headers"
+import { decodeJwt } from "jose"
 
 type Payload = {
   exp?: number
@@ -30,12 +30,11 @@ function decrypt(input: string): Payload | null {
  */
 export default async function getSession(): Promise<Payload | null> {
   const cookieStore = await cookies()
-  const session = cookieStore.get('session')?.value
-  
+  const session = cookieStore.get("session")?.value
+
   if (!session) {
     return null
   }
 
   return decrypt(session)
 }
-

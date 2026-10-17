@@ -43,8 +43,7 @@ export default async function DocsTransactionsPage() {
       ? {
           back: "Back to Documentation",
           title: "Module: Transactions",
-          desc:
-            "Record and manage movements: income and expenses. Includes search, filters and row actions.",
+          desc: "Record and manage movements: income and expenses. Includes search, filters and row actions.",
           placeholderList: "[IMAGE / GIF] Transactions list (overview)",
           purposeTitle: "Purpose",
           purposeP1:
@@ -55,7 +54,8 @@ export default async function DocsTransactionsPage() {
             "Income: income-only view.",
             "Expenses: expense-only view.",
           ],
-          placeholderTabs: "[IMAGE / GIF] Navigation between Transactions / Income / Expenses",
+          placeholderTabs:
+            "[IMAGE / GIF] Navigation between Transactions / Income / Expenses",
           listTitle: "List screen",
           listBullets: [
             "Search: filter by text (e.g. description).",
@@ -64,7 +64,8 @@ export default async function DocsTransactionsPage() {
             "Row actions: view details, edit, delete/deactivate.",
             "Signed amounts: consolidated view shows + (income) or - (expense).",
           ],
-          placeholderControls: "[IMAGE / GIF] Search + filters + row actions menu",
+          placeholderControls:
+            "[IMAGE / GIF] Search + filters + row actions menu",
           filtersTitle: "Filters (details)",
           filtersP1:
             "The filter panel helps you narrow results without losing context:",
@@ -93,7 +94,8 @@ export default async function DocsTransactionsPage() {
             "Delete: removes (or deactivates) the record; may ask for confirmation.",
           ],
           placeholderActions: "[IMAGE / GIF] Transaction row actions menu",
-          tipPrefix: "Tip: for movements between accounts without category, see ",
+          tipPrefix:
+            "Tip: for movements between accounts without category, see ",
           tipTransfers: "Transfers",
           tipSuffix: ".",
         }
@@ -101,8 +103,7 @@ export default async function DocsTransactionsPage() {
         ? {
             back: "Voltar para Documentação",
             title: "Módulo: Transações",
-            desc:
-              "Registro e controle de movimentos: receitas e despesas. Inclui busca, filtros e ações.",
+            desc: "Registro e controle de movimentos: receitas e despesas. Inclui busca, filtros e ações.",
             placeholderList: "[IMAGEM / GIF] Lista de transações (visão geral)",
             purposeTitle: "Propósito",
             purposeP1:
@@ -123,7 +124,8 @@ export default async function DocsTransactionsPage() {
               "Ações por linha: ver detalhe, editar, excluir/desativar.",
               "Valores com sinal: na vista consolidada mostra + (receita) ou - (despesa).",
             ],
-            placeholderControls: "[IMAGEM / GIF] Busca + filtros + menu de ações",
+            placeholderControls:
+              "[IMAGEM / GIF] Busca + filtros + menu de ações",
             filtersTitle: "Filtros (detalhe)",
             filtersP1: "O painel de filtros ajuda a refinar resultados:",
             filtersBullets: [
@@ -131,7 +133,8 @@ export default async function DocsTransactionsPage() {
               "Conta: (se disponível) para ver movimentos de uma conta específica.",
               "Categoria: (se disponível) para analisar uma categoria específica.",
             ],
-            placeholderFilters: "[IMAGEM / GIF] Painel de filtros aberto (Sheet)",
+            placeholderFilters:
+              "[IMAGEM / GIF] Painel de filtros aberto (Sheet)",
             formTitle: "Criar / editar transação",
             formP1:
               "Para criar, normalmente existe um botão “Nova” na vista correspondente (Receitas ou Despesas).",
@@ -143,7 +146,8 @@ export default async function DocsTransactionsPage() {
               "Data: data da transação.",
               "Validações comuns: valor > 0, campos obrigatórios e limites de texto.",
             ],
-            placeholderForm: "[IMAGEM / GIF] Formulário de transação (criar/editar)",
+            placeholderForm:
+              "[IMAGEM / GIF] Formulário de transação (criar/editar)",
             actionsTitle: "Ações por transação",
             actionsBullets: [
               "Ver detalhe: mostra informações e timestamps.",
@@ -151,16 +155,17 @@ export default async function DocsTransactionsPage() {
               "Excluir: remove (ou desativa) o registro; pode pedir confirmação.",
             ],
             placeholderActions: "[IMAGEM / GIF] Menu de ações de uma transação",
-            tipPrefix: "Dica: para movimentos entre contas sem categoria, veja ",
+            tipPrefix:
+              "Dica: para movimentos entre contas sem categoria, veja ",
             tipTransfers: "Transferências",
             tipSuffix: ".",
           }
         : {
             back: "Regresar a Documentación",
             title: "Módulo: Transacciones",
-            desc:
-              "Registro y control de movimientos: ingresos y gastos. Incluye filtros, búsqueda y acciones.",
-            placeholderList: "[IMAGEN / GIF] Lista de transacciones (vista general)",
+            desc: "Registro y control de movimientos: ingresos y gastos. Incluye filtros, búsqueda y acciones.",
+            placeholderList:
+              "[IMAGEN / GIF] Lista de transacciones (vista general)",
             purposeTitle: "Propósito",
             purposeP1:
               "Las transacciones registran movimientos de dinero asociados a una cuenta y una categoría. Existen transacciones de Ingreso y de Gasto.",
@@ -180,7 +185,8 @@ export default async function DocsTransactionsPage() {
               "Acciones por fila: ver detalle, editar, eliminar.",
               "Montos con signo: en la vista consolidada se muestran con + (ingreso) o - (gasto).",
             ],
-            placeholderControls: "[IMAGEN / GIF] Barra de búsqueda + filtros + menú de acciones",
+            placeholderControls:
+              "[IMAGEN / GIF] Barra de búsqueda + filtros + menú de acciones",
             filtersTitle: "Filtros (detalle)",
             filtersP1:
               "El panel de filtros te ayuda a acotar resultados sin perder contexto:",
@@ -189,7 +195,8 @@ export default async function DocsTransactionsPage() {
               "Cuenta: (si está disponible) para ver movimientos de una cuenta concreta.",
               "Categoría: (si está disponible) para analizar una categoría específica.",
             ],
-            placeholderFilters: "[IMAGEN / GIF] Panel de filtros abierto (Sheet)",
+            placeholderFilters:
+              "[IMAGEN / GIF] Panel de filtros abierto (Sheet)",
             formTitle: "Crear / editar transacción",
             formP1:
               "Para crear, normalmente hay un botón Nueva en la pantalla correspondiente (Ingresos o Gastos).",
@@ -201,15 +208,18 @@ export default async function DocsTransactionsPage() {
               "Fecha: fecha de la transacción.",
               "Validaciones comunes: monto mayor a 0, campos requeridos y longitudes de texto.",
             ],
-            placeholderForm: "[IMAGEN / GIF] Formulario de transacción (crear/editar)",
+            placeholderForm:
+              "[IMAGEN / GIF] Formulario de transacción (crear/editar)",
             actionsTitle: "Acciones por transacción",
             actionsBullets: [
               "Ver detalle: muestra toda la información y timestamps.",
               "Editar: ajusta monto, descripción, cuenta/categoría/fecha (según reglas).",
               "Eliminar: elimina (o desactiva) el registro; puede pedir confirmación.",
             ],
-            placeholderActions: "[IMAGEN / GIF] Menú de acciones de una transacción",
-            tipPrefix: "Tip: para movimientos entre cuentas sin categoría, revisa ",
+            placeholderActions:
+              "[IMAGEN / GIF] Menú de acciones de una transacción",
+            tipPrefix:
+              "Tip: para movimientos entre cuentas sin categoría, revisa ",
             tipTransfers: "Transferencias",
             tipSuffix: ".",
           }
@@ -238,7 +248,7 @@ export default async function DocsTransactionsPage() {
           <CardTitle>{copy.viewsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.views.map((v) => (
               <li key={v}>{v}</li>
             ))}
@@ -252,7 +262,7 @@ export default async function DocsTransactionsPage() {
           <CardTitle>{copy.listTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.listBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -267,7 +277,7 @@ export default async function DocsTransactionsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.filtersP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.filtersBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -282,7 +292,7 @@ export default async function DocsTransactionsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.formP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.formBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -296,7 +306,7 @@ export default async function DocsTransactionsPage() {
           <CardTitle>{copy.actionsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.actionsBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -307,7 +317,10 @@ export default async function DocsTransactionsPage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/transfers">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/transfers"
+        >
           {copy.tipTransfers}
         </Link>
         {copy.tipSuffix}
@@ -315,4 +328,3 @@ export default async function DocsTransactionsPage() {
     </PageContainer>
   )
 }
-

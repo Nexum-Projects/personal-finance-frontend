@@ -11,7 +11,13 @@ import { Loader2, UserPlus } from "lucide-react"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
 import { Form } from "@/components/ui/form"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FormSection } from "@/components/display/form/form-section"
 import { TextField } from "@/components/inputs/rhf/text-field"
@@ -31,7 +37,10 @@ import {
   TIME_ZONES,
   TIME_ZONE_TO_IANA,
 } from "@/utils/user-preferences"
-import { registerSchema, type RegisterFormValues } from "@/app/actions/auth/register-schema"
+import {
+  registerSchema,
+  type RegisterFormValues,
+} from "@/app/actions/auth/register-schema"
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -57,27 +66,34 @@ export default function RegisterPage() {
       const result = await registerUser(values)
 
       if (result.status === "error") {
-        const humanizedError = parseApiError(result.errors[0] || "Error al registrarse")
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        const humanizedError = parseApiError(
+          result.errors[0] || "Error al registrarse"
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         return
       }
 
       toast.success("Cuenta creada", {
-        description: "Revisa tu correo y confirma tu email para poder iniciar sesión.",
+        description:
+          "Revisa tu correo y confirma tu email para poder iniciar sesión.",
       })
 
       router.push("/login")
       router.refresh()
     } catch (error) {
       const humanizedError = parseApiError(error)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
     } finally {
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-3xl">
         <CardHeader className="space-y-2">
           <div className="flex justify-center">
@@ -90,7 +106,7 @@ export default function RegisterPage() {
               className="h-auto w-auto"
             />
           </div>
-          <CardTitle className="text-xl font-bold text-center">
+          <CardTitle className="text-center text-xl font-bold">
             {t("auth.register.title")}
           </CardTitle>
           <CardDescription className="text-center">
@@ -202,7 +218,10 @@ export default function RegisterPage() {
 
               <div className="text-center text-sm text-muted-foreground">
                 {t("auth.register.haveAccount")}{" "}
-                <Link href="/login" className="text-primary underline-offset-4 hover:underline">
+                <Link
+                  href="/login"
+                  className="text-primary underline-offset-4 hover:underline"
+                >
                   {t("auth.register.login")}
                 </Link>
               </div>
@@ -213,4 +232,3 @@ export default function RegisterPage() {
     </div>
   )
 }
-

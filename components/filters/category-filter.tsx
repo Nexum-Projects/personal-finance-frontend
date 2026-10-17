@@ -46,7 +46,9 @@ export function CategoryFilter({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={searchParamName}>{label ?? t("filters.category.label")}</Label>
+      <Label htmlFor={searchParamName}>
+        {label ?? t("filters.category.label")}
+      </Label>
       <Select value={value || "all"} onValueChange={handleChange}>
         <SelectTrigger id={searchParamName}>
           <SelectValue placeholder={t("filters.category.placeholder")} />
@@ -63,4 +65,3 @@ export function CategoryFilter({
     </div>
   )
 }
-

@@ -16,5 +16,3 @@ export const changePasswordSchema = z.object({
 })
 
 export type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>
-
-

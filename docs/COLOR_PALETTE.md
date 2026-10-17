@@ -9,6 +9,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## 📐 Colores Principales
 
 ### Fondo Principal
+
 - **Variable CSS**: `--background`
 - **Valor HSL**: `hsl(0, 0%, 3%)`
 - **Hex**: `#080808`
@@ -16,6 +17,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 - **Descripción**: Casi negro con sutil calidez, similar a Resend y Notion
 
 ### Tarjetas / Superficies
+
 - **Variable CSS**: `--card`
 - **Valor HSL**: `hsl(0, 0%, 5%)`
 - **Hex**: `#0d0d0d`
@@ -27,6 +29,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## 🎯 Acciones
 
 ### Acción Primaria
+
 - **Variable CSS**: `--primary`
 - **Valor HSL**: `hsl(217, 91%, 60%)`
 - **Hex**: `#3b82f6`
@@ -34,6 +37,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 - **Descripción**: Azul vibrante que destaca sobre el fondo ultra oscuro
 
 ### Acción Secundaria
+
 - **Variable CSS**: `--secondary`
 - **Valor HSL**: `hsl(0, 0%, 8%)`
 - **Hex**: `#141414`
@@ -45,13 +49,15 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## ✅❌ Estados
 
 ### Éxito (Ingresos)
-- **Variable CSS**: `--success`**
+
+- **Variable CSS**: `--success`\*\*
 - **Valor HSL**: `hsl(142, 76%, 36%)`
 - **Hex**: `#10b981`
 - **Uso**: Indicadores de ingresos, transacciones positivas, estados exitosos
 - **Descripción**: Verde suave, no demasiado brillante, cómodo para la vista
 
 ### Error / Advertencia (Gastos)
+
 - **Variable CSS**: `--destructive`
 - **Valor HSL**: `hsl(0, 72%, 51%)`
 - **Hex**: `#ef4444`
@@ -63,6 +69,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## 📝 Texto
 
 ### Texto Principal
+
 - **Variable CSS**: `--foreground`
 - **Valor HSL**: `hsl(0, 0%, 98%)`
 - **Hex**: `#fafafa`
@@ -70,6 +77,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 - **Descripción**: Casi blanco, máximo contraste y legibilidad
 
 ### Texto Secundario
+
 - **Variable CSS**: `--muted-foreground`
 - **Valor HSL**: `hsl(0, 0%, 65%)`
 - **Hex**: `#a6a6a6`
@@ -81,18 +89,21 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## 🎨 Colores Adicionales
 
 ### Muted (Fondo para texto secundario)
+
 - **Variable CSS**: `--muted`
 - **Valor HSL**: `hsl(0, 0%, 8%)`
 - **Hex**: `#141414`
 - **Uso**: Fondos sutiles, áreas de información secundaria
 
 ### Accent (Resaltado sutil)
+
 - **Variable CSS**: `--accent`
 - **Valor HSL**: `hsl(0, 0%, 8%)`
 - **Hex**: `#141414`
 - **Uso**: Hover states, elementos destacados sutilmente
 
 ### Border / Input
+
 - **Variable CSS**: `--border` / `--input`
 - **Valor HSL**: `hsl(0, 0%, 12%)`
 - **Hex**: `#1f1f1f`
@@ -100,6 +111,7 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 - **Descripción**: Bordes muy sutiles, casi imperceptibles pero funcionales
 
 ### Ring (Focus)
+
 - **Variable CSS**: `--ring`
 - **Valor HSL**: `hsl(217, 91%, 60%)`
 - **Hex**: `#3b82f6`
@@ -136,11 +148,13 @@ Paleta de colores ultra oscura inspirada en Resend y Notion en modo oscuro. Dise
 ## 🎯 Inspiración
 
 Esta paleta está inspirada en:
+
 - **Resend Dark Mode**: Fondos ultra oscuros, casi negros
 - **Notion Dark Mode**: Minimalismo extremo y elegancia
 - **Modo oscuro moderno**: Máximo contraste con fondos casi negros
 
 Todos los colores están diseñados para:
+
 - ✅ Reducir fatiga visual con fondos ultra oscuros
 - ✅ Mantener máximo contraste para legibilidad
 - ✅ Ser apropiados para visualización de datos financieros
@@ -173,4 +187,3 @@ Todos los colores están diseñados para:
   Agregar Transacción
 </Button>
 ```
-

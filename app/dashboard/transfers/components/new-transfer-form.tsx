@@ -70,4 +70,3 @@ export function NewTransferForm({ accounts, backToHref }: Props) {
     />
   )
 }
-

@@ -10,7 +10,10 @@ import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
-import { transactionSchema, type TransactionFormValues } from "@/app/actions/transactions/schema"
+import {
+  transactionSchema,
+  type TransactionFormValues,
+} from "@/app/actions/transactions/schema"
 import type { Category } from "@/app/actions/transactions/types"
 import type { Account } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
@@ -141,4 +144,3 @@ export function TransactionForm({
     </Form>
   )
 }
-

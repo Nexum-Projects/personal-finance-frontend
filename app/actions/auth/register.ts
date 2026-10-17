@@ -1,4 +1,4 @@
-'use server'
+"use server"
 
 import { isAxiosError } from "axios"
 import { z } from "zod"
@@ -39,15 +39,18 @@ export default async function registerUser(
       const humanizedError = parseApiError(error.response.data)
       return {
         status: "error",
-        errors: [{ title: humanizedError.title, message: humanizedError.description }],
+        errors: [
+          { title: humanizedError.title, message: humanizedError.description },
+        ],
       }
     }
 
     const humanizedError = parseApiError(error)
     return {
       status: "error",
-      errors: [{ title: humanizedError.title, message: humanizedError.description }],
+      errors: [
+        { title: humanizedError.title, message: humanizedError.description },
+      ],
     }
   }
 }
-

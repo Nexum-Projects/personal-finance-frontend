@@ -24,7 +24,7 @@ export function DateRangeFilter({
 
   const handleStartDateChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
-    
+
     if (value) {
       params.set(startDateParamName, value)
       params.set("page", "1")
@@ -37,7 +37,7 @@ export function DateRangeFilter({
 
   const handleEndDateChange = (value: string) => {
     const params = new URLSearchParams(searchParams)
-    
+
     if (value) {
       params.set(endDateParamName, value)
       params.set("page", "1")
@@ -73,4 +73,3 @@ export function DateRangeFilter({
     </div>
   )
 }
-

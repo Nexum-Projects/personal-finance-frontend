@@ -27,7 +27,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   return {
-    title: interpolate(messages["categories.editTitle"], { name: category.data.name }),
+    title: interpolate(messages["categories.editTitle"], {
+      name: category.data.name,
+    }),
   }
 }
 
@@ -60,10 +62,11 @@ export default async function EditCategoryPage(props: Props) {
           href: BACK_TO_HREF,
           label: t("categories.backToList"),
         }}
-        title={interpolate(t("categories.editTitle"), { name: category.data.name })}
+        title={interpolate(t("categories.editTitle"), {
+          name: category.data.name,
+        })}
       />
       <EditCategoryForm category={category.data} backToHref={BACK_TO_HREF} />
     </PageContainer>
   )
 }
-

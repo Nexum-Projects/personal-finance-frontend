@@ -27,7 +27,9 @@ export default async function createTransaction(
       }
     )
 
-    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`)
+    revalidatePath(
+      `/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`
+    )
 
     return {
       status: "success",
@@ -62,4 +64,3 @@ export default async function createTransaction(
     }
   }
 }
-

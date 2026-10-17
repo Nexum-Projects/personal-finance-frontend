@@ -2,7 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { removeMonthlyPeriod, reactivateMonthlyPeriod } from "@/app/actions/monthly-periods"
+import {
+  removeMonthlyPeriod,
+  reactivateMonthlyPeriod,
+} from "@/app/actions/monthly-periods"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"
 import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
@@ -27,10 +30,10 @@ export function MonthlyPeriodsRowActions({ monthlyPeriod }: Props) {
       description: (
         <>
           {t("monthlyPeriods.confirmDeactivate.title")}{" "}
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {humanizeMonth(monthlyPeriod.month, locale)}
-          </span>?
-          {t("monthlyPeriods.confirmDeactivate.description")}
+          </span>
+          ?{t("monthlyPeriods.confirmDeactivate.description")}
         </>
       ),
       onConfirm: onRemove,
@@ -47,9 +50,10 @@ export function MonthlyPeriodsRowActions({ monthlyPeriod }: Props) {
       description: (
         <>
           {t("monthlyPeriods.confirmReactivate.title")}{" "}
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {humanizeMonth(monthlyPeriod.month, locale)}
-          </span>?
+          </span>
+          ?
         </>
       ),
       onConfirm: onReactivate,
@@ -141,12 +145,19 @@ export function MonthlyPeriodsRowActions({ monthlyPeriod }: Props) {
 
   return (
     <DataTableRowActions>
-      <DataTableRowActions.Item href={`/dashboard/monthly-periods/${monthlyPeriod.id}`} type="link">
+      <DataTableRowActions.Item
+        href={`/dashboard/monthly-periods/${monthlyPeriod.id}`}
+        type="link"
+      >
         {t("monthlyPeriods.actions.view")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       {monthlyPeriod.isActive ? (
-        <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
+        <DataTableRowActions.Item
+          type="button"
+          variant="destructive"
+          onClick={handleRemove}
+        >
           {t("monthlyPeriods.actions.deactivate")}
         </DataTableRowActions.Item>
       ) : (
@@ -157,4 +168,3 @@ export function MonthlyPeriodsRowActions({ monthlyPeriod }: Props) {
     </DataTableRowActions>
   )
 }
-

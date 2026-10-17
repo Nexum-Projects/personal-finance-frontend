@@ -54,4 +54,3 @@ export interface TransactionPageResponse {
   data: Transaction[]
   meta: TransactionPageMeta
 }
-

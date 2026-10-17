@@ -11,10 +11,13 @@ export function humanizeMonth(month: number, locale: string = "es-GT"): string {
   return locale.startsWith("en") ? `Month ${month}` : `Mes ${month}`
 }
 
-export function formatPeriod(year: number, month: number, locale: string = "es-GT"): string {
+export function formatPeriod(
+  year: number,
+  month: number,
+  locale: string = "es-GT"
+): string {
   // Capitalizar primera letra para que se vea consistente entre locales.
   const m = humanizeMonth(month, locale)
   const mCap = m.length ? m[0].toUpperCase() + m.slice(1) : m
   return `${mCap} ${year}`
 }
-

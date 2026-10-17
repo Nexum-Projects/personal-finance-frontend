@@ -13,4 +13,3 @@ export interface MonthlyPeriodAnalytics {
 export interface MonthlyPeriodAnalyticsResponse {
   data: MonthlyPeriodAnalytics[]
 }
-

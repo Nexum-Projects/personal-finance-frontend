@@ -35,7 +35,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, timeZone: string, locale: string): string {
+function formatDate(
+  dateString: string,
+  timeZone: string,
+  locale: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -70,7 +74,12 @@ export default async function TransactionExpenseDetailPage(props: Props) {
   return (
     <PageContainer>
       <PageHeader
-        actions={<DetailTransactionActions transaction={trans} categoryType="EXPENSE" />}
+        actions={
+          <DetailTransactionActions
+            transaction={trans}
+            categoryType="EXPENSE"
+          />
+        }
         backTo={{
           href: "/dashboard/transactions/expenses",
           label: t("transactions.backToExpenses"),
@@ -89,7 +98,10 @@ export default async function TransactionExpenseDetailPage(props: Props) {
           },
           amount: {
             label: t("transactions.detail.amount"),
-            value: formatAmount(trans.amountCents, preferences.preferredCurrency),
+            value: formatAmount(
+              trans.amountCents,
+              preferences.preferredCurrency
+            ),
           },
           description: {
             label: t("transactions.detail.description"),
@@ -121,4 +133,3 @@ export default async function TransactionExpenseDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

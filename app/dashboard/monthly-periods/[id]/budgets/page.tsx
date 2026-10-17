@@ -9,7 +9,13 @@ import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { MonthlyBudgetsTable } from "./components/monthly-budgets-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { getServerI18n } from "@/utils/i18n/server"
@@ -44,7 +50,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const locale = languageToLocale(preferences.preferredLanguage)
 
   return {
-    title: t("monthlyPeriods.budgets.metaTitle", { month: humanizeMonth(period.data.month, locale) }),
+    title: t("monthlyPeriods.budgets.metaTitle", {
+      month: humanizeMonth(period.data.month, locale),
+    }),
   }
 }
 
@@ -72,7 +80,10 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "budgetedCents",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "budgetedCents",
     search: parsedParams.search,
     monthlyPeriodId: id,
     pagination: true,
@@ -104,7 +115,8 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
           </CardHeader>
           <CardContent>
             <p className="text-destructive">
-              {budgetsResult.errors[0]?.message || t("monthlyPeriods.budgets.errorLoad")}
+              {budgetsResult.errors[0]?.message ||
+                t("monthlyPeriods.budgets.errorLoad")}
             </p>
           </CardContent>
         </Card>
@@ -139,7 +151,7 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
           <h2 className="text-2xl font-bold text-foreground">
             {t("monthlyPeriods.budgets.sectionTitle")}
           </h2>
-          <p className="text-muted-foreground mt-1">
+          <p className="mt-1 text-muted-foreground">
             {t("monthlyPeriods.budgets.sectionSubtitle")}
           </p>
         </div>
@@ -171,4 +183,3 @@ export default async function MonthlyPeriodBudgetsPage(props: Props) {
     </PageContainer>
   )
 }
-

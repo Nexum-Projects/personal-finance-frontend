@@ -1,6 +1,10 @@
 "use client"
 
-import type { FieldPath, FieldValues, UseControllerProps } from "react-hook-form"
+import type {
+  FieldPath,
+  FieldValues,
+  UseControllerProps,
+} from "react-hook-form"
 import type { ComponentProps } from "react"
 
 import { useState } from "react"
@@ -71,10 +75,16 @@ export function PasswordField<
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
                 disabled={disabled}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors focus:outline-none disabled:opacity-50"
-                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground focus:outline-none disabled:opacity-50"
+                aria-label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
               >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </button>
             </div>
           </FormControl>
@@ -85,4 +95,3 @@ export function PasswordField<
     />
   )
 }
-

@@ -62,9 +62,10 @@ const FIELD_NAME_MAP: Record<string, string> = {
 }
 
 const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
-  "BAD_REQUEST": {
+  BAD_REQUEST: {
     title: "Solicitud incorrecta",
-    description: "La solicitud no pudo ser procesada debido a un error en los datos proporcionados.",
+    description:
+      "La solicitud no pudo ser procesada debido a un error en los datos proporcionados.",
   },
   "BAD_REQUEST/INVALID_REQUEST_BODY": {
     title: "Campo inválido",
@@ -72,11 +73,13 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "BAD_REQUEST/VALIDATION_ERROR": {
     title: "Error de validación",
-    description: "Los datos proporcionados no cumplen con los requisitos de validación.",
+    description:
+      "Los datos proporcionados no cumplen con los requisitos de validación.",
   },
   "BAD_REQUEST/STOCK_INSUFFICIENT": {
     title: "Stock insuficiente",
-    description: "No hay suficiente stock disponible para realizar esta operación.",
+    description:
+      "No hay suficiente stock disponible para realizar esta operación.",
   },
   "BAD_REQUEST/INVENTORY_NOT_ASSIGNED": {
     title: "Inventario no asignado",
@@ -92,7 +95,8 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "BAD_REQUEST/PAYMENT_TOTAL_MISMATCH": {
     title: "Monto total de pagos no coincide",
-    description: "El monto total de pagos debe ser igual al total de la transacción.",
+    description:
+      "El monto total de pagos debe ser igual al total de la transacción.",
   },
   "BAD_REQUEST/RUNTIME_EXCEPTION": {
     title: "Error en tiempo de ejecución",
@@ -104,17 +108,20 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "BAD_REQUEST/ACCOUNT_INACTIVE": {
     title: "Cuenta inactiva",
-    description: "Tu cuenta está inactiva. Por favor, contacta al administrador.",
+    description:
+      "Tu cuenta está inactiva. Por favor, contacta al administrador.",
   },
   "BAD_REQUEST/ACCOUNT_NOT_VERIFIED": {
     title: "Cuenta no verificada",
-    description: "Tu cuenta no ha sido verificada. Por favor, verifica tu cuenta.",
+    description:
+      "Tu cuenta no ha sido verificada. Por favor, verifica tu cuenta.",
   },
   "BAD_REQUEST/INSUFFICIENT_FUNDS": {
     title: "Fondos insuficientes",
-    description: "No tienes saldo suficiente en la cuenta para realizar esta operación.",
+    description:
+      "No tienes saldo suficiente en la cuenta para realizar esta operación.",
   },
-  "UNAUTHORIZED": {
+  UNAUTHORIZED: {
     title: "No autorizado",
     description: "No estás autorizado para realizar esta acción.",
   },
@@ -126,7 +133,7 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
     title: "Token expirado",
     description: "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.",
   },
-  "FORBIDDEN": {
+  FORBIDDEN: {
     title: "Acceso denegado",
     description: "No tienes permiso para acceder a este recurso.",
   },
@@ -134,7 +141,7 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
     title: "Acceso denegado",
     description: "No tienes permiso para realizar esta acción.",
   },
-  "NOT_FOUND": {
+  NOT_FOUND: {
     title: "Recurso no encontrado",
     description: "El recurso solicitado no fue encontrado.",
   },
@@ -160,7 +167,8 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "CONFLICT/EMAIL_ALREADY_EXISTS": {
     title: "Correo electrónico ya existe",
-    description: "Ya existe un usuario con el correo electrónico proporcionado.",
+    description:
+      "Ya existe un usuario con el correo electrónico proporcionado.",
   },
   "CONFLICT/USERNAME_ALREADY_EXISTS": {
     title: "Nombre de usuario ya existe",
@@ -168,15 +176,18 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "CONFLICT/FOREIGN_KEY_VIOLATION": {
     title: "Violación de clave foránea",
-    description: "El recurso está siendo utilizado por otro registro y no puede ser eliminado.",
+    description:
+      "El recurso está siendo utilizado por otro registro y no puede ser eliminado.",
   },
   "MULTIPLE_CHOICES/AMBIGUOUS_EMBEDDING": {
     title: "Elección ambigua de incrustación",
-    description: "La incrustación solicitada es ambigua y no se puede resolver.",
+    description:
+      "La incrustación solicitada es ambigua y no se puede resolver.",
   },
   "MULTIPLE_CHOICES/AMBIGUOUS_FUNCTION_CALL": {
     title: "Llamada a función ambigua",
-    description: "La llamada a la función solicitada es ambigua y no se puede resolver.",
+    description:
+      "La llamada a la función solicitada es ambigua y no se puede resolver.",
   },
   "SERVICE_UNAVAILABLE/DB_CONNECTION_FAILED": {
     title: "Servicio no disponible",
@@ -196,25 +207,29 @@ const PLAIN_HUMANIZED_ERRORS: Record<ErrorCode, HumanizedError> = {
   },
   "GATEWAY_TIMEOUT/DB_POOL_ACQUISITION_TIMEOUT": {
     title: "Tiempo de espera agotado",
-    description: "La adquisición del pool de conexiones a la base de datos ha agotado el tiempo de espera.",
+    description:
+      "La adquisición del pool de conexiones a la base de datos ha agotado el tiempo de espera.",
   },
   "GATEWAY_TIMEOUT/POOL_TIMEOUT": {
     title: "Tiempo de espera agotado",
-    description: "La adquisición del pool de conexiones ha agotado el tiempo de espera.",
+    description:
+      "La adquisición del pool de conexiones ha agotado el tiempo de espera.",
   },
-  "INTERNAL_SERVER_ERROR": {
+  INTERNAL_SERVER_ERROR: {
     title: "Error en el servidor",
     description: "Ocurrió un error inesperado en el servidor.",
   },
   "INTERNAL_SERVER_ERROR/UNEXPECTED": {
     title: "Error inesperado",
-    description: "Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde.",
+    description:
+      "Ocurrió un error inesperado. Por favor, intenta nuevamente más tarde.",
   },
   "INTERNAL_SERVER_ERROR/JWT_SECRET_MISSING": {
     title: "Error interno del servidor",
-    description: "Falta la clave secreta del JWT en la configuración del servidor.",
+    description:
+      "Falta la clave secreta del JWT en la configuración del servidor.",
   },
-  "METHOD_NOT_IMPLEMENTED": {
+  METHOD_NOT_IMPLEMENTED: {
     title: "Método no implementado",
     description: "El método no está implementado.",
   },
@@ -227,7 +242,10 @@ export function humanizeError(
 ): HumanizedError {
   // Caso especial: backend lanza RuntimeException con este mensaje al intentar login
   // cuando el usuario aún no ha confirmado su email.
-  if (typeof message === "string" && message.trim() === "User account is not verified") {
+  if (
+    typeof message === "string" &&
+    message.trim() === "User account is not verified"
+  ) {
     return {
       title: "Cuenta no verificada",
       description:
@@ -237,12 +255,16 @@ export function humanizeError(
 
   if (
     code === "BAD_REQUEST/INSUFFICIENT_FUNDS" ||
-    (typeof message === "string" && message.toLowerCase() === "insufficient funds")
+    (typeof message === "string" &&
+      message.toLowerCase() === "insufficient funds")
   ) {
     const amountCents = details?.amountCents
     const currentBalanceCents = details?.currentBalanceCents
 
-    if (typeof amountCents === "number" && typeof currentBalanceCents === "number") {
+    if (
+      typeof amountCents === "number" &&
+      typeof currentBalanceCents === "number"
+    ) {
       return {
         title: "Fondos insuficientes",
         description: `No tienes saldo suficiente en la cuenta. Saldo disponible: ${formatAmount(
@@ -264,7 +286,8 @@ export function humanizeError(
       const fieldErrorMessages = Object.entries(fieldErrors)
         .map(([field, error]) => {
           // Usar el mapeo de nombres de campos o humanizar el nombre
-          const fieldName = FIELD_NAME_MAP[field] || 
+          const fieldName =
+            FIELD_NAME_MAP[field] ||
             field
               .replace(/([A-Z])/g, " $1")
               .replace(/^./, (str) => str.toUpperCase())
@@ -272,10 +295,11 @@ export function humanizeError(
           return `${fieldName}: ${error}`
         })
         .join(". ")
-      
+
       return {
         title: humanizedError.title,
-        description: fieldErrorMessages || message || humanizedError.description,
+        description:
+          fieldErrorMessages || message || humanizedError.description,
       }
     }
 
@@ -292,7 +316,7 @@ export function humanizeError(
   // Si no se encuentra el código, usar el mensaje del servidor o un mensaje genérico
   return {
     title: "Error",
-    description: message || "Ocurrió un error inesperado. Por favor, intenta nuevamente.",
+    description:
+      message || "Ocurrió un error inesperado. Por favor, intenta nuevamente.",
   }
 }
-

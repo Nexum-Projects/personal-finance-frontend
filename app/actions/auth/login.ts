@@ -1,12 +1,12 @@
-'use server'
+"use server"
 
-import { cookies } from 'next/headers'
-import { isAxiosError } from 'axios'
-import { z } from 'zod'
+import { cookies } from "next/headers"
+import { isAxiosError } from "axios"
+import { z } from "zod"
 
-import baseAxios from '../baseAxios'
-import { ActionResponse } from '../types'
-import { parseApiError } from '@/utils/helpers/parse-api-error'
+import baseAxios from "../baseAxios"
+import { ActionResponse } from "../types"
+import { parseApiError } from "@/utils/helpers/parse-api-error"
 
 type Props = {
   usernameOrEmail: string
@@ -25,15 +25,16 @@ const PageDetailResponseSchema = z.object({
 export default async function login({
   usernameOrEmail,
   password,
-}: Props): Promise<ActionResponse<{ accessToken: string; refreshToken: string }>> {
+}: Props): Promise<
+  ActionResponse<{ accessToken: string; refreshToken: string }>
+> {
   try {
-    const response = await baseAxios.post<z.infer<typeof PageDetailResponseSchema>>(
-      '/auth/login',
-      {
-        usernameOrEmail,
-        password,
-      }
-    )
+    const response = await baseAxios.post<
+      z.infer<typeof PageDetailResponseSchema>
+    >("/auth/login", {
+      usernameOrEmail,
+      password,
+    })
 
     const validatedResponse = PageDetailResponseSchema.parse(response.data)
     const { accessToken, refreshToken } = validatedResponse.data
@@ -42,28 +43,28 @@ export default async function login({
     const expires = new Date(Date.now() + 3600 * 1000 * 8) // 8 horas
 
     const cookieStore = await cookies()
-    cookieStore.set('session', accessToken, {
+    cookieStore.set("session", accessToken, {
       expires,
       httpOnly: true,
-      path: '/',
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     })
 
     // Guardar refreshToken en otra cookie (opcional, si lo necesitas)
     if (refreshToken) {
       const refreshExpires = new Date(Date.now() + 3600 * 1000 * 24 * 30) // 30 días
-      cookieStore.set('refreshToken', refreshToken, {
+      cookieStore.set("refreshToken", refreshToken, {
         expires: refreshExpires,
         httpOnly: true,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        path: "/",
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
       })
     }
 
     return {
-      status: 'success',
+      status: "success",
       data: {
         accessToken,
         refreshToken,
@@ -74,12 +75,14 @@ export default async function login({
       const responseData = error.response.data
       const humanizedError = parseApiError(responseData)
       const responseCode =
-        responseData && typeof responseData === "object" && "code" in responseData
+        responseData &&
+        typeof responseData === "object" &&
+        "code" in responseData
           ? String((responseData as { code?: unknown }).code ?? "")
           : undefined
 
       return {
-        status: 'error',
+        status: "error",
         errors: [
           {
             title: humanizedError.title,
@@ -93,7 +96,7 @@ export default async function login({
 
     const humanizedError = parseApiError(error)
     return {
-      status: 'error',
+      status: "error",
       errors: [
         {
           title: humanizedError.title,
@@ -103,4 +106,3 @@ export default async function login({
     }
   }
 }
-

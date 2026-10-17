@@ -41,4 +41,3 @@ export interface AccountBalanceBreakdown {
   balanceCents: number
   percentage: number
 }
-

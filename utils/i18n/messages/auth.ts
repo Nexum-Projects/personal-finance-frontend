@@ -1,7 +1,8 @@
 export const ES_AUTH_MESSAGES = {
   "auth.login.subtitle": "Inicia sesión para acceder a tu dashboard",
   "auth.login.usernameOrEmail.label": "Email o Nombre de usuario",
-  "auth.login.usernameOrEmail.placeholder": "Ingresa tu email o nombre de usuario",
+  "auth.login.usernameOrEmail.placeholder":
+    "Ingresa tu email o nombre de usuario",
   "auth.login.password.label": "Contraseña",
   "auth.login.password.placeholder": "Ingresa tu contraseña",
   "auth.login.submit": "Iniciar sesión",
@@ -13,11 +14,14 @@ export const ES_AUTH_MESSAGES = {
   "auth.login.confirmEmail.link": "Reenviar correo de confirmación",
 
   "auth.register.title": "Crear cuenta",
-  "auth.register.subtitle": "Completa tus datos. Te enviaremos un correo para confirmar tu email.",
+  "auth.register.subtitle":
+    "Completa tus datos. Te enviaremos un correo para confirmar tu email.",
   "auth.register.access.title": "Datos de acceso",
-  "auth.register.access.subtitle": "Estos datos se usarán para iniciar sesión en el sistema",
+  "auth.register.access.subtitle":
+    "Estos datos se usarán para iniciar sesión en el sistema",
   "auth.register.prefs.title": "Preferencias",
-  "auth.register.prefs.subtitle": "Se usarán para formatear montos y fechas en tu dashboard",
+  "auth.register.prefs.subtitle":
+    "Se usarán para formatear montos y fechas en tu dashboard",
   "auth.register.submit": "Crear cuenta",
   "auth.register.submitting": "Creando cuenta...",
   "auth.register.haveAccount": "¿Ya tienes cuenta?",
@@ -39,11 +43,13 @@ export const EN_AUTH_MESSAGES = {
   "auth.login.confirmEmail.link": "Resend confirmation email",
 
   "auth.register.title": "Create account",
-  "auth.register.subtitle": "Fill in your details. We'll send you an email to confirm your address.",
+  "auth.register.subtitle":
+    "Fill in your details. We'll send you an email to confirm your address.",
   "auth.register.access.title": "Access details",
   "auth.register.access.subtitle": "These details are used to sign in",
   "auth.register.prefs.title": "Preferences",
-  "auth.register.prefs.subtitle": "Used to format amounts and dates in your dashboard",
+  "auth.register.prefs.subtitle":
+    "Used to format amounts and dates in your dashboard",
   "auth.register.submit": "Create account",
   "auth.register.submitting": "Creating account...",
   "auth.register.haveAccount": "Already have an account?",
@@ -65,14 +71,16 @@ export const PT_AUTH_MESSAGES = {
   "auth.login.confirmEmail.link": "Reenviar email de confirmação",
 
   "auth.register.title": "Criar conta",
-  "auth.register.subtitle": "Preencha seus dados. Enviaremos um email para confirmar.",
+  "auth.register.subtitle":
+    "Preencha seus dados. Enviaremos um email para confirmar.",
   "auth.register.access.title": "Dados de acesso",
-  "auth.register.access.subtitle": "Esses dados são usados para entrar no sistema",
+  "auth.register.access.subtitle":
+    "Esses dados são usados para entrar no sistema",
   "auth.register.prefs.title": "Preferências",
-  "auth.register.prefs.subtitle": "Usadas para formatar valores e datas no seu painel",
+  "auth.register.prefs.subtitle":
+    "Usadas para formatar valores e datas no seu painel",
   "auth.register.submit": "Criar conta",
   "auth.register.submitting": "Criando conta...",
   "auth.register.haveAccount": "Já tem uma conta?",
   "auth.register.login": "Entrar",
 } as const
-

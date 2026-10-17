@@ -3,7 +3,10 @@
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { toast } from "sonner"
-import { removeMonthlyPeriod, reactivateMonthlyPeriod } from "@/app/actions/monthly-periods"
+import {
+  removeMonthlyPeriod,
+  reactivateMonthlyPeriod,
+} from "@/app/actions/monthly-periods"
 import { Button } from "@/components/ui/button"
 import { Trash2, RotateCcw, Pencil } from "lucide-react"
 import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
@@ -29,10 +32,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
       description: (
         <>
           {t("monthlyPeriods.confirmDeactivate.title")}{" "}
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {humanizeMonth(monthlyPeriod.month, locale)}
-          </span>?
-          {t("monthlyPeriods.confirmDeactivate.description")}
+          </span>
+          ?{t("monthlyPeriods.confirmDeactivate.description")}
         </>
       ),
       onConfirm: onRemove,
@@ -49,9 +52,10 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
       description: (
         <>
           {t("monthlyPeriods.confirmReactivate.title")}{" "}
-          <span className="text-foreground font-medium">
+          <span className="font-medium text-foreground">
             {humanizeMonth(monthlyPeriod.month, locale)}
-          </span>?
+          </span>
+          ?
         </>
       ),
       onConfirm: onReactivate,
@@ -165,4 +169,3 @@ export function DetailMonthlyPeriodActions({ monthlyPeriod }: Props) {
     </div>
   )
 }
-

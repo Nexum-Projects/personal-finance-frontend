@@ -4,7 +4,13 @@ import { Plus } from "lucide-react"
 import { findManyMonthlyPeriods } from "@/app/actions/monthly-periods"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { MonthlyPeriodsTable } from "./components/monthly-periods-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { getServerI18n } from "@/utils/i18n/server"
 import { PageContainer } from "@/components/display/containers/page-container"
@@ -38,7 +44,11 @@ export default async function MonthlyPeriodsPage(props: Props) {
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "year" | "month",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "year"
+      | "month",
     search: parsedParams.search,
     startDate: searchParams.startDate,
     endDate: searchParams.endDate,
@@ -48,7 +58,10 @@ export default async function MonthlyPeriodsPage(props: Props) {
   if (result.status === "error") {
     return (
       <PageContainer>
-        <PageHeader title={t("monthlyPeriods.title")} description={t("monthlyPeriods.subtitle")} />
+        <PageHeader
+          title={t("monthlyPeriods.title")}
+          description={t("monthlyPeriods.subtitle")}
+        />
         <Card>
           <CardHeader>
             <CardTitle>{t("monthlyPeriods.errorTitle")}</CardTitle>
@@ -94,4 +107,3 @@ export default async function MonthlyPeriodsPage(props: Props) {
     </PageContainer>
   )
 }
-

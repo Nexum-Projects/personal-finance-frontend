@@ -58,7 +58,6 @@ export function NumericField<
     event.currentTarget.select()
   }
 
-
   return (
     <FormField
       control={control}
@@ -111,4 +110,3 @@ export function NumericField<
     />
   )
 }
-

@@ -15,4 +15,3 @@ export function ServiceWorkerCleanup() {
 
   return null
 }
-

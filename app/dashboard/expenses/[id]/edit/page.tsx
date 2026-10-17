@@ -51,8 +51,10 @@ export default async function EditExpensePage(props: Props) {
   // Cargar cuentas
   const accountsResult = await findManyAccounts()
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const accounts =
+    accountsResult.status === "success" ? accountsResult.data.data : []
 
   const BACK_TO_HREF = "/dashboard/expenses"
 
@@ -75,4 +77,3 @@ export default async function EditExpensePage(props: Props) {
     </PageContainer>
   )
 }
-

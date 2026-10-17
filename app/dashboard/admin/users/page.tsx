@@ -2,7 +2,13 @@ import { listUsers } from "@/app/actions/users"
 import { parseAdminUsersSearchParams } from "@/utils/parsers/admin-users-search-params"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { AdminUsersTable } from "./components/admin-users-table"
 import { getServerI18n } from "@/utils/i18n/server"
 import type { Metadata } from "next"
@@ -39,10 +45,15 @@ export default async function AdminUsersPage(props: Props) {
   if (result.status === "error") {
     return (
       <PageContainer>
-        <PageHeader title={t("admin.users.title")} description={t("admin.users.subtitle")} />
+        <PageHeader
+          title={t("admin.users.title")}
+          description={t("admin.users.subtitle")}
+        />
         <Card>
           <CardHeader>
-            <CardTitle>{result.errors[0]?.title ?? t("admin.error.forbidden.title")}</CardTitle>
+            <CardTitle>
+              {result.errors[0]?.title ?? t("admin.error.forbidden.title")}
+            </CardTitle>
             <CardDescription>{result.errors[0]?.message}</CardDescription>
           </CardHeader>
         </Card>
@@ -54,7 +65,10 @@ export default async function AdminUsersPage(props: Props) {
 
   return (
     <PageContainer>
-      <PageHeader title={t("admin.users.title")} description={t("admin.users.subtitle")} />
+      <PageHeader
+        title={t("admin.users.title")}
+        description={t("admin.users.subtitle")}
+      />
 
       <AdminUsersTable users={users} meta={meta} />
     </PageContainer>

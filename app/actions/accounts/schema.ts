@@ -18,5 +18,3 @@ export const accountSchema = z.object({
 })
 
 export type AccountFormValues = z.infer<typeof accountSchema>
-
-

@@ -37,7 +37,9 @@ export function ChangePasswordForm({ backToHref }: Props) {
   const formSchema = useMemo(() => {
     return changePasswordSchema
       .extend({
-        confirmNewPassword: z.string().min(8, t("profile.password.validation.confirmRequired")),
+        confirmNewPassword: z
+          .string()
+          .min(8, t("profile.password.validation.confirmRequired")),
       })
       .refine((data) => data.newPassword === data.confirmNewPassword, {
         message: t("profile.password.validation.mismatch"),
@@ -69,7 +71,9 @@ export function ChangePasswordForm({ backToHref }: Props) {
         const humanizedError = parseApiError(
           result.errors[0] || t("profile.password.error.changePassword")
         )
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         return
       }
 
@@ -82,7 +86,9 @@ export function ChangePasswordForm({ backToHref }: Props) {
     } catch (error) {
       handleAuthError(error, router)
       const humanizedError = parseApiError(error)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -139,11 +145,13 @@ export function ChangePasswordForm({ backToHref }: Props) {
           >
             {showPassword ? (
               <span className="inline-flex items-center gap-2">
-                <EyeOff className="h-4 w-4" /> {t("profile.password.form.toggle.hide")}
+                <EyeOff className="h-4 w-4" />{" "}
+                {t("profile.password.form.toggle.hide")}
               </span>
             ) : (
               <span className="inline-flex items-center gap-2">
-                <Eye className="h-4 w-4" /> {t("profile.password.form.toggle.show")}
+                <Eye className="h-4 w-4" />{" "}
+                {t("profile.password.form.toggle.show")}
               </span>
             )}
           </button>
@@ -166,5 +174,3 @@ export function ChangePasswordForm({ backToHref }: Props) {
     </Form>
   )
 }
-
-

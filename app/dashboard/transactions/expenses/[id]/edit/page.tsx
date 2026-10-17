@@ -27,7 +27,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   return {
-    title: t("transactions.editTitle", { description: transaction.data.description }),
+    title: t("transactions.editTitle", {
+      description: transaction.data.description,
+    }),
   }
 }
 
@@ -54,10 +56,16 @@ export default async function EditTransactionExpensePage(props: Props) {
   })
 
   // Cargar cuentas
-  const accountsResult = await findManyAccounts({ page: 1, limit: 5, pagination: false })
+  const accountsResult = await findManyAccounts({
+    page: 1,
+    limit: 5,
+    pagination: false,
+  })
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const accounts =
+    accountsResult.status === "success" ? accountsResult.data.data : []
 
   return (
     <PageContainer>
@@ -78,4 +86,3 @@ export default async function EditTransactionExpensePage(props: Props) {
     </PageContainer>
   )
 }
-

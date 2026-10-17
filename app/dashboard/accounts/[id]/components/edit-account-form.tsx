@@ -72,5 +72,3 @@ export function EditAccountForm({ account, backToHref }: Props) {
     />
   )
 }
-
-

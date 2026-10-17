@@ -51,4 +51,3 @@ export function parseApiError(error: unknown): HumanizedError {
     description: "Ocurrió un error inesperado. Por favor, intenta nuevamente.",
   }
 }
-

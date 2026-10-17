@@ -50,7 +50,9 @@ export function SidebarUserSection({ onClose }: SidebarUserSectionProps) {
       if (!currentUser) {
         try {
           const cookies = document.cookie.split(";")
-          const sessionCookie = cookies.find((c) => c.trim().startsWith("session="))
+          const sessionCookie = cookies.find((c) =>
+            c.trim().startsWith("session=")
+          )
 
           if (sessionCookie) {
             try {
@@ -85,28 +87,37 @@ export function SidebarUserSection({ onClose }: SidebarUserSectionProps) {
       : t("common.user")
 
   return (
-    <div className="p-4 border-t border-border">
+    <div className="border-t border-border p-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
             type="button"
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2 rounded-md text-left",
-              "hover:bg-accent hover:text-accent-foreground transition-colors",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              "flex w-full items-center gap-3 rounded-md px-3 py-2 text-left",
+              "transition-colors hover:bg-accent hover:text-accent-foreground",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             )}
           >
-            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-primary-foreground shrink-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <UserIcon className="h-5 w-5" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground truncate">{displayUsername}</p>
-              <p className="text-xs text-muted-foreground truncate">{displayRole}</p>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-foreground">
+                {displayUsername}
+              </p>
+              <p className="truncate text-xs text-muted-foreground">
+                {displayRole}
+              </p>
             </div>
           </button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent side="right" align="start" sideOffset={8} className="w-56">
+        <DropdownMenuContent
+          side="right"
+          align="start"
+          sideOffset={8}
+          className="w-56"
+        >
           <DropdownMenuItem
             onSelect={(e) => {
               e.preventDefault()
@@ -156,7 +167,9 @@ export function SidebarUserSection({ onClose }: SidebarUserSectionProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="mt-3 text-center text-xs text-muted-foreground">{APP_VERSION}</div>
+      <div className="mt-3 text-center text-xs text-muted-foreground">
+        {APP_VERSION}
+      </div>
     </div>
   )
 }

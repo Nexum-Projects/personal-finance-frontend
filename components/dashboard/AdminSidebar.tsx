@@ -38,7 +38,9 @@ export function AdminSidebar({ onClose }: AdminSidebarProps) {
           />
           <div className="min-w-0 leading-tight">
             <p className="text-lg font-bold text-foreground">Nexum</p>
-            <p className="text-xs font-medium text-primary">{t("admin.sidebar.brandSubtitle")}</p>
+            <p className="text-xs font-medium text-primary">
+              {t("admin.sidebar.brandSubtitle")}
+            </p>
           </div>
         </div>
       </div>
@@ -49,14 +51,14 @@ export function AdminSidebar({ onClose }: AdminSidebarProps) {
           onClick={() => handleLinkClick(onClose)}
           className={cn(
             "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-            "border border-border bg-muted/40 text-foreground hover:bg-muted",
+            "border border-border bg-muted/40 text-foreground hover:bg-muted"
           )}
         >
           <ArrowLeft className="h-5 w-5 shrink-0" />
           {t("admin.sidebar.backToApp")}
         </Link>
 
-        <p className="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {t("admin.sidebar.sectionMenu")}
         </p>
 
@@ -67,7 +69,7 @@ export function AdminSidebar({ onClose }: AdminSidebarProps) {
             "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
             usersActive
               ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
           )}
         >
           <Users className="h-5 w-5 shrink-0" />

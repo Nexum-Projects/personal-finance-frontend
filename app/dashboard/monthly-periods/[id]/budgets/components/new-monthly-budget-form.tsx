@@ -17,7 +17,11 @@ type Props = {
   categories: Category[]
 }
 
-export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }: Props) {
+export function NewMonthlyBudgetForm({
+  backToHref,
+  monthlyPeriodId,
+  categories,
+}: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
   const { t } = useI18n()
@@ -49,9 +53,7 @@ export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }
       }
 
       toast.success(t("toast.monthlyBudget.created"), {
-        description: (
-          <>{t("toast.monthlyBudget.created.desc")}</>
-        ),
+        description: <>{t("toast.monthlyBudget.created.desc")}</>,
       })
 
       router.push(backToHref)
@@ -77,4 +79,3 @@ export function NewMonthlyBudgetForm({ backToHref, monthlyPeriodId, categories }
     />
   )
 }
-

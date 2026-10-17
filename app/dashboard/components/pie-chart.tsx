@@ -1,6 +1,13 @@
 "use client"
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  Legend,
+} from "recharts"
 import type { CategoryBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
@@ -66,7 +73,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
       ) : (
         <div className="flex flex-col gap-4 xl:flex-row xl:items-start">
           {/* Gráfica de pastel */}
-          <div className="flex-1 min-w-0 xl:min-w-[300px]">
+          <div className="min-w-0 flex-1 xl:min-w-[300px]">
             <ResponsiveContainer width="100%" height={350}>
               <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
                 <Pie
@@ -79,7 +86,10 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
                   dataKey="value"
                 >
                   {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -100,16 +110,19 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
                       style={{ color }}
                     >
                       <div
-                        className="h-4 w-4 rounded-full flex-shrink-0"
+                        className="h-4 w-4 flex-shrink-0 rounded-full"
                         style={{ backgroundColor: color }}
                       />
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{entry.name}</div>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-medium">{entry.name}</div>
                         <div className="text-xs text-muted-foreground">
-                          {formatCurrency(entry.value)} ({entry.percentage.toFixed(1)}%)
+                          {formatCurrency(entry.value)} (
+                          {entry.percentage.toFixed(1)}%)
                         </div>
                         <div className="text-xs text-muted-foreground">
-                          {t("common.transactionsCount", { count: entry.count })}
+                          {t("common.transactionsCount", {
+                            count: entry.count,
+                          })}
                         </div>
                       </div>
                     </div>
@@ -123,4 +136,3 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
     </div>
   )
 }
-

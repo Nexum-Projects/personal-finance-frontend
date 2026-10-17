@@ -4,7 +4,13 @@ import { Plus } from "lucide-react"
 import { findManyCategories } from "@/app/actions/categories"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { CategoriesTable } from "./components/categories-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { getServerI18n } from "@/utils/i18n/server"
 
@@ -37,7 +43,11 @@ export default async function CategoriesPage(props: Props) {
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "name" | "categoryType",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "name"
+      | "categoryType",
     search: parsedParams.search,
     categoryType: parsedParams.categoryType,
     startDate: searchParams.startDate,
@@ -48,10 +58,12 @@ export default async function CategoriesPage(props: Props) {
   if (result.status === "error") {
     return (
       <div className="p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">{t("categories.title")}</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("categories.title")}
+            </h1>
+            <p className="mt-1 text-muted-foreground">
               {t("categories.subtitle")}
             </p>
           </div>
@@ -74,11 +86,13 @@ export default async function CategoriesPage(props: Props) {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">{t("categories.title")}</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("categories.title")}
+            </h1>
+            <p className="mt-1 text-muted-foreground">
               {t("categories.subtitle")}
             </p>
           </div>
@@ -93,9 +107,7 @@ export default async function CategoriesPage(props: Props) {
         <Card>
           <CardHeader>
             <CardTitle>{t("categories.listTitle")}</CardTitle>
-            <CardDescription>
-              {t("categories.listSubtitle")}
-            </CardDescription>
+            <CardDescription>{t("categories.listSubtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Suspense fallback={<div>{t("common.loading")}</div>}>
@@ -107,4 +119,3 @@ export default async function CategoriesPage(props: Props) {
     </div>
   )
 }
-

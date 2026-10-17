@@ -35,7 +35,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, locale: string, timeZone: string): string {
+function formatDate(
+  dateString: string,
+  locale: string,
+  timeZone: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -94,11 +98,17 @@ export default async function AccountDetailPage(props: Props) {
           },
           accountType: {
             label: t("accounts.detail.type"),
-            value: humanizeAccountType(acc.accountType, preferences.preferredLanguage),
+            value: humanizeAccountType(
+              acc.accountType,
+              preferences.preferredLanguage
+            ),
           },
           currentBalance: {
             label: t("accounts.detail.currentBalance"),
-            value: formatAmount(acc.currentBalanceCents, preferences.preferredCurrency),
+            value: formatAmount(
+              acc.currentBalanceCents,
+              preferences.preferredCurrency
+            ),
           },
           createdAt: {
             label: t("accounts.detail.createdAt"),
@@ -114,5 +124,3 @@ export default async function AccountDetailPage(props: Props) {
     </PageContainer>
   )
 }
-
-

@@ -46,9 +46,7 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
       }
 
       toast.success(t("toast.monthlyPeriod.updated"), {
-        description: (
-          <>{t("toast.monthlyPeriod.updated.desc")}</>
-        ),
+        description: <>{t("toast.monthlyPeriod.updated.desc")}</>,
       })
 
       router.push(backToHref)
@@ -78,4 +76,3 @@ export function EditMonthlyPeriodForm({ monthlyPeriod, backToHref }: Props) {
     />
   )
 }
-

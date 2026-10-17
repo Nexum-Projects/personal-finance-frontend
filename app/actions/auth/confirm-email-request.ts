@@ -1,4 +1,4 @@
-'use server'
+"use server"
 
 import { isAxiosError } from "axios"
 import { z } from "zod"
@@ -13,7 +13,9 @@ const schema = z.object({
 
 type Props = z.infer<typeof schema>
 
-export default async function confirmEmailRequest({ email }: Props): ActionResponse<{ ok: true }> {
+export default async function confirmEmailRequest({
+  email,
+}: Props): ActionResponse<{ ok: true }> {
   try {
     const payload = schema.parse({ email })
 
@@ -28,15 +30,18 @@ export default async function confirmEmailRequest({ email }: Props): ActionRespo
       const humanizedError = parseApiError(error.response.data)
       return {
         status: "error",
-        errors: [{ title: humanizedError.title, message: humanizedError.description }],
+        errors: [
+          { title: humanizedError.title, message: humanizedError.description },
+        ],
       }
     }
 
     const humanizedError = parseApiError(error)
     return {
       status: "error",
-      errors: [{ title: humanizedError.title, message: humanizedError.description }],
+      errors: [
+        { title: humanizedError.title, message: humanizedError.description },
+      ],
     }
   }
 }
-

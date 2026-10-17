@@ -10,7 +10,8 @@ type UserPreferencesContextValue = UserPreferences & {
   locale: string
 }
 
-const UserPreferencesContext = React.createContext<UserPreferencesContextValue | null>(null)
+const UserPreferencesContext =
+  React.createContext<UserPreferencesContextValue | null>(null)
 
 export function UserPreferencesProvider({
   children,
@@ -37,8 +38,9 @@ export function UserPreferencesProvider({
 export function useUserPreferences(): UserPreferencesContextValue {
   const ctx = React.useContext(UserPreferencesContext)
   if (!ctx) {
-    throw new Error("useUserPreferences debe usarse dentro de <UserPreferencesProvider />")
+    throw new Error(
+      "useUserPreferences debe usarse dentro de <UserPreferencesProvider />"
+    )
   }
   return ctx
 }
-

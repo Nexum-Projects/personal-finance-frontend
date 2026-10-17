@@ -66,7 +66,12 @@ export default async function ExpenseDetailPage(props: Props) {
   return (
     <PageContainer>
       <PageHeader
-        actions={<DetailTransactionActions transaction={trans} categoryType="EXPENSE" />}
+        actions={
+          <DetailTransactionActions
+            transaction={trans}
+            categoryType="EXPENSE"
+          />
+        }
         backTo={{
           href: "/dashboard/expenses",
           label: "Regresar a gastos",
@@ -85,7 +90,10 @@ export default async function ExpenseDetailPage(props: Props) {
           },
           amount: {
             label: "Monto",
-            value: formatAmount(trans.amountCents, preferences.preferredCurrency),
+            value: formatAmount(
+              trans.amountCents,
+              preferences.preferredCurrency
+            ),
           },
           description: {
             label: "Descripción",
@@ -117,4 +125,3 @@ export default async function ExpenseDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

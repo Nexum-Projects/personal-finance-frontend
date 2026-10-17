@@ -8,7 +8,9 @@ import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
 import type { User } from "./types"
 import { normalizeUserFromApi } from "./normalize-user-from-api"
 
-export default async function findUser(userId: string): Promise<ActionResponse<User>> {
+export default async function findUser(
+  userId: string
+): Promise<ActionResponse<User>> {
   try {
     const response = await baseAxios.get<{ data: User }>(`/users/${userId}`)
 
@@ -52,4 +54,3 @@ export default async function findUser(userId: string): Promise<ActionResponse<U
     }
   }
 }
-
