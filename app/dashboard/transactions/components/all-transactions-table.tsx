@@ -15,13 +15,18 @@ import {
 } from "@/components/ui/table"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { formatTransactionDateAsIs } from "@/utils/helpers/format-date-only"
-import type { Transaction, Category, Account } from "@/app/actions/transactions/types"
+import type {
+  Transaction,
+  Category,
+  Account,
+} from "@/app/actions/transactions/types"
 import { TransactionsRowActions } from "../../expenses/components/transactions-row-actions"
 import { TransactionsFilters } from "@/components/filters/transactions-filters"
 import { TransactionsExportAction } from "./transactions-export-action"
 import { cn } from "@/lib/utils"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import { TablePagination } from "@/components/display/table-pagination"
 
 type SortField = "amountCents" | "transactionDate" | "createdAt" | "updatedAt"
 type SortDirection = "ASC" | "DESC"
@@ -39,13 +44,13 @@ interface AllTransactionsTableProps {
   accounts?: Account[]
 }
 
-export function AllTransactionsTable({ 
-  transactions, 
-  meta, 
+export function AllTransactionsTable({
+  transactions,
+  meta,
   basePath,
   categories = [],
   accounts = [],
-}: AllTransactionsTableProps) {
+}: Readonly<AllTransactionsTableProps>) {
   const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
   const { t } = useI18n()
   const router = useRouter()
@@ -54,14 +59,15 @@ export function AllTransactionsTable({
 
   const currentPage = parseInt(searchParams.get("page") || "1", 10)
   const currentSearch = searchParams.get("search") || ""
-  const currentOrderBy = (searchParams.get("orderBy") || "updatedAt") as SortField
+  const currentOrderBy = (searchParams.get("orderBy") ||
+    "updatedAt") as SortField
   const currentOrder = (searchParams.get("order") || "DESC") as SortDirection
 
   const [search, setSearch] = useState(currentSearch)
 
   const updateSearchParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString())
-    
+
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null || value === "") {
         params.delete(key)
@@ -71,7 +77,11 @@ export function AllTransactionsTable({
     })
 
     // Reset to page 1 when search or sort changes
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined) {
+    if (
+      updates.search !== undefined ||
+      updates.orderBy !== undefined ||
+      updates.order !== undefined
+    ) {
       params.set("page", "1")
     }
 
@@ -161,7 +171,9 @@ export function AllTransactionsTable({
                   {getSortIcon("transactionDate")}
                 </Button>
               </TableHead>
-              <TableHead className="text-center">{t("transactions.table.actions")}</TableHead>
+              <TableHead className="text-center">
+                {t("transactions.table.actions")}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -177,34 +189,48 @@ export function AllTransactionsTable({
                 const amountDisplay = isIncome
                   ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
                   : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
-                
+
                 return (
                   <TableRow key={transaction.id}>
-                    <TableCell className={cn(
-                      "font-medium",
-                      isIncome ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
-                    )}>
+                    <TableCell
+                      className={cn(
+                        "font-medium",
+                        isIncome
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-red-600 dark:text-red-400"
+                      )}
+                    >
                       {amountDisplay}
                     </TableCell>
                     <TableCell>{transaction.description}</TableCell>
                     <TableCell>{transaction.category.name}</TableCell>
                     <TableCell>{transaction.account.name}</TableCell>
                     <TableCell>
-                      <span className={cn(
-                        "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
-                        isIncome 
-                          ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
-                      )}>
-                        {isIncome ? t("transactions.type.income") : t("transactions.type.expense")}
+                      <span
+                        className={cn(
+                          "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
+                          isIncome
+                            ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                        )}
+                      >
+                        {isIncome
+                          ? t("transactions.type.income")
+                          : t("transactions.type.expense")}
                       </span>
                     </TableCell>
-                    <TableCell>{formatTransactionDateAsIs(transaction.transactionDate)}</TableCell>
+                    <TableCell>
+                      {formatTransactionDateAsIs(transaction.transactionDate)}
+                    </TableCell>
                     <TableCell className="text-center">
-                      <TransactionsRowActions 
-                        transaction={transaction} 
+                      <TransactionsRowActions
+                        transaction={transaction}
                         categoryType={transaction.category.categoryType}
-                        basePath={isIncome ? "/dashboard/transactions/income" : "/dashboard/transactions/expenses"}
+                        basePath={
+                          isIncome
+                            ? "/dashboard/transactions/income"
+                            : "/dashboard/transactions/expenses"
+                        }
                       />
                     </TableCell>
                   </TableRow>
@@ -215,51 +241,16 @@ export function AllTransactionsTable({
         </Table>
       </div>
 
-      {/* Paginación */}
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          {t("pagination.showing", {
-            from: transactions.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
-            to: Math.min(currentPage * meta.limit, meta.totalObjects),
-            total: meta.totalObjects,
-            entity: t("transactions.title").toLowerCase(),
-          })}
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1 || isPending}
-          >
-            {t("pagination.prev")}
-          </Button>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(
-              (page) => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => handlePageChange(page)}
-                  disabled={isPending}
-                >
-                  {page}
-                </Button>
-              )
-            )}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === meta.totalPages || isPending}
-          >
-            {t("pagination.next")}
-          </Button>
-        </div>
-      </div>
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={meta.totalPages}
+        limit={meta.limit}
+        totalObjects={meta.totalObjects}
+        itemCount={transactions.length}
+        entity={t("transactions.title").toLowerCase()}
+        disabled={isPending}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
-
