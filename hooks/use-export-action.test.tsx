@@ -21,6 +21,8 @@ function useExportWithData() {
     data,
     pageSize: 10,
     sort: { direction: "DESC", field: null },
+    columnLabelKeys: { name: "accounts.table.name" },
+    reportNameKey: "export.report.accounts",
   })
   return { ...exportAction, data, setData }
 }

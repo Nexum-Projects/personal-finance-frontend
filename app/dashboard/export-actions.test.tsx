@@ -1,7 +1,11 @@
 import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { toast } from "sonner"
+import { render } from "@testing-library/react"
 import { es, meta, renderWithProviders } from "@/test/table-test-utils"
+import { I18nProvider } from "@/components/i18n/i18n-provider"
+import { UserPreferencesProvider } from "@/components/preferences/user-preferences-provider"
+import { EN_MESSAGES } from "@/utils/i18n/messages"
 import { findManyAccounts } from "@/app/actions/accounts"
 import { findManyTransactions } from "@/app/actions/transactions"
 import { exportXLSX } from "@/utils/helpers/export-xlsx"
@@ -13,7 +17,19 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }))
 vi.mock("react-to-print", () => ({ useReactToPrint: () => vi.fn() }))
-vi.mock("@/components/display/page-print", () => ({ PagePrint: () => null }))
+vi.mock("@/components/display/page-print", () => ({
+  PagePrint: ({
+    title,
+    columns,
+  }: {
+    title: string
+    columns: { label: string }[]
+  }) => (
+    <p data-testid="print">
+      {[title, ...columns.map((column) => column.label)].join("|")}
+    </p>
+  ),
+}))
 vi.mock("@/utils/helpers/export-xlsx", () => ({ exportXLSX: vi.fn() }))
 vi.mock("@/app/actions/accounts", () => ({ findManyAccounts: vi.fn() }))
 vi.mock("@/app/actions/transactions", () => ({ findManyTransactions: vi.fn() }))
@@ -24,11 +40,19 @@ vi.mock("@/components/display/export-actions-dialog", () => ({
     options,
   }: {
     actions: { XLSX: { onClick: () => void } }
-    options: { fullData: { onChange: (value: boolean) => void } }
+    options: {
+      fullData: { onChange: (value: boolean) => void }
+      sorting: { items: Record<string, { label: string }> }
+    }
   }) => (
     <>
       <button onClick={() => options.fullData.onChange(true)}>todo</button>
       <button onClick={actions.XLSX.onClick}>excel</button>
+      <p data-testid="sort-options">
+        {Object.values(options.sorting.items)
+          .map((item) => item.label)
+          .join("|")}
+      </p>
     </>
   ),
 }))
@@ -64,12 +88,20 @@ const cases = [
     Component: AccountsExportAction,
     findMany: vi.mocked(findManyAccounts),
     row: ACCOUNT,
+    en: {
+      report: "Accounts Report",
+      labels: ["Name", "Type", "Balance", "Currency", "Last update"],
+    },
   },
   {
     name: "TransactionsExportAction",
     Component: TransactionsExportAction,
     findMany: vi.mocked(findManyTransactions),
     row: TRANSACTION,
+    en: {
+      report: "Transactions Report",
+      labels: ["Amount", "Description", "Category", "Account", "Type", "Date"],
+    },
   },
 ]
 
@@ -130,6 +162,41 @@ describe.each(cases)(
       )
       expect(findMany).toHaveBeenCalledTimes(2)
       expect(exportXLSX).not.toHaveBeenCalled()
+    })
+  }
+)
+
+describe.each(cases)(
+  "$name — idioma del usuario",
+  ({ Component, findMany, row, en }) => {
+    it("exporta con encabezados y nombre del reporte en inglés", async () => {
+      findMany.mockResolvedValue(page([row]) as never)
+      render(
+        <I18nProvider language="EN" messages={EN_MESSAGES}>
+          <UserPreferencesProvider
+            preferences={{
+              preferredCurrency: "GTQ",
+              timeZone: "AMERICA_GUATEMALA",
+              preferredLanguage: "EN",
+            }}
+          >
+            <Component />
+          </UserPreferencesProvider>
+        </I18nProvider>
+      )
+
+      expect(screen.getByTestId("sort-options").textContent).toBe(
+        en.labels.join("|")
+      )
+      expect(screen.getByTestId("print").textContent).toBe(
+        [en.report, ...en.labels].join("|")
+      )
+
+      fireEvent.click(screen.getByRole("button", { name: "excel" }))
+      await waitFor(() => expect(exportXLSX).toHaveBeenCalledOnce())
+      const { documentName, columns } = vi.mocked(exportXLSX).mock.calls[0][0]
+      expect(documentName).toBe(en.report)
+      expect(columns.map((column) => column.label)).toEqual(en.labels)
     })
   }
 )

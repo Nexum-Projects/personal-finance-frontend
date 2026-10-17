@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import type { I18nKey } from "@/utils/i18n/messages"
 
 export type ExportType = "PDF" | "XLSX"
 
@@ -11,20 +12,31 @@ type SortDirection = "ASC" | "DESC"
 // El efecto que resuelve la carga solo dispara con filas: sin ellas la exportación quedaría colgada.
 const NO_DATA_ERROR = new Error("No data to export")
 
-type Params<K extends string, T> = {
+type Params<K extends string, C extends string, T> = {
   data: T[]
   pageSize: number
   sort: {
     direction: SortDirection
     field: K | null
   }
+  /** Columnas del reporte, en orden, con la clave i18n de su encabezado. */
+  columnLabelKeys: Record<C, I18nKey>
+  reportNameKey: I18nKey
 }
 
-export function useExportAction<K extends string, T>({
+type DialogHandlers = {
+  onPDF: () => void
+  onXLSX: () => Promise<void>
+  onOpenChange: (open: boolean) => void
+}
+
+export function useExportAction<K extends string, C extends string, T>({
   data,
   pageSize,
   sort: { direction, field },
-}: Params<K, T>) {
+  columnLabelKeys,
+  reportNameKey,
+}: Params<K, C, T>) {
   const [fullData, setFullData] = useState<boolean>(false)
   const [isExporting, setIsExporting] = useState<ExportType | null>(null)
   const [rowsQuantity, setRowsQuantity] = useState<number>(pageSize)
@@ -127,6 +139,44 @@ export function useExportAction<K extends string, T>({
     }
   }, [data])
 
+  const reportName = t(reportNameKey)
+  const reportColumns = (Object.keys(columnLabelKeys) as C[]).map((id) => ({
+    id,
+    label: t(columnLabelKeys[id]),
+  }))
+
+  // Props de <ExportActionsDialog />, iguales en todas las exportaciones salvo los manejadores.
+  const dialogProps = ({ onPDF, onXLSX, onOpenChange }: DialogHandlers) => ({
+    actions: {
+      PDF: {
+        onClick: onPDF,
+        isLoading: isExporting === "PDF",
+        disabled: !!isExporting,
+      },
+      XLSX: {
+        onClick: onXLSX,
+        isLoading: isExporting === "XLSX",
+        disabled: !!isExporting,
+      },
+    },
+    description: t("export.description"),
+    options: {
+      fullData: { value: fullData, onChange: onFullDataChange },
+      rowsQuantity: { value: rowsQuantity, onChange: onRowsQtyChange },
+      sorting: {
+        items: Object.fromEntries(
+          reportColumns.map(({ id, label }) => [id, { label, value: id }])
+        ),
+        onSortDirectionChange,
+        onSortedByChange,
+        sortedBy,
+        sortDirection,
+      },
+    },
+    title: t("export.title"),
+    onOpenChange,
+  })
+
   return {
     contentRef,
     promiseResolveRef,
@@ -142,5 +192,8 @@ export function useExportAction<K extends string, T>({
     onSortDirectionChange,
     onRowsQtyChange,
     onReset,
+    reportName,
+    reportColumns,
+    dialogProps,
   }
 }
