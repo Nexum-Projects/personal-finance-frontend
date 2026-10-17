@@ -18,21 +18,7 @@ import { useUserPreferences } from "@/components/preferences/user-preferences-pr
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
 import { useTableSearchParams } from "@/hooks/use-table-search-params"
-// Formateo de fecha simple sin dependencias externas
-function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString)
-    const day = date.getDate().toString().padStart(2, "0")
-    const month = (date.getMonth() + 1).toString().padStart(2, "0")
-    const year = date.getFullYear()
-    const hours = date.getHours().toString().padStart(2, "0")
-    const minutes = date.getMinutes().toString().padStart(2, "0")
-    return `${day}/${month}/${year} ${hours}:${minutes}`
-  } catch {
-    return dateString
-  }
-}
-
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 type SortField = "name" | "categoryType" | "updatedAt"
 
 interface CategoriesTableProps {
@@ -49,7 +35,7 @@ export function CategoriesTable({
   categories,
   meta,
 }: Readonly<CategoriesTableProps>) {
-  const { preferredLanguage } = useUserPreferences()
+  const { preferredLanguage, locale, timeZoneIana } = useUserPreferences()
   const { t } = useI18n()
   const {
     isPending,
@@ -133,7 +119,9 @@ export function CategoriesTable({
                       preferredLanguage
                     )}
                   </TableCell>
-                  <TableCell>{formatDate(category.updatedAt)}</TableCell>
+                  <TableCell>
+                    {formatDateTime(category.updatedAt, locale, timeZoneIana)}
+                  </TableCell>
                   <TableCell className="text-center">
                     <CategoriesRowActions category={category} />
                   </TableCell>
