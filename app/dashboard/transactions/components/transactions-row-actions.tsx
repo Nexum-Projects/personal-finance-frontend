@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { toast } from "sonner"
 import { removeTransaction } from "@/app/actions/transactions"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"

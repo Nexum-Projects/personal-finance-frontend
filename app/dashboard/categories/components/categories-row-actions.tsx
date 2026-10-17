@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { toast } from "sonner"
 import { removeCategory } from "@/app/actions/categories"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"

@@ -1,10 +1,6 @@
 "use client"
 
-import type {
-  PropsWithChildren,
-  ComponentProps,
-  HTMLAttributeAnchorTarget,
-} from "react"
+import type { PropsWithChildren, HTMLAttributeAnchorTarget } from "react"
 import Link from "next/link"
 import { MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
