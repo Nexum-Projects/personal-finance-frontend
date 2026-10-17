@@ -14,7 +14,14 @@ import type { Transaction } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
-const COLUMNS = ["amountCents", "description", "category", "account", "type", "transactionDate"] as const
+const COLUMNS = [
+  "amountCents",
+  "description",
+  "category",
+  "account",
+  "type",
+  "transactionDate",
+] as const
 
 type ReportRecord = Record<(typeof COLUMNS)[number], string>
 
@@ -46,12 +53,26 @@ export function TransactionsExportAction() {
   const { preferredCurrency, timeZoneIana, locale } = useUserPreferences()
   const { t } = useI18n()
 
-  const { page, limit, order, orderBy, search, startDate, endDate, categoryId, accountId } = useMemo(
+  const {
+    page,
+    limit,
+    order,
+    orderBy,
+    search,
+    startDate,
+    endDate,
+    categoryId,
+    accountId,
+  } = useMemo(
     () => ({
       page: parseInt(searchParams.get("page") || "1", 10),
       limit: parseInt(searchParams.get("limit") || "10", 10),
       order: (searchParams.get("order") || "DESC") as "ASC" | "DESC",
-      orderBy: (searchParams.get("orderBy") || "updatedAt") as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+      orderBy: (searchParams.get("orderBy") || "updatedAt") as
+        | "createdAt"
+        | "updatedAt"
+        | "transactionDate"
+        | "amountCents",
       search: searchParams.get("search") || "",
       startDate: searchParams.get("startDate") || undefined,
       endDate: searchParams.get("endDate") || undefined,
@@ -95,7 +116,11 @@ export function TransactionsExportAction() {
           page: currentPage,
           limit: pageSize,
           order: sortDirection,
-          orderBy: (sortedBy || orderBy) as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+          orderBy: (sortedBy || orderBy) as
+            | "createdAt"
+            | "updatedAt"
+            | "transactionDate"
+            | "amountCents",
           search: search || undefined,
           startDate: startDate || undefined,
           endDate: endDate || undefined,
@@ -121,7 +146,11 @@ export function TransactionsExportAction() {
         page,
         limit: rowsQuantity,
         order: sortDirection,
-        orderBy: (sortedBy || orderBy) as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+        orderBy: (sortedBy || orderBy) as
+          | "createdAt"
+          | "updatedAt"
+          | "transactionDate"
+          | "amountCents",
         search: search || undefined,
         startDate: startDate || undefined,
         endDate: endDate || undefined,
@@ -135,7 +164,19 @@ export function TransactionsExportAction() {
       }
       return []
     }
-  }, [fullData, page, rowsQuantity, sortDirection, sortedBy, orderBy, search, startDate, endDate, categoryId, accountId])
+  }, [
+    fullData,
+    page,
+    rowsQuantity,
+    sortDirection,
+    sortedBy,
+    orderBy,
+    search,
+    startDate,
+    endDate,
+    categoryId,
+    accountId,
+  ])
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -179,7 +220,9 @@ export function TransactionsExportAction() {
         description: transaction.description,
         category: transaction.category.name,
         account: transaction.account.name,
-        type: isIncome ? t("transactions.type.income") : t("transactions.type.expense"),
+        type: isIncome
+          ? t("transactions.type.income")
+          : t("transactions.type.expense"),
         transactionDate: formatTransactionDateAsIs(transaction.transactionDate),
       }
     })
@@ -244,22 +287,28 @@ export function TransactionsExportAction() {
             label: column.label,
             align: "left" as const,
           }))}
-          rows={transactions.map((transaction): ReportRecord & { id: string } => {
-            const isIncome = transaction.category.categoryType === "INCOME"
-            const amountDisplay = isIncome
-              ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
-              : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
+          rows={transactions.map(
+            (transaction): ReportRecord & { id: string } => {
+              const isIncome = transaction.category.categoryType === "INCOME"
+              const amountDisplay = isIncome
+                ? `+${formatAmount(transaction.amountCents, preferredCurrency)}`
+                : `-${formatAmount(transaction.amountCents, preferredCurrency)}`
 
-            return {
-              id: transaction.id,
-              amountCents: amountDisplay,
-              description: transaction.description,
-              category: transaction.category.name,
-              account: transaction.account.name,
-              type: isIncome ? t("transactions.type.income") : t("transactions.type.expense"),
-              transactionDate: formatTransactionDateAsIs(transaction.transactionDate),
+              return {
+                id: transaction.id,
+                amountCents: amountDisplay,
+                description: transaction.description,
+                category: transaction.category.name,
+                account: transaction.account.name,
+                type: isIncome
+                  ? t("transactions.type.income")
+                  : t("transactions.type.expense"),
+                transactionDate: formatTransactionDateAsIs(
+                  transaction.transactionDate
+                ),
+              }
             }
-          })}
+          )}
           title={REPORT_NAME}
         />
       </div>

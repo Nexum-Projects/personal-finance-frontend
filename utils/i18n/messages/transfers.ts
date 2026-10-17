@@ -3,7 +3,8 @@ export const ES_TRANSFERS_MESSAGES = {
   "transfers.subtitle": "Gestiona tus transferencias entre cuentas",
   "transfers.actions.new": "Nueva transferencia",
   "transfers.listTitle": "Lista de Transferencias",
-  "transfers.listSubtitle": "Aquí podrás ver y gestionar todas tus transferencias",
+  "transfers.listSubtitle":
+    "Aquí podrás ver y gestionar todas tus transferencias",
   "transfers.errorTitle": "Error",
   "transfers.errorLoad": "Error al cargar las transferencias",
 
@@ -19,7 +20,8 @@ export const ES_TRANSFERS_MESSAGES = {
 
   "transfers.backToList": "Regresar a transferencias",
   "transfers.newTitle": "Nueva Transferencia",
-  "transfers.new.needTwoAccounts": "Necesitas al menos 2 cuentas para realizar una transferencia.",
+  "transfers.new.needTwoAccounts":
+    "Necesitas al menos 2 cuentas para realizar una transferencia.",
 
   "transfers.detail.notFound": "Transferencia no encontrada",
   "transfers.detail.title": "Transferencia: {from} → {to}",
@@ -40,7 +42,8 @@ export const ES_TRANSFERS_MESSAGES = {
   "transfers.edit.sectionSubtitle": "Actualiza los datos de la transferencia",
 
   "transfers.form.sectionTitle": "Datos de la transferencia",
-  "transfers.form.sectionDescNew": "Ingresa los datos de la nueva transferencia",
+  "transfers.form.sectionDescNew":
+    "Ingresa los datos de la nueva transferencia",
   "transfers.form.sectionDescEdit": "Ingresa los datos de la transferencia",
   "transfers.form.fromAccount.label": "Cuenta de Origen",
   "transfers.form.fromAccount.desc": "Selecciona la cuenta de origen",
@@ -51,10 +54,12 @@ export const ES_TRANSFERS_MESSAGES = {
   "transfers.form.amount.label": "Monto",
   "transfers.form.amount.desc": "Ingresa el monto a transferir (en {currency})",
   "transfers.form.description.label": "Descripción",
-  "transfers.form.description.desc": "Describe el propósito de la transferencia",
+  "transfers.form.description.desc":
+    "Describe el propósito de la transferencia",
   "transfers.form.description.placeholder": "Ingresa una descripción",
   "transfers.form.transferDate.label": "Fecha de Transferencia",
-  "transfers.form.transferDate.desc": "Fecha en que se realiza la transferencia",
+  "transfers.form.transferDate.desc":
+    "Fecha en que se realiza la transferencia",
   "transfers.form.transferDate.placeholder": "YYYY-MM-DD",
 
   "transfers.actions.view": "Ver transferencia",
@@ -70,11 +75,14 @@ export const ES_TRANSFERS_MESSAGES = {
   "transfers.errorDelete": "Error al eliminar la transferencia",
 
   "toast.transfer.created": "Transferencia creada",
-  "toast.transfer.created.desc": "La transferencia ha sido creada exitosamente.",
+  "toast.transfer.created.desc":
+    "La transferencia ha sido creada exitosamente.",
   "toast.transfer.updated": "Transferencia actualizada",
-  "toast.transfer.updated.desc": "La transferencia ha sido actualizada exitosamente",
+  "toast.transfer.updated.desc":
+    "La transferencia ha sido actualizada exitosamente",
   "toast.transfer.deleted": "Transferencia eliminada",
-  "toast.transfer.deleted.desc": "La transferencia ha sido eliminada exitosamente.",
+  "toast.transfer.deleted.desc":
+    "La transferencia ha sido eliminada exitosamente.",
 } as const
 
 export const EN_TRANSFERS_MESSAGES = {
@@ -98,7 +106,8 @@ export const EN_TRANSFERS_MESSAGES = {
 
   "transfers.backToList": "Back to transfers",
   "transfers.newTitle": "New transfer",
-  "transfers.new.needTwoAccounts": "You need at least 2 accounts to make a transfer.",
+  "transfers.new.needTwoAccounts":
+    "You need at least 2 accounts to make a transfer.",
 
   "transfers.detail.notFound": "Transfer not found",
   "transfers.detail.title": "Transfer: {from} → {to}",
@@ -177,7 +186,8 @@ export const PT_TRANSFERS_MESSAGES = {
 
   "transfers.backToList": "Voltar para transferências",
   "transfers.newTitle": "Nova transferência",
-  "transfers.new.needTwoAccounts": "Você precisa de pelo menos 2 contas para fazer uma transferência.",
+  "transfers.new.needTwoAccounts":
+    "Você precisa de pelo menos 2 contas para fazer uma transferência.",
 
   "transfers.detail.notFound": "Transferência não encontrada",
   "transfers.detail.title": "Transferência: {from} → {to}",
@@ -234,4 +244,3 @@ export const PT_TRANSFERS_MESSAGES = {
   "toast.transfer.deleted": "Transferência excluída",
   "toast.transfer.deleted.desc": "A transferência foi excluída com sucesso.",
 } as const
-

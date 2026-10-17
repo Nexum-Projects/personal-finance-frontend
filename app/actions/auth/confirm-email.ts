@@ -1,4 +1,4 @@
-'use server'
+"use server"
 
 import { isAxiosError } from "axios"
 import { z } from "zod"
@@ -15,7 +15,9 @@ const ConfirmEmailResponseSchema = z.object({
   data: z.unknown().optional(),
 })
 
-export default async function confirmEmail({ token }: Props): ActionResponse<{ ok: true }> {
+export default async function confirmEmail({
+  token,
+}: Props): ActionResponse<{ ok: true }> {
   try {
     await baseAxios.post("/auth/confirm-email", { token })
 
@@ -32,15 +34,18 @@ export default async function confirmEmail({ token }: Props): ActionResponse<{ o
       const humanizedError = parseApiError(error.response.data)
       return {
         status: "error",
-        errors: [{ title: humanizedError.title, message: humanizedError.description }],
+        errors: [
+          { title: humanizedError.title, message: humanizedError.description },
+        ],
       }
     }
 
     const humanizedError = parseApiError(error)
     return {
       status: "error",
-      errors: [{ title: humanizedError.title, message: humanizedError.description }],
+      errors: [
+        { title: humanizedError.title, message: humanizedError.description },
+      ],
     }
   }
 }
-

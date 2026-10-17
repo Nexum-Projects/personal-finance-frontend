@@ -26,9 +26,14 @@ export function DetailTransferActions({ transfer }: Props) {
       description: (
         <>
           {t("transfers.confirmDelete.title")}{" "}
-          <span className="text-foreground font-medium">{transfer.fromAccount.name}</span> →{" "}
-          <span className="text-foreground font-medium">{transfer.toAccount.name}</span>.{" "}
-          {t("transfers.confirmDelete.description")}
+          <span className="font-medium text-foreground">
+            {transfer.fromAccount.name}
+          </span>{" "}
+          →{" "}
+          <span className="font-medium text-foreground">
+            {transfer.toAccount.name}
+          </span>
+          . {t("transfers.confirmDelete.description")}
         </>
       ),
       onConfirm: onRemove,
@@ -89,4 +94,3 @@ export function DetailTransferActions({ transfer }: Props) {
     </div>
   )
 }
-

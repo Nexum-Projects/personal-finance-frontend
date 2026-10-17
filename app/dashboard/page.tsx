@@ -49,15 +49,17 @@ export default async function DashboardPage() {
   ])
 
   const periods =
-    periodsResult[0].status === "fulfilled" && periodsResult[0].value.status === "success"
+    periodsResult[0].status === "fulfilled" &&
+    periodsResult[0].value.status === "success"
       ? periodsResult[0].value.data.data
       : []
-  const availableYears = Array.from(
-    new Set(periods.map((p) => p.year))
-  ).sort((a, b) => b - a) // Ordenar de mayor a menor
+  const availableYears = Array.from(new Set(periods.map((p) => p.year))).sort(
+    (a, b) => b - a
+  ) // Ordenar de mayor a menor
 
   // Determinar el año inicial: usar el año que tiene datos, o el año actual si no hay datos
-  const analyticsYear = availableYears.length > 0 ? availableYears[0] : currentYear
+  const analyticsYear =
+    availableYears.length > 0 ? availableYears[0] : currentYear
 
   // Cargar datos iniciales en paralelo
   // Usar Promise.allSettled para evitar que un error detenga toda la carga
@@ -94,23 +96,28 @@ export default async function DashboardPage() {
   ])
 
   const summary =
-    summaryResult.status === "fulfilled" && summaryResult.value.status === "success"
+    summaryResult.status === "fulfilled" &&
+    summaryResult.value.status === "success"
       ? summaryResult.value.data
       : null
   const expenseCategories =
-    expenseResult.status === "fulfilled" && expenseResult.value.status === "success"
+    expenseResult.status === "fulfilled" &&
+    expenseResult.value.status === "success"
       ? expenseResult.value.data
       : []
   const incomeCategories =
-    incomeResult.status === "fulfilled" && incomeResult.value.status === "success"
+    incomeResult.status === "fulfilled" &&
+    incomeResult.value.status === "success"
       ? incomeResult.value.data
       : []
   const trends =
-    trendsResult.status === "fulfilled" && trendsResult.value.status === "success"
+    trendsResult.status === "fulfilled" &&
+    trendsResult.value.status === "success"
       ? trendsResult.value.data
       : []
   const accountBalanceBreakdown =
-    balanceResult.status === "fulfilled" && balanceResult.value.status === "success"
+    balanceResult.status === "fulfilled" &&
+    balanceResult.value.status === "success"
       ? balanceResult.value.data
       : []
   const monthlyPeriodsAnalytics =
@@ -122,7 +129,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <DashboardContent
           initialSummary={summary}
           initialExpenseCategories={expenseCategories}
@@ -132,7 +139,9 @@ export default async function DashboardPage() {
           initialAccountBalanceBreakdown={accountBalanceBreakdown}
           initialMonthlyPeriodsAnalytics={monthlyPeriodsAnalytics}
           initialAnalyticsYear={analyticsYear}
-          availableYears={availableYears.length > 0 ? availableYears : [currentYear]}
+          availableYears={
+            availableYears.length > 0 ? availableYears : [currentYear]
+          }
         />
       </div>
     </div>

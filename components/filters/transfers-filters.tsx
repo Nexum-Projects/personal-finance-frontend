@@ -62,13 +62,15 @@ export function TransfersFilters({
           {activeFiltersCount > 0 && (
             <>
               <Separator
-                className="bg-border rounded-xs data-[orientation=vertical]:h-4/5 data-[orientation=vertical]:w-0.5 mx-2"
+                className="rounded-xs mx-2 bg-border data-[orientation=vertical]:h-4/5 data-[orientation=vertical]:w-0.5"
                 orientation="vertical"
               />
-              <div className="bg-primary/10 text-primary grid h-5 w-fit shrink-0 place-items-center rounded-xs px-1.5">
+              <div className="rounded-xs grid h-5 w-fit shrink-0 place-items-center bg-primary/10 px-1.5 text-primary">
                 <span className="text-xs leading-none">
                   {activeFiltersCount === 1
-                    ? t("filters.active.singular", { count: activeFiltersCount })
+                    ? t("filters.active.singular", {
+                        count: activeFiltersCount,
+                      })
                     : t("filters.active.plural", { count: activeFiltersCount })}
                 </span>
               </div>
@@ -76,15 +78,17 @@ export function TransfersFilters({
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full border-none sm:max-w-md flex flex-col">
+      <SheetContent className="flex w-full flex-col border-none sm:max-w-md">
         <SheetHeader className="relative flex-shrink-0">
-          <SheetTitle className="text-xl leading-6">{t("filters.title")}</SheetTitle>
+          <SheetTitle className="text-xl leading-6">
+            {t("filters.title")}
+          </SheetTitle>
           <SheetDescription className="mr-11">
             {t("filters.description")}
           </SheetDescription>
           <SheetClose asChild>
             <Button
-              className="absolute top-4 right-4 size-8"
+              className="absolute right-4 top-4 size-8"
               size="icon"
               type="button"
               variant="ghost"
@@ -102,7 +106,7 @@ export function TransfersFilters({
         </div>
 
         {activeFiltersCount > 0 && (
-          <SheetFooter className="flex-shrink-0 px-4 pb-4 border-t pt-4 mt-auto">
+          <SheetFooter className="mt-auto flex-shrink-0 border-t px-4 pb-4 pt-4">
             <Button
               className="w-full"
               type="button"
@@ -112,7 +116,7 @@ export function TransfersFilters({
                 setOpen(false)
               }}
             >
-              <XCircle className="h-4 w-4 mr-2" />
+              <XCircle className="mr-2 h-4 w-4" />
               {t("filters.clear")}
             </Button>
           </SheetFooter>
@@ -121,4 +125,3 @@ export function TransfersFilters({
     </Sheet>
   )
 }
-

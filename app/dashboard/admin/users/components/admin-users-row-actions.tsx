@@ -33,7 +33,9 @@ export function AdminUsersRowActions({ user }: Props) {
     } catch (error) {
       handleAuthError(error, router)
       const humanizedError = parseApiError(error)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
     }
   }
 
@@ -51,7 +53,9 @@ export function AdminUsersRowActions({ user }: Props) {
     } catch (error) {
       handleAuthError(error, router)
       const humanizedError = parseApiError(error)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
     }
   }
 
@@ -62,7 +66,10 @@ export function AdminUsersRowActions({ user }: Props) {
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       {!user.isActive ? (
-        <DataTableRowActions.Item type="button" onClick={() => void handleActivate()}>
+        <DataTableRowActions.Item
+          type="button"
+          onClick={() => void handleActivate()}
+        >
           {t("admin.users.actions.activate")}
         </DataTableRowActions.Item>
       ) : (

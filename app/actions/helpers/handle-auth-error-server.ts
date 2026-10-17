@@ -16,4 +16,3 @@ export async function handleAuthErrorServer(): Promise<never> {
   // Pasar por /logout para limpiar cookies (Route Handler) y luego ir a /login
   redirect("/logout")
 }
-

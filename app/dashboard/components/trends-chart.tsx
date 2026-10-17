@@ -35,7 +35,7 @@ export function TrendsChart({ data }: TrendsChartProps) {
           year: "numeric",
         })
       }
-      
+
       // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
       const date = new Date(dateString)
       return date.toLocaleDateString(locale, {
@@ -64,7 +64,10 @@ export function TrendsChart({ data }: TrendsChartProps) {
 
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <LineChart
+        data={chartData}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      >
         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
         <XAxis
           dataKey="date"
@@ -125,4 +128,3 @@ export function TrendsChart({ data }: TrendsChartProps) {
     </ResponsiveContainer>
   )
 }
-

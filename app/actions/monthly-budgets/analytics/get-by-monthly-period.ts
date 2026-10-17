@@ -11,9 +11,10 @@ export default async function getMonthlyBudgetsAnalyticsByMonthlyPeriod(
   monthlyPeriodId: string
 ): Promise<ActionResponse<MonthlyBudgetAnalyticsByPeriodResponse>> {
   try {
-    const response = await baseAxios.get<MonthlyBudgetAnalyticsByPeriodResponse>(
-      `/monthly-budgets/analytics/monthly-period/${monthlyPeriodId}`
-    )
+    const response =
+      await baseAxios.get<MonthlyBudgetAnalyticsByPeriodResponse>(
+        `/monthly-budgets/analytics/monthly-period/${monthlyPeriodId}`
+      )
 
     return {
       status: "success",
@@ -53,5 +54,3 @@ export default async function getMonthlyBudgetsAnalyticsByMonthlyPeriod(
     }
   }
 }
-
-

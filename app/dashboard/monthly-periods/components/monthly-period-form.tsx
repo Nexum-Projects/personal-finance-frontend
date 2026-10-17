@@ -9,7 +9,10 @@ import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
-import { monthlyPeriodSchema, type MonthlyPeriodFormValues } from "@/app/actions/monthly-periods/schema"
+import {
+  monthlyPeriodSchema,
+  type MonthlyPeriodFormValues,
+} from "@/app/actions/monthly-periods/schema"
 import { humanizeMonth } from "@/utils/helpers/humanize-month"
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
@@ -41,10 +44,12 @@ export function MonthlyPeriodForm({
     },
   })
 
-  const monthOptions = Array.from({ length: 12 }, (_, i) => i + 1).map((month) => ({
-    label: humanizeMonth(month, locale),
-    value: month.toString(),
-  }))
+  const monthOptions = Array.from({ length: 12 }, (_, i) => i + 1).map(
+    (month) => ({
+      label: humanizeMonth(month, locale),
+      value: month.toString(),
+    })
+  )
 
   return (
     <Form {...form}>
@@ -73,7 +78,9 @@ export function MonthlyPeriodForm({
             name="month"
             options={monthOptions}
             placeholder={t("monthlyPeriods.form.month.placeholder")}
-            transformValue={(value) => (value ? parseInt(value, 10) : undefined)}
+            transformValue={(value) =>
+              value ? parseInt(value, 10) : undefined
+            }
           />
 
           <NumericField
@@ -105,4 +112,3 @@ export function MonthlyPeriodForm({
     </Form>
   )
 }
-

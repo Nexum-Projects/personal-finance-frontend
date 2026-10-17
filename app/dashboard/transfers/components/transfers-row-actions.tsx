@@ -24,9 +24,14 @@ export function TransfersRowActions({ transfer }: Props) {
       description: (
         <>
           {t("transfers.confirmDelete.title")}{" "}
-          <span className="text-foreground font-medium">{transfer.fromAccount.name}</span> →{" "}
-          <span className="text-foreground font-medium">{transfer.toAccount.name}</span>.{" "}
-          {t("transfers.confirmDelete.description")}
+          <span className="font-medium text-foreground">
+            {transfer.fromAccount.name}
+          </span>{" "}
+          →{" "}
+          <span className="font-medium text-foreground">
+            {transfer.toAccount.name}
+          </span>
+          . {t("transfers.confirmDelete.description")}
         </>
       ),
       onConfirm: onRemove,
@@ -73,17 +78,26 @@ export function TransfersRowActions({ transfer }: Props) {
 
   return (
     <DataTableRowActions>
-      <DataTableRowActions.Item href={`/dashboard/transfers/${transfer.id}`} type="link">
+      <DataTableRowActions.Item
+        href={`/dashboard/transfers/${transfer.id}`}
+        type="link"
+      >
         {t("transfers.actions.view")}
       </DataTableRowActions.Item>
-      <DataTableRowActions.Item href={`/dashboard/transfers/${transfer.id}/edit`} type="link">
+      <DataTableRowActions.Item
+        href={`/dashboard/transfers/${transfer.id}/edit`}
+        type="link"
+      >
         {t("transfers.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
-      <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
+      <DataTableRowActions.Item
+        type="button"
+        variant="destructive"
+        onClick={handleRemove}
+      >
         {t("transfers.actions.delete")}
       </DataTableRowActions.Item>
     </DataTableRowActions>
   )
 }
-

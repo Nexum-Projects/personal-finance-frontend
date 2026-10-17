@@ -1,7 +1,13 @@
 "use client"
 
 import { useState, useEffect, useTransition } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   Select,
   SelectContent,
@@ -26,7 +32,10 @@ import {
   type TrendData,
   type AccountBalanceBreakdown,
 } from "@/app/actions/analytics"
-import { getMonthlyPeriodsAnalytics, type MonthlyPeriodAnalytics } from "@/app/actions/monthly-periods/analytics"
+import {
+  getMonthlyPeriodsAnalytics,
+  type MonthlyPeriodAnalytics,
+} from "@/app/actions/monthly-periods/analytics"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { toast } from "sonner"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
@@ -58,10 +67,12 @@ export function DashboardContent({
   const { preferredCurrency, timeZoneIana } = useUserPreferences()
   const { t } = useI18n()
   const [isPending, startTransition] = useTransition()
-  const [summary, setSummary] = useState<AnalyticsSummary | null>(initialSummary)
-  const [expenseCategories, setExpenseCategories] = useState<CategoryBreakdown[]>(
-    initialExpenseCategories
+  const [summary, setSummary] = useState<AnalyticsSummary | null>(
+    initialSummary
   )
+  const [expenseCategories, setExpenseCategories] = useState<
+    CategoryBreakdown[]
+  >(initialExpenseCategories)
   const [incomeCategories, setIncomeCategories] = useState<CategoryBreakdown[]>(
     initialIncomeCategories
   )
@@ -99,32 +110,39 @@ export function DashboardContent({
   }
 
   const [dateRange, setDateRange] = useState(getDefaultDates())
-  const [groupBy, setGroupBy] = useState<"day" | "week" | "month" | "year">("day")
+  const [groupBy, setGroupBy] = useState<"day" | "week" | "month" | "year">(
+    "day"
+  )
 
   const loadData = () => {
     startTransition(async () => {
       try {
-        const [summaryResult, expenseResult, incomeResult, trendsResult, balanceResult] =
-          await Promise.all([
-            getAnalyticsSummary({
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-            }),
-            getExpenseCategoryBreakdown({
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-            }),
-            getIncomeCategoryBreakdown({
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-            }),
-            getTrends({
-              startDate: dateRange.startDate,
-              endDate: dateRange.endDate,
-              groupBy: groupBy,
-            }),
-            getAccountBalanceBreakdown(),
-          ])
+        const [
+          summaryResult,
+          expenseResult,
+          incomeResult,
+          trendsResult,
+          balanceResult,
+        ] = await Promise.all([
+          getAnalyticsSummary({
+            startDate: dateRange.startDate,
+            endDate: dateRange.endDate,
+          }),
+          getExpenseCategoryBreakdown({
+            startDate: dateRange.startDate,
+            endDate: dateRange.endDate,
+          }),
+          getIncomeCategoryBreakdown({
+            startDate: dateRange.startDate,
+            endDate: dateRange.endDate,
+          }),
+          getTrends({
+            startDate: dateRange.startDate,
+            endDate: dateRange.endDate,
+            groupBy: groupBy,
+          }),
+          getAccountBalanceBreakdown(),
+        ])
 
         if (summaryResult.status === "success") {
           setSummary(summaryResult.data)
@@ -132,8 +150,13 @@ export function DashboardContent({
         } else {
           const firstError = summaryResult.errors?.[0]
           const errorMessage =
-            firstError?.title || firstError?.message || "Error al cargar resumen"
-          console.error("Error al cargar resumen:", JSON.stringify(summaryResult.errors, null, 2))
+            firstError?.title ||
+            firstError?.message ||
+            "Error al cargar resumen"
+          console.error(
+            "Error al cargar resumen:",
+            JSON.stringify(summaryResult.errors, null, 2)
+          )
           toast.error(errorMessage, {
             description: firstError?.message || firstError?.title,
           })
@@ -144,8 +167,13 @@ export function DashboardContent({
         } else {
           const firstError = expenseResult.errors?.[0]
           const errorMessage =
-            firstError?.title || firstError?.message || "Error al cargar categorías de gastos"
-          console.error("Error al cargar categorías de gastos:", JSON.stringify(expenseResult.errors, null, 2))
+            firstError?.title ||
+            firstError?.message ||
+            "Error al cargar categorías de gastos"
+          console.error(
+            "Error al cargar categorías de gastos:",
+            JSON.stringify(expenseResult.errors, null, 2)
+          )
           toast.error(errorMessage, {
             description: firstError?.message || firstError?.title,
           })
@@ -156,8 +184,13 @@ export function DashboardContent({
         } else {
           const firstError = incomeResult.errors?.[0]
           const errorMessage =
-            firstError?.title || firstError?.message || "Error al cargar categorías de ingresos"
-          console.error("Error al cargar categorías de ingresos:", JSON.stringify(incomeResult.errors, null, 2))
+            firstError?.title ||
+            firstError?.message ||
+            "Error al cargar categorías de ingresos"
+          console.error(
+            "Error al cargar categorías de ingresos:",
+            JSON.stringify(incomeResult.errors, null, 2)
+          )
           toast.error(errorMessage, {
             description: firstError?.message || firstError?.title,
           })
@@ -168,8 +201,13 @@ export function DashboardContent({
         } else {
           const firstError = trendsResult.errors?.[0]
           const errorMessage =
-            firstError?.title || firstError?.message || "Error al cargar tendencias"
-          console.error("Error al cargar tendencias:", JSON.stringify(trendsResult.errors, null, 2))
+            firstError?.title ||
+            firstError?.message ||
+            "Error al cargar tendencias"
+          console.error(
+            "Error al cargar tendencias:",
+            JSON.stringify(trendsResult.errors, null, 2)
+          )
           toast.error(errorMessage, {
             description: firstError?.message || firstError?.title,
           })
@@ -180,7 +218,9 @@ export function DashboardContent({
         } else {
           const firstError = balanceResult.errors?.[0]
           const errorMessage =
-            firstError?.title || firstError?.message || "Error al cargar balance por cuenta"
+            firstError?.title ||
+            firstError?.message ||
+            "Error al cargar balance por cuenta"
           console.error(
             "Error al cargar balance por cuenta:",
             JSON.stringify(balanceResult.errors, null, 2)
@@ -214,12 +254,14 @@ export function DashboardContent({
       {/* Header con selector de fechas */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">{t("dashboard.title")}</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-foreground">
+            {t("dashboard.title")}
+          </h1>
+          <p className="mt-1 text-muted-foreground">
             {t("dashboard.subtitle")}
           </p>
         </div>
-        <div className="flex items-center gap-4 w-full md:w-auto">
+        <div className="flex w-full items-center gap-4 md:w-auto">
           <DateRangePicker
             startDate={dateRange.startDate}
             endDate={dateRange.endDate}
@@ -233,11 +275,15 @@ export function DashboardContent({
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("dashboard.cards.totalBalance")}</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              {t("dashboard.cards.totalBalance")}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-foreground">
-              {summary ? formatAmount(summary.totalBalanceCents, preferredCurrency) : "$0.00"}
+              {summary
+                ? formatAmount(summary.totalBalanceCents, preferredCurrency)
+                : "$0.00"}
             </div>
             <p className="text-xs text-muted-foreground">
               {summary && summary.growthPercentage !== null
@@ -251,35 +297,53 @@ export function DashboardContent({
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("dashboard.cards.income")}</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              {t("dashboard.cards.income")}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-success">
-              {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
+              {summary
+                ? formatAmount(summary.totalIncomeCents, preferredCurrency)
+                : "$0.00"}
             </div>
-            <p className="text-xs text-muted-foreground">{t("dashboard.cards.inRange")}</p>
+            <p className="text-xs text-muted-foreground">
+              {t("dashboard.cards.inRange")}
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("dashboard.cards.expenses")}</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              {t("dashboard.cards.expenses")}
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-destructive">
-              {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
+              {summary
+                ? formatAmount(summary.totalExpensesCents, preferredCurrency)
+                : "$0.00"}
             </div>
-            <p className="text-xs text-muted-foreground">{t("dashboard.cards.inRange")}</p>
+            <p className="text-xs text-muted-foreground">
+              {t("dashboard.cards.inRange")}
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("dashboard.cards.accounts")}</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              {t("dashboard.cards.accounts")}
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-foreground">{totalAccounts}</div>
-            <p className="text-xs text-muted-foreground">{t("dashboard.cards.activeAccounts")}</p>
+            <div className="text-2xl font-bold text-foreground">
+              {totalAccounts}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {t("dashboard.cards.activeAccounts")}
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -299,11 +363,15 @@ export function DashboardContent({
                   : "text-success"
               }`}
             >
-              {summary ? formatAmount(summary.savingsCents, preferredCurrency) : "$0.00"}
+              {summary
+                ? formatAmount(summary.savingsCents, preferredCurrency)
+                : "$0.00"}
             </div>
-            <p className="text-sm text-muted-foreground mt-2">
+            <p className="mt-2 text-sm text-muted-foreground">
               {t("dashboard.savings.netAmount", {
-                value: summary ? formatAmount(summary.netAmountCents, preferredCurrency) : "$0.00",
+                value: summary
+                  ? formatAmount(summary.netAmountCents, preferredCurrency)
+                  : "$0.00",
               })}
             </p>
           </CardContent>
@@ -317,21 +385,36 @@ export function DashboardContent({
           <CardContent>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t("dashboard.summary.income")}</span>
+                <span className="text-muted-foreground">
+                  {t("dashboard.summary.income")}
+                </span>
                 <span className="font-medium text-success">
-                  {summary ? formatAmount(summary.totalIncomeCents, preferredCurrency) : "$0.00"}
+                  {summary
+                    ? formatAmount(summary.totalIncomeCents, preferredCurrency)
+                    : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t("dashboard.summary.expenses")}</span>
+                <span className="text-muted-foreground">
+                  {t("dashboard.summary.expenses")}
+                </span>
                 <span className="font-medium text-destructive">
-                  {summary ? formatAmount(summary.totalExpensesCents, preferredCurrency) : "$0.00"}
+                  {summary
+                    ? formatAmount(
+                        summary.totalExpensesCents,
+                        preferredCurrency
+                      )
+                    : "$0.00"}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">{t("dashboard.summary.balance")}</span>
+                <span className="text-muted-foreground">
+                  {t("dashboard.summary.balance")}
+                </span>
                 <span className="font-medium">
-                  {summary ? formatAmount(summary.totalBalanceCents, preferredCurrency) : "$0.00"}
+                  {summary
+                    ? formatAmount(summary.totalBalanceCents, preferredCurrency)
+                    : "$0.00"}
                 </span>
               </div>
             </div>
@@ -346,24 +429,36 @@ export function DashboardContent({
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <CardTitle>{t("dashboard.trends.title")}</CardTitle>
-                <CardDescription>{t("dashboard.trends.subtitle")}</CardDescription>
+                <CardDescription>
+                  {t("dashboard.trends.subtitle")}
+                </CardDescription>
               </div>
               <div className="flex items-center gap-2">
-                <Label htmlFor="groupBy" className="text-sm whitespace-nowrap">
+                <Label htmlFor="groupBy" className="whitespace-nowrap text-sm">
                   {t("dashboard.trends.groupBy")}
                 </Label>
                 <Select
                   value={groupBy}
-                  onValueChange={(value: "day" | "week" | "month" | "year") => setGroupBy(value)}
+                  onValueChange={(value: "day" | "week" | "month" | "year") =>
+                    setGroupBy(value)
+                  }
                 >
                   <SelectTrigger id="groupBy" className="w-[140px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="day">{t("dashboard.trends.groupBy.day")}</SelectItem>
-                    <SelectItem value="week">{t("dashboard.trends.groupBy.week")}</SelectItem>
-                    <SelectItem value="month">{t("dashboard.trends.groupBy.month")}</SelectItem>
-                    <SelectItem value="year">{t("dashboard.trends.groupBy.year")}</SelectItem>
+                    <SelectItem value="day">
+                      {t("dashboard.trends.groupBy.day")}
+                    </SelectItem>
+                    <SelectItem value="week">
+                      {t("dashboard.trends.groupBy.week")}
+                    </SelectItem>
+                    <SelectItem value="month">
+                      {t("dashboard.trends.groupBy.month")}
+                    </SelectItem>
+                    <SelectItem value="year">
+                      {t("dashboard.trends.groupBy.year")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -387,7 +482,9 @@ export function DashboardContent({
         <Card>
           <CardHeader>
             <CardTitle>{t("dashboard.pies.expensesByCategory")}</CardTitle>
-            <CardDescription>{t("dashboard.pies.expensesByCategory.subtitle")}</CardDescription>
+            <CardDescription>
+              {t("dashboard.pies.expensesByCategory.subtitle")}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
@@ -403,7 +500,9 @@ export function DashboardContent({
         <Card>
           <CardHeader>
             <CardTitle>{t("dashboard.pies.incomeByCategory")}</CardTitle>
-            <CardDescription>{t("dashboard.pies.incomeByCategory.subtitle")}</CardDescription>
+            <CardDescription>
+              {t("dashboard.pies.incomeByCategory.subtitle")}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
@@ -419,7 +518,9 @@ export function DashboardContent({
         <Card>
           <CardHeader>
             <CardTitle>{t("dashboard.pies.balanceByAccount")}</CardTitle>
-            <CardDescription>{t("dashboard.pies.balanceByAccount.subtitle")}</CardDescription>
+            <CardDescription>
+              {t("dashboard.pies.balanceByAccount.subtitle")}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             {isPending ? (
@@ -464,7 +565,8 @@ export function DashboardContent({
                     setMonthlyPeriodsAnalytics(result.data.data)
                   } else {
                     toast.error("Error al cargar presupuestos mensuales", {
-                      description: result.errors[0]?.message || "Error desconocido",
+                      description:
+                        result.errors[0]?.message || "Error desconocido",
                     })
                   }
                 } catch (error) {
@@ -481,4 +583,3 @@ export function DashboardContent({
     </div>
   )
 }
-

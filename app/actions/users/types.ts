@@ -1,7 +1,15 @@
 export type UserRole = "USER" | "ADMIN" | "SYSADMIN"
 
-import type { PreferredCurrency, TimeZone, PreferredLanguage } from "@/utils/user-preferences"
-export type { PreferredCurrency, TimeZone, PreferredLanguage } from "@/utils/user-preferences"
+import type {
+  PreferredCurrency,
+  TimeZone,
+  PreferredLanguage,
+} from "@/utils/user-preferences"
+export type {
+  PreferredCurrency,
+  TimeZone,
+  PreferredLanguage,
+} from "@/utils/user-preferences"
 
 export interface User {
   id: string
@@ -47,4 +55,3 @@ export interface UsersPageResponse {
   data: User[]
   meta: UsersPageMeta
 }
-

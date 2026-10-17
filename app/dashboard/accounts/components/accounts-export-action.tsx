@@ -14,7 +14,13 @@ import type { Account } from "@/app/actions/accounts/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
-const COLUMNS = ["name", "accountType", "currentBalanceCents", "currency", "updatedAt"] as const
+const COLUMNS = [
+  "name",
+  "accountType",
+  "currentBalanceCents",
+  "currency",
+  "updatedAt",
+] as const
 
 type ReportRecord = Record<(typeof COLUMNS)[number], string>
 
@@ -41,7 +47,8 @@ const REPORT_NAME = "Reporte de Cuentas"
 
 export function AccountsExportAction() {
   const searchParams = useSearchParams()
-  const { preferredCurrency, timeZoneIana, preferredLanguage, locale } = useUserPreferences()
+  const { preferredCurrency, timeZoneIana, preferredLanguage, locale } =
+    useUserPreferences()
   const { t } = useI18n()
 
   const { page, limit, order, orderBy, search, startDate, endDate } = useMemo(
@@ -49,7 +56,12 @@ export function AccountsExportAction() {
       page: parseInt(searchParams.get("page") || "1", 10),
       limit: parseInt(searchParams.get("limit") || "10", 10),
       order: (searchParams.get("order") || "DESC") as "ASC" | "DESC",
-      orderBy: (searchParams.get("orderBy") || "updatedAt") as "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents",
+      orderBy: (searchParams.get("orderBy") || "updatedAt") as
+        | "createdAt"
+        | "updatedAt"
+        | "name"
+        | "accountType"
+        | "currentBalanceCents",
       search: searchParams.get("search") || "",
       startDate: searchParams.get("startDate") || undefined,
       endDate: searchParams.get("endDate") || undefined,
@@ -105,7 +117,12 @@ export function AccountsExportAction() {
           page: currentPage,
           limit: pageSize,
           order: sortDirection,
-          orderBy: (sortedBy || orderBy) as "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents",
+          orderBy: (sortedBy || orderBy) as
+            | "createdAt"
+            | "updatedAt"
+            | "name"
+            | "accountType"
+            | "currentBalanceCents",
           search: search || undefined,
           startDate: startDate || undefined,
           endDate: endDate || undefined,
@@ -129,7 +146,12 @@ export function AccountsExportAction() {
         page,
         limit: rowsQuantity,
         order: sortDirection,
-        orderBy: (sortedBy || orderBy) as "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents",
+        orderBy: (sortedBy || orderBy) as
+          | "createdAt"
+          | "updatedAt"
+          | "name"
+          | "accountType"
+          | "currentBalanceCents",
         search: search || undefined,
         startDate: startDate || undefined,
         endDate: endDate || undefined,
@@ -141,7 +163,17 @@ export function AccountsExportAction() {
       }
       return []
     }
-  }, [fullData, page, rowsQuantity, sortDirection, sortedBy, orderBy, search, startDate, endDate])
+  }, [
+    fullData,
+    page,
+    rowsQuantity,
+    sortDirection,
+    sortedBy,
+    orderBy,
+    search,
+    startDate,
+    endDate,
+  ])
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -177,7 +209,10 @@ export function AccountsExportAction() {
     const rows: ReportRecord[] = fetchedAccounts.map((account) => ({
       name: account.name,
       accountType: humanizeAccountType(account.accountType, preferredLanguage),
-      currentBalanceCents: formatAmount(account.currentBalanceCents, account.currency),
+      currentBalanceCents: formatAmount(
+        account.currentBalanceCents,
+        account.currency
+      ),
       currency: account.currency,
       updatedAt: formatDateShort(account.updatedAt),
     }))
@@ -245,8 +280,14 @@ export function AccountsExportAction() {
           rows={accounts.map((account): ReportRecord & { id: string } => ({
             id: account.id,
             name: account.name,
-            accountType: humanizeAccountType(account.accountType, preferredLanguage),
-            currentBalanceCents: formatAmount(account.currentBalanceCents, account.currency),
+            accountType: humanizeAccountType(
+              account.accountType,
+              preferredLanguage
+            ),
+            currentBalanceCents: formatAmount(
+              account.currentBalanceCents,
+              account.currency
+            ),
             currency: account.currency,
             updatedAt: formatDateShort(account.updatedAt),
           }))}

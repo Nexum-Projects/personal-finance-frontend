@@ -35,5 +35,6 @@ export const monthlyPeriodUpdateSchema = z.object({
 })
 
 export type MonthlyPeriodFormValues = z.infer<typeof monthlyPeriodSchema>
-export type MonthlyPeriodUpdateFormValues = z.infer<typeof monthlyPeriodUpdateSchema>
-
+export type MonthlyPeriodUpdateFormValues = z.infer<
+  typeof monthlyPeriodUpdateSchema
+>

@@ -96,7 +96,8 @@ export default async function DocsProfilePage() {
               "URL do perfil: /dashboard/profile",
               "No perfil você verá seus dados e botões de ação no cabeçalho (Editar usuário / Alterar senha).",
             ],
-            placeholderProfile: "[IMAGEM / GIF] Página de perfil com botões de ação",
+            placeholderProfile:
+              "[IMAGEM / GIF] Página de perfil com botões de ação",
             editTitle: "Editar usuário (preferências)",
             editBullets: [
               "Nome de usuário: atualiza o nome/usuário visível.",
@@ -106,7 +107,8 @@ export default async function DocsProfilePage() {
               "Comportamento importante: ao salvar moeda/fuso/idioma, a sessão é encerrada para aplicar mudanças no token.",
               "Impacto: valores do painel, tabelas, tooltips e timestamps em detalhes.",
             ],
-            placeholderEdit: "[IMAGEM / GIF] Formulário de editar usuário + aviso",
+            placeholderEdit:
+              "[IMAGEM / GIF] Formulário de editar usuário + aviso",
             passwordTitle: "Alterar senha",
             passwordBullets: [
               "Requer senha atual e nova senha.",
@@ -129,7 +131,8 @@ export default async function DocsProfilePage() {
             back: "Regresar a Documentación",
             title: "Módulo: Perfil y seguridad",
             desc: "Administra tus datos de usuario, preferencias (moneda/zona horaria/idioma) y contraseña.",
-            placeholderMenu: "[IMAGEN / GIF] Menú del avatar (sidebar) + opciones",
+            placeholderMenu:
+              "[IMAGEN / GIF] Menú del avatar (sidebar) + opciones",
             purposeTitle: "Propósito",
             purposeP1:
               "El perfil te permite ver tu información (usuario, correo, rol, estado) y administrar preferencias que afectan toda la aplicación, como moneda y zona horaria.",
@@ -139,7 +142,8 @@ export default async function DocsProfilePage() {
               "URL del perfil: /dashboard/profile",
               "En el perfil verás tus datos y botones de acción en el encabezado (Editar usuario / Cambiar contraseña).",
             ],
-            placeholderProfile: "[IMAGEN / GIF] Página de perfil con botones de acción",
+            placeholderProfile:
+              "[IMAGEN / GIF] Página de perfil con botones de acción",
             editTitle: "Editar usuario (preferencias)",
             editBullets: [
               "Nombre de usuario: actualiza el nombre visible/usuario del sistema.",
@@ -149,7 +153,8 @@ export default async function DocsProfilePage() {
               "Comportamiento importante: al guardar cambios de moneda/zona horaria/idioma, se cierra sesión automáticamente para aplicar cambios en el token.",
               "Qué cambia con tus preferencias: montos del dashboard, tablas, tooltips y fechas/hora en detalles.",
             ],
-            placeholderEdit: "[IMAGEN / GIF] Formulario de editar usuario + advertencia",
+            placeholderEdit:
+              "[IMAGEN / GIF] Formulario de editar usuario + advertencia",
             passwordTitle: "Cambiar contraseña",
             passwordBullets: [
               "Requiere contraseña actual y nueva contraseña.",
@@ -157,11 +162,13 @@ export default async function DocsProfilePage() {
               "Opción de mostrar/ocultar contraseñas mientras editas.",
               "Recomendación: usa una contraseña única y segura (mínimo 8 caracteres).",
             ],
-            placeholderPassword: "[IMAGEN / GIF] Formulario de cambiar contraseña",
+            placeholderPassword:
+              "[IMAGEN / GIF] Formulario de cambiar contraseña",
             logoutTitle: "Cerrar sesión",
             logoutP1:
               "Puedes cerrar sesión desde el menú del avatar. Esto elimina la sesión actual y te redirige al login.",
-            placeholderLogout: "[IMAGEN / GIF] Opción “Cerrar sesión” en el menú del avatar",
+            placeholderLogout:
+              "[IMAGEN / GIF] Opción “Cerrar sesión” en el menú del avatar",
             tipPrefix:
               "Tip: los cambios de preferencias impactan el formateo de montos/fechas en ",
             tipDashboard: "Dashboard",
@@ -194,7 +201,7 @@ export default async function DocsProfilePage() {
           <CardTitle>{copy.accessTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.accessBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -208,7 +215,7 @@ export default async function DocsProfilePage() {
           <CardTitle>{copy.editTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.editBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -222,7 +229,7 @@ export default async function DocsProfilePage() {
           <CardTitle>{copy.passwordTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.passwordBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -243,11 +250,17 @@ export default async function DocsProfilePage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/dashboard">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/dashboard"
+        >
           {copy.tipDashboard}
         </Link>
         {copy.tipAnd}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/transactions">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/transactions"
+        >
           {copy.tipTransactions}
         </Link>
         {copy.tipSuffix}
@@ -255,4 +268,3 @@ export default async function DocsProfilePage() {
     </PageContainer>
   )
 }
-

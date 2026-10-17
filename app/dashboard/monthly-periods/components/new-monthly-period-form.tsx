@@ -43,9 +43,7 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
       }
 
       toast.success(t("toast.monthlyPeriod.created"), {
-        description: (
-          <>{t("toast.monthlyPeriod.created.desc")}</>
-        ),
+        description: <>{t("toast.monthlyPeriod.created.desc")}</>,
       })
 
       router.push(backToHref)
@@ -69,4 +67,3 @@ export function NewMonthlyPeriodForm({ backToHref }: Props) {
     />
   )
 }
-

@@ -36,7 +36,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 }
 
-function formatDate(dateString: string, timeZone: string, locale: string): string {
+function formatDate(
+  dateString: string,
+  timeZone: string,
+  locale: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -98,7 +102,10 @@ export default async function TransferDetailPage(props: Props) {
           },
           amount: {
             label: i18n("transfers.detail.amount"),
-            value: formatAmount(transferData.amountCents, preferences.preferredCurrency),
+            value: formatAmount(
+              transferData.amountCents,
+              preferences.preferredCurrency
+            ),
           },
           description: {
             label: i18n("transfers.detail.description"),
@@ -122,4 +129,3 @@ export default async function TransferDetailPage(props: Props) {
     </PageContainer>
   )
 }
-

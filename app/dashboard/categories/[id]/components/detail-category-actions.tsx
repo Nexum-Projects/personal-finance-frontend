@@ -27,10 +27,8 @@ export function DetailCategoryActions({ category }: Props) {
       description: (
         <>
           ¿Estás seguro que deseas desactivar la categoría{" "}
-          <span className="text-foreground font-medium">
-            {category.name}
-          </span>
-          ? Esta acción no se puede deshacer.
+          <span className="font-medium text-foreground">{category.name}</span>?
+          Esta acción no se puede deshacer.
         </>
       ),
       onConfirm: onDeactivate,
@@ -51,7 +49,7 @@ export function DetailCategoryActions({ category }: Props) {
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           setLoading(false)
@@ -69,7 +67,9 @@ export function DetailCategoryActions({ category }: Props) {
       }
 
       toast.success(t("toast.category.deactivated"), {
-        description: t("toast.category.deactivated.desc", { name: category.name }),
+        description: t("toast.category.deactivated.desc", {
+          name: category.name,
+        }),
       })
 
       router.push("/dashboard/categories")
@@ -108,4 +108,3 @@ export function DetailCategoryActions({ category }: Props) {
     />
   )
 }
-

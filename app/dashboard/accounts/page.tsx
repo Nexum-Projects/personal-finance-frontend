@@ -4,7 +4,13 @@ import { Plus } from "lucide-react"
 import { findManyAccounts } from "@/app/actions/accounts"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { AccountsTable } from "./components/accounts-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { getServerI18n } from "@/utils/i18n/server"
 
@@ -36,7 +42,12 @@ export default async function AccountsPage(props: Props) {
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "name"
+      | "accountType"
+      | "currentBalanceCents",
     search: parsedParams.search,
     startDate: searchParams.startDate,
     endDate: searchParams.endDate,
@@ -46,10 +57,12 @@ export default async function AccountsPage(props: Props) {
   if (result.status === "error") {
     return (
       <div className="p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground">{t("accounts.title")}</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("accounts.title")}
+            </h1>
+            <p className="mt-1 text-muted-foreground">
               {t("accounts.subtitle")}
             </p>
           </div>
@@ -72,11 +85,13 @@ export default async function AccountsPage(props: Props) {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">{t("accounts.title")}</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold text-foreground">
+              {t("accounts.title")}
+            </h1>
+            <p className="mt-1 text-muted-foreground">
               {t("accounts.subtitle")}
             </p>
           </div>
@@ -91,9 +106,7 @@ export default async function AccountsPage(props: Props) {
         <Card>
           <CardHeader>
             <CardTitle>{t("accounts.listTitle")}</CardTitle>
-            <CardDescription>
-              {t("accounts.listSubtitle")}
-            </CardDescription>
+            <CardDescription>{t("accounts.listSubtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Suspense fallback={<div>{t("common.loading")}</div>}>
@@ -105,5 +118,3 @@ export default async function AccountsPage(props: Props) {
     </div>
   )
 }
-
-

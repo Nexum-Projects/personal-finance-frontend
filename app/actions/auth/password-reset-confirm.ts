@@ -9,10 +9,14 @@ import { parseApiError } from "@/utils/helpers/parse-api-error"
 
 const passwordResetConfirmSchema = z.object({
   token: z.string().min(1, "El token es requerido"),
-  newPassword: z.string().min(8, "La nueva contraseña debe tener al menos 8 caracteres"),
+  newPassword: z
+    .string()
+    .min(8, "La nueva contraseña debe tener al menos 8 caracteres"),
 })
 
-export type PasswordResetConfirmInput = z.infer<typeof passwordResetConfirmSchema>
+export type PasswordResetConfirmInput = z.infer<
+  typeof passwordResetConfirmSchema
+>
 
 export default async function passwordResetConfirm(
   input: PasswordResetConfirmInput
@@ -57,5 +61,3 @@ export default async function passwordResetConfirm(
     }
   }
 }
-
-

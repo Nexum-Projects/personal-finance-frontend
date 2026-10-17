@@ -24,7 +24,7 @@ export function AccountsRowActions({ account }: Props) {
       description: (
         <>
           ¿Estás seguro que deseas desactivar la cuenta{" "}
-          <span className="text-foreground font-medium">{account.name}</span>?
+          <span className="font-medium text-foreground">{account.name}</span>?
           Esta acción no se puede deshacer.
         </>
       ),
@@ -60,7 +60,7 @@ export function AccountsRowActions({ account }: Props) {
         description: (
           <>
             La cuenta{" "}
-            <span className="text-foreground font-medium">{account.name}</span>{" "}
+            <span className="font-medium text-foreground">{account.name}</span>{" "}
             ha sido desactivada exitosamente.
           </>
         ),
@@ -78,18 +78,26 @@ export function AccountsRowActions({ account }: Props) {
 
   return (
     <DataTableRowActions>
-      <DataTableRowActions.Item href={`/dashboard/accounts/${account.id}`} type="link">
+      <DataTableRowActions.Item
+        href={`/dashboard/accounts/${account.id}`}
+        type="link"
+      >
         {t("accounts.actions.view")}
       </DataTableRowActions.Item>
-      <DataTableRowActions.Item href={`/dashboard/accounts/${account.id}/edit`} type="link">
+      <DataTableRowActions.Item
+        href={`/dashboard/accounts/${account.id}/edit`}
+        type="link"
+      >
         {t("accounts.actions.edit")}
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
-      <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
+      <DataTableRowActions.Item
+        type="button"
+        variant="destructive"
+        onClick={handleRemove}
+      >
         {t("accounts.actions.deactivate")}
       </DataTableRowActions.Item>
     </DataTableRowActions>
   )
 }
-
-

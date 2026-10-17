@@ -38,9 +38,9 @@ export default async function DocsCategoriesPage() {
       ? {
           back: "Back to Documentation",
           title: "Module: Categories",
-          desc:
-            "Define and manage income/expense categories used to classify transactions and budgets.",
-          placeholderList: "[IMAGE / GIF] Categories list (table) + type filter",
+          desc: "Define and manage income/expense categories used to classify transactions and budgets.",
+          placeholderList:
+            "[IMAGE / GIF] Categories list (table) + type filter",
           purposeTitle: "Purpose",
           purposeP1:
             "Categories are used to classify transactions (income/expenses) and to create monthly category budgets (usually for expenses).",
@@ -68,7 +68,8 @@ export default async function DocsCategoriesPage() {
             "Type filter: pick Expense when building monthly budgets or analyzing expenses.",
             "Deactivate/Delete: if a category is referenced by transactions, the backend may block deletion.",
           ],
-          placeholderDelete: "[IMAGE / GIF] Delete state (confirmation / error if in use)",
+          placeholderDelete:
+            "[IMAGE / GIF] Delete state (confirmation / error if in use)",
           tipPrefix: "Tip: to see how categories are used in analytics, check ",
           tipDashboard: "Dashboard",
           tipAnd: " and ",
@@ -79,9 +80,9 @@ export default async function DocsCategoriesPage() {
         ? {
             back: "Voltar para Documentação",
             title: "Módulo: Categorias",
-            desc:
-              "Defina e administre categorias de receitas e despesas para classificar transações e orçamentos.",
-            placeholderList: "[IMAGEM / GIF] Lista de categorias (tabela) + filtro por tipo",
+            desc: "Defina e administre categorias de receitas e despesas para classificar transações e orçamentos.",
+            placeholderList:
+              "[IMAGEM / GIF] Lista de categorias (tabela) + filtro por tipo",
             purposeTitle: "Propósito",
             purposeP1:
               "As categorias são usadas para classificar transações (receitas/despesas) e para criar orçamentos mensais por categoria (principalmente despesas).",
@@ -94,7 +95,8 @@ export default async function DocsCategoriesPage() {
               "Ações por linha: ver detalhe, editar, desativar/excluir.",
               "Boas práticas: nomes consistentes (ex.: “Alimentação”, “Transporte”, “Serviços”).",
             ],
-            placeholderFilters: "[IMAGEM / GIF] Painel de filtros + seletor de tipo",
+            placeholderFilters:
+              "[IMAGEM / GIF] Painel de filtros + seletor de tipo",
             formTitle: "Criar / editar categoria",
             formP1:
               "Para criar, clique em “Nova categoria”. Para editar, use o menu de ações da linha.",
@@ -109,8 +111,10 @@ export default async function DocsCategoriesPage() {
               "Filtro por tipo: selecione Despesa ao criar orçamentos mensais.",
               "Desativar/Excluir: se estiver em uso por transações, o backend pode impedir a exclusão.",
             ],
-            placeholderDelete: "[IMAGEM / GIF] Estado ao excluir (confirmação / erro se estiver em uso)",
-            tipPrefix: "Dica: para ver como categorias são usadas na análise, veja ",
+            placeholderDelete:
+              "[IMAGEM / GIF] Estado ao excluir (confirmação / erro se estiver em uso)",
+            tipPrefix:
+              "Dica: para ver como categorias são usadas na análise, veja ",
             tipDashboard: "Painel",
             tipAnd: " e ",
             tipMonthly: "Orçamentos mensais",
@@ -119,9 +123,9 @@ export default async function DocsCategoriesPage() {
         : {
             back: "Regresar a Documentación",
             title: "Módulo: Categorías",
-            desc:
-              "Define y administra categorías de ingresos y gastos para clasificar transacciones y presupuestos.",
-            placeholderList: "[IMAGEN / GIF] Lista de categorías (tabla) + filtro por tipo",
+            desc: "Define y administra categorías de ingresos y gastos para clasificar transacciones y presupuestos.",
+            placeholderList:
+              "[IMAGEN / GIF] Lista de categorías (tabla) + filtro por tipo",
             purposeTitle: "Propósito",
             purposeP1:
               "Las categorías se usan para clasificar transacciones (ingresos/gastos) y para crear presupuestos mensuales por categoría (principalmente para gastos).",
@@ -134,7 +138,8 @@ export default async function DocsCategoriesPage() {
               "Acciones por fila: ver detalle, editar, eliminar.",
               "Buenas prácticas: usa nombres consistentes (ej. “Comida”, “Transporte”, “Servicios”).",
             ],
-            placeholderFilters: "[IMAGEN / GIF] Sheet/Panel de filtros + combobox de tipo",
+            placeholderFilters:
+              "[IMAGEN / GIF] Sheet/Panel de filtros + combobox de tipo",
             formTitle: "Crear / editar categoría",
             formP1:
               "Para crear una categoría, haz clic en Nueva categoría. Para editar, entra al menú de acciones de una fila.",
@@ -149,8 +154,10 @@ export default async function DocsCategoriesPage() {
               "Filtro por tipo: selecciona Gasto si estás creando presupuestos mensuales o analizando gastos.",
               "Eliminar: si una categoría está referenciada por transacciones, el backend puede impedirlo.",
             ],
-            placeholderDelete: "[IMAGEN / GIF] Estado al eliminar (confirmación / error si está en uso)",
-            tipPrefix: "Tip: para ver cómo se usan categorías en analítica, revisa ",
+            placeholderDelete:
+              "[IMAGEN / GIF] Estado al eliminar (confirmación / error si está en uso)",
+            tipPrefix:
+              "Tip: para ver cómo se usan categorías en analítica, revisa ",
             tipDashboard: "Dashboard",
             tipAnd: " y ",
             tipMonthly: "Presupuestos mensuales",
@@ -181,7 +188,7 @@ export default async function DocsCategoriesPage() {
           <CardTitle>{copy.listTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.listBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -196,7 +203,7 @@ export default async function DocsCategoriesPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.formP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.formBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -210,7 +217,7 @@ export default async function DocsCategoriesPage() {
           <CardTitle>{copy.actionsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.actionsBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -221,11 +228,17 @@ export default async function DocsCategoriesPage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/dashboard">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/dashboard"
+        >
           {copy.tipDashboard}
         </Link>
         {copy.tipAnd}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/monthly-budgets">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/monthly-budgets"
+        >
           {copy.tipMonthly}
         </Link>
         {copy.tipSuffix}
@@ -233,4 +246,3 @@ export default async function DocsCategoriesPage() {
     </PageContainer>
   )
 }
-

@@ -25,7 +25,7 @@ export function DetailAccountActions({ account }: Props) {
       description: (
         <>
           ¿Estás seguro que deseas desactivar la cuenta{" "}
-          <span className="text-foreground font-medium">{account.name}</span>?
+          <span className="font-medium text-foreground">{account.name}</span>?
           Esta acción no se puede deshacer.
         </>
       ),
@@ -65,7 +65,7 @@ export function DetailAccountActions({ account }: Props) {
         description: (
           <>
             La cuenta{" "}
-            <span className="text-foreground font-medium">{account.name}</span>{" "}
+            <span className="font-medium text-foreground">{account.name}</span>{" "}
             ha sido desactivada exitosamente.
           </>
         ),
@@ -106,5 +106,3 @@ export function DetailAccountActions({ account }: Props) {
     />
   )
 }
-
-

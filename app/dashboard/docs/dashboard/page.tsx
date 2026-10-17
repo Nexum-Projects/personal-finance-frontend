@@ -69,7 +69,8 @@ export default async function DocsDashboardPage() {
             "Savings: net indicator (income − expenses). If negative, it is shown in red.",
           ],
           placeholderCardsTitle: "[IMAGE / GIF] Dashboard cards",
-          placeholderCardsDesc: "Suggestion: capture focused on the top metric cards.",
+          placeholderCardsDesc:
+            "Suggestion: capture focused on the top metric cards.",
           chartsTitle: "Charts",
           trendsTitle: "Financial trends",
           trendsBullets: [
@@ -102,7 +103,8 @@ export default async function DocsDashboardPage() {
             "Click on a month: opens a dialog with category budgets for that monthly period.",
             "Interpretation: “Remaining” shows how much room is left to spend (or how much you exceeded).",
           ],
-          placeholderMonthlyTitle: "[IMAGE / GIF] Table + category budgets dialog",
+          placeholderMonthlyTitle:
+            "[IMAGE / GIF] Table + category budgets dialog",
           tipPrefix: "Tip: if you want to go deeper into monthly budgets, see ",
           tipLinkText: "Monthly budgets",
           tipSuffix: ".",
@@ -134,7 +136,8 @@ export default async function DocsDashboardPage() {
               "Poupança: indicador líquido (receitas − despesas). Se negativo, aparece em vermelho.",
             ],
             placeholderCardsTitle: "[IMAGEM / GIF] Cartões do painel",
-            placeholderCardsDesc: "Sugestão: captura focada nos cartões superiores.",
+            placeholderCardsDesc:
+              "Sugestão: captura focada nos cartões superiores.",
             chartsTitle: "Gráficos",
             trendsTitle: "Tendências financeiras",
             trendsBullets: [
@@ -145,21 +148,24 @@ export default async function DocsDashboardPage() {
               "Tooltip: ao passar o mouse mostra valores exatos na moeda preferida.",
               "Dica: use “Mês” para ver um ano completo; use “Dia” para ver o comportamento dentro de um mês.",
             ],
-            placeholderTrendsTitle: "[IMAGEM / GIF] Tooltip e seletor de agrupamento",
+            placeholderTrendsTitle:
+              "[IMAGEM / GIF] Tooltip e seletor de agrupamento",
             piesTitle: "Despesas por categoria / Receitas por categoria",
             piesBullets: [
               "Distribuição por categoria (percentual e valor total)",
               "Quantidade de transações por categoria",
               "Lista lateral com scroll quando há muitas categorias",
             ],
-            placeholderPieTitle: "[IMAGEM / GIF] Gráfico de pizza e lista com scroll",
+            placeholderPieTitle:
+              "[IMAGEM / GIF] Gráfico de pizza e lista com scroll",
             balanceByAccountTitle: "Saldo por conta",
             balanceByAccountBullets: [
               "Distribuição do saldo total por conta",
               "Mostra o tipo de conta no tooltip",
               "Útil para detectar quais contas pesam mais no saldo total",
             ],
-            placeholderBalanceTitle: "[IMAGEM / GIF] Tooltip de saldo por conta",
+            placeholderBalanceTitle:
+              "[IMAGEM / GIF] Tooltip de saldo por conta",
             monthlyAnalyticsTitle: "Análise de Orçamento Mensal (tabela)",
             monthlyAnalyticsBullets: [
               "Filtro de ano: muda o ano mostrado na tabela.",
@@ -167,7 +173,8 @@ export default async function DocsDashboardPage() {
               "Clique em um mês: abre um diálogo com orçamentos por categoria do período mensal.",
               "Interpretação: “Restante” mostra quanto ainda pode gastar (ou quanto excedeu).",
             ],
-            placeholderMonthlyTitle: "[IMAGEM / GIF] Tabela + diálogo de orçamentos por categoria",
+            placeholderMonthlyTitle:
+              "[IMAGEM / GIF] Tabela + diálogo de orçamentos por categoria",
             tipPrefix: "Dica: para aprofundar em orçamentos mensais, veja ",
             tipLinkText: "Orçamentos mensais",
             tipSuffix: ".",
@@ -210,21 +217,24 @@ export default async function DocsDashboardPage() {
               "Tooltip: al pasar el cursor muestra valores exactos en la moneda preferida.",
               "Recomendación: usa “Mes” para ver un año completo; usa “Día” para ver el comportamiento dentro de un mes.",
             ],
-            placeholderTrendsTitle: "[IMAGEN / GIF] Tooltip y selector de agrupación",
+            placeholderTrendsTitle:
+              "[IMAGEN / GIF] Tooltip y selector de agrupación",
             piesTitle: "Gastos por categoría / Ingresos por categoría",
             piesBullets: [
               "Distribución por categoría (porcentaje y monto total)",
               "Conteo de transacciones por categoría",
               "Lista lateral con scroll cuando hay muchas categorías",
             ],
-            placeholderPieTitle: "[IMAGEN / GIF] Gráfica de pastel y lista con scroll",
+            placeholderPieTitle:
+              "[IMAGEN / GIF] Gráfica de pastel y lista con scroll",
             balanceByAccountTitle: "Balance por cuenta",
             balanceByAccountBullets: [
               "Distribución del balance total por cuenta",
               "Muestra el tipo de cuenta en el tooltip",
               "Útil para detectar cuentas con mayor peso en tu balance total",
             ],
-            placeholderBalanceTitle: "[IMAGEN / GIF] Tooltip de balance por cuenta",
+            placeholderBalanceTitle:
+              "[IMAGEN / GIF] Tooltip de balance por cuenta",
             monthlyAnalyticsTitle: "Analítica de Presupuesto Mensual (tabla)",
             monthlyAnalyticsBullets: [
               "Filtro de año: cambia el año mostrado en la tabla.",
@@ -232,7 +242,8 @@ export default async function DocsDashboardPage() {
               "Click en un mes: abre un diálogo con presupuestos por categoría del período mensual.",
               "Interpretación: “Restante” indica cuánto margen queda por gastar (o cuánto se excedió).",
             ],
-            placeholderMonthlyTitle: "[IMAGEN / GIF] Tabla + diálogo de presupuestos por categoría",
+            placeholderMonthlyTitle:
+              "[IMAGEN / GIF] Tabla + diálogo de presupuestos por categoría",
             tipPrefix:
               "Tip: si quieres profundizar en presupuestos mensuales, revisa ",
             tipLinkText: "Presupuestos mensuales",
@@ -264,7 +275,7 @@ export default async function DocsDashboardPage() {
           <CardTitle>{copy.controlsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.controls.map((c) => (
               <li key={c}>{c}</li>
             ))}
@@ -277,7 +288,7 @@ export default async function DocsDashboardPage() {
           <CardTitle>{copy.cardsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.cards.map((c) => (
               <li key={c}>{c}</li>
             ))}
@@ -296,32 +307,41 @@ export default async function DocsDashboardPage() {
         <CardContent className="space-y-4 text-sm">
           <div>
             <b>{copy.trendsTitle}</b>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
+            <ul className="mt-2 list-disc space-y-1 pl-5">
               {copy.trendsBullets.map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
-            <DocImagePlaceholder className="mt-3" title={copy.placeholderTrendsTitle} />
+            <DocImagePlaceholder
+              className="mt-3"
+              title={copy.placeholderTrendsTitle}
+            />
           </div>
 
           <div>
             <b>{copy.piesTitle}</b>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
+            <ul className="mt-2 list-disc space-y-1 pl-5">
               {copy.piesBullets.map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
-            <DocImagePlaceholder className="mt-3" title={copy.placeholderPieTitle} />
+            <DocImagePlaceholder
+              className="mt-3"
+              title={copy.placeholderPieTitle}
+            />
           </div>
 
           <div>
             <b>{copy.balanceByAccountTitle}</b>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
+            <ul className="mt-2 list-disc space-y-1 pl-5">
               {copy.balanceByAccountBullets.map((b) => (
                 <li key={b}>{b}</li>
               ))}
             </ul>
-            <DocImagePlaceholder className="mt-3" title={copy.placeholderBalanceTitle} />
+            <DocImagePlaceholder
+              className="mt-3"
+              title={copy.placeholderBalanceTitle}
+            />
           </div>
         </CardContent>
       </Card>
@@ -331,7 +351,7 @@ export default async function DocsDashboardPage() {
           <CardTitle>{copy.monthlyAnalyticsTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.monthlyAnalyticsBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -342,7 +362,10 @@ export default async function DocsDashboardPage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/monthly-budgets">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/monthly-budgets"
+        >
           {copy.tipLinkText}
         </Link>
         {copy.tipSuffix}
@@ -350,4 +373,3 @@ export default async function DocsDashboardPage() {
     </PageContainer>
   )
 }
-

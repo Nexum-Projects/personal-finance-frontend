@@ -13,7 +13,9 @@ export default async function removeTransaction(
   try {
     await baseAxios.delete(`/transactions/${transactionId}`)
 
-    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`)
+    revalidatePath(
+      `/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`
+    )
 
     return {
       status: "success",
@@ -47,4 +49,3 @@ export default async function removeTransaction(
     }
   }
 }
-

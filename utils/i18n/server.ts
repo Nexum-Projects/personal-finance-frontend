@@ -18,7 +18,9 @@ export async function getServerI18n(): Promise<{
   t: (key: I18nKey, vars?: Record<string, string | number>) => string
 }> {
   const session = await getSession()
-  const language = getLanguageFromSession(session as Record<string, unknown> | null)
+  const language = getLanguageFromSession(
+    session as Record<string, unknown> | null
+  )
   const messages = getMessages(language)
   return {
     language,
@@ -26,4 +28,3 @@ export async function getServerI18n(): Promise<{
     t: (key, vars) => interpolate(messages[key] ?? key, vars),
   }
 }
-

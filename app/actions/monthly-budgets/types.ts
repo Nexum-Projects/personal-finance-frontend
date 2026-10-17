@@ -35,4 +35,3 @@ export interface MonthlyBudgetPageResponse {
   data: MonthlyBudget[]
   meta: MonthlyBudgetPageMeta
 }
-

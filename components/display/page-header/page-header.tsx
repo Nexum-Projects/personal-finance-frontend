@@ -62,7 +62,7 @@ export function PageHeader({
           {backTo && (
             <Button
               asChild
-              className="hover:bg-primary/10 text-primary hover:text-primary dark:hover:bg-primary/20 w-fit"
+              className="w-fit text-primary hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20"
               size="sm"
               variant="ghost"
             >
@@ -72,12 +72,12 @@ export function PageHeader({
               </Link>
             </Button>
           )}
-          <Typography className="leading-10 font-medium" variant="h1">
+          <Typography className="font-medium leading-10" variant="h1">
             {title}
           </Typography>
           {description && (
             <Typography
-              className="text-muted-foreground leading-tight"
+              className="leading-tight text-muted-foreground"
               variant="p"
             >
               {description}
@@ -85,11 +85,18 @@ export function PageHeader({
           )}
         </div>
         {actions && typeof actions === "object" && !isValidElement(actions) ? (
-          <div className="flex max-w-[calc(100vw-2rem)] min-w-0 items-end gap-3 overflow-x-auto *:shrink-0 lg:flex-row-reverse xl:max-w-[calc(100vw-var(--sidebar-width,256px)-2rem)]">
+          <div className="flex min-w-0 max-w-[calc(100vw-2rem)] items-end gap-3 overflow-x-auto *:shrink-0 lg:flex-row-reverse xl:max-w-[calc(100vw-var(--sidebar-width,256px)-2rem)]">
             {Object.entries(actions).map(
               ([
                 key,
-                { disabled, isLoading, variant, label, className: actionClassName, ...action },
+                {
+                  disabled,
+                  isLoading,
+                  variant,
+                  label,
+                  className: actionClassName,
+                  ...action
+                },
               ]) => {
                 if (action.type === "link") {
                   const { href, target } = action
@@ -103,7 +110,9 @@ export function PageHeader({
                       variant={variant}
                     >
                       <Link href={href} target={target}>
-                        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {isLoading && (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        )}
                         {action.icon && (
                           <action.icon
                             className={cn("mr-2 h-4 w-4", {
@@ -125,7 +134,9 @@ export function PageHeader({
                     onClick={action.onClick}
                     className={actionClassName}
                   >
-                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isLoading && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     {action.icon && (
                       <action.icon
                         className={cn("mr-2 h-4 w-4", {
@@ -152,7 +163,7 @@ export function PageHeader({
         )}
       >
         {tabs && (
-          <div className="flex h-fit w-full max-w-[calc(100vw-2rem)] min-w-0 gap-0 overflow-x-auto xl:max-w-[calc(100vw-var(--sidebar-width,256px)-2rem)]">
+          <div className="flex h-fit w-full min-w-0 max-w-[calc(100vw-2rem)] gap-0 overflow-x-auto xl:max-w-[calc(100vw-var(--sidebar-width,256px)-2rem)]">
             {Object.entries(tabs).map(([key, tab]) => (
               <PageHeaderTab key={key} {...tab} />
             ))}
@@ -169,4 +180,3 @@ export function PageHeader({
     </header>
   )
 }
-

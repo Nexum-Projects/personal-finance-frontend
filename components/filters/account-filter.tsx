@@ -46,7 +46,9 @@ export function AccountFilter({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={searchParamName}>{label ?? t("filters.account.label")}</Label>
+      <Label htmlFor={searchParamName}>
+        {label ?? t("filters.account.label")}
+      </Label>
       <Select value={value || "all"} onValueChange={handleChange}>
         <SelectTrigger id={searchParamName}>
           <SelectValue placeholder={t("filters.account.placeholder")} />
@@ -63,4 +65,3 @@ export function AccountFilter({
     </div>
   )
 }
-

@@ -49,5 +49,3 @@ export default async function EditAccountPage(props: Props) {
     </PageContainer>
   )
 }
-
-

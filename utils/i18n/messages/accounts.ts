@@ -25,7 +25,8 @@ export const ES_ACCOUNTS_MESSAGES = {
   "accounts.detail.updatedAt": "Última actualización",
   "accounts.newTitle": "Nueva cuenta",
   "accounts.form.sectionTitle": "Datos generales",
-  "accounts.form.sectionDescNew": "Ingresa los datos generales de la nueva cuenta",
+  "accounts.form.sectionDescNew":
+    "Ingresa los datos generales de la nueva cuenta",
   "accounts.form.sectionDescEdit": "Ingresa los datos generales de la cuenta",
   "accounts.form.name.label": "Nombre",
   "accounts.form.name.desc": "El nombre debe tener entre 1 y 255 caracteres",
@@ -34,7 +35,8 @@ export const ES_ACCOUNTS_MESSAGES = {
   "accounts.form.type.desc": "Selecciona el tipo de cuenta",
   "accounts.form.type.placeholder": "Selecciona el tipo de cuenta",
   "accounts.form.initialBalance.label": "Balance inicial",
-  "accounts.form.initialBalance.desc": "Opcional. No permite valores negativos.",
+  "accounts.form.initialBalance.desc":
+    "Opcional. No permite valores negativos.",
   "accounts.actions.view": "Ver cuenta",
   "accounts.actions.edit": "Editar cuenta",
   "accounts.actions.deactivate": "Desactivar cuenta",
@@ -70,7 +72,8 @@ export const EN_ACCOUNTS_MESSAGES = {
   "accounts.detail.updatedAt": "Last update",
   "accounts.newTitle": "New account",
   "accounts.form.sectionTitle": "General details",
-  "accounts.form.sectionDescNew": "Enter the general details for the new account",
+  "accounts.form.sectionDescNew":
+    "Enter the general details for the new account",
   "accounts.form.sectionDescEdit": "Enter the general details for the account",
   "accounts.form.name.label": "Name",
   "accounts.form.name.desc": "Name must be between 1 and 255 characters",
@@ -79,7 +82,8 @@ export const EN_ACCOUNTS_MESSAGES = {
   "accounts.form.type.desc": "Select the account type",
   "accounts.form.type.placeholder": "Select an account type",
   "accounts.form.initialBalance.label": "Initial balance",
-  "accounts.form.initialBalance.desc": "Optional. Negative values are not allowed.",
+  "accounts.form.initialBalance.desc":
+    "Optional. Negative values are not allowed.",
   "accounts.actions.view": "View account",
   "accounts.actions.edit": "Edit account",
   "accounts.actions.deactivate": "Deactivate account",
@@ -124,7 +128,8 @@ export const PT_ACCOUNTS_MESSAGES = {
   "accounts.form.type.desc": "Selecione o tipo de conta",
   "accounts.form.type.placeholder": "Selecione o tipo de conta",
   "accounts.form.initialBalance.label": "Saldo inicial",
-  "accounts.form.initialBalance.desc": "Opcional. Não permite valores negativos.",
+  "accounts.form.initialBalance.desc":
+    "Opcional. Não permite valores negativos.",
   "accounts.actions.view": "Ver conta",
   "accounts.actions.edit": "Editar conta",
   "accounts.actions.deactivate": "Desativar conta",
@@ -132,4 +137,3 @@ export const PT_ACCOUNTS_MESSAGES = {
   "accounts.confirmDeactivate.confirm": "Sim, desativar conta",
   "accounts.confirmDeactivate.cancel": "Cancelar",
 } as const
-

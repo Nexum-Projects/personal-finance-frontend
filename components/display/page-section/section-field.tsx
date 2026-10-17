@@ -31,7 +31,7 @@ export function SectionField({ classNames, label, value }: Props) {
     >
       {label && (
         <Typography
-          className={cn("text-muted-foreground leading-4", labelClassName)}
+          className={cn("leading-4 text-muted-foreground", labelClassName)}
           variant="small"
         >
           {label}
@@ -40,7 +40,7 @@ export function SectionField({ classNames, label, value }: Props) {
       {typeof value === "string" ? (
         <Typography
           className={cn(
-            "text-foreground leading-6 text-pretty break-all",
+            "text-pretty break-all leading-6 text-foreground",
             valueClassName
           )}
         >
@@ -52,4 +52,3 @@ export function SectionField({ classNames, label, value }: Props) {
     </div>
   )
 }
-

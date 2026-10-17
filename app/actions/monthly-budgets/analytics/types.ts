@@ -10,5 +10,3 @@ export interface MonthlyBudgetAnalyticsByPeriodItem {
 export interface MonthlyBudgetAnalyticsByPeriodResponse {
   data: MonthlyBudgetAnalyticsByPeriodItem[]
 }
-
-

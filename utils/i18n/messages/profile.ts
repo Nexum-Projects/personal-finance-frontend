@@ -33,22 +33,27 @@ export const ES_PROFILE_MESSAGES = {
   "profile.edit.form.warning":
     "Al guardar estos cambios, se cerrará tu sesión automáticamente para aplicar la moneda, la zona horaria y el idioma. Luego tendrás que iniciar sesión de nuevo.",
 
-  "profile.edit.username.desc": "El nombre de usuario debe tener entre 1 y 255 caracteres",
+  "profile.edit.username.desc":
+    "El nombre de usuario debe tener entre 1 y 255 caracteres",
   "profile.edit.username.label": "Nombre de usuario",
   "profile.edit.username.placeholder": "Ingresa tu nombre de usuario",
 
-  "profile.edit.currency.desc": "La moneda se usa para formatear montos en toda la aplicación",
+  "profile.edit.currency.desc":
+    "La moneda se usa para formatear montos en toda la aplicación",
   "profile.edit.currency.label": "Moneda preferida",
   "profile.edit.currency.placeholder": "Selecciona una moneda",
 
-  "profile.edit.language.desc": "El idioma se usa para formatear textos, fechas y números",
+  "profile.edit.language.desc":
+    "El idioma se usa para formatear textos, fechas y números",
   "profile.edit.language.label": "Idioma",
   "profile.edit.language.placeholder": "Selecciona un idioma",
 
-  "profile.edit.timeZone.desc": "La zona horaria se usa para mostrar fechas y horas",
+  "profile.edit.timeZone.desc":
+    "La zona horaria se usa para mostrar fechas y horas",
   "profile.edit.timeZone.label": "Zona horaria",
   "profile.edit.timeZone.placeholder": "Selecciona una zona horaria",
-  "profile.edit.timeZone.searchPlaceholder": "Buscar zona horaria (ej. Guatemala, Lima, Bogotá...)",
+  "profile.edit.timeZone.searchPlaceholder":
+    "Buscar zona horaria (ej. Guatemala, Lima, Bogotá...)",
 
   "profile.edit.error.updateUser": "Error al actualizar usuario",
   "profile.edit.toast.updated.title": "Usuario actualizado",
@@ -57,10 +62,12 @@ export const ES_PROFILE_MESSAGES = {
 
   "profile.password.backToProfile": "Regresar a mi perfil",
   "profile.password.title": "Cambiar contraseña",
-  "profile.password.description": "Por seguridad, confirma tu contraseña actual",
+  "profile.password.description":
+    "Por seguridad, confirma tu contraseña actual",
 
   "profile.password.form.sectionTitle": "Seguridad",
-  "profile.password.form.sectionDescription": "Tu nueva contraseña debe ser diferente a la anterior",
+  "profile.password.form.sectionDescription":
+    "Tu nueva contraseña debe ser diferente a la anterior",
   "profile.password.form.current.label": "Contraseña actual",
   "profile.password.form.current.placeholder": "Ingresa tu contraseña actual",
   "profile.password.form.new.label": "Nueva contraseña",
@@ -75,7 +82,8 @@ export const ES_PROFILE_MESSAGES = {
 
   "profile.password.error.changePassword": "Error al cambiar contraseña",
   "profile.password.toast.updated.title": "Contraseña actualizada",
-  "profile.password.toast.updated.description": "Tu contraseña fue actualizada correctamente.",
+  "profile.password.toast.updated.description":
+    "Tu contraseña fue actualizada correctamente.",
 } as const
 
 export const EN_PROFILE_MESSAGES = {
@@ -108,7 +116,8 @@ export const EN_PROFILE_MESSAGES = {
     "Update your username and preferences. After saving, you'll be signed out to apply the changes.",
 
   "profile.edit.form.title": "User preferences and data",
-  "profile.edit.form.description": "Update your username, currency and time zone preferences",
+  "profile.edit.form.description":
+    "Update your username, currency and time zone preferences",
   "profile.edit.form.warning":
     "After saving, you'll be signed out automatically to apply currency, time zone and language changes. Then you'll need to sign in again.",
 
@@ -116,18 +125,21 @@ export const EN_PROFILE_MESSAGES = {
   "profile.edit.username.label": "Username",
   "profile.edit.username.placeholder": "Enter your username",
 
-  "profile.edit.currency.desc": "Currency is used to format amounts across the application",
+  "profile.edit.currency.desc":
+    "Currency is used to format amounts across the application",
   "profile.edit.currency.label": "Preferred currency",
   "profile.edit.currency.placeholder": "Select a currency",
 
-  "profile.edit.language.desc": "Language is used to format texts, dates and numbers",
+  "profile.edit.language.desc":
+    "Language is used to format texts, dates and numbers",
   "profile.edit.language.label": "Language",
   "profile.edit.language.placeholder": "Select a language",
 
   "profile.edit.timeZone.desc": "Time zone is used to display dates and times",
   "profile.edit.timeZone.label": "Time zone",
   "profile.edit.timeZone.placeholder": "Select a time zone",
-  "profile.edit.timeZone.searchPlaceholder": "Search time zone (e.g. Guatemala, Lima, Bogota...)",
+  "profile.edit.timeZone.searchPlaceholder":
+    "Search time zone (e.g. Guatemala, Lima, Bogota...)",
 
   "profile.edit.error.updateUser": "Error updating user",
   "profile.edit.toast.updated.title": "User updated",
@@ -139,7 +151,8 @@ export const EN_PROFILE_MESSAGES = {
   "profile.password.description": "For security, confirm your current password",
 
   "profile.password.form.sectionTitle": "Security",
-  "profile.password.form.sectionDescription": "Your new password must be different from the previous one",
+  "profile.password.form.sectionDescription":
+    "Your new password must be different from the previous one",
   "profile.password.form.current.label": "Current password",
   "profile.password.form.current.placeholder": "Enter your current password",
   "profile.password.form.new.label": "New password",
@@ -154,7 +167,8 @@ export const EN_PROFILE_MESSAGES = {
 
   "profile.password.error.changePassword": "Error changing password",
   "profile.password.toast.updated.title": "Password updated",
-  "profile.password.toast.updated.description": "Your password was updated successfully.",
+  "profile.password.toast.updated.description":
+    "Your password was updated successfully.",
 } as const
 
 export const PT_PROFILE_MESSAGES = {
@@ -191,22 +205,27 @@ export const PT_PROFILE_MESSAGES = {
   "profile.edit.form.warning":
     "Ao salvar, sua sessão será encerrada automaticamente para aplicar moeda, fuso horário e idioma. Depois você precisará entrar novamente.",
 
-  "profile.edit.username.desc": "O nome de usuário deve ter entre 1 e 255 caracteres",
+  "profile.edit.username.desc":
+    "O nome de usuário deve ter entre 1 e 255 caracteres",
   "profile.edit.username.label": "Nome de usuário",
   "profile.edit.username.placeholder": "Informe seu nome de usuário",
 
-  "profile.edit.currency.desc": "A moeda é usada para formatar valores em toda a aplicação",
+  "profile.edit.currency.desc":
+    "A moeda é usada para formatar valores em toda a aplicação",
   "profile.edit.currency.label": "Moeda preferida",
   "profile.edit.currency.placeholder": "Selecione uma moeda",
 
-  "profile.edit.language.desc": "O idioma é usado para formatar textos, datas e números",
+  "profile.edit.language.desc":
+    "O idioma é usado para formatar textos, datas e números",
   "profile.edit.language.label": "Idioma",
   "profile.edit.language.placeholder": "Selecione um idioma",
 
-  "profile.edit.timeZone.desc": "O fuso horário é usado para mostrar datas e horas",
+  "profile.edit.timeZone.desc":
+    "O fuso horário é usado para mostrar datas e horas",
   "profile.edit.timeZone.label": "Fuso horário",
   "profile.edit.timeZone.placeholder": "Selecione um fuso horário",
-  "profile.edit.timeZone.searchPlaceholder": "Buscar fuso horário (ex.: Guatemala, Lima, Bogotá...)",
+  "profile.edit.timeZone.searchPlaceholder":
+    "Buscar fuso horário (ex.: Guatemala, Lima, Bogotá...)",
 
   "profile.edit.error.updateUser": "Erro ao atualizar usuário",
   "profile.edit.toast.updated.title": "Usuário atualizado",
@@ -218,7 +237,8 @@ export const PT_PROFILE_MESSAGES = {
   "profile.password.description": "Por segurança, confirme sua senha atual",
 
   "profile.password.form.sectionTitle": "Segurança",
-  "profile.password.form.sectionDescription": "Sua nova senha deve ser diferente da anterior",
+  "profile.password.form.sectionDescription":
+    "Sua nova senha deve ser diferente da anterior",
   "profile.password.form.current.label": "Senha atual",
   "profile.password.form.current.placeholder": "Informe sua senha atual",
   "profile.password.form.new.label": "Nova senha",
@@ -233,6 +253,6 @@ export const PT_PROFILE_MESSAGES = {
 
   "profile.password.error.changePassword": "Erro ao alterar senha",
   "profile.password.toast.updated.title": "Senha atualizada",
-  "profile.password.toast.updated.description": "Sua senha foi atualizada com sucesso.",
+  "profile.password.toast.updated.description":
+    "Sua senha foi atualizada com sucesso.",
 } as const
-

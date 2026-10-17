@@ -30,4 +30,3 @@ export interface MonthlyPeriodPageResponse {
   data: MonthlyPeriod[]
   meta: MonthlyPeriodPageMeta
 }
-

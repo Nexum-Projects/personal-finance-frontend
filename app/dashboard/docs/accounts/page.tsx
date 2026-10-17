@@ -45,8 +45,7 @@ export default async function DocsAccountsPage() {
       ? {
           back: "Back to Documentation",
           title: "Module: Accounts",
-          desc:
-            "Manage your accounts (bank, cash, savings, credit card, investment, etc.) and view balances.",
+          desc: "Manage your accounts (bank, cash, savings, credit card, investment, etc.) and view balances.",
           placeholderList: "[IMAGE / GIF] Accounts list (table)",
           purposeTitle: "Purpose",
           purposeP1:
@@ -66,9 +65,18 @@ export default async function DocsAccountsPage() {
           createP1:
             "Go to Accounts and click “New account”. Fill in the fields below:",
           createBullets: [
-            { label: "Name", text: 'Account name (e.g. “Bank”, “Cash”, “Card”).' },
-            { label: "Type", text: "Pick the type that best represents the account." },
-            { label: "Initial balance (optional)", text: "Used as starting balance (negative values not allowed)." },
+            {
+              label: "Name",
+              text: "Account name (e.g. “Bank”, “Cash”, “Card”).",
+            },
+            {
+              label: "Type",
+              text: "Pick the type that best represents the account.",
+            },
+            {
+              label: "Initial balance (optional)",
+              text: "Used as starting balance (negative values not allowed).",
+            },
           ],
           typesTitle: "Account types (humanized)",
           types: [
@@ -110,8 +118,7 @@ export default async function DocsAccountsPage() {
         ? {
             back: "Voltar para Documentação",
             title: "Módulo: Contas",
-            desc:
-              "Administre suas contas (banco, dinheiro, poupança, cartão, investimento, etc.) e visualize saldos.",
+            desc: "Administre suas contas (banco, dinheiro, poupança, cartão, investimento, etc.) e visualize saldos.",
             placeholderList: "[IMAGEM / GIF] Lista de contas (tabela)",
             purposeTitle: "Propósito",
             purposeP1:
@@ -131,9 +138,18 @@ export default async function DocsAccountsPage() {
             createP1:
               "Vá para Contas e clique em “Nova conta”. Preencha os campos abaixo:",
             createBullets: [
-              { label: "Nome", text: 'Nome da conta (ex.: “Banco”, “Dinheiro”, “Cartão”).' },
-              { label: "Tipo", text: "Escolha o tipo que melhor representa a conta." },
-              { label: "Saldo inicial (opcional)", text: "Saldo inicial (não permite negativos)." },
+              {
+                label: "Nome",
+                text: "Nome da conta (ex.: “Banco”, “Dinheiro”, “Cartão”).",
+              },
+              {
+                label: "Tipo",
+                text: "Escolha o tipo que melhor representa a conta.",
+              },
+              {
+                label: "Saldo inicial (opcional)",
+                text: "Saldo inicial (não permite negativos).",
+              },
             ],
             typesTitle: "Tipos de conta (humanizados)",
             types: [
@@ -170,8 +186,7 @@ export default async function DocsAccountsPage() {
         : {
             back: "Regresar a Documentación",
             title: "Módulo: Cuentas",
-            desc:
-              "Administra tus cuentas (banco, efectivo, ahorro, tarjeta, inversión, etc.) y visualiza balances.",
+            desc: "Administra tus cuentas (banco, efectivo, ahorro, tarjeta, inversión, etc.) y visualiza balances.",
             placeholderList: "[IMAGEN / GIF] Lista de cuentas (tabla)",
             purposeTitle: "Propósito",
             purposeP1:
@@ -191,9 +206,18 @@ export default async function DocsAccountsPage() {
             createP1:
               "Para crear una cuenta, entra a Cuentas y haz clic en “Nueva cuenta”.",
             createBullets: [
-              { label: "Nombre", text: "Nombre de la cuenta (ej. “Banco”, “Efectivo”, “Tarjeta”)." },
-              { label: "Tipo", text: "Selecciona el tipo correcto para que el sistema lo interprete bien." },
-              { label: "Balance inicial (opcional)", text: "Se usa para iniciar la cuenta (no permite negativos)." },
+              {
+                label: "Nombre",
+                text: "Nombre de la cuenta (ej. “Banco”, “Efectivo”, “Tarjeta”).",
+              },
+              {
+                label: "Tipo",
+                text: "Selecciona el tipo correcto para que el sistema lo interprete bien.",
+              },
+              {
+                label: "Balance inicial (opcional)",
+                text: "Se usa para iniciar la cuenta (no permite negativos).",
+              },
             ],
             typesTitle: "Tipos de cuenta (humanizados)",
             types: [
@@ -206,7 +230,8 @@ export default async function DocsAccountsPage() {
               { label: "Préstamo", code: "LOAN" },
               { label: "Otro", code: "OTHER" },
             ],
-            placeholderCreate: "[IMAGEN / GIF] Formulario de creación de cuenta",
+            placeholderCreate:
+              "[IMAGEN / GIF] Formulario de creación de cuenta",
             editTitle: "Editar cuenta",
             editP1:
               "En la edición se actualizan datos generales (por ejemplo nombre y tipo). El balance inicial no se edita para evitar inconsistencias históricas.",
@@ -252,7 +277,7 @@ export default async function DocsAccountsPage() {
           <CardTitle>{copy.listTitle}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.listBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -267,7 +292,7 @@ export default async function DocsAccountsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.createP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.createBullets.map((b) => (
               <li key={b.label}>
                 <b>{b.label}</b>: {b.text}
@@ -275,7 +300,7 @@ export default async function DocsAccountsPage() {
             ))}
             <li>
               <b>{copy.typesTitle}</b>:
-              <ul className="list-disc pl-5 mt-2 space-y-1">
+              <ul className="mt-2 list-disc space-y-1 pl-5">
                 {copy.types.map((t) => (
                   <li key={t.code}>
                     <b>{t.label}</b> ({t.code})
@@ -294,7 +319,7 @@ export default async function DocsAccountsPage() {
         </CardHeader>
         <CardContent className="space-y-2 text-sm">
           <p>{copy.editP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.editBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -309,7 +334,7 @@ export default async function DocsAccountsPage() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p>{copy.actionsP1}</p>
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.actionsBullets.map((b) => (
               <li key={b}>{b}</li>
             ))}
@@ -320,11 +345,17 @@ export default async function DocsAccountsPage() {
 
       <div className="text-sm text-muted-foreground">
         {copy.tipPrefix}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/transactions">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/transactions"
+        >
           {copy.tipTx}
         </Link>
         {copy.tipAnd}
-        <Link className="underline underline-offset-4" href="/dashboard/docs/transfers">
+        <Link
+          className="underline underline-offset-4"
+          href="/dashboard/docs/transfers"
+        >
           {copy.tipTransfers}
         </Link>
         {copy.tipSuffix}
@@ -332,4 +363,3 @@ export default async function DocsAccountsPage() {
     </PageContainer>
   )
 }
-

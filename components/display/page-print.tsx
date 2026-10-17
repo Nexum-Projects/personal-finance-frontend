@@ -31,7 +31,7 @@ function PagePrintContainer({
 }: React.PropsWithChildren & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className="font-sans hidden flex-col text-[10pt] print:flex print:min-h-screen print:bg-white print:text-black"
+      className="hidden flex-col font-sans text-[10pt] print:flex print:min-h-screen print:bg-white print:text-black"
       {...props}
     >
       {children}
@@ -41,9 +41,9 @@ function PagePrintContainer({
 
 function PagePrintHeader({ title }: { title: React.ReactNode }) {
   return (
-    <header className="flex flex-row items-center justify-between mb-8 print:mb-8">
+    <header className="mb-8 flex flex-row items-center justify-between print:mb-8">
       <div className="flex flex-col gap-2">
-        <h1 className="text-[18pt] leading-[110%] font-semibold uppercase">
+        <h1 className="text-[18pt] font-semibold uppercase leading-[110%]">
           {title}
         </h1>
       </div>

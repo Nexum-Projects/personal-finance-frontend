@@ -8,7 +8,10 @@ import { useState } from "react"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { updateTransfer } from "@/app/actions/transfers"
-import { transferUpdateSchema, type TransferUpdateFormValues } from "@/app/actions/transfers/schema"
+import {
+  transferUpdateSchema,
+  type TransferUpdateFormValues,
+} from "@/app/actions/transfers/schema"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
@@ -41,7 +44,9 @@ export function EditTransferForm({ transfer, backToHref }: Props) {
     },
   })
 
-  const onSubmit: SubmitHandler<TransferUpdateFormValues> = async (formValues) => {
+  const onSubmit: SubmitHandler<TransferUpdateFormValues> = async (
+    formValues
+  ) => {
     setIsSubmitting(true)
 
     try {
@@ -126,4 +131,3 @@ export function EditTransferForm({ transfer, backToHref }: Props) {
     </Form>
   )
 }
-

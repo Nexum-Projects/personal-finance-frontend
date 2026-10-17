@@ -25,7 +25,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const period = await findMonthlyPeriod(id)
   const budget = await findMonthlyBudget(budgetId)
 
-  if (period.status === "error" || !period.data || budget.status === "error" || !budget.data) {
+  if (
+    period.status === "error" ||
+    !period.data ||
+    budget.status === "error" ||
+    !budget.data
+  ) {
     return {
       title: t("monthlyPeriods.budgets.notFound"),
     }
@@ -35,7 +40,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const locale = languageToLocale(preferences.preferredLanguage)
 
   return {
-    title: t("monthlyPeriods.budgets.editTitle", { month: humanizeMonth(period.data.month, locale) }),
+    title: t("monthlyPeriods.budgets.editTitle", {
+      month: humanizeMonth(period.data.month, locale),
+    }),
   }
 }
 
@@ -48,7 +55,12 @@ export default async function EditMonthlyBudgetPage(props: Props) {
   const period = await findMonthlyPeriod(id)
   const budget = await findMonthlyBudget(budgetId)
 
-  if (period.status === "error" || !period.data || budget.status === "error" || !budget.data) {
+  if (
+    period.status === "error" ||
+    !period.data ||
+    budget.status === "error" ||
+    !budget.data
+  ) {
     return notFound()
   }
 
@@ -58,7 +70,8 @@ export default async function EditMonthlyBudgetPage(props: Props) {
     pagination: false,
   })
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
 
   const BACK_TO_HREF = `/dashboard/monthly-periods/${id}/budgets`
 
@@ -92,4 +105,3 @@ export default async function EditMonthlyBudgetPage(props: Props) {
     </PageContainer>
   )
 }
-

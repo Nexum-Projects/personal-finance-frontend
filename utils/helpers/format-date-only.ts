@@ -17,7 +17,7 @@ export function formatDateOnly(
         day: "numeric",
       })
     }
-    
+
     // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
     const date = new Date(dateString)
     return date.toLocaleDateString(locale, {
@@ -54,7 +54,7 @@ export function formatDateOnlyShort(
       const [year, month, day] = dateString.split("-").map(Number)
       return `${day.toString().padStart(2, "0")}/${month.toString().padStart(2, "0")}/${year}`
     }
-    
+
     // Si tiene información de hora, usar el método normal pero en zona horaria de Guatemala
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat("en-GB", {
@@ -68,4 +68,3 @@ export function formatDateOnlyShort(
     return dateString
   }
 }
-

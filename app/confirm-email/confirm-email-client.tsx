@@ -6,7 +6,13 @@ import { toast } from "sonner"
 import Image from "next/image"
 import { Loader2, CircleCheck, CircleX } from "lucide-react"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { confirmEmail } from "@/app/actions/auth"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
@@ -29,7 +35,9 @@ export function ConfirmEmailClient({ token }: Props) {
     const run = async () => {
       if (!hasToken) {
         setStatus("error")
-        setErrorMessage("El link no contiene token. Solicita un nuevo correo de confirmación.")
+        setErrorMessage(
+          "El link no contiene token. Solicita un nuevo correo de confirmación."
+        )
         return
       }
 
@@ -42,23 +50,30 @@ export function ConfirmEmailClient({ token }: Props) {
         if (cancelled) return
 
         if (result.status === "error") {
-          const humanizedError = parseApiError(result.errors[0] || "Error al confirmar email")
+          const humanizedError = parseApiError(
+            result.errors[0] || "Error al confirmar email"
+          )
           setStatus("error")
           setErrorMessage(humanizedError.description)
-          toast.error(humanizedError.title, { description: humanizedError.description })
+          toast.error(humanizedError.title, {
+            description: humanizedError.description,
+          })
           return
         }
 
         setStatus("success")
         toast.success("Email confirmado", {
-          description: "Tu correo se confirmó correctamente. Ya puedes iniciar sesión.",
+          description:
+            "Tu correo se confirmó correctamente. Ya puedes iniciar sesión.",
         })
       } catch (err) {
         if (cancelled) return
         const humanizedError = parseApiError(err)
         setStatus("error")
         setErrorMessage(humanizedError.description)
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
       }
     }
 
@@ -70,7 +85,7 @@ export function ConfirmEmailClient({ token }: Props) {
   }, [hasToken, token])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-2">
           <div className="flex justify-center">
@@ -83,7 +98,9 @@ export function ConfirmEmailClient({ token }: Props) {
               className="h-auto w-auto"
             />
           </div>
-          <CardTitle className="text-xl font-bold text-center">Confirmación de email</CardTitle>
+          <CardTitle className="text-center text-xl font-bold">
+            Confirmación de email
+          </CardTitle>
           <CardDescription className="text-center">
             {status === "loading" && "Estamos confirmando tu correo..."}
             {status === "success" && "Tu correo fue confirmado correctamente."}
@@ -103,7 +120,7 @@ export function ConfirmEmailClient({ token }: Props) {
           {status === "success" && (
             <div className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:text-emerald-100">
               <div className="flex items-start gap-2">
-                <CircleCheck className="h-5 w-5 mt-0.5" />
+                <CircleCheck className="mt-0.5 h-5 w-5" />
                 <div>
                   <div className="font-medium">Email confirmado</div>
                   <div className="text-emerald-800/90 dark:text-emerald-100/90">
@@ -117,10 +134,12 @@ export function ConfirmEmailClient({ token }: Props) {
           {status === "error" && (
             <div className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
               <div className="flex items-start gap-2">
-                <CircleX className="h-5 w-5 mt-0.5" />
+                <CircleX className="mt-0.5 h-5 w-5" />
                 <div>
                   <div className="font-medium">Confirmación fallida</div>
-                  <div className="text-destructive/90">{errorMessage ?? "Ocurrió un error inesperado."}</div>
+                  <div className="text-destructive/90">
+                    {errorMessage ?? "Ocurrió un error inesperado."}
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,7 +149,12 @@ export function ConfirmEmailClient({ token }: Props) {
             <Button asChild className="w-full" disabled={status === "loading"}>
               <Link href="/login">Ir al login</Link>
             </Button>
-            <Button asChild variant="outline" className="w-full" disabled={status === "loading"}>
+            <Button
+              asChild
+              variant="outline"
+              className="w-full"
+              disabled={status === "loading"}
+            >
               <Link href="/confirm-password">¿Olvidaste tu contraseña?</Link>
             </Button>
           </div>
@@ -139,4 +163,3 @@ export function ConfirmEmailClient({ token }: Props) {
     </div>
   )
 }
-

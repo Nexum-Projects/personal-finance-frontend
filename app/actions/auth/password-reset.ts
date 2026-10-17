@@ -55,5 +55,3 @@ export default async function passwordReset(
     }
   }
 }
-
-

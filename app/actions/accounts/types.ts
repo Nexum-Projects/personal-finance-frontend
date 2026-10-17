@@ -4,7 +4,12 @@ export interface AccountSearchParams {
   page?: number
   limit?: number
   order?: "ASC" | "DESC"
-  orderBy?: "createdAt" | "updatedAt" | "name" | "accountType" | "currentBalanceCents"
+  orderBy?:
+    | "createdAt"
+    | "updatedAt"
+    | "name"
+    | "accountType"
+    | "currentBalanceCents"
   search?: string
   pagination?: boolean
   startDate?: string
@@ -24,4 +29,3 @@ export interface AccountPageResponse {
 }
 
 export type { Account }
-

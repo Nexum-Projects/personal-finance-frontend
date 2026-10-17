@@ -22,13 +22,15 @@ export const ES_DASHBOARD_MESSAGES = {
   "dashboard.summary.balance": "Balance:",
 
   "dashboard.trends.title": "Tendencias Financieras",
-  "dashboard.trends.subtitle": "Evolución de ingresos, gastos y ahorros en el tiempo",
+  "dashboard.trends.subtitle":
+    "Evolución de ingresos, gastos y ahorros en el tiempo",
   "dashboard.trends.groupBy": "Agrupar por:",
   "dashboard.trends.groupBy.day": "Día",
   "dashboard.trends.groupBy.week": "Semana",
   "dashboard.trends.groupBy.month": "Mes",
   "dashboard.trends.groupBy.year": "Año",
-  "dashboard.trends.noData": "No hay datos disponibles para el rango seleccionado",
+  "dashboard.trends.noData":
+    "No hay datos disponibles para el rango seleccionado",
   "dashboard.trends.series.income": "Ingresos",
   "dashboard.trends.series.expenses": "Gastos",
   "dashboard.trends.series.net": "Neto",
@@ -39,29 +41,38 @@ export const ES_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory": "Ingresos por Categoría",
   "dashboard.pies.incomeByCategory.subtitle": "Distribución de ingresos",
   "dashboard.pies.balanceByAccount": "Balance por Cuenta",
-  "dashboard.pies.balanceByAccount.subtitle": "Distribución del balance total por cuenta",
-  "dashboard.pies.balanceByAccount.selectedTotal": "Total seleccionado: {value}",
-  "dashboard.pies.balanceByAccount.noneSelected": "Selecciona al menos una cuenta para ver la gráfica.",
+  "dashboard.pies.balanceByAccount.subtitle":
+    "Distribución del balance total por cuenta",
+  "dashboard.pies.balanceByAccount.selectedTotal":
+    "Total seleccionado: {value}",
+  "dashboard.pies.balanceByAccount.noneSelected":
+    "Selecciona al menos una cuenta para ver la gráfica.",
 
   "dashboard.monthlyAnalytics.title": "Analítica de Presupuesto Mensual",
   "dashboard.monthlyAnalytics.subtitle":
     "Vista detallada de ahorros, ingresos, gastos y balance por presupuesto mensual",
-  "dashboard.monthlyAnalytics.emptyForYear": "No hay datos disponibles para el año {year}",
-  "dashboard.monthlyAnalytics.viewBudgetsTooltip": "Ver presupuestos por categoría",
+  "dashboard.monthlyAnalytics.emptyForYear":
+    "No hay datos disponibles para el año {year}",
+  "dashboard.monthlyAnalytics.viewBudgetsTooltip":
+    "Ver presupuestos por categoría",
   "dashboard.monthlyAnalytics.rows.initialSaving": "Ahorro Inicial",
   "dashboard.monthlyAnalytics.rows.income": "Ingresos",
   "dashboard.monthlyAnalytics.rows.expenses": "Gastos",
   "dashboard.monthlyAnalytics.rows.balance": "Balance",
   "dashboard.monthlyAnalytics.rows.finalSaving": "Ahorro final",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving": "Ahorro acumulado",
-  "dashboard.monthlyAnalytics.rows.balance.desc": "Ingresos - Gastos - Ahorro inicial",
-  "dashboard.monthlyAnalytics.rows.finalSaving.desc": "Balance + Ahorro inicial",
+  "dashboard.monthlyAnalytics.rows.balance.desc":
+    "Ingresos - Gastos - Ahorro inicial",
+  "dashboard.monthlyAnalytics.rows.finalSaving.desc":
+    "Balance + Ahorro inicial",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving.desc":
     "Ahorro final + Ahorro acumulado del período anterior",
-  "dashboard.monthlyAnalytics.dialog.title": "Presupuestos por categoría {period}",
+  "dashboard.monthlyAnalytics.dialog.title":
+    "Presupuestos por categoría {period}",
   "dashboard.monthlyAnalytics.dialog.subtitle":
     "Presupuesto, gastado y restante por categoría para el presupuesto mensual seleccionado.",
-  "dashboard.monthlyAnalytics.dialog.empty": "No hay presupuestos para este presupuesto mensual",
+  "dashboard.monthlyAnalytics.dialog.empty":
+    "No hay presupuestos para este presupuesto mensual",
 } as const
 
 export const EN_DASHBOARD_MESSAGES = {
@@ -88,7 +99,8 @@ export const EN_DASHBOARD_MESSAGES = {
   "dashboard.summary.balance": "Balance:",
 
   "dashboard.trends.title": "Financial Trends",
-  "dashboard.trends.subtitle": "Evolution of income, expenses and savings over time",
+  "dashboard.trends.subtitle":
+    "Evolution of income, expenses and savings over time",
   "dashboard.trends.groupBy": "Group by:",
   "dashboard.trends.groupBy.day": "Day",
   "dashboard.trends.groupBy.week": "Week",
@@ -105,14 +117,17 @@ export const EN_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory": "Income by Category",
   "dashboard.pies.incomeByCategory.subtitle": "Income distribution",
   "dashboard.pies.balanceByAccount": "Balance by Account",
-  "dashboard.pies.balanceByAccount.subtitle": "Total balance distribution by account",
+  "dashboard.pies.balanceByAccount.subtitle":
+    "Total balance distribution by account",
   "dashboard.pies.balanceByAccount.selectedTotal": "Selected total: {value}",
-  "dashboard.pies.balanceByAccount.noneSelected": "Select at least one account to see the chart.",
+  "dashboard.pies.balanceByAccount.noneSelected":
+    "Select at least one account to see the chart.",
 
   "dashboard.monthlyAnalytics.title": "Monthly Budget Analytics",
   "dashboard.monthlyAnalytics.subtitle":
     "Detailed view of savings, income, expenses and balance per monthly budget",
-  "dashboard.monthlyAnalytics.emptyForYear": "No data available for year {year}",
+  "dashboard.monthlyAnalytics.emptyForYear":
+    "No data available for year {year}",
   "dashboard.monthlyAnalytics.viewBudgetsTooltip": "View budgets by category",
   "dashboard.monthlyAnalytics.rows.initialSaving": "Initial Savings",
   "dashboard.monthlyAnalytics.rows.income": "Income",
@@ -120,14 +135,17 @@ export const EN_DASHBOARD_MESSAGES = {
   "dashboard.monthlyAnalytics.rows.balance": "Balance",
   "dashboard.monthlyAnalytics.rows.finalSaving": "Final savings",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving": "Accumulated savings",
-  "dashboard.monthlyAnalytics.rows.balance.desc": "Income - Expenses - Initial savings",
-  "dashboard.monthlyAnalytics.rows.finalSaving.desc": "Balance + Initial savings",
+  "dashboard.monthlyAnalytics.rows.balance.desc":
+    "Income - Expenses - Initial savings",
+  "dashboard.monthlyAnalytics.rows.finalSaving.desc":
+    "Balance + Initial savings",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving.desc":
     "Final savings + previous period accumulated savings",
   "dashboard.monthlyAnalytics.dialog.title": "Budgets by category {period}",
   "dashboard.monthlyAnalytics.dialog.subtitle":
     "Budgeted, spent and remaining by category for the selected monthly budget.",
-  "dashboard.monthlyAnalytics.dialog.empty": "No budgets for this monthly budget",
+  "dashboard.monthlyAnalytics.dialog.empty":
+    "No budgets for this monthly budget",
 } as const
 
 export const PT_DASHBOARD_MESSAGES = {
@@ -154,7 +172,8 @@ export const PT_DASHBOARD_MESSAGES = {
   "dashboard.summary.balance": "Saldo:",
 
   "dashboard.trends.title": "Tendências Financeiras",
-  "dashboard.trends.subtitle": "Evolução de receitas, despesas e poupança ao longo do tempo",
+  "dashboard.trends.subtitle":
+    "Evolução de receitas, despesas e poupança ao longo do tempo",
   "dashboard.trends.groupBy": "Agrupar por:",
   "dashboard.trends.groupBy.day": "Dia",
   "dashboard.trends.groupBy.week": "Semana",
@@ -171,28 +190,34 @@ export const PT_DASHBOARD_MESSAGES = {
   "dashboard.pies.incomeByCategory": "Receitas por Categoria",
   "dashboard.pies.incomeByCategory.subtitle": "Distribuição de receitas",
   "dashboard.pies.balanceByAccount": "Saldo por Conta",
-  "dashboard.pies.balanceByAccount.subtitle": "Distribuição do saldo total por conta",
+  "dashboard.pies.balanceByAccount.subtitle":
+    "Distribuição do saldo total por conta",
   "dashboard.pies.balanceByAccount.selectedTotal": "Total selecionado: {value}",
-  "dashboard.pies.balanceByAccount.noneSelected": "Selecione pelo menos uma conta para ver o gráfico.",
+  "dashboard.pies.balanceByAccount.noneSelected":
+    "Selecione pelo menos uma conta para ver o gráfico.",
 
   "dashboard.monthlyAnalytics.title": "Análise de Orçamento Mensal",
   "dashboard.monthlyAnalytics.subtitle":
     "Visão detalhada de poupança, receitas, despesas e saldo por orçamento mensal",
   "dashboard.monthlyAnalytics.emptyForYear": "Sem dados para o ano {year}",
-  "dashboard.monthlyAnalytics.viewBudgetsTooltip": "Ver orçamentos por categoria",
+  "dashboard.monthlyAnalytics.viewBudgetsTooltip":
+    "Ver orçamentos por categoria",
   "dashboard.monthlyAnalytics.rows.initialSaving": "Poupança inicial",
   "dashboard.monthlyAnalytics.rows.income": "Receitas",
   "dashboard.monthlyAnalytics.rows.expenses": "Despesas",
   "dashboard.monthlyAnalytics.rows.balance": "Saldo",
   "dashboard.monthlyAnalytics.rows.finalSaving": "Poupança final",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving": "Poupança acumulada",
-  "dashboard.monthlyAnalytics.rows.balance.desc": "Receitas - Despesas - Poupança inicial",
-  "dashboard.monthlyAnalytics.rows.finalSaving.desc": "Saldo + Poupança inicial",
+  "dashboard.monthlyAnalytics.rows.balance.desc":
+    "Receitas - Despesas - Poupança inicial",
+  "dashboard.monthlyAnalytics.rows.finalSaving.desc":
+    "Saldo + Poupança inicial",
   "dashboard.monthlyAnalytics.rows.accumulatedSaving.desc":
     "Poupança final + poupança acumulada do período anterior",
-  "dashboard.monthlyAnalytics.dialog.title": "Orçamentos por categoria {period}",
+  "dashboard.monthlyAnalytics.dialog.title":
+    "Orçamentos por categoria {period}",
   "dashboard.monthlyAnalytics.dialog.subtitle":
     "Orçado, gasto e restante por categoria para o orçamento mensal selecionado.",
-  "dashboard.monthlyAnalytics.dialog.empty": "Sem orçamentos para este orçamento mensal",
+  "dashboard.monthlyAnalytics.dialog.empty":
+    "Sem orçamentos para este orçamento mensal",
 } as const
-

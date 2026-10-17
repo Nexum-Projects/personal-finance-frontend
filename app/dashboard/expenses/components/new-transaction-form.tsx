@@ -19,7 +19,12 @@ type Props = {
   categoryType: "INCOME" | "EXPENSE"
 }
 
-export function NewTransactionForm({ backToHref, categories, accounts, categoryType }: Props) {
+export function NewTransactionForm({
+  backToHref,
+  categories,
+  accounts,
+  categoryType,
+}: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
   const { t } = useI18n()
@@ -33,7 +38,7 @@ export function NewTransactionForm({ backToHref, categories, accounts, categoryT
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           setIsSubmitting(false)
@@ -53,7 +58,9 @@ export function NewTransactionForm({ backToHref, categories, accounts, categoryT
       toast.success(t("toast.transaction.created"), {
         description: (
           <>
-            {t("toast.transaction.created.desc", { description: result.data.description })}
+            {t("toast.transaction.created.desc", {
+              description: result.data.description,
+            })}
           </>
         ),
       })
@@ -82,4 +89,3 @@ export function NewTransactionForm({ backToHref, categories, accounts, categoryT
     />
   )
 }
-

@@ -34,4 +34,3 @@ export const useConfirmationDialogStore = create<
     }),
   toggle: () => set((state) => ({ open: !state.open })),
 }))
-

@@ -15,7 +15,10 @@ import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
 import { SearchableSelectField } from "@/components/inputs/rhf/searchable-select-field"
 import { updateUser } from "@/app/actions/users"
-import { userUpdateSchema, type UserUpdateFormValues } from "@/app/actions/users/schema"
+import {
+  userUpdateSchema,
+  type UserUpdateFormValues,
+} from "@/app/actions/users/schema"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthError } from "@/utils/helpers/handle-auth-error"
 import { useI18n } from "@/components/i18n/i18n-provider"
@@ -52,8 +55,12 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
         const isAuthError = handleAuthError(result.errors[0], router)
         if (isAuthError) return
 
-        const humanizedError = parseApiError(result.errors[0] || t("profile.edit.error.updateUser"))
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        const humanizedError = parseApiError(
+          result.errors[0] || t("profile.edit.error.updateUser")
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         return
       }
 
@@ -67,7 +74,9 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
     } catch (error) {
       handleAuthError(error, router)
       const humanizedError = parseApiError(error)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -154,5 +163,3 @@ export function EditUsernameForm({ defaultValues, backToHref }: Props) {
     </Form>
   )
 }
-
-

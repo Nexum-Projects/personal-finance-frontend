@@ -4,5 +4,10 @@ import removeCategory from "./remove"
 import createCategory from "./create"
 import updateCategory from "./update"
 
-export { findManyCategories, findCategory, removeCategory, createCategory, updateCategory }
-
+export {
+  findManyCategories,
+  findCategory,
+  removeCategory,
+  createCategory,
+  updateCategory,
+}

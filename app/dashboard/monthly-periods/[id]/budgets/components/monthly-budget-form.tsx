@@ -9,7 +9,10 @@ import { Form } from "@/components/ui/form"
 import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
-import { monthlyBudgetSchema, type MonthlyBudgetFormValues } from "@/app/actions/monthly-budgets/schema"
+import {
+  monthlyBudgetSchema,
+  type MonthlyBudgetFormValues,
+} from "@/app/actions/monthly-budgets/schema"
 import type { Category } from "@/app/actions/categories/types"
 import { useI18n } from "@/components/i18n/i18n-provider"
 
@@ -92,4 +95,3 @@ export function MonthlyBudgetForm({
     </Form>
   )
 }
-

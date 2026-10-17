@@ -18,4 +18,3 @@ export const transactionSchema = z.object({
 })
 
 export type TransactionFormValues = z.infer<typeof transactionSchema>
-

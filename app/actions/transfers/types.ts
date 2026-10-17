@@ -40,4 +40,3 @@ export interface TransferPageResponse {
   data: Transfer[]
   meta: TransferPageMeta
 }
-

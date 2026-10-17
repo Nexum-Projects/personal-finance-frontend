@@ -16,16 +16,13 @@ export default async function createTransfer(
     // Convertir el monto de decimales a centavos
     const amountCents = Math.round(input.amountCents * 100)
 
-    const response = await baseAxios.post<{ data: Transfer }>(
-      "/transfers",
-      {
-        amountCents,
-        description: input.description,
-        transferDate: input.transferDate,
-        fromAccountId: input.fromAccountId,
-        toAccountId: input.toAccountId,
-      }
-    )
+    const response = await baseAxios.post<{ data: Transfer }>("/transfers", {
+      amountCents,
+      description: input.description,
+      transferDate: input.transferDate,
+      fromAccountId: input.fromAccountId,
+      toAccountId: input.toAccountId,
+    })
 
     revalidatePath("/dashboard/transfers")
 
@@ -68,4 +65,3 @@ export default async function createTransfer(
     }
   }
 }
-

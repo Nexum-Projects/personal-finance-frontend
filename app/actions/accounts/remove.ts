@@ -46,5 +46,3 @@ export default async function removeAccount(
     }
   }
 }
-
-

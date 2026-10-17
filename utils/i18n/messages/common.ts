@@ -41,7 +41,8 @@ export const ES_COMMON_MESSAGES = {
   // Filters
   "filters.button": "Filtros",
   "filters.title": "Filtros",
-  "filters.description": "Aplica filtros para refinar los resultados mostrados en la tabla",
+  "filters.description":
+    "Aplica filtros para refinar los resultados mostrados en la tabla",
   "filters.active.singular": "{count} activo",
   "filters.active.plural": "{count} activos",
   "filters.clear": "Limpiar filtros",
@@ -112,7 +113,8 @@ export const EN_COMMON_MESSAGES = {
   // Filters
   "filters.button": "Filters",
   "filters.title": "Filters",
-  "filters.description": "Apply filters to refine the results shown in the table",
+  "filters.description":
+    "Apply filters to refine the results shown in the table",
   "filters.active.singular": "{count} active",
   "filters.active.plural": "{count} active",
   "filters.clear": "Clear filters",
@@ -128,7 +130,8 @@ export const EN_COMMON_MESSAGES = {
 
   // Export
   "export.title": "Export data",
-  "export.description": "Choose the format in which you want to export the data",
+  "export.description":
+    "Choose the format in which you want to export the data",
   "export.toExcel": "Export\nto Excel",
   "export.toPDF": "Export\nto PDF",
   "export.fullData": "All data",
@@ -183,7 +186,8 @@ export const PT_COMMON_MESSAGES = {
   // Filters
   "filters.button": "Filtros",
   "filters.title": "Filtros",
-  "filters.description": "Aplique filtros para refinar os resultados mostrados na tabela",
+  "filters.description":
+    "Aplique filtros para refinar os resultados mostrados na tabela",
   "filters.active.singular": "{count} ativo",
   "filters.active.plural": "{count} ativos",
   "filters.clear": "Limpar filtros",
@@ -210,4 +214,3 @@ export const PT_COMMON_MESSAGES = {
   "export.sortByDesc": "Define a ordem em que os dados serão exportados",
   "export.selectField": "Selecione um campo",
 } as const
-

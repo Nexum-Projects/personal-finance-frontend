@@ -4,7 +4,13 @@ import { Plus } from "lucide-react"
 import { findManyTransactions } from "@/app/actions/transactions"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { TransactionsTable } from "./components/transactions-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
 type Props = {
@@ -32,7 +38,11 @@ export default async function ExpensesPage(props: Props) {
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "transactionDate"
+      | "amountCents",
     search: parsedParams.search,
     categoryType: "EXPENSE",
     pagination: true,
@@ -41,12 +51,10 @@ export default async function ExpensesPage(props: Props) {
   if (result.status === "error") {
     return (
       <div className="p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="mx-auto max-w-7xl">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-foreground">Gastos</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus gastos
-            </p>
+            <p className="mt-1 text-muted-foreground">Gestiona tus gastos</p>
           </div>
           <Card>
             <CardHeader>
@@ -67,13 +75,11 @@ export default async function ExpensesPage(props: Props) {
 
   return (
     <div className="p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Gastos</h1>
-            <p className="text-muted-foreground mt-1">
-              Gestiona tus gastos
-            </p>
+            <p className="mt-1 text-muted-foreground">Gestiona tus gastos</p>
           </div>
           <Button asChild>
             <Link href="/dashboard/expenses/new">
@@ -92,9 +98,9 @@ export default async function ExpensesPage(props: Props) {
           </CardHeader>
           <CardContent>
             <Suspense fallback={<div>Cargando...</div>}>
-              <TransactionsTable 
-                transactions={transactions} 
-                meta={meta} 
+              <TransactionsTable
+                transactions={transactions}
+                meta={meta}
                 categoryType="EXPENSE"
                 basePath="/dashboard/expenses"
               />

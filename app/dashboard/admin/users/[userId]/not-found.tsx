@@ -9,9 +9,13 @@ export default async function AdminUserNotFound() {
   return (
     <PageContainer>
       <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
-        <p className="text-lg text-muted-foreground">{t("admin.users.detail.notFoundMessage")}</p>
+        <p className="text-lg text-muted-foreground">
+          {t("admin.users.detail.notFoundMessage")}
+        </p>
         <Button asChild variant="outline">
-          <Link href="/dashboard/admin/users">{t("admin.users.detail.backToList")}</Link>
+          <Link href="/dashboard/admin/users">
+            {t("admin.users.detail.backToList")}
+          </Link>
         </Button>
       </div>
     </PageContainer>

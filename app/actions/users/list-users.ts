@@ -15,7 +15,8 @@ function normalizeUsersPageResponse(body: unknown): UsersPageResponse | null {
   const b = body as Record<string, unknown>
   const rawData = b.data
   const rawMeta = b.meta
-  if (!Array.isArray(rawData) || !rawMeta || typeof rawMeta !== "object") return null
+  if (!Array.isArray(rawData) || !rawMeta || typeof rawMeta !== "object")
+    return null
   const m = rawMeta as Record<string, unknown>
   const page = Number(m.page ?? 1)
   const limit = Number(m.limit ?? 10)
@@ -73,7 +74,9 @@ export default async function listUsers(
     }
 
     const qs = queryParams.toString()
-    const response = await baseAxios.get<unknown>(qs ? `/users?${qs}` : "/users")
+    const response = await baseAxios.get<unknown>(
+      qs ? `/users?${qs}` : "/users"
+    )
 
     const normalized = normalizeUsersPageResponse(response.data)
     if (!normalized) {

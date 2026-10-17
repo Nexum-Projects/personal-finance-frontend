@@ -85,25 +85,24 @@ export function SelectField<
               value={displayValue}
               disabled={disabled}
             >
-            <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
-            </FormControl>
-            <SelectContent>
-              {options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {description && <FormDescription>{description}</FormDescription>}
-          <FormMessage />
-        </FormItem>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {options.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {description && <FormDescription>{description}</FormDescription>}
+            <FormMessage />
+          </FormItem>
         )
       }}
     />
   )
 }
-

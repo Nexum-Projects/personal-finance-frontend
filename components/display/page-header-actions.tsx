@@ -47,7 +47,9 @@ export function PageHeaderActions({ actions }: Props) {
                 variant={variant}
               >
                 <Link href={href} target={target}>
-                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isLoading && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   {action.icon && (
                     <action.icon
                       className={cn("mr-2 h-4 w-4", {
@@ -84,4 +86,3 @@ export function PageHeaderActions({ actions }: Props) {
     </div>
   )
 }
-

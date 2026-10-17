@@ -72,7 +72,9 @@ export function MonthlyPeriodsAnalyticsTable({
     id: string
     label: string
   } | null>(null)
-  const [budgets, setBudgets] = useState<MonthlyBudgetAnalyticsByPeriodItem[]>([])
+  const [budgets, setBudgets] = useState<MonthlyBudgetAnalyticsByPeriodItem[]>(
+    []
+  )
   const [budgetsError, setBudgetsError] = useState<string | null>(null)
 
   const openBudgetsDialog = (monthlyPeriodId: string, label: string) => {
@@ -82,9 +84,12 @@ export function MonthlyPeriodsAnalyticsTable({
     setIsDialogOpen(true)
 
     startTransition(async () => {
-      const result = await getMonthlyBudgetsAnalyticsByMonthlyPeriod(monthlyPeriodId)
+      const result =
+        await getMonthlyBudgetsAnalyticsByMonthlyPeriod(monthlyPeriodId)
       if (result.status === "error") {
-        setBudgetsError(result.errors[0]?.message || "Error al cargar presupuestos")
+        setBudgetsError(
+          result.errors[0]?.message || "Error al cargar presupuestos"
+        )
         return
       }
       setBudgets(result.data.data)
@@ -151,10 +156,7 @@ export function MonthlyPeriodsAnalyticsTable({
           value={currentYear.toString()}
           onValueChange={(value) => onYearChange(parseInt(value, 10))}
         >
-          <SelectTrigger
-            id="year-filter"
-            className="w-40 h-10 font-semibold"
-          >
+          <SelectTrigger id="year-filter" className="h-10 w-40 font-semibold">
             <Calendar className="mr-2 h-4 w-4" />
             <SelectValue placeholder={t("common.selectYear")} />
             <ChevronDown className="ml-auto h-4 w-4 opacity-50" />
@@ -179,19 +181,22 @@ export function MonthlyPeriodsAnalyticsTable({
           {t("dashboard.monthlyAnalytics.emptyForYear", { year: currentYear })}
         </div>
       ) : (
-        <div className="rounded-md border overflow-x-auto">
+        <div className="overflow-x-auto rounded-md border">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="sticky left-0 bg-background z-10 min-w-[150px]">
+                <TableHead className="sticky left-0 z-10 min-w-[150px] bg-background">
                   {t("common.concept")}
                 </TableHead>
                 {sortedData.map((item) => (
-                  <TableHead key={item.monthlyPeriodId} className="min-w-[160px] text-center">
+                  <TableHead
+                    key={item.monthlyPeriodId}
+                    className="min-w-[160px] text-center"
+                  >
                     <button
                       type="button"
                       className={cn(
-                        "w-full rounded-md px-2 py-1 font-semibold hover:bg-accent hover:text-accent-foreground transition-colors",
+                        "w-full rounded-md px-2 py-1 font-semibold transition-colors hover:bg-accent hover:text-accent-foreground",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                       )}
                       onClick={() =>
@@ -214,11 +219,11 @@ export function MonthlyPeriodsAnalyticsTable({
             <TableBody>
               {rows.map((row) => (
                 <TableRow key={row.label}>
-                  <TableCell className="sticky left-0 bg-background z-10 font-medium">
+                  <TableCell className="sticky left-0 z-10 bg-background font-medium">
                     <div className="flex flex-col">
                       <span>{row.label}</span>
                       {row.description && (
-                        <span className="text-xs text-muted-foreground font-normal mt-0.5">
+                        <span className="mt-0.5 text-xs font-normal text-muted-foreground">
                           {row.description}
                         </span>
                       )}
@@ -247,7 +252,10 @@ export function MonthlyPeriodsAnalyticsTable({
                   })}
 
                   {(() => {
-                    const totalCents = sortedData.reduce((acc, item) => acc + row.getValue(item), 0)
+                    const totalCents = sortedData.reduce(
+                      (acc, item) => acc + row.getValue(item),
+                      0
+                    )
                     const { value, isNegative } = formatCellValue(totalCents)
                     const isBalance = row.isBalance === true
 
@@ -298,21 +306,33 @@ export function MonthlyPeriodsAnalyticsTable({
                 <TableHeader className="sticky top-0 bg-background">
                   <TableRow>
                     <TableHead>{t("common.category")}</TableHead>
-                    <TableHead className="text-right">{t("common.budgeted")}</TableHead>
-                    <TableHead className="text-right">{t("common.spent")}</TableHead>
-                    <TableHead className="text-right">{t("common.remaining")}</TableHead>
+                    <TableHead className="text-right">
+                      {t("common.budgeted")}
+                    </TableHead>
+                    <TableHead className="text-right">
+                      {t("common.spent")}
+                    </TableHead>
+                    <TableHead className="text-right">
+                      {t("common.remaining")}
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {isPending ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
+                      <TableCell
+                        colSpan={4}
+                        className="py-10 text-center text-muted-foreground"
+                      >
                         {t("common.loading")}
                       </TableCell>
                     </TableRow>
                   ) : budgets.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
+                      <TableCell
+                        colSpan={4}
+                        className="py-10 text-center text-muted-foreground"
+                      >
                         {t("dashboard.monthlyAnalytics.dialog.empty")}
                       </TableCell>
                     </TableRow>
@@ -321,7 +341,9 @@ export function MonthlyPeriodsAnalyticsTable({
                       const remainingIsNegative = b.remainingCents < 0
                       return (
                         <TableRow key={b.monthlyBudgetId}>
-                          <TableCell className="font-medium">{b.categoryName}</TableCell>
+                          <TableCell className="font-medium">
+                            {b.categoryName}
+                          </TableCell>
                           <TableCell className="text-right">
                             {formatAmount(b.budgetedCents, preferredCurrency)}
                           </TableCell>
@@ -348,7 +370,11 @@ export function MonthlyPeriodsAnalyticsTable({
           </div>
 
           <div className="flex justify-end">
-            <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsDialogOpen(false)}
+            >
               {t("common.close")}
             </Button>
           </div>
@@ -357,4 +383,3 @@ export function MonthlyPeriodsAnalyticsTable({
     </div>
   )
 }
-

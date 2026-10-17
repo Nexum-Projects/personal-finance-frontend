@@ -4,10 +4,7 @@ import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
-import type {
-  TransactionPageResponse,
-  TransactionSearchParams,
-} from "./types"
+import type { TransactionPageResponse, TransactionSearchParams } from "./types"
 
 export default async function findManyTransactions(
   params: TransactionSearchParams
@@ -86,4 +83,3 @@ export default async function findManyTransactions(
     }
   }
 }
-

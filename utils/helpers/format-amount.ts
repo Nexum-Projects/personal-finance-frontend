@@ -30,4 +30,3 @@ export function formatAmount(
     currency: normalizedCurrency,
   }).format(decimal)
 }
-

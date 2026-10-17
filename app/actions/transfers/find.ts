@@ -11,9 +11,7 @@ export default async function findTransfer(
   id: string
 ): Promise<ActionResponse<Transfer>> {
   try {
-    const response = await baseAxios.get<{ data: Transfer }>(
-      `/transfers/${id}`
-    )
+    const response = await baseAxios.get<{ data: Transfer }>(`/transfers/${id}`)
 
     return {
       status: "success",
@@ -54,4 +52,3 @@ export default async function findTransfer(
     }
   }
 }
-

@@ -32,7 +32,7 @@ export function FormSection({
       <div className="space-y-1">
         <Typography variant="h4">{title}</Typography>
         {description && (
-          <Typography className="leading-5 text-pretty" variant="muted">
+          <Typography className="text-pretty leading-5" variant="muted">
             {description}
           </Typography>
         )}
@@ -41,4 +41,3 @@ export function FormSection({
     </div>
   )
 }
-

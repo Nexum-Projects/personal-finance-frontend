@@ -1,6 +1,10 @@
 "use client"
 
-import type { PropsWithChildren, ComponentProps, HTMLAttributeAnchorTarget } from "react"
+import type {
+  PropsWithChildren,
+  ComponentProps,
+  HTMLAttributeAnchorTarget,
+} from "react"
 import Link from "next/link"
 import { MoreVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -40,7 +44,11 @@ function Item({
     const { href, target } = props
 
     return (
-      <DropdownMenuItem asChild disabled={disabled || isLoading} variant={variant}>
+      <DropdownMenuItem
+        asChild
+        disabled={disabled || isLoading}
+        variant={variant}
+      >
         <Link href={href} target={target}>
           {children}
         </Link>
@@ -82,4 +90,3 @@ export function DataTableRowActions({ children }: PropsWithChildren) {
 
 DataTableRowActions.Separator = DropdownMenuSeparator
 DataTableRowActions.Item = Item
-

@@ -3,6 +3,7 @@
 Frontend de **Nexum Finanzas Personales**, una aplicación de gestión de finanzas personales (cuentas, categorías, transacciones, transferencias y presupuestos mensuales), desarrollada con **Next.js (App Router)**, **TypeScript**, **Tailwind CSS** y **shadcn/ui**.
 
 Incluye:
+
 - **Autenticación** (login/registro), confirmación de email y recuperación de contraseña.
 - **Dashboard** con gráficas (Recharts) y analítica por períodos/presupuestos.
 - **Preferencias de usuario** (moneda, zona horaria, idioma ES/EN/PT).
@@ -27,6 +28,7 @@ Ver documentación completa de colores en [`docs/COLOR_PALETTE.md`](docs/COLOR_P
 ## 🚀 Inicio rápido (desarrollo)
 
 ### Requisitos
+
 - **Node.js 18+**
 - **Yarn**
 - Backend/API corriendo (Spring Boot)
@@ -60,6 +62,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 > Nota: este proyecto usa **Next.js App Router** (carpeta `app/`) y Server Actions para comunicarse con la API.
 
 ### Flujo recomendado para probar el sistema
+
 - **1) Registrar usuario** en `/register`
 - **2) Confirmar email** desde el link recibido (página `/confirm-email?token=...`)
 - **3) Iniciar sesión** en `/login`
@@ -149,12 +152,13 @@ NEXT_PUBLIC_API_URL=http://tu-servidor:8080/api
 ## 🧭 ¿En qué consiste el proyecto?
 
 Este frontend se encarga de:
+
 - Proveer una **UI moderna** para administrar finanzas personales.
 - Consumir la API del backend mediante **Server Actions** (Axios).
 - Centralizar **humanización de errores** (mensajes amigables).
 - Aplicar **preferencias** del usuario para formateo (moneda, zona horaria) e idioma.
 
 Rutas relevantes:
+
 - **Públicas**: `/login`, `/register`, `/confirm-email`, `/confirm-email/request`, `/reset-password`
 - **Privadas (dashboard)**: `/dashboard/*`
-

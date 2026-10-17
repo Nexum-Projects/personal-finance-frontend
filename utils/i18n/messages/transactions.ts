@@ -7,7 +7,8 @@ export const ES_TRANSACTIONS_MESSAGES = {
   "transactions.actions.newIncome": "Nuevo ingreso",
   "transactions.actions.newExpense": "Nuevo gasto",
   "transactions.listTitle": "Lista de Transacciones",
-  "transactions.listSubtitle": "Aquí podrás ver y gestionar todas tus transacciones (ingresos y gastos)",
+  "transactions.listSubtitle":
+    "Aquí podrás ver y gestionar todas tus transacciones (ingresos y gastos)",
   "transactions.errorTitle": "Error",
   "transactions.errorLoadAll": "Error al cargar las transacciones",
   "transactions.errorCreate": "Error al crear la transacción",
@@ -17,12 +18,14 @@ export const ES_TRANSACTIONS_MESSAGES = {
   "transactions.income.subtitle": "Gestiona tus ingresos",
   "transactions.income.errorLoad": "Error al cargar los ingresos",
   "transactions.income.listTitle": "Lista de Ingresos",
-  "transactions.income.listSubtitle": "Aquí podrás ver y gestionar todos tus ingresos",
+  "transactions.income.listSubtitle":
+    "Aquí podrás ver y gestionar todos tus ingresos",
   "transactions.expenses.title": "Gastos",
   "transactions.expenses.subtitle": "Gestiona tus gastos",
   "transactions.expenses.errorLoad": "Error al cargar los gastos",
   "transactions.expenses.listTitle": "Lista de Gastos",
-  "transactions.expenses.listSubtitle": "Aquí podrás ver y gestionar todos tus gastos",
+  "transactions.expenses.listSubtitle":
+    "Aquí podrás ver y gestionar todos tus gastos",
 
   "transactions.search.all": "Buscar transacciones...",
   "transactions.search.byDescription": "Buscar por descripción...",
@@ -66,27 +69,36 @@ export const ES_TRANSACTIONS_MESSAGES = {
   "transactions.confirmDelete.cancel": "Cancelar",
 
   "transactions.form.sectionTitle": "Datos generales",
-  "transactions.form.sectionDescNew": "Ingresa los datos generales de la nueva transacción",
-  "transactions.form.sectionDescEdit": "Ingresa los datos generales de la transacción",
+  "transactions.form.sectionDescNew":
+    "Ingresa los datos generales de la nueva transacción",
+  "transactions.form.sectionDescEdit":
+    "Ingresa los datos generales de la transacción",
   "transactions.form.amount.label": "Monto",
   "transactions.form.amount.desc":
     "Ingresa el monto de la transacción en {currency} (debe ser mayor a 0)",
   "transactions.form.description.label": "Descripción",
-  "transactions.form.description.desc": "La descripción debe tener entre 1 y 255 caracteres",
-  "transactions.form.description.placeholder": "Ingresa la descripción de la transacción",
+  "transactions.form.description.desc":
+    "La descripción debe tener entre 1 y 255 caracteres",
+  "transactions.form.description.placeholder":
+    "Ingresa la descripción de la transacción",
   "transactions.form.category.label": "Categoría",
-  "transactions.form.category.desc": "Selecciona la categoría de la transacción",
+  "transactions.form.category.desc":
+    "Selecciona la categoría de la transacción",
   "transactions.form.account.label": "Cuenta",
   "transactions.form.account.desc": "Selecciona la cuenta de la transacción",
   "transactions.form.transactionDate.label": "Fecha de Transacción",
-  "transactions.form.transactionDate.desc": "Selecciona la fecha de la transacción",
+  "transactions.form.transactionDate.desc":
+    "Selecciona la fecha de la transacción",
 
   "toast.transaction.created": "Transacción creada",
-  "toast.transaction.created.desc": "La transacción {description} ha sido creada exitosamente.",
+  "toast.transaction.created.desc":
+    "La transacción {description} ha sido creada exitosamente.",
   "toast.transaction.updated": "Transacción actualizada",
-  "toast.transaction.updated.desc": "La transacción ha sido actualizada exitosamente.",
+  "toast.transaction.updated.desc":
+    "La transacción ha sido actualizada exitosamente.",
   "toast.transaction.deleted": "Transacción eliminada",
-  "toast.transaction.deleted.desc": "La transacción {description} ha sido eliminada exitosamente.",
+  "toast.transaction.deleted.desc":
+    "La transacción {description} ha sido eliminada exitosamente.",
 } as const
 
 export const EN_TRANSACTIONS_MESSAGES = {
@@ -98,7 +110,8 @@ export const EN_TRANSACTIONS_MESSAGES = {
   "transactions.actions.newIncome": "New income",
   "transactions.actions.newExpense": "New expense",
   "transactions.listTitle": "Transaction List",
-  "transactions.listSubtitle": "View and manage all your transactions (income and expenses)",
+  "transactions.listSubtitle":
+    "View and manage all your transactions (income and expenses)",
   "transactions.errorTitle": "Error",
   "transactions.errorLoadAll": "Error loading transactions",
   "transactions.errorCreate": "Error creating transaction",
@@ -157,13 +170,18 @@ export const EN_TRANSACTIONS_MESSAGES = {
   "transactions.confirmDelete.cancel": "Cancel",
 
   "transactions.form.sectionTitle": "General details",
-  "transactions.form.sectionDescNew": "Enter the general details for the new transaction",
-  "transactions.form.sectionDescEdit": "Enter the general details for the transaction",
+  "transactions.form.sectionDescNew":
+    "Enter the general details for the new transaction",
+  "transactions.form.sectionDescEdit":
+    "Enter the general details for the transaction",
   "transactions.form.amount.label": "Amount",
-  "transactions.form.amount.desc": "Enter the transaction amount in {currency} (must be greater than 0)",
+  "transactions.form.amount.desc":
+    "Enter the transaction amount in {currency} (must be greater than 0)",
   "transactions.form.description.label": "Description",
-  "transactions.form.description.desc": "Description must be between 1 and 255 characters",
-  "transactions.form.description.placeholder": "Enter the transaction description",
+  "transactions.form.description.desc":
+    "Description must be between 1 and 255 characters",
+  "transactions.form.description.placeholder":
+    "Enter the transaction description",
   "transactions.form.category.label": "Category",
   "transactions.form.category.desc": "Select the transaction category",
   "transactions.form.account.label": "Account",
@@ -172,11 +190,13 @@ export const EN_TRANSACTIONS_MESSAGES = {
   "transactions.form.transactionDate.desc": "Select the transaction date",
 
   "toast.transaction.created": "Transaction created",
-  "toast.transaction.created.desc": "Transaction {description} was created successfully.",
+  "toast.transaction.created.desc":
+    "Transaction {description} was created successfully.",
   "toast.transaction.updated": "Transaction updated",
   "toast.transaction.updated.desc": "The transaction was updated successfully.",
   "toast.transaction.deleted": "Transaction deleted",
-  "toast.transaction.deleted.desc": "Transaction {description} was deleted successfully.",
+  "toast.transaction.deleted.desc":
+    "Transaction {description} was deleted successfully.",
 } as const
 
 export const PT_TRANSACTIONS_MESSAGES = {
@@ -188,7 +208,8 @@ export const PT_TRANSACTIONS_MESSAGES = {
   "transactions.actions.newIncome": "Nova receita",
   "transactions.actions.newExpense": "Nova despesa",
   "transactions.listTitle": "Lista de Transações",
-  "transactions.listSubtitle": "Veja e gerencie todas as suas transações (receitas e despesas)",
+  "transactions.listSubtitle":
+    "Veja e gerencie todas as suas transações (receitas e despesas)",
   "transactions.errorTitle": "Erro",
   "transactions.errorLoadAll": "Erro ao carregar transações",
   "transactions.errorCreate": "Erro ao criar transação",
@@ -203,7 +224,8 @@ export const PT_TRANSACTIONS_MESSAGES = {
   "transactions.expenses.subtitle": "Gerencie suas despesas",
   "transactions.expenses.errorLoad": "Erro ao carregar despesas",
   "transactions.expenses.listTitle": "Lista de Despesas",
-  "transactions.expenses.listSubtitle": "Veja e gerencie todas as suas despesas",
+  "transactions.expenses.listSubtitle":
+    "Veja e gerencie todas as suas despesas",
 
   "transactions.search.all": "Buscar transações...",
   "transactions.search.byDescription": "Buscar por descrição...",
@@ -247,13 +269,17 @@ export const PT_TRANSACTIONS_MESSAGES = {
   "transactions.confirmDelete.cancel": "Cancelar",
 
   "transactions.form.sectionTitle": "Dados gerais",
-  "transactions.form.sectionDescNew": "Informe os dados gerais da nova transação",
+  "transactions.form.sectionDescNew":
+    "Informe os dados gerais da nova transação",
   "transactions.form.sectionDescEdit": "Informe os dados gerais da transação",
   "transactions.form.amount.label": "Valor",
-  "transactions.form.amount.desc": "Informe o valor da transação em {currency} (deve ser maior que 0)",
+  "transactions.form.amount.desc":
+    "Informe o valor da transação em {currency} (deve ser maior que 0)",
   "transactions.form.description.label": "Descrição",
-  "transactions.form.description.desc": "A descrição deve ter entre 1 e 255 caracteres",
-  "transactions.form.description.placeholder": "Digite a descrição da transação",
+  "transactions.form.description.desc":
+    "A descrição deve ter entre 1 e 255 caracteres",
+  "transactions.form.description.placeholder":
+    "Digite a descrição da transação",
   "transactions.form.category.label": "Categoria",
   "transactions.form.category.desc": "Selecione a categoria da transação",
   "transactions.form.account.label": "Conta",
@@ -262,10 +288,11 @@ export const PT_TRANSACTIONS_MESSAGES = {
   "transactions.form.transactionDate.desc": "Selecione a data da transação",
 
   "toast.transaction.created": "Transação criada",
-  "toast.transaction.created.desc": "A transação {description} foi criada com sucesso.",
+  "toast.transaction.created.desc":
+    "A transação {description} foi criada com sucesso.",
   "toast.transaction.updated": "Transação atualizada",
   "toast.transaction.updated.desc": "A transação foi atualizada com sucesso.",
   "toast.transaction.deleted": "Transação excluída",
-  "toast.transaction.deleted.desc": "A transação {description} foi excluída com sucesso.",
+  "toast.transaction.deleted.desc":
+    "A transação {description} foi excluída com sucesso.",
 } as const
-

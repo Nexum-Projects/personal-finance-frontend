@@ -28,7 +28,7 @@ export function NewCategoryForm({ backToHref }: Props) {
       if (result.status === "error") {
         // Verificar si es un error de autenticación
         const isAuthError = handleAuthError(result.errors[0], router)
-        
+
         // Si es error de autenticación, ya se manejó el logout y redirección
         if (isAuthError) {
           setIsSubmitting(false)
@@ -46,7 +46,9 @@ export function NewCategoryForm({ backToHref }: Props) {
       }
 
       toast.success(t("toast.category.created"), {
-        description: t("toast.category.created.desc", { name: result.data.name }),
+        description: t("toast.category.created.desc", {
+          name: result.data.name,
+        }),
       })
 
       router.push(backToHref)
@@ -71,4 +73,3 @@ export function NewCategoryForm({ backToHref }: Props) {
     />
   )
 }
-

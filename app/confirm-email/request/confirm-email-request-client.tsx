@@ -12,7 +12,13 @@ import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { confirmEmailRequest } from "@/app/actions/auth"
 
@@ -49,18 +55,25 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
       const result = await confirmEmailRequest({ email: data.email })
 
       if (result.status === "error") {
-        const humanizedError = parseApiError(result.errors[0] || "Error al solicitar confirmación")
-        toast.error(humanizedError.title, { description: humanizedError.description })
+        const humanizedError = parseApiError(
+          result.errors[0] || "Error al solicitar confirmación"
+        )
+        toast.error(humanizedError.title, {
+          description: humanizedError.description,
+        })
         setError(humanizedError.description)
         return
       }
 
       toast.success("Correo enviado", {
-        description: "Si el correo existe, recibirás un link para confirmar tu email.",
+        description:
+          "Si el correo existe, recibirás un link para confirmar tu email.",
       })
     } catch (err: any) {
       const humanizedError = parseApiError(err)
-      toast.error(humanizedError.title, { description: humanizedError.description })
+      toast.error(humanizedError.title, {
+        description: humanizedError.description,
+      })
       setError(humanizedError.description)
     } finally {
       setIsLoading(false)
@@ -68,7 +81,7 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-2">
           <div className="flex justify-center">
@@ -81,7 +94,9 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
               className="h-auto w-auto"
             />
           </div>
-          <CardTitle className="text-xl font-bold text-center">Reenviar confirmación de email</CardTitle>
+          <CardTitle className="text-center text-xl font-bold">
+            Reenviar confirmación de email
+          </CardTitle>
           <CardDescription className="text-center">
             Ingresa tu correo y te enviaremos un link para confirmar tu cuenta.
           </CardDescription>
@@ -89,7 +104,7 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {error && (
-              <div className="p-3 rounded-md bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+              <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -104,7 +119,11 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
                 disabled={isLoading}
                 className={errors.email ? "border-destructive" : ""}
               />
-              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <Button type="submit" className="w-full" disabled={isLoading}>
@@ -119,7 +138,10 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
             </Button>
 
             <div className="text-center text-sm">
-              <Link href="/login" className="text-muted-foreground underline-offset-4 hover:underline">
+              <Link
+                href="/login"
+                className="text-muted-foreground underline-offset-4 hover:underline"
+              >
                 Volver al login
               </Link>
             </div>
@@ -129,4 +151,3 @@ export function ConfirmEmailRequestClient({ defaultEmail }: Props) {
     </div>
   )
 }
-

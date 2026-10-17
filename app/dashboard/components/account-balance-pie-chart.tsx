@@ -28,7 +28,10 @@ const COLORS = [
   "hsl(260, 70%, 50%)", // Indigo
 ]
 
-export function AccountBalancePieChart({ data, title }: AccountBalancePieChartProps) {
+export function AccountBalancePieChart({
+  data,
+  title,
+}: AccountBalancePieChartProps) {
   const { preferredCurrency, preferredLanguage } = useUserPreferences()
   const { t } = useI18n()
 
@@ -94,7 +97,10 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
     return null
   }
 
-  const selectedTotalFormatted = formatAmount(selectedTotalCents, preferredCurrency)
+  const selectedTotalFormatted = formatAmount(
+    selectedTotalCents,
+    preferredCurrency
+  )
 
   return (
     <div className="space-y-4">
@@ -106,17 +112,21 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
       ) : (
         <>
           <p className="text-sm font-medium tabular-nums">
-            {t("dashboard.pies.balanceByAccount.selectedTotal", { value: selectedTotalFormatted })}
+            {t("dashboard.pies.balanceByAccount.selectedTotal", {
+              value: selectedTotalFormatted,
+            })}
           </p>
           <div className="flex flex-col gap-4 xl:flex-row xl:items-start">
-            <div className="flex-1 min-w-0 xl:min-w-[300px]">
+            <div className="min-w-0 flex-1 xl:min-w-[300px]">
               {chartData.length === 0 ? (
                 <div className="flex h-[350px] items-center justify-center px-4 text-center text-sm text-muted-foreground">
                   {t("dashboard.pies.balanceByAccount.noneSelected")}
                 </div>
               ) : (
                 <ResponsiveContainer width="100%" height={350}>
-                  <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+                  <PieChart
+                    margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                  >
                     <Pie
                       data={chartData}
                       cx="50%"
@@ -154,7 +164,7 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
                         key={item.accountId}
                         className={cn(
                           "flex cursor-pointer items-start gap-2 rounded-md p-1 text-sm transition-colors hover:bg-muted/50",
-                          !checked && "opacity-60",
+                          !checked && "opacity-60"
                         )}
                       >
                         <input
@@ -164,7 +174,10 @@ export function AccountBalancePieChart({ data, title }: AccountBalancePieChartPr
                           className="mt-0.5 h-4 w-4 shrink-0 rounded border-primary text-primary focus-visible:ring-2 focus-visible:ring-ring"
                           aria-label={item.accountName}
                         />
-                        <div className="flex min-w-0 flex-1 items-start gap-2" style={{ color }}>
+                        <div
+                          className="flex min-w-0 flex-1 items-start gap-2"
+                          style={{ color }}
+                        >
                           <div
                             className="mt-1 h-3 w-3 shrink-0 rounded-full"
                             style={{ backgroundColor: color }}

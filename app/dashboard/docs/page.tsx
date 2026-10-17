@@ -13,7 +13,13 @@ import {
 
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { DocImagePlaceholder } from "@/components/docs/doc-image-placeholder"
 import { getServerI18n } from "@/utils/i18n/server"
@@ -45,7 +51,8 @@ export default async function DocsIndexPage() {
             "How to interpret tables, filters and actions across the system.",
           glossaryTitle: "Quick glossary",
           glossaryDesc: "Terms used on screens and in this guide.",
-          placeholderExamplesTitle: "[IMAGE / GIF] Examples of search, filters and actions",
+          placeholderExamplesTitle:
+            "[IMAGE / GIF] Examples of search, filters and actions",
           placeholderExamplesDesc:
             "Suggestion: screenshot of a table showing the search input, filter panel, and row actions menu.",
           links: [
@@ -93,8 +100,7 @@ export default async function DocsIndexPage() {
             },
             {
               title: "Monthly budgets",
-              description:
-                "Monthly periods, category budgets and analytics.",
+              description: "Monthly periods, category budgets and analytics.",
               href: "/dashboard/docs/monthly-budgets",
               icon: Calendar,
             },
@@ -107,21 +113,60 @@ export default async function DocsIndexPage() {
             },
           ] satisfies DocLink[],
           conventions: [
-            { label: "Search", text: "Most lists include a search input to filter by text." },
-            { label: "Filters", text: "Some lists include a filter panel (e.g. date range and type)." },
-            { label: "Sorting", text: "Many tables can be sorted by clicking on column headers." },
-            { label: "Pagination", text: "If there are many records, results are paginated (usually 10 by default)." },
-            { label: "Row actions", text: "Each row usually has an actions menu (view, edit, delete)." },
-            { label: "Page reset", text: "When you change search/filters, the system usually resets to page 1." },
+            {
+              label: "Search",
+              text: "Most lists include a search input to filter by text.",
+            },
+            {
+              label: "Filters",
+              text: "Some lists include a filter panel (e.g. date range and type).",
+            },
+            {
+              label: "Sorting",
+              text: "Many tables can be sorted by clicking on column headers.",
+            },
+            {
+              label: "Pagination",
+              text: "If there are many records, results are paginated (usually 10 by default).",
+            },
+            {
+              label: "Row actions",
+              text: "Each row usually has an actions menu (view, edit, delete).",
+            },
+            {
+              label: "Page reset",
+              text: "When you change search/filters, the system usually resets to page 1.",
+            },
           ],
           glossary: [
-            { label: "Income", text: "Money that goes into an account (e.g. salary)." },
-            { label: "Expense", text: "Money that goes out of an account (e.g. food)." },
-            { label: "Transfer", text: "Internal movement between two accounts (no category)." },
-            { label: "Monthly budget", text: "A month+year period used for analytics and category budgets." },
-            { label: "Category budget", text: "Planned amount to spend in a category within a monthly budget." },
-            { label: "Date range", text: "Start/end filter used to limit data to a period." },
-            { label: "Actions", text: "Buttons/menus to operate on a record: view, edit, delete (and sometimes reactivate)." },
+            {
+              label: "Income",
+              text: "Money that goes into an account (e.g. salary).",
+            },
+            {
+              label: "Expense",
+              text: "Money that goes out of an account (e.g. food).",
+            },
+            {
+              label: "Transfer",
+              text: "Internal movement between two accounts (no category).",
+            },
+            {
+              label: "Monthly budget",
+              text: "A month+year period used for analytics and category budgets.",
+            },
+            {
+              label: "Category budget",
+              text: "Planned amount to spend in a category within a monthly budget.",
+            },
+            {
+              label: "Date range",
+              text: "Start/end filter used to limit data to a period.",
+            },
+            {
+              label: "Actions",
+              text: "Buttons/menus to operate on a record: view, edit, delete (and sometimes reactivate).",
+            },
           ],
         }
       : language === "PT"
@@ -196,28 +241,66 @@ export default async function DocsIndexPage() {
               },
               {
                 title: "Perfil e segurança",
-                description:
-                  "Preferências (moeda/fuso), alterar senha e sair.",
+                description: "Preferências (moeda/fuso), alterar senha e sair.",
                 href: "/dashboard/docs/profile",
                 icon: User,
               },
             ] satisfies DocLink[],
             conventions: [
-              { label: "Busca", text: "A maioria das listas inclui um campo de busca para filtrar por texto." },
-              { label: "Filtros", text: "Algumas listas incluem um painel de filtros (ex.: intervalo de datas e tipo)." },
-              { label: "Ordenação", text: "Em muitas tabelas você pode ordenar clicando nos cabeçalhos." },
-              { label: "Paginação", text: "Se houver muitos registros, os resultados são paginados (geralmente 10)." },
-              { label: "Ações por linha", text: "Cada linha geralmente tem um menu de ações (ver, editar, excluir)." },
-              { label: "Reset de página", text: "Ao mudar busca/filtros, o sistema normalmente volta para a página 1." },
+              {
+                label: "Busca",
+                text: "A maioria das listas inclui um campo de busca para filtrar por texto.",
+              },
+              {
+                label: "Filtros",
+                text: "Algumas listas incluem um painel de filtros (ex.: intervalo de datas e tipo).",
+              },
+              {
+                label: "Ordenação",
+                text: "Em muitas tabelas você pode ordenar clicando nos cabeçalhos.",
+              },
+              {
+                label: "Paginação",
+                text: "Se houver muitos registros, os resultados são paginados (geralmente 10).",
+              },
+              {
+                label: "Ações por linha",
+                text: "Cada linha geralmente tem um menu de ações (ver, editar, excluir).",
+              },
+              {
+                label: "Reset de página",
+                text: "Ao mudar busca/filtros, o sistema normalmente volta para a página 1.",
+              },
             ],
             glossary: [
-              { label: "Receita", text: "Dinheiro que entra em uma conta (ex.: salário)." },
-              { label: "Despesa", text: "Dinheiro que sai de uma conta (ex.: alimentação)." },
-              { label: "Transferência", text: "Movimento interno entre duas contas (sem categoria)." },
-              { label: "Orçamento mensal", text: "Período mês+ano usado para análises e orçamentos por categoria." },
-              { label: "Orçamento por categoria", text: "Valor planejado para gastar em uma categoria dentro do orçamento mensal." },
-              { label: "Intervalo de datas", text: "Filtro início/fim para limitar dados a um período." },
-              { label: "Ações", text: "Botões/menus para operar um registro: ver, editar, excluir (e às vezes reativar)." },
+              {
+                label: "Receita",
+                text: "Dinheiro que entra em uma conta (ex.: salário).",
+              },
+              {
+                label: "Despesa",
+                text: "Dinheiro que sai de uma conta (ex.: alimentação).",
+              },
+              {
+                label: "Transferência",
+                text: "Movimento interno entre duas contas (sem categoria).",
+              },
+              {
+                label: "Orçamento mensal",
+                text: "Período mês+ano usado para análises e orçamentos por categoria.",
+              },
+              {
+                label: "Orçamento por categoria",
+                text: "Valor planejado para gastar em uma categoria dentro do orçamento mensal.",
+              },
+              {
+                label: "Intervalo de datas",
+                text: "Filtro início/fim para limitar dados a um período.",
+              },
+              {
+                label: "Ações",
+                text: "Botões/menus para operar um registro: ver, editar, excluir (e às vezes reativar).",
+              },
             ],
           }
         : {
@@ -225,7 +308,8 @@ export default async function DocsIndexPage() {
             pageDesc:
               "Guía rápida por módulos para aprender a usar el sistema: propósito, filtros, acciones y pantallas clave.",
             goDashboard: "Ir al Dashboard",
-            placeholderNavTitle: "[IMAGEN / GIF] Vista general de la navegación",
+            placeholderNavTitle:
+              "[IMAGEN / GIF] Vista general de la navegación",
             placeholderNavDesc:
               "Sugerencia: captura del sidebar con los módulos principales y el menú del avatar.",
             indexTitle: "Índice",
@@ -298,21 +382,60 @@ export default async function DocsIndexPage() {
               },
             ] satisfies DocLink[],
             conventions: [
-              { label: "Búsqueda", text: "la mayoría de listados incluye un campo de búsqueda para filtrar por texto." },
-              { label: "Filtros", text: "algunos listados incluyen un panel de filtros (por ejemplo, rango de fechas y tipo)." },
-              { label: "Ordenamiento", text: "en muchas tablas puedes ordenar haciendo clic en encabezados (cuando hay iconos de orden)." },
-              { label: "Paginación", text: "si hay muchos registros, se muestran por páginas (normalmente 10 por defecto)." },
-              { label: "Acciones por fila", text: "en cada registro suele haber un menú de acciones (ver, editar, eliminar)." },
-              { label: "Reset de página", text: "cuando cambias búsqueda/filtros, el sistema suele volver a la página 1 para evitar “páginas vacías”." },
+              {
+                label: "Búsqueda",
+                text: "la mayoría de listados incluye un campo de búsqueda para filtrar por texto.",
+              },
+              {
+                label: "Filtros",
+                text: "algunos listados incluyen un panel de filtros (por ejemplo, rango de fechas y tipo).",
+              },
+              {
+                label: "Ordenamiento",
+                text: "en muchas tablas puedes ordenar haciendo clic en encabezados (cuando hay iconos de orden).",
+              },
+              {
+                label: "Paginación",
+                text: "si hay muchos registros, se muestran por páginas (normalmente 10 por defecto).",
+              },
+              {
+                label: "Acciones por fila",
+                text: "en cada registro suele haber un menú de acciones (ver, editar, eliminar).",
+              },
+              {
+                label: "Reset de página",
+                text: "cuando cambias búsqueda/filtros, el sistema suele volver a la página 1 para evitar “páginas vacías”.",
+              },
             ],
             glossary: [
-              { label: "Ingreso", text: "dinero que entra a una cuenta (ej. salario)." },
-              { label: "Gasto", text: "dinero que sale de una cuenta (ej. comida)." },
-              { label: "Transferencia", text: "movimiento interno entre dos cuentas (no usa categoría)." },
-              { label: "Presupuesto mensual", text: "período por mes y año (ej. Marzo 2026) usado para analítica y presupuestos por categoría." },
-              { label: "Presupuesto por categoría", text: "monto planeado para gastar en una categoría dentro de un presupuesto mensual." },
-              { label: "Rango de fechas", text: "filtro “inicio/fin” para limitar datos a un período." },
-              { label: "Acciones", text: "botones/menús para operar sobre un registro: ver, editar, eliminar (y en algunos módulos reactivar)." },
+              {
+                label: "Ingreso",
+                text: "dinero que entra a una cuenta (ej. salario).",
+              },
+              {
+                label: "Gasto",
+                text: "dinero que sale de una cuenta (ej. comida).",
+              },
+              {
+                label: "Transferencia",
+                text: "movimiento interno entre dos cuentas (no usa categoría).",
+              },
+              {
+                label: "Presupuesto mensual",
+                text: "período por mes y año (ej. Marzo 2026) usado para analítica y presupuestos por categoría.",
+              },
+              {
+                label: "Presupuesto por categoría",
+                text: "monto planeado para gastar en una categoría dentro de un presupuesto mensual.",
+              },
+              {
+                label: "Rango de fechas",
+                text: "filtro “inicio/fin” para limitar datos a un período.",
+              },
+              {
+                label: "Acciones",
+                text: "botones/menús para operar sobre un registro: ver, editar, eliminar (y en algunos módulos reactivar).",
+              },
             ],
           }
 
@@ -363,10 +486,12 @@ export default async function DocsIndexPage() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0">
-                    <div className="font-medium group-hover:underline underline-offset-4">
+                    <div className="font-medium underline-offset-4 group-hover:underline">
                       {item.title}
                     </div>
-                    <div className="text-sm text-muted-foreground">{item.description}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {item.description}
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -381,7 +506,7 @@ export default async function DocsIndexPage() {
           <CardDescription>{copy.conventionsDesc}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.conventions.map((item) => (
               <li key={item.label}>
                 <b>{item.label}</b>: {item.text}
@@ -397,7 +522,7 @@ export default async function DocsIndexPage() {
           <CardDescription>{copy.glossaryDesc}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <ul className="list-disc pl-5 space-y-2">
+          <ul className="list-disc space-y-2 pl-5">
             {copy.glossary.map((item) => (
               <li key={item.label}>
                 <b>{item.label}</b>: {item.text}
@@ -413,4 +538,3 @@ export default async function DocsIndexPage() {
     </PageContainer>
   )
 }
-

@@ -2,7 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
-import { removeMonthlyBudget, reactivateMonthlyBudget } from "@/app/actions/monthly-budgets"
+import {
+  removeMonthlyBudget,
+  reactivateMonthlyBudget,
+} from "@/app/actions/monthly-budgets"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"
 import { useConfirmationDialogStore } from "@/stores/confirmation-dialog-store"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
@@ -25,8 +28,10 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
       description: (
         <>
           {t("monthlyPeriods.budgets.confirmDeactivate.title")}{" "}
-          <span className="text-foreground font-medium">{budget.category.name}</span>?
-          {t("monthlyPeriods.budgets.confirmDeactivate.description")}
+          <span className="font-medium text-foreground">
+            {budget.category.name}
+          </span>
+          ?{t("monthlyPeriods.budgets.confirmDeactivate.description")}
         </>
       ),
       onConfirm: onRemove,
@@ -43,7 +48,10 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
       description: (
         <>
           {t("monthlyPeriods.budgets.confirmReactivate.title")}{" "}
-          <span className="text-foreground font-medium">{budget.category.name}</span>?
+          <span className="font-medium text-foreground">
+            {budget.category.name}
+          </span>
+          ?
         </>
       ),
       onConfirm: onReactivate,
@@ -77,7 +85,9 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
       toast.success(t("toast.monthlyBudget.deactivated"), {
         description: (
           <>
-            {t("toast.monthlyBudget.deactivated.desc", { category: budget.category.name })}
+            {t("toast.monthlyBudget.deactivated.desc", {
+              category: budget.category.name,
+            })}
           </>
         ),
       })
@@ -114,7 +124,9 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
       toast.success(t("toast.monthlyBudget.reactivated"), {
         description: (
           <>
-            {t("toast.monthlyBudget.reactivated.desc", { category: budget.category.name })}
+            {t("toast.monthlyBudget.reactivated.desc", {
+              category: budget.category.name,
+            })}
           </>
         ),
       })
@@ -139,7 +151,11 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
       </DataTableRowActions.Item>
       <DataTableRowActions.Separator />
       {budget.isActive ? (
-        <DataTableRowActions.Item type="button" variant="destructive" onClick={handleRemove}>
+        <DataTableRowActions.Item
+          type="button"
+          variant="destructive"
+          onClick={handleRemove}
+        >
           {t("monthlyPeriods.budgets.actions.deactivate")}
         </DataTableRowActions.Item>
       ) : (
@@ -150,4 +166,3 @@ export function MonthlyBudgetsRowActions({ monthlyPeriodId, budget }: Props) {
     </DataTableRowActions>
   )
 }
-

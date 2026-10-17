@@ -10,7 +10,10 @@ import { FormSection } from "@/components/display/form/form-section"
 import { NumericField } from "@/components/inputs/rhf/numeric-field"
 import { TextField } from "@/components/inputs/rhf/text-field"
 import { SelectField } from "@/components/inputs/rhf/select-field"
-import { transferSchema, type TransferFormValues } from "@/app/actions/transfers/schema"
+import {
+  transferSchema,
+  type TransferFormValues,
+} from "@/app/actions/transfers/schema"
 import type { Account } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { PREFERRED_CURRENCY_LABEL } from "@/utils/user-preferences"
@@ -81,7 +84,9 @@ export function TransferForm({
       <form className="grid space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
         <FormSection
           description={
-            !isOnEdit ? t("transfers.form.sectionDescNew") : t("transfers.form.sectionDescEdit")
+            !isOnEdit
+              ? t("transfers.form.sectionDescNew")
+              : t("transfers.form.sectionDescEdit")
           }
           title={t("transfers.form.sectionTitle")}
         >
@@ -152,4 +157,3 @@ export function TransferForm({
     </Form>
   )
 }
-

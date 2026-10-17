@@ -13,10 +13,13 @@ export default async function updateAccount(
   input: AccountFormValues
 ): Promise<ActionResponse<Account>> {
   try {
-    const response = await baseAxios.put<{ data: Account }>(`/accounts/${accountId}`, {
-      name: input.name,
-      accountType: input.accountType,
-    })
+    const response = await baseAxios.put<{ data: Account }>(
+      `/accounts/${accountId}`,
+      {
+        name: input.name,
+        accountType: input.accountType,
+      }
+    )
 
     revalidatePath("/dashboard/accounts")
     revalidatePath(`/dashboard/accounts/${accountId}`)
@@ -53,5 +56,3 @@ export default async function updateAccount(
     }
   }
 }
-
-

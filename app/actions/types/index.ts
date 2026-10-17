@@ -1,2 +1,5 @@
-export type { ActionResponse, SuccessResponse, ErrorResponse } from './action-response'
-
+export type {
+  ActionResponse,
+  SuccessResponse,
+  ErrorResponse,
+} from "./action-response"

@@ -11,7 +11,12 @@ import {
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { PageSection } from "@/components/display/page-section/page-section"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { getServerI18n } from "@/utils/i18n/server"
 import type { Metadata } from "next"
@@ -21,7 +26,11 @@ const loadUserDetail = cache(async (userId: string) => {
   return findUser(userId)
 })
 
-function formatDate(dateString: string, locale: string, timeZone: string): string {
+function formatDate(
+  dateString: string,
+  locale: string,
+  timeZone: string
+): string {
   try {
     const date = new Date(dateString)
     const formatter = new Intl.DateTimeFormat(locale, {
@@ -100,7 +109,11 @@ export default async function AdminUserDetailPage(props: Props) {
         title={user.username}
         description={user.email}
         actions={
-          <AdminUserStatusButtons userId={user.id} isActive={user.isActive} layout="detail" />
+          <AdminUserStatusButtons
+            userId={user.id}
+            isActive={user.isActive}
+            layout="detail"
+          />
         }
       />
 
@@ -128,7 +141,9 @@ export default async function AdminUserDetailPage(props: Props) {
               user.emailVerifiedAt != null && user.emailVerifiedAt !== "" ? (
                 formatDate(user.emailVerifiedAt, locale, timeZoneIana)
               ) : (
-                <span className="text-muted-foreground">{t("admin.users.emailNotVerified")}</span>
+                <span className="text-muted-foreground">
+                  {t("admin.users.emailNotVerified")}
+                </span>
               ),
           },
           role: {
@@ -154,7 +169,9 @@ export default async function AdminUserDetailPage(props: Props) {
                 {t("profile.status.active")}
               </span>
             ) : (
-              <span className="text-red-600 dark:text-red-400">{t("profile.status.inactive")}</span>
+              <span className="text-red-600 dark:text-red-400">
+                {t("profile.status.inactive")}
+              </span>
             ),
           },
           createdAt: {

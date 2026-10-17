@@ -28,8 +28,12 @@ export default async function updateTransaction(
       }
     )
 
-    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`)
-    revalidatePath(`/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}/${transactionId}`)
+    revalidatePath(
+      `/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}`
+    )
+    revalidatePath(
+      `/dashboard/${categoryType === "INCOME" ? "income" : "expenses"}/${transactionId}`
+    )
 
     return {
       status: "success",
@@ -63,4 +67,3 @@ export default async function updateTransaction(
     }
   }
 }
-

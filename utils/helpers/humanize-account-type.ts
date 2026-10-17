@@ -36,9 +36,11 @@ const ACCOUNT_TYPES_MAP: Record<PreferredLanguage, Record<string, string>> = {
   },
 }
 
-export function humanizeAccountType(accountType: string, language: PreferredLanguage = "ES"): string {
+export function humanizeAccountType(
+  accountType: string,
+  language: PreferredLanguage = "ES"
+): string {
   // Convertir a mayúsculas para hacer la búsqueda case-insensitive
   const upperType = accountType.toUpperCase()
   return ACCOUNT_TYPES_MAP[language]?.[upperType] || accountType
 }
-

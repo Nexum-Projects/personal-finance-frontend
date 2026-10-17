@@ -5,10 +5,7 @@ import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
 import { parseApiError } from "@/utils/helpers/parse-api-error"
 import { handleAuthErrorServer } from "../helpers/handle-auth-error-server"
-import type {
-  TransferPageResponse,
-  TransferSearchParams,
-} from "./types"
+import type { TransferPageResponse, TransferSearchParams } from "./types"
 
 export default async function findManyTransfers(
   params?: TransferSearchParams
@@ -87,4 +84,3 @@ export default async function findManyTransfers(
     }
   }
 }
-

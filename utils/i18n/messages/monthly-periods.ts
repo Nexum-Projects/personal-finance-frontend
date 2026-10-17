@@ -3,7 +3,8 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.subtitle": "Gestiona tus presupuestos mensuales",
   "monthlyPeriods.actions.new": "Nuevo presupuesto mensual",
   "monthlyPeriods.listTitle": "Lista de Presupuestos Mensuales",
-  "monthlyPeriods.listSubtitle": "Aquí podrás ver y gestionar todos tus presupuestos mensuales",
+  "monthlyPeriods.listSubtitle":
+    "Aquí podrás ver y gestionar todos tus presupuestos mensuales",
   "monthlyPeriods.errorTitle": "Error",
   "monthlyPeriods.errorLoad": "Error al cargar los presupuestos mensuales",
 
@@ -21,8 +22,10 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.newTitle": "Nuevo presupuesto mensual",
 
   "monthlyPeriods.form.sectionTitle": "Datos generales",
-  "monthlyPeriods.form.sectionDescNew": "Ingresa los datos generales del nuevo presupuesto mensual",
-  "monthlyPeriods.form.sectionDescEdit": "Ingresa los datos generales del presupuesto mensual",
+  "monthlyPeriods.form.sectionDescNew":
+    "Ingresa los datos generales del nuevo presupuesto mensual",
+  "monthlyPeriods.form.sectionDescEdit":
+    "Ingresa los datos generales del presupuesto mensual",
   "monthlyPeriods.form.year.label": "Año",
   "monthlyPeriods.form.year.desc": "El año debe estar entre 1900 y 9999",
   "monthlyPeriods.form.month.label": "Mes",
@@ -35,7 +38,8 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.detail.notFound": "Presupuesto mensual no encontrado",
   "monthlyPeriods.tabs.general": "General",
   "monthlyPeriods.tabs.budgets": "Presupuestos",
-  "monthlyPeriods.detail.subtitle": "Información general del presupuesto mensual",
+  "monthlyPeriods.detail.subtitle":
+    "Información general del presupuesto mensual",
   "monthlyPeriods.detail.sectionTitle": "Datos generales",
   "monthlyPeriods.detail.id": "Identificador",
   "monthlyPeriods.detail.year": "Año",
@@ -48,10 +52,12 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.editInitialSaving.title": "Editar ahorro inicial - {month}",
   "monthlyPeriods.editInitialSaving.backToDetail": "Regresar al detalle",
   "monthlyPeriods.editInitialSaving.form.title": "Ahorro Inicial",
-  "monthlyPeriods.editInitialSaving.form.subtitle": "Actualiza el ahorro inicial para este presupuesto mensual",
+  "monthlyPeriods.editInitialSaving.form.subtitle":
+    "Actualiza el ahorro inicial para este presupuesto mensual",
   "monthlyPeriods.editInitialSaving.form.amount.desc":
     "Ingresa el ahorro inicial para este período (en {currency})",
-  "monthlyPeriods.editInitialSaving.toast.updatedTitle": "Presupuesto mensual actualizado",
+  "monthlyPeriods.editInitialSaving.toast.updatedTitle":
+    "Presupuesto mensual actualizado",
   "monthlyPeriods.editInitialSaving.toast.updatedDesc":
     "La meta de ahorro ha sido actualizada exitosamente.",
 
@@ -61,28 +67,35 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.confirmDeactivate.title": "¿Desactivar presupuesto mensual?",
   "monthlyPeriods.confirmDeactivate.confirm": "Sí, desactivar presupuesto",
   "monthlyPeriods.confirmDeactivate.cancel": "Cancelar",
-  "monthlyPeriods.confirmDeactivate.description": "Esta acción no se puede deshacer.",
+  "monthlyPeriods.confirmDeactivate.description":
+    "Esta acción no se puede deshacer.",
   "monthlyPeriods.confirmReactivate.title": "¿Reactivar presupuesto mensual?",
   "monthlyPeriods.confirmReactivate.confirm": "Sí, reactivar presupuesto",
   "monthlyPeriods.confirmReactivate.cancel": "Cancelar",
 
-  "monthlyPeriods.errorDeactivate": "Error al desactivar el presupuesto mensual",
+  "monthlyPeriods.errorDeactivate":
+    "Error al desactivar el presupuesto mensual",
   "monthlyPeriods.errorReactivate": "Error al reactivar el presupuesto mensual",
   "toast.monthlyPeriod.deactivated": "Presupuesto mensual desactivado",
-  "toast.monthlyPeriod.deactivated.desc": "El presupuesto mensual {month} ha sido desactivado exitosamente.",
+  "toast.monthlyPeriod.deactivated.desc":
+    "El presupuesto mensual {month} ha sido desactivado exitosamente.",
   "toast.monthlyPeriod.reactivated": "Presupuesto mensual reactivado",
-  "toast.monthlyPeriod.reactivated.desc": "El presupuesto mensual {month} ha sido reactivado exitosamente.",
+  "toast.monthlyPeriod.reactivated.desc":
+    "El presupuesto mensual {month} ha sido reactivado exitosamente.",
   "toast.monthlyPeriod.created": "Presupuesto mensual creado",
-  "toast.monthlyPeriod.created.desc": "El presupuesto mensual ha sido creado exitosamente.",
+  "toast.monthlyPeriod.created.desc":
+    "El presupuesto mensual ha sido creado exitosamente.",
   "toast.monthlyPeriod.updated": "Presupuesto mensual actualizado",
-  "toast.monthlyPeriod.updated.desc": "El presupuesto mensual ha sido actualizado exitosamente.",
+  "toast.monthlyPeriod.updated.desc":
+    "El presupuesto mensual ha sido actualizado exitosamente.",
   "monthlyPeriods.errorCreate": "Error al crear el presupuesto mensual",
   "monthlyPeriods.errorUpdate": "Error al actualizar el presupuesto mensual",
 
   // Budgets dentro del período
   "monthlyPeriods.budgets.metaTitle": "Presupuestos - {month}",
   "monthlyPeriods.budgets.sectionTitle": "Presupuestos por Categoría",
-  "monthlyPeriods.budgets.sectionSubtitle": "Gestiona los presupuestos mensuales por categoría",
+  "monthlyPeriods.budgets.sectionSubtitle":
+    "Gestiona los presupuestos mensuales por categoría",
   "monthlyPeriods.budgets.actions.new": "Nuevo presupuesto",
   "monthlyPeriods.budgets.listTitle": "Lista de Presupuestos",
   "monthlyPeriods.budgets.listSubtitle":
@@ -106,11 +119,14 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.actions.deactivate": "Desactivar presupuesto",
   "monthlyPeriods.budgets.actions.reactivate": "Reactivar presupuesto",
   "monthlyPeriods.budgets.confirmDeactivate.title": "¿Desactivar presupuesto?",
-  "monthlyPeriods.budgets.confirmDeactivate.confirm": "Sí, desactivar presupuesto",
+  "monthlyPeriods.budgets.confirmDeactivate.confirm":
+    "Sí, desactivar presupuesto",
   "monthlyPeriods.budgets.confirmDeactivate.cancel": "Cancelar",
-  "monthlyPeriods.budgets.confirmDeactivate.description": "Esta acción no se puede deshacer.",
+  "monthlyPeriods.budgets.confirmDeactivate.description":
+    "Esta acción no se puede deshacer.",
   "monthlyPeriods.budgets.confirmReactivate.title": "¿Reactivar presupuesto?",
-  "monthlyPeriods.budgets.confirmReactivate.confirm": "Sí, reactivar presupuesto",
+  "monthlyPeriods.budgets.confirmReactivate.confirm":
+    "Sí, reactivar presupuesto",
   "monthlyPeriods.budgets.confirmReactivate.cancel": "Cancelar",
 
   "monthlyPeriods.budgets.errorCreate": "Error al crear el presupuesto",
@@ -118,27 +134,35 @@ export const ES_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.errorDeactivate": "Error al eliminar el presupuesto",
   "monthlyPeriods.budgets.errorReactivate": "Error al reactivar el presupuesto",
   "toast.monthlyBudget.deactivated": "Presupuesto desactivado",
-  "toast.monthlyBudget.deactivated.desc": "El presupuesto de {category} ha sido desactivado exitosamente.",
+  "toast.monthlyBudget.deactivated.desc":
+    "El presupuesto de {category} ha sido desactivado exitosamente.",
   "toast.monthlyBudget.reactivated": "Presupuesto reactivado",
-  "toast.monthlyBudget.reactivated.desc": "El presupuesto de {category} ha sido reactivado exitosamente.",
+  "toast.monthlyBudget.reactivated.desc":
+    "El presupuesto de {category} ha sido reactivado exitosamente.",
   "toast.monthlyBudget.created": "Presupuesto creado",
-  "toast.monthlyBudget.created.desc": "El presupuesto ha sido creado exitosamente.",
+  "toast.monthlyBudget.created.desc":
+    "El presupuesto ha sido creado exitosamente.",
   "toast.monthlyBudget.updated": "Presupuesto actualizado",
-  "toast.monthlyBudget.updated.desc": "El presupuesto ha sido actualizado exitosamente.",
+  "toast.monthlyBudget.updated.desc":
+    "El presupuesto ha sido actualizado exitosamente.",
 
   "monthlyPeriods.budgets.newTitle": "Nuevo presupuesto - {month}",
   "monthlyPeriods.budgets.editTitle": "Editar presupuesto - {month}",
   "monthlyPeriods.budgets.notFound": "Presupuesto no encontrado",
 
   "monthlyPeriods.budgets.form.sectionTitle": "Datos del presupuesto",
-  "monthlyPeriods.budgets.form.sectionDescNew": "Ingresa los datos del nuevo presupuesto mensual",
-  "monthlyPeriods.budgets.form.sectionDescEdit": "Ingresa los datos del presupuesto mensual",
+  "monthlyPeriods.budgets.form.sectionDescNew":
+    "Ingresa los datos del nuevo presupuesto mensual",
+  "monthlyPeriods.budgets.form.sectionDescEdit":
+    "Ingresa los datos del presupuesto mensual",
   "monthlyPeriods.budgets.form.category.label": "Categoría",
   "monthlyPeriods.budgets.form.category.desc":
     "Selecciona una categoría de gastos para el presupuesto (solo categorías de tipo gasto)",
-  "monthlyPeriods.budgets.form.category.placeholder": "Selecciona una categoría",
+  "monthlyPeriods.budgets.form.category.placeholder":
+    "Selecciona una categoría",
   "monthlyPeriods.budgets.form.budgeted.label": "Monto Presupuestado",
-  "monthlyPeriods.budgets.form.budgeted.desc": "Ingresa el monto presupuestado (debe ser mayor a 0)",
+  "monthlyPeriods.budgets.form.budgeted.desc":
+    "Ingresa el monto presupuestado (debe ser mayor a 0)",
 } as const
 
 export const EN_MONTHLY_PERIODS_MESSAGES = {
@@ -164,15 +188,18 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.newTitle": "New monthly budget",
 
   "monthlyPeriods.form.sectionTitle": "General details",
-  "monthlyPeriods.form.sectionDescNew": "Enter the general details for the new monthly budget",
-  "monthlyPeriods.form.sectionDescEdit": "Enter the general details for the monthly budget",
+  "monthlyPeriods.form.sectionDescNew":
+    "Enter the general details for the new monthly budget",
+  "monthlyPeriods.form.sectionDescEdit":
+    "Enter the general details for the monthly budget",
   "monthlyPeriods.form.year.label": "Year",
   "monthlyPeriods.form.year.desc": "Year must be between 1900 and 9999",
   "monthlyPeriods.form.month.label": "Month",
   "monthlyPeriods.form.month.desc": "Select the budget month",
   "monthlyPeriods.form.month.placeholder": "Select month",
   "monthlyPeriods.form.initialSaving.label": "Initial savings",
-  "monthlyPeriods.form.initialSaving.desc": "Enter the initial savings for this budget (in {currency})",
+  "monthlyPeriods.form.initialSaving.desc":
+    "Enter the initial savings for this budget (in {currency})",
 
   "monthlyPeriods.detail.notFound": "Monthly budget not found",
   "monthlyPeriods.tabs.general": "General",
@@ -190,10 +217,14 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.editInitialSaving.title": "Edit initial savings - {month}",
   "monthlyPeriods.editInitialSaving.backToDetail": "Back to details",
   "monthlyPeriods.editInitialSaving.form.title": "Initial savings",
-  "monthlyPeriods.editInitialSaving.form.subtitle": "Update initial savings for this monthly budget",
-  "monthlyPeriods.editInitialSaving.form.amount.desc": "Enter the initial savings for this period (in {currency})",
-  "monthlyPeriods.editInitialSaving.toast.updatedTitle": "Monthly budget updated",
-  "monthlyPeriods.editInitialSaving.toast.updatedDesc": "Savings goal was updated successfully.",
+  "monthlyPeriods.editInitialSaving.form.subtitle":
+    "Update initial savings for this monthly budget",
+  "monthlyPeriods.editInitialSaving.form.amount.desc":
+    "Enter the initial savings for this period (in {currency})",
+  "monthlyPeriods.editInitialSaving.toast.updatedTitle":
+    "Monthly budget updated",
+  "monthlyPeriods.editInitialSaving.toast.updatedDesc":
+    "Savings goal was updated successfully.",
 
   "monthlyPeriods.actions.view": "View monthly budget",
   "monthlyPeriods.actions.deactivate": "Deactivate budget",
@@ -201,7 +232,8 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.confirmDeactivate.title": "Deactivate monthly budget?",
   "monthlyPeriods.confirmDeactivate.confirm": "Yes, deactivate budget",
   "monthlyPeriods.confirmDeactivate.cancel": "Cancel",
-  "monthlyPeriods.confirmDeactivate.description": "This action cannot be undone.",
+  "monthlyPeriods.confirmDeactivate.description":
+    "This action cannot be undone.",
   "monthlyPeriods.confirmReactivate.title": "Reactivate monthly budget?",
   "monthlyPeriods.confirmReactivate.confirm": "Yes, reactivate budget",
   "monthlyPeriods.confirmReactivate.cancel": "Cancel",
@@ -209,23 +241,29 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.errorDeactivate": "Error deactivating monthly budget",
   "monthlyPeriods.errorReactivate": "Error reactivating monthly budget",
   "toast.monthlyPeriod.deactivated": "Monthly budget deactivated",
-  "toast.monthlyPeriod.deactivated.desc": "Monthly budget {month} was deactivated successfully.",
+  "toast.monthlyPeriod.deactivated.desc":
+    "Monthly budget {month} was deactivated successfully.",
   "toast.monthlyPeriod.reactivated": "Monthly budget reactivated",
-  "toast.monthlyPeriod.reactivated.desc": "Monthly budget {month} was reactivated successfully.",
+  "toast.monthlyPeriod.reactivated.desc":
+    "Monthly budget {month} was reactivated successfully.",
   "toast.monthlyPeriod.created": "Monthly budget created",
-  "toast.monthlyPeriod.created.desc": "Monthly budget was created successfully.",
+  "toast.monthlyPeriod.created.desc":
+    "Monthly budget was created successfully.",
   "toast.monthlyPeriod.updated": "Monthly budget updated",
-  "toast.monthlyPeriod.updated.desc": "Monthly budget was updated successfully.",
+  "toast.monthlyPeriod.updated.desc":
+    "Monthly budget was updated successfully.",
   "monthlyPeriods.errorCreate": "Error creating monthly budget",
   "monthlyPeriods.errorUpdate": "Error updating monthly budget",
 
   // Budgets dentro del período
   "monthlyPeriods.budgets.metaTitle": "Budgets - {month}",
   "monthlyPeriods.budgets.sectionTitle": "Budgets by Category",
-  "monthlyPeriods.budgets.sectionSubtitle": "Manage monthly budgets by category",
+  "monthlyPeriods.budgets.sectionSubtitle":
+    "Manage monthly budgets by category",
   "monthlyPeriods.budgets.actions.new": "New budget",
   "monthlyPeriods.budgets.listTitle": "Budget List",
-  "monthlyPeriods.budgets.listSubtitle": "View and manage all budgets for this monthly budget",
+  "monthlyPeriods.budgets.listSubtitle":
+    "View and manage all budgets for this monthly budget",
   "monthlyPeriods.budgets.errorLoad": "Error loading budgets",
   "monthlyPeriods.budgets.backToDetail": "Back to details",
   "monthlyPeriods.budgets.backToBudgets": "Back to budgets",
@@ -247,7 +285,8 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.confirmDeactivate.title": "Deactivate budget?",
   "monthlyPeriods.budgets.confirmDeactivate.confirm": "Yes, deactivate budget",
   "monthlyPeriods.budgets.confirmDeactivate.cancel": "Cancel",
-  "monthlyPeriods.budgets.confirmDeactivate.description": "This action cannot be undone.",
+  "monthlyPeriods.budgets.confirmDeactivate.description":
+    "This action cannot be undone.",
   "monthlyPeriods.budgets.confirmReactivate.title": "Reactivate budget?",
   "monthlyPeriods.budgets.confirmReactivate.confirm": "Yes, reactivate budget",
   "monthlyPeriods.budgets.confirmReactivate.cancel": "Cancel",
@@ -257,9 +296,11 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.errorDeactivate": "Error deactivating budget",
   "monthlyPeriods.budgets.errorReactivate": "Error reactivating budget",
   "toast.monthlyBudget.deactivated": "Budget deactivated",
-  "toast.monthlyBudget.deactivated.desc": "Budget for {category} was deactivated successfully.",
+  "toast.monthlyBudget.deactivated.desc":
+    "Budget for {category} was deactivated successfully.",
   "toast.monthlyBudget.reactivated": "Budget reactivated",
-  "toast.monthlyBudget.reactivated.desc": "Budget for {category} was reactivated successfully.",
+  "toast.monthlyBudget.reactivated.desc":
+    "Budget for {category} was reactivated successfully.",
   "toast.monthlyBudget.created": "Budget created",
   "toast.monthlyBudget.created.desc": "Budget was created successfully.",
   "toast.monthlyBudget.updated": "Budget updated",
@@ -270,14 +311,17 @@ export const EN_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.notFound": "Budget not found",
 
   "monthlyPeriods.budgets.form.sectionTitle": "Budget details",
-  "monthlyPeriods.budgets.form.sectionDescNew": "Enter the details for the new monthly budget",
-  "monthlyPeriods.budgets.form.sectionDescEdit": "Enter the monthly budget details",
+  "monthlyPeriods.budgets.form.sectionDescNew":
+    "Enter the details for the new monthly budget",
+  "monthlyPeriods.budgets.form.sectionDescEdit":
+    "Enter the monthly budget details",
   "monthlyPeriods.budgets.form.category.label": "Category",
   "monthlyPeriods.budgets.form.category.desc":
     "Select an expense category for the budget (expense categories only)",
   "monthlyPeriods.budgets.form.category.placeholder": "Select a category",
   "monthlyPeriods.budgets.form.budgeted.label": "Budgeted amount",
-  "monthlyPeriods.budgets.form.budgeted.desc": "Enter the budgeted amount (must be greater than 0)",
+  "monthlyPeriods.budgets.form.budgeted.desc":
+    "Enter the budgeted amount (must be greater than 0)",
 } as const
 
 export const PT_MONTHLY_PERIODS_MESSAGES = {
@@ -285,7 +329,8 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.subtitle": "Gerencie seus orçamentos mensais",
   "monthlyPeriods.actions.new": "Novo orçamento mensal",
   "monthlyPeriods.listTitle": "Lista de Orçamentos Mensais",
-  "monthlyPeriods.listSubtitle": "Veja e gerencie todos os seus orçamentos mensais",
+  "monthlyPeriods.listSubtitle":
+    "Veja e gerencie todos os seus orçamentos mensais",
   "monthlyPeriods.errorTitle": "Erro",
   "monthlyPeriods.errorLoad": "Erro ao carregar orçamentos mensais",
 
@@ -303,8 +348,10 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.newTitle": "Novo orçamento mensal",
 
   "monthlyPeriods.form.sectionTitle": "Dados gerais",
-  "monthlyPeriods.form.sectionDescNew": "Informe os dados gerais do novo orçamento mensal",
-  "monthlyPeriods.form.sectionDescEdit": "Informe os dados gerais do orçamento mensal",
+  "monthlyPeriods.form.sectionDescNew":
+    "Informe os dados gerais do novo orçamento mensal",
+  "monthlyPeriods.form.sectionDescEdit":
+    "Informe os dados gerais do orçamento mensal",
   "monthlyPeriods.form.year.label": "Ano",
   "monthlyPeriods.form.year.desc": "O ano deve estar entre 1900 e 9999",
   "monthlyPeriods.form.month.label": "Mês",
@@ -330,11 +377,14 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.editInitialSaving.title": "Editar poupança inicial - {month}",
   "monthlyPeriods.editInitialSaving.backToDetail": "Voltar para detalhes",
   "monthlyPeriods.editInitialSaving.form.title": "Poupança inicial",
-  "monthlyPeriods.editInitialSaving.form.subtitle": "Atualize a poupança inicial deste orçamento mensal",
+  "monthlyPeriods.editInitialSaving.form.subtitle":
+    "Atualize a poupança inicial deste orçamento mensal",
   "monthlyPeriods.editInitialSaving.form.amount.desc":
     "Informe a poupança inicial deste período (em {currency})",
-  "monthlyPeriods.editInitialSaving.toast.updatedTitle": "Orçamento mensal atualizado",
-  "monthlyPeriods.editInitialSaving.toast.updatedDesc": "A meta de poupança foi atualizada com sucesso.",
+  "monthlyPeriods.editInitialSaving.toast.updatedTitle":
+    "Orçamento mensal atualizado",
+  "monthlyPeriods.editInitialSaving.toast.updatedDesc":
+    "A meta de poupança foi atualizada com sucesso.",
 
   "monthlyPeriods.actions.view": "Ver orçamento mensal",
   "monthlyPeriods.actions.deactivate": "Desativar orçamento",
@@ -342,7 +392,8 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.confirmDeactivate.title": "Desativar orçamento mensal?",
   "monthlyPeriods.confirmDeactivate.confirm": "Sim, desativar orçamento",
   "monthlyPeriods.confirmDeactivate.cancel": "Cancelar",
-  "monthlyPeriods.confirmDeactivate.description": "Esta ação não pode ser desfeita.",
+  "monthlyPeriods.confirmDeactivate.description":
+    "Esta ação não pode ser desfeita.",
   "monthlyPeriods.confirmReactivate.title": "Reativar orçamento mensal?",
   "monthlyPeriods.confirmReactivate.confirm": "Sim, reativar orçamento",
   "monthlyPeriods.confirmReactivate.cancel": "Cancelar",
@@ -350,23 +401,29 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.errorDeactivate": "Erro ao desativar orçamento mensal",
   "monthlyPeriods.errorReactivate": "Erro ao reativar orçamento mensal",
   "toast.monthlyPeriod.deactivated": "Orçamento mensal desativado",
-  "toast.monthlyPeriod.deactivated.desc": "O orçamento mensal {month} foi desativado com sucesso.",
+  "toast.monthlyPeriod.deactivated.desc":
+    "O orçamento mensal {month} foi desativado com sucesso.",
   "toast.monthlyPeriod.reactivated": "Orçamento mensal reativado",
-  "toast.monthlyPeriod.reactivated.desc": "O orçamento mensal {month} foi reativado com sucesso.",
+  "toast.monthlyPeriod.reactivated.desc":
+    "O orçamento mensal {month} foi reativado com sucesso.",
   "toast.monthlyPeriod.created": "Orçamento mensal criado",
-  "toast.monthlyPeriod.created.desc": "O orçamento mensal foi criado com sucesso.",
+  "toast.monthlyPeriod.created.desc":
+    "O orçamento mensal foi criado com sucesso.",
   "toast.monthlyPeriod.updated": "Orçamento mensal atualizado",
-  "toast.monthlyPeriod.updated.desc": "O orçamento mensal foi atualizado com sucesso.",
+  "toast.monthlyPeriod.updated.desc":
+    "O orçamento mensal foi atualizado com sucesso.",
   "monthlyPeriods.errorCreate": "Erro ao criar orçamento mensal",
   "monthlyPeriods.errorUpdate": "Erro ao atualizar orçamento mensal",
 
   // Budgets dentro del período
   "monthlyPeriods.budgets.metaTitle": "Orçamentos - {month}",
   "monthlyPeriods.budgets.sectionTitle": "Orçamentos por Categoria",
-  "monthlyPeriods.budgets.sectionSubtitle": "Gerencie os orçamentos mensais por categoria",
+  "monthlyPeriods.budgets.sectionSubtitle":
+    "Gerencie os orçamentos mensais por categoria",
   "monthlyPeriods.budgets.actions.new": "Novo orçamento",
   "monthlyPeriods.budgets.listTitle": "Lista de Orçamentos",
-  "monthlyPeriods.budgets.listSubtitle": "Veja e gerencie todos os orçamentos deste orçamento mensal",
+  "monthlyPeriods.budgets.listSubtitle":
+    "Veja e gerencie todos os orçamentos deste orçamento mensal",
   "monthlyPeriods.budgets.errorLoad": "Erro ao carregar orçamentos",
   "monthlyPeriods.budgets.backToDetail": "Voltar para detalhes",
   "monthlyPeriods.budgets.backToBudgets": "Voltar para orçamentos",
@@ -386,9 +443,11 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.actions.deactivate": "Desativar orçamento",
   "monthlyPeriods.budgets.actions.reactivate": "Reativar orçamento",
   "monthlyPeriods.budgets.confirmDeactivate.title": "Desativar orçamento?",
-  "monthlyPeriods.budgets.confirmDeactivate.confirm": "Sim, desativar orçamento",
+  "monthlyPeriods.budgets.confirmDeactivate.confirm":
+    "Sim, desativar orçamento",
   "monthlyPeriods.budgets.confirmDeactivate.cancel": "Cancelar",
-  "monthlyPeriods.budgets.confirmDeactivate.description": "Esta ação não pode ser desfeita.",
+  "monthlyPeriods.budgets.confirmDeactivate.description":
+    "Esta ação não pode ser desfeita.",
   "monthlyPeriods.budgets.confirmReactivate.title": "Reativar orçamento?",
   "monthlyPeriods.budgets.confirmReactivate.confirm": "Sim, reativar orçamento",
   "monthlyPeriods.budgets.confirmReactivate.cancel": "Cancelar",
@@ -398,9 +457,11 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.errorDeactivate": "Erro ao desativar orçamento",
   "monthlyPeriods.budgets.errorReactivate": "Erro ao reativar orçamento",
   "toast.monthlyBudget.deactivated": "Orçamento desativado",
-  "toast.monthlyBudget.deactivated.desc": "O orçamento de {category} foi desativado com sucesso.",
+  "toast.monthlyBudget.deactivated.desc":
+    "O orçamento de {category} foi desativado com sucesso.",
   "toast.monthlyBudget.reactivated": "Orçamento reativado",
-  "toast.monthlyBudget.reactivated.desc": "O orçamento de {category} foi reativado com sucesso.",
+  "toast.monthlyBudget.reactivated.desc":
+    "O orçamento de {category} foi reativado com sucesso.",
   "toast.monthlyBudget.created": "Orçamento criado",
   "toast.monthlyBudget.created.desc": "O orçamento foi criado com sucesso.",
   "toast.monthlyBudget.updated": "Orçamento atualizado",
@@ -411,13 +472,15 @@ export const PT_MONTHLY_PERIODS_MESSAGES = {
   "monthlyPeriods.budgets.notFound": "Orçamento não encontrado",
 
   "monthlyPeriods.budgets.form.sectionTitle": "Dados do orçamento",
-  "monthlyPeriods.budgets.form.sectionDescNew": "Informe os dados do novo orçamento mensal",
-  "monthlyPeriods.budgets.form.sectionDescEdit": "Informe os dados do orçamento mensal",
+  "monthlyPeriods.budgets.form.sectionDescNew":
+    "Informe os dados do novo orçamento mensal",
+  "monthlyPeriods.budgets.form.sectionDescEdit":
+    "Informe os dados do orçamento mensal",
   "monthlyPeriods.budgets.form.category.label": "Categoria",
   "monthlyPeriods.budgets.form.category.desc":
     "Selecione uma categoria de despesas para o orçamento (somente despesas)",
   "monthlyPeriods.budgets.form.category.placeholder": "Selecione uma categoria",
   "monthlyPeriods.budgets.form.budgeted.label": "Valor orçado",
-  "monthlyPeriods.budgets.form.budgeted.desc": "Informe o valor orçado (deve ser maior que 0)",
+  "monthlyPeriods.budgets.form.budgeted.desc":
+    "Informe o valor orçado (deve ser maior que 0)",
 } as const
-

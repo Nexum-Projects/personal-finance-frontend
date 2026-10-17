@@ -32,4 +32,3 @@ export interface CategoryPageResponse {
   data: Category[]
   meta: CategoryPageMeta
 }
-

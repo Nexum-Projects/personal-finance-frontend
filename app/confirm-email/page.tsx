@@ -11,4 +11,3 @@ export default async function ConfirmEmailPage({ searchParams }: Props) {
 
   return <ConfirmEmailClient token={token} />
 }
-

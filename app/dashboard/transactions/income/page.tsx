@@ -6,7 +6,13 @@ import { findManyCategories } from "@/app/actions/categories"
 import { findManyAccounts } from "@/app/actions/accounts"
 import { parseSearchParams } from "@/utils/parsers/parse-search-params"
 import { TransactionsTable } from "../../expenses/components/transactions-table"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
@@ -40,18 +46,29 @@ export default async function TransactionsIncomePage(props: Props) {
 
   // Cargar categorías y cuentas para los filtros
   const [categoriesResult, accountsResult] = await Promise.all([
-    findManyCategories({ page: 1, limit: 5, categoryType: "INCOME", pagination: false }),
+    findManyCategories({
+      page: 1,
+      limit: 5,
+      categoryType: "INCOME",
+      pagination: false,
+    }),
     findManyAccounts({ page: 1, limit: 5, pagination: false }),
   ])
 
-  const categories = categoriesResult.status === "success" ? categoriesResult.data.data : []
-  const accounts = accountsResult.status === "success" ? accountsResult.data.data : []
+  const categories =
+    categoriesResult.status === "success" ? categoriesResult.data.data : []
+  const accounts =
+    accountsResult.status === "success" ? accountsResult.data.data : []
 
   const result = await findManyTransactions({
     page: parsedParams.page,
     limit: parsedParams.limit,
     order: parsedParams.order,
-    orderBy: parsedParams.orderBy as "createdAt" | "updatedAt" | "transactionDate" | "amountCents",
+    orderBy: parsedParams.orderBy as
+      | "createdAt"
+      | "updatedAt"
+      | "transactionDate"
+      | "amountCents",
     search: parsedParams.search,
     categoryType: "INCOME",
     startDate: searchParams.startDate,
@@ -122,9 +139,9 @@ export default async function TransactionsIncomePage(props: Props) {
         </CardHeader>
         <CardContent>
           <Suspense fallback={<div>{t("common.loading")}</div>}>
-            <TransactionsTable 
-              transactions={transactions} 
-              meta={meta} 
+            <TransactionsTable
+              transactions={transactions}
+              meta={meta}
               categoryType="INCOME"
               basePath="/dashboard/transactions/income"
               categories={categories}
@@ -136,4 +153,3 @@ export default async function TransactionsIncomePage(props: Props) {
     </PageContainer>
   )
 }
-

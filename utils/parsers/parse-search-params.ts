@@ -41,7 +41,8 @@ export function parseSearchParams(
   const orderBy = searchParams.orderBy || defaults.orderBy || "createdAt"
   const search = searchParams.search || defaults.search || ""
   const categoryType =
-    searchParams.categoryType === "INCOME" || searchParams.categoryType === "EXPENSE"
+    searchParams.categoryType === "INCOME" ||
+    searchParams.categoryType === "EXPENSE"
       ? searchParams.categoryType
       : undefined
 
@@ -54,4 +55,3 @@ export function parseSearchParams(
     categoryType,
   }
 }
-
