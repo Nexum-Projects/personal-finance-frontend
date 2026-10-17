@@ -20,28 +20,7 @@ import { useUserPreferences } from "@/components/preferences/user-preferences-pr
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
 import { useTableSearchParams } from "@/hooks/use-table-search-params"
-
-// Formateo de fecha simple sin dependencias externas
-function formatDate(
-  dateString: string,
-  locale: string,
-  timeZone: string
-): string {
-  try {
-    const date = new Date(dateString)
-    const formatter = new Intl.DateTimeFormat(locale, {
-      timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-    return formatter.format(date)
-  } catch {
-    return dateString
-  }
-}
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 
 type SortField = "name" | "accountType" | "currentBalanceCents" | "updatedAt"
 
@@ -162,7 +141,7 @@ export function AccountsTable({
                     )}
                   </TableCell>
                   <TableCell>
-                    {formatDate(account.updatedAt, locale, timeZoneIana)}
+                    {formatDateTime(account.updatedAt, locale, timeZoneIana)}
                   </TableCell>
                   <TableCell className="text-center">
                     <AccountsRowActions account={account} />

@@ -30,6 +30,7 @@ import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
 import { useTableSearchParams } from "@/hooks/use-table-search-params"
 import { AdminUsersRowActions } from "./admin-users-row-actions"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 
 const BASE_PATH = "/dashboard/admin/users"
 
@@ -70,18 +71,6 @@ export function AdminUsersTable({
     Number.parseInt(searchParams.get("limit") || String(meta.limit), 10) ||
     meta.limit
 
-  const formatDateTime = (iso: string) => {
-    try {
-      return new Intl.DateTimeFormat(locale, {
-        timeZone: timeZoneIana,
-        dateStyle: "short",
-        timeStyle: "short",
-      }).format(new Date(iso))
-    } catch {
-      return iso
-    }
-  }
-
   const renderEmailVerified = (user: User) => {
     const raw = user.emailVerifiedAt
     if (raw == null || raw === "") {
@@ -93,7 +82,7 @@ export function AdminUsersTable({
     }
     return (
       <span className="text-sm tabular-nums text-muted-foreground">
-        {formatDateTime(raw)}
+        {formatDateTime(raw, locale, timeZoneIana)}
       </span>
     )
   }
@@ -257,10 +246,10 @@ export function AdminUsersTable({
                     </span>
                   </TableCell>
                   <TableCell className="text-sm tabular-nums text-muted-foreground">
-                    {formatDateTime(user.createdAt)}
+                    {formatDateTime(user.createdAt, locale, timeZoneIana)}
                   </TableCell>
                   <TableCell className="text-sm tabular-nums text-muted-foreground">
-                    {formatDateTime(user.updatedAt)}
+                    {formatDateTime(user.updatedAt, locale, timeZoneIana)}
                   </TableCell>
                   <TableCell className="text-right align-middle">
                     <AdminUsersRowActions user={user} />

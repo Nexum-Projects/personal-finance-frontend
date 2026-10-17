@@ -18,6 +18,7 @@ import { useUserPreferences } from "@/components/preferences/user-preferences-pr
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
 import { useTableSearchParams } from "@/hooks/use-table-search-params"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 
 type SortField = "budgetedCents" | "updatedAt"
 
@@ -51,22 +52,6 @@ export function MonthlyBudgetsTable({
   } = useTableSearchParams<SortField>(
     `/dashboard/monthly-periods/${monthlyPeriodId}/budgets`
   )
-
-  const formatDateTime = (dateString: string): string => {
-    try {
-      const d = new Date(dateString)
-      return new Intl.DateTimeFormat(locale, {
-        timeZone: timeZoneIana,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }).format(d)
-    } catch {
-      return dateString
-    }
-  }
 
   return (
     <div className="space-y-4">
@@ -151,7 +136,9 @@ export function MonthlyBudgetsTable({
                         </span>
                       )}
                     </TableCell>
-                    <TableCell>{formatDateTime(budget.updatedAt)}</TableCell>
+                    <TableCell>
+                      {formatDateTime(budget.updatedAt, locale, timeZoneIana)}
+                    </TableCell>
                     <TableCell className="text-center">
                       <MonthlyBudgetsRowActions
                         monthlyPeriodId={monthlyPeriodId}

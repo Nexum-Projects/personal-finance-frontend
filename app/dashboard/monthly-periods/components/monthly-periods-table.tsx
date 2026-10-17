@@ -18,6 +18,7 @@ import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
 import { useTableSearchParams } from "@/hooks/use-table-search-params"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
+import { formatDateTime } from "@/utils/helpers/format-date-time"
 
 type SortField = "year" | "month" | "updatedAt"
 
@@ -46,22 +47,6 @@ export function MonthlyPeriodsTable({
     handlePageChange,
     getSortIcon,
   } = useTableSearchParams<SortField>("/dashboard/monthly-periods")
-
-  const formatDateTime = (dateString: string): string => {
-    try {
-      const d = new Date(dateString)
-      return new Intl.DateTimeFormat(locale, {
-        timeZone: timeZoneIana,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }).format(d)
-    } catch {
-      return dateString
-    }
-  }
 
   return (
     <div className="space-y-4">
@@ -142,7 +127,9 @@ export function MonthlyPeriodsTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell>{formatDateTime(period.updatedAt)}</TableCell>
+                  <TableCell>
+                    {formatDateTime(period.updatedAt, locale, timeZoneIana)}
+                  </TableCell>
                   <TableCell className="text-center">
                     <MonthlyPeriodsRowActions monthlyPeriod={period} />
                   </TableCell>

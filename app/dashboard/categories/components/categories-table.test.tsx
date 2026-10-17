@@ -31,7 +31,7 @@ function category(id: string): Category {
     name: `categoria-${id}`,
     categoryType: "EXPENSE",
     createdAt: "",
-    updatedAt: "2026-10-16T12:30:00",
+    updatedAt: "2026-10-16T18:30:00Z",
     isActive: true,
   }
 }
@@ -53,7 +53,7 @@ describe("CategoriesTable", () => {
     renderTable([category("1")])
 
     expect(screen.getByText("categoria-1")).toBeTruthy()
-    expect(screen.getByText("16/10/2026 12:30")).toBeTruthy()
+    expect(screen.getByText("16/10/2026, 12:30")).toBeTruthy()
     expect(screen.getByText("Página 3 de 50")).toBeTruthy()
     expect(screen.queryByRole("button", { name: "50" })).toBeNull()
   })
