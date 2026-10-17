@@ -56,4 +56,20 @@ describe("useExportAction.loadBeforePrint", () => {
     expect(result.current.promiseResolveRef.current).toBeNull()
     expect(toast.error).toHaveBeenCalledWith(ES_MESSAGES["export.loadError"])
   })
+
+  it("cancela la exportación y avisa si no hay datos", async () => {
+    const { result } = renderHook(useExportWithData, { wrapper })
+    const setData = vi.fn()
+
+    await act(async () => {
+      await expect(
+        result.current.loadBeforePrint(async () => [], setData)
+      ).rejects.toThrow()
+    })
+
+    expect(setData).not.toHaveBeenCalled()
+    expect(result.current.isExporting).toBeNull()
+    expect(result.current.promiseResolveRef.current).toBeNull()
+    expect(toast.error).toHaveBeenCalledWith(ES_MESSAGES["export.noData"])
+  })
 })

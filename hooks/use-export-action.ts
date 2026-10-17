@@ -8,6 +8,9 @@ export type ExportType = "PDF" | "XLSX"
 
 type SortDirection = "ASC" | "DESC"
 
+// El efecto que resuelve la carga solo dispara con filas: sin ellas la exportación quedaría colgada.
+const NO_DATA_ERROR = new Error("No data to export")
+
 type Params<K extends string, T> = {
   data: T[]
   pageSize: number
@@ -39,12 +42,13 @@ export function useExportAction<K extends string, T>({
   }, [])
 
   // `onBeforePrint` de react-to-print: carga los datos y espera a que se rendericen.
-  // Si la carga falla, rechaza para cancelar la impresión y limpia el estado.
+  // Si la carga falla o no trae filas, rechaza para cancelar la impresión y limpia el estado.
   const loadBeforePrint = useCallback(
     async (fetchData: () => Promise<T[]>, setData: (data: T[]) => void) => {
       setIsExporting("PDF")
       try {
         const fetched = await fetchData()
+        if (fetched.length === 0) throw NO_DATA_ERROR
         await new Promise<void>((resolve) => {
           promiseResolveRef.current = resolve
           setData(fetched)
@@ -52,7 +56,9 @@ export function useExportAction<K extends string, T>({
       } catch (error) {
         promiseResolveRef.current = null
         setIsExporting(null)
-        toast.error(t("export.loadError"))
+        toast.error(
+          t(error === NO_DATA_ERROR ? "export.noData" : "export.loadError")
+        )
         throw error
       }
     },
