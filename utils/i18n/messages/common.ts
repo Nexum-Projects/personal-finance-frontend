@@ -11,6 +11,7 @@ export const ES_COMMON_MESSAGES = {
   "nav.profile.edit": "Editar usuario",
   "nav.profile.changePassword": "Cambiar contraseña",
   "nav.logout": "Cerrar sesión",
+  "nav.menu": "Menú",
 
   // Common
   "common.user": "Usuario",
@@ -85,6 +86,7 @@ export const EN_COMMON_MESSAGES = {
   "nav.profile.edit": "Edit user",
   "nav.profile.changePassword": "Change password",
   "nav.logout": "Sign out",
+  "nav.menu": "Menu",
 
   // Common
   "common.user": "User",
@@ -160,6 +162,7 @@ export const PT_COMMON_MESSAGES = {
   "nav.profile.edit": "Editar usuário",
   "nav.profile.changePassword": "Alterar senha",
   "nav.logout": "Sair",
+  "nav.menu": "Menu",
 
   // Common
   "common.user": "Usuário",
