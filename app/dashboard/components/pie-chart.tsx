@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from "recharts"
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts"
 import type { CategoryBreakdown } from "@/app/actions/analytics/types"
 import { formatAmount } from "@/utils/helpers/format-amount"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
@@ -35,6 +28,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
   const { t } = useI18n()
   // Formatear datos para la gráfica
   const chartData = data.map((item) => ({
+    id: item.categoryId,
     name: item.categoryName,
     value: item.totalAmountCents / 100,
     percentage: item.percentage,
@@ -86,10 +80,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
                   dataKey="value"
                 >
                   {chartData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
+                    <Cell key={entry.id} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip content={<CustomTooltip />} />
@@ -105,7 +96,7 @@ export function CategoryPieChart({ data, title }: PieChartProps) {
                   const color = COLORS[index % COLORS.length]
                   return (
                     <div
-                      key={index}
+                      key={entry.id}
                       className="flex items-center gap-2 text-sm"
                       style={{ color }}
                     >
