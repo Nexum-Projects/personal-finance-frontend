@@ -73,6 +73,15 @@ export const ES_DASHBOARD_MESSAGES = {
     "Presupuesto, gastado y restante por categoría para el presupuesto mensual seleccionado.",
   "dashboard.monthlyAnalytics.dialog.empty":
     "No hay presupuestos para este presupuesto mensual",
+  "dashboard.errors.summary": "Error al cargar resumen",
+  "dashboard.errors.expenseCategories": "Error al cargar categorías de gastos",
+  "dashboard.errors.incomeCategories": "Error al cargar categorías de ingresos",
+  "dashboard.errors.trends": "Error al cargar tendencias",
+  "dashboard.errors.accountBalance": "Error al cargar balance por cuenta",
+  "dashboard.errors.load": "Error al cargar datos del dashboard",
+  "dashboard.errors.monthlyPeriods": "Error al cargar presupuestos mensuales",
+  "dashboard.errors.budgets": "Error al cargar presupuestos",
+  "dashboard.errors.unknown": "Error desconocido",
 } as const
 
 export const EN_DASHBOARD_MESSAGES = {
@@ -146,6 +155,15 @@ export const EN_DASHBOARD_MESSAGES = {
     "Budgeted, spent and remaining by category for the selected monthly budget.",
   "dashboard.monthlyAnalytics.dialog.empty":
     "No budgets for this monthly budget",
+  "dashboard.errors.summary": "Error loading summary",
+  "dashboard.errors.expenseCategories": "Error loading expense categories",
+  "dashboard.errors.incomeCategories": "Error loading income categories",
+  "dashboard.errors.trends": "Error loading trends",
+  "dashboard.errors.accountBalance": "Error loading balance by account",
+  "dashboard.errors.load": "Error loading dashboard data",
+  "dashboard.errors.monthlyPeriods": "Error loading monthly budgets",
+  "dashboard.errors.budgets": "Error loading budgets",
+  "dashboard.errors.unknown": "Unknown error",
 } as const
 
 export const PT_DASHBOARD_MESSAGES = {
@@ -220,4 +238,15 @@ export const PT_DASHBOARD_MESSAGES = {
     "Orçado, gasto e restante por categoria para o orçamento mensal selecionado.",
   "dashboard.monthlyAnalytics.dialog.empty":
     "Sem orçamentos para este orçamento mensal",
+  "dashboard.errors.summary": "Erro ao carregar o resumo",
+  "dashboard.errors.expenseCategories":
+    "Erro ao carregar as categorias de despesas",
+  "dashboard.errors.incomeCategories":
+    "Erro ao carregar as categorias de receitas",
+  "dashboard.errors.trends": "Erro ao carregar as tendências",
+  "dashboard.errors.accountBalance": "Erro ao carregar o saldo por conta",
+  "dashboard.errors.load": "Erro ao carregar os dados do dashboard",
+  "dashboard.errors.monthlyPeriods": "Erro ao carregar os orçamentos mensais",
+  "dashboard.errors.budgets": "Erro ao carregar os orçamentos",
+  "dashboard.errors.unknown": "Erro desconhecido",
 } as const

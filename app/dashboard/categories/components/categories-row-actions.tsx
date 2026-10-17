@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { toast } from "sonner"
 import { removeCategory } from "@/app/actions/categories"
 import { DataTableRowActions } from "@/components/dashboard/data-table-row-actions"
@@ -22,13 +21,9 @@ export function CategoriesRowActions({ category }: Props) {
 
   const handleRemove = () => {
     confirmationDialog({
-      description: (
-        <>
-          ¿Estás seguro que deseas desactivar la categoría{" "}
-          <span className="font-medium text-foreground">{category.name}</span>?
-          Esta acción no se puede deshacer.
-        </>
-      ),
+      description: t("categories.confirmDeactivate.desc", {
+        name: category.name,
+      }),
       onConfirm: onRemove,
       actions: {
         confirm: t("categories.confirmDeactivate.confirm"),

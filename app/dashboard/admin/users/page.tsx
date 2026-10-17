@@ -4,7 +4,6 @@ import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,

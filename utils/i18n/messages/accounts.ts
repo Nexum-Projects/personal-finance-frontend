@@ -43,6 +43,16 @@ export const ES_ACCOUNTS_MESSAGES = {
   "accounts.confirmDeactivate.title": "¿Desactivar cuenta?",
   "accounts.confirmDeactivate.confirm": "Sí, desactivar cuenta",
   "accounts.confirmDeactivate.cancel": "Cancelar",
+  "accounts.confirmDeactivate.desc":
+    "¿Estás seguro que deseas desactivar la cuenta {name}? Esta acción no se puede deshacer.",
+  "accounts.editTitle": "Editar {name}",
+  "toast.account.created": "Cuenta creada",
+  "toast.account.created.desc": "La cuenta {name} ha sido creada exitosamente.",
+  "toast.account.updated": "Cuenta actualizada",
+  "toast.account.updated.desc": "La cuenta ha sido actualizada exitosamente.",
+  "toast.account.deactivated": "Cuenta desactivada",
+  "toast.account.deactivated.desc":
+    "La cuenta {name} ha sido desactivada exitosamente.",
 } as const
 
 export const EN_ACCOUNTS_MESSAGES = {
@@ -90,6 +100,16 @@ export const EN_ACCOUNTS_MESSAGES = {
   "accounts.confirmDeactivate.title": "Deactivate account?",
   "accounts.confirmDeactivate.confirm": "Yes, deactivate account",
   "accounts.confirmDeactivate.cancel": "Cancel",
+  "accounts.confirmDeactivate.desc":
+    "Are you sure you want to deactivate the account {name}? This action cannot be undone.",
+  "accounts.editTitle": "Edit {name}",
+  "toast.account.created": "Account created",
+  "toast.account.created.desc": "Account {name} was created successfully.",
+  "toast.account.updated": "Account updated",
+  "toast.account.updated.desc": "The account was updated successfully.",
+  "toast.account.deactivated": "Account deactivated",
+  "toast.account.deactivated.desc":
+    "Account {name} was deactivated successfully.",
 } as const
 
 export const PT_ACCOUNTS_MESSAGES = {
@@ -136,4 +156,14 @@ export const PT_ACCOUNTS_MESSAGES = {
   "accounts.confirmDeactivate.title": "Desativar conta?",
   "accounts.confirmDeactivate.confirm": "Sim, desativar conta",
   "accounts.confirmDeactivate.cancel": "Cancelar",
+  "accounts.confirmDeactivate.desc":
+    "Tem certeza de que deseja desativar a conta {name}? Esta ação não pode ser desfeita.",
+  "accounts.editTitle": "Editar {name}",
+  "toast.account.created": "Conta criada",
+  "toast.account.created.desc": "A conta {name} foi criada com sucesso.",
+  "toast.account.updated": "Conta atualizada",
+  "toast.account.updated.desc": "A conta foi atualizada com sucesso.",
+  "toast.account.deactivated": "Conta desativada",
+  "toast.account.deactivated.desc":
+    "A conta {name} foi desativada com sucesso.",
 } as const

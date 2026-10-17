@@ -3,11 +3,7 @@
 import { actionError } from "@/app/actions/helpers/action-error"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
-import type {
-  Category,
-  CategoryPageResponse,
-  CategorySearchParams,
-} from "./types"
+import type { CategoryPageResponse, CategorySearchParams } from "./types"
 
 export default async function findManyCategories(
   params: CategorySearchParams

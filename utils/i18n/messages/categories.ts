@@ -18,6 +18,8 @@ export const ES_CATEGORIES_MESSAGES = {
   "categories.confirmDeactivate.title": "¿Desactivar categoría?",
   "categories.confirmDeactivate.confirm": "Sí, desactivar categoría",
   "categories.confirmDeactivate.cancel": "Cancelar",
+  "categories.confirmDeactivate.desc":
+    "¿Estás seguro que deseas desactivar la categoría {name}? Esta acción no se puede deshacer.",
   "categories.backToList": "Regresar a categorías",
   "categories.newTitle": "Nueva categoría",
   "categories.editTitle": "Editar {name}",
@@ -78,6 +80,8 @@ export const EN_CATEGORIES_MESSAGES = {
   "categories.confirmDeactivate.title": "Deactivate category?",
   "categories.confirmDeactivate.confirm": "Yes, deactivate category",
   "categories.confirmDeactivate.cancel": "Cancel",
+  "categories.confirmDeactivate.desc":
+    "Are you sure you want to deactivate the category {name}? This action cannot be undone.",
   "categories.backToList": "Back to categories",
   "categories.newTitle": "New category",
   "categories.editTitle": "Edit {name}",
@@ -136,6 +140,8 @@ export const PT_CATEGORIES_MESSAGES = {
   "categories.confirmDeactivate.title": "Desativar categoria?",
   "categories.confirmDeactivate.confirm": "Sim, desativar categoria",
   "categories.confirmDeactivate.cancel": "Cancelar",
+  "categories.confirmDeactivate.desc":
+    "Tem certeza de que deseja desativar a categoria {name}? Esta ação não pode ser desfeita.",
   "categories.backToList": "Voltar para categorias",
   "categories.newTitle": "Nova categoria",
   "categories.editTitle": "Editar {name}",

@@ -88,7 +88,7 @@ export function MonthlyPeriodsAnalyticsTable({
         await getMonthlyBudgetsAnalyticsByMonthlyPeriod(monthlyPeriodId)
       if (result.status === "error") {
         setBudgetsError(
-          result.errors[0]?.message || "Error al cargar presupuestos"
+          result.errors[0]?.message || t("dashboard.errors.budgets")
         )
         return
       }

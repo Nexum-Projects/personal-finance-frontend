@@ -3,7 +3,7 @@
 import { actionError } from "@/app/actions/helpers/action-error"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
-import type { Account, AccountPageResponse, AccountSearchParams } from "./types"
+import type { AccountPageResponse, AccountSearchParams } from "./types"
 
 export default async function findManyAccounts(
   params?: AccountSearchParams
