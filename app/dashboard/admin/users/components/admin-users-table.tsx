@@ -20,11 +20,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { AdminUsersOrderBy, User, UserRole } from "@/app/actions/users/types"
+import type {
+  AdminUsersOrderBy,
+  User,
+  UserRole,
+} from "@/app/actions/users/types"
 import { humanizeRole } from "@/utils/helpers/humanize-role"
 import { cn } from "@/lib/utils"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import { TablePagination } from "@/components/display/table-pagination"
 import { AdminUsersRowActions } from "./admin-users-row-actions"
 
 const BASE_PATH = "/dashboard/admin/users"
@@ -41,7 +46,10 @@ interface AdminUsersTableProps {
   }
 }
 
-export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
+export function AdminUsersTable({
+  users,
+  meta,
+}: Readonly<AdminUsersTableProps>) {
   const { timeZoneIana, locale } = useUserPreferences()
   const { t, language } = useI18n()
   const router = useRouter()
@@ -51,8 +59,12 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
   const currentPage = parseInt(searchParams.get("page") || "1", 10)
   const currentSearch = searchParams.get("search") || ""
   const currentOrderBy = (searchParams.get("orderBy") || "") as SortField | ""
-  const currentOrder = (searchParams.get("order") || "ASC").toUpperCase() as "ASC" | "DESC"
-  const currentLimit = parseInt(searchParams.get("limit") || String(meta.limit), 10) || meta.limit
+  const currentOrder = (searchParams.get("order") || "ASC").toUpperCase() as
+    | "ASC"
+    | "DESC"
+  const currentLimit =
+    Number.parseInt(searchParams.get("limit") || String(meta.limit), 10) ||
+    meta.limit
 
   const [search, setSearch] = useState(currentSearch)
 
@@ -72,11 +84,15 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
     const raw = user.emailVerifiedAt
     if (raw == null || raw === "") {
       return (
-        <span className="text-muted-foreground">{t("admin.users.emailNotVerified")}</span>
+        <span className="text-muted-foreground">
+          {t("admin.users.emailNotVerified")}
+        </span>
       )
     }
     return (
-      <span className="text-muted-foreground text-sm tabular-nums">{formatDateTime(raw)}</span>
+      <span className="text-sm tabular-nums text-muted-foreground">
+        {formatDateTime(raw)}
+      </span>
     )
   }
 
@@ -161,7 +177,7 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
           />
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground whitespace-nowrap">
+          <span className="whitespace-nowrap text-sm text-muted-foreground">
             {t("admin.users.limit")}
           </span>
           <Select
@@ -256,13 +272,18 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
                   {getSortIcon("updatedAt")}
                 </Button>
               </TableHead>
-              <TableHead className="text-right w-[140px]">{t("admin.users.table.actions")}</TableHead>
+              <TableHead className="w-[140px] text-right">
+                {t("admin.users.table.actions")}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="h-24 text-center text-muted-foreground">
+                <TableCell
+                  colSpan={8}
+                  className="h-24 text-center text-muted-foreground"
+                >
                   {t("admin.users.table.empty")}
                 </TableCell>
               </TableRow>
@@ -272,23 +293,25 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
                   <TableCell className="font-medium">{user.username}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{renderEmailVerified(user)}</TableCell>
-                  <TableCell>{humanizeRole(safeRole(user.role), language)}</TableCell>
+                  <TableCell>
+                    {humanizeRole(safeRole(user.role), language)}
+                  </TableCell>
                   <TableCell>
                     <span
                       className={cn(
                         "inline-flex rounded-full px-2 py-0.5 text-xs font-medium",
                         user.isActive
                           ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-muted text-muted-foreground",
+                          : "bg-muted text-muted-foreground"
                       )}
                     >
                       {user.isActive ? "✓" : "—"}
                     </span>
                   </TableCell>
-                  <TableCell className="text-muted-foreground text-sm tabular-nums">
+                  <TableCell className="text-sm tabular-nums text-muted-foreground">
                     {formatDateTime(user.createdAt)}
                   </TableCell>
-                  <TableCell className="text-muted-foreground text-sm tabular-nums">
+                  <TableCell className="text-sm tabular-nums text-muted-foreground">
                     {formatDateTime(user.updatedAt)}
                   </TableCell>
                   <TableCell className="text-right align-middle">
@@ -301,47 +324,16 @@ export function AdminUsersTable({ users, meta }: AdminUsersTableProps) {
         </Table>
       </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="text-sm text-muted-foreground">
-          {t("pagination.showing", {
-            from: users.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
-            to: Math.min(currentPage * meta.limit, meta.totalObjects),
-            total: meta.totalObjects,
-            entity: t("admin.users.entity"),
-          })}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage <= 1 || isPending}
-          >
-            {t("pagination.prev")}
-          </Button>
-          <div className="flex flex-wrap items-center gap-1">
-            {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map((page) => (
-              <Button
-                key={page}
-                variant={currentPage === page ? "default" : "outline"}
-                size="sm"
-                onClick={() => handlePageChange(page)}
-                disabled={isPending}
-              >
-                {page}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= meta.totalPages || isPending || meta.totalPages === 0}
-          >
-            {t("pagination.next")}
-          </Button>
-        </div>
-      </div>
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={meta.totalPages}
+        limit={meta.limit}
+        totalObjects={meta.totalObjects}
+        itemCount={users.length}
+        entity={t("admin.users.entity")}
+        disabled={isPending}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
