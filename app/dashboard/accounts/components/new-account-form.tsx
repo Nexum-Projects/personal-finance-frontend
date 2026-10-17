@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import { createAccount } from "@/app/actions/accounts"
 import { AccountForm } from "./account-form"
 import type { AccountFormValues } from "@/app/actions/accounts/schema"
@@ -16,6 +17,7 @@ type Props = {
 export function NewAccountForm({ backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: AccountFormValues) => {
     setIsSubmitting(true)
@@ -40,16 +42,10 @@ export function NewAccountForm({ backToHref }: Props) {
         return
       }
 
-      toast.success("Cuenta creada", {
-        description: (
-          <>
-            La cuenta{" "}
-            <span className="font-medium text-foreground">
-              {result.data.name}
-            </span>{" "}
-            ha sido creada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.account.created"), {
+        description: t("toast.account.created.desc", {
+          name: result.data.name,
+        }),
       })
 
       router.push(backToHref)

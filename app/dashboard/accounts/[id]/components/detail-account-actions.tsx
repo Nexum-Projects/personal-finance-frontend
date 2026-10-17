@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import { Edit, Trash2 } from "lucide-react"
 import { removeAccount } from "@/app/actions/accounts"
 import { PageHeaderActions } from "@/components/display/page-header-actions"
@@ -19,22 +20,17 @@ export function DetailAccountActions({ account }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { confirmationDialog } = useConfirmationDialogStore()
   const router = useRouter()
+  const { t } = useI18n()
 
   const handleDeactivate = () => {
     confirmationDialog({
-      description: (
-        <>
-          ¿Estás seguro que deseas desactivar la cuenta{" "}
-          <span className="font-medium text-foreground">{account.name}</span>?
-          Esta acción no se puede deshacer.
-        </>
-      ),
+      description: t("accounts.confirmDeactivate.desc", { name: account.name }),
       onConfirm: onDeactivate,
       actions: {
-        confirm: "Sí, desactivar cuenta",
-        cancel: "Cancelar",
+        confirm: t("accounts.confirmDeactivate.confirm"),
+        cancel: t("accounts.confirmDeactivate.cancel"),
       },
-      title: "¿Desactivar cuenta?",
+      title: t("accounts.confirmDeactivate.title"),
     })
   }
 
@@ -61,14 +57,10 @@ export function DetailAccountActions({ account }: Props) {
         return
       }
 
-      toast.success("Cuenta desactivada", {
-        description: (
-          <>
-            La cuenta{" "}
-            <span className="font-medium text-foreground">{account.name}</span>{" "}
-            ha sido desactivada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.account.deactivated"), {
+        description: t("toast.account.deactivated.desc", {
+          name: account.name,
+        }),
       })
 
       router.push("/dashboard/accounts")
@@ -90,14 +82,14 @@ export function DetailAccountActions({ account }: Props) {
         edit: {
           icon: Edit,
           isLoading: loading,
-          label: "Editar cuenta",
+          label: t("accounts.actions.edit"),
           type: "link",
           href: `/dashboard/accounts/${account.id}/edit`,
         },
         deactivate: {
           icon: Trash2,
           isLoading: loading,
-          label: "Desactivar cuenta",
+          label: t("accounts.actions.deactivate"),
           type: "button",
           variant: "destructive",
           onClick: handleDeactivate,
