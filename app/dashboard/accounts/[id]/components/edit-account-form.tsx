@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import { updateAccount } from "@/app/actions/accounts"
 import { AccountForm } from "../../components/account-form"
 import type { AccountFormValues } from "@/app/actions/accounts/schema"
@@ -18,6 +19,7 @@ type Props = {
 export function EditAccountForm({ account, backToHref }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
+  const { t } = useI18n()
 
   const onSubmit = async (formValues: AccountFormValues) => {
     setIsSubmitting(true)
@@ -42,8 +44,8 @@ export function EditAccountForm({ account, backToHref }: Props) {
         return
       }
 
-      toast.success("Cuenta actualizada", {
-        description: "La cuenta ha sido actualizada exitosamente",
+      toast.success(t("toast.account.updated"), {
+        description: t("toast.account.updated.desc"),
       })
 
       router.push("/dashboard/accounts")

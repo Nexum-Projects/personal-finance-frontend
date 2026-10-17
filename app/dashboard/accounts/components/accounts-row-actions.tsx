@@ -21,13 +21,7 @@ export function AccountsRowActions({ account }: Props) {
 
   const handleRemove = () => {
     confirmationDialog({
-      description: (
-        <>
-          ¿Estás seguro que deseas desactivar la cuenta{" "}
-          <span className="font-medium text-foreground">{account.name}</span>?
-          Esta acción no se puede deshacer.
-        </>
-      ),
+      description: t("accounts.confirmDeactivate.desc", { name: account.name }),
       onConfirm: onRemove,
       actions: {
         confirm: t("accounts.confirmDeactivate.confirm"),
@@ -56,14 +50,10 @@ export function AccountsRowActions({ account }: Props) {
         return
       }
 
-      toast.success("Cuenta desactivada", {
-        description: (
-          <>
-            La cuenta{" "}
-            <span className="font-medium text-foreground">{account.name}</span>{" "}
-            ha sido desactivada exitosamente.
-          </>
-        ),
+      toast.success(t("toast.account.deactivated"), {
+        description: t("toast.account.deactivated.desc", {
+          name: account.name,
+        }),
       })
       router.refresh()
     } catch (error) {

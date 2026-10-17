@@ -24,13 +24,9 @@ export function DetailCategoryActions({ category }: Props) {
 
   const handleDeactivate = () => {
     confirmationDialog({
-      description: (
-        <>
-          ¿Estás seguro que deseas desactivar la categoría{" "}
-          <span className="font-medium text-foreground">{category.name}</span>?
-          Esta acción no se puede deshacer.
-        </>
-      ),
+      description: t("categories.confirmDeactivate.desc", {
+        name: category.name,
+      }),
       onConfirm: onDeactivate,
       actions: {
         confirm: t("categories.confirmDeactivate.confirm"),

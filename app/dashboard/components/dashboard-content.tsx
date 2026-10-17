@@ -152,7 +152,7 @@ export function DashboardContent({
           const errorMessage =
             firstError?.title ||
             firstError?.message ||
-            "Error al cargar resumen"
+            t("dashboard.errors.summary")
           console.error(
             "Error al cargar resumen:",
             JSON.stringify(summaryResult.errors, null, 2)
@@ -169,7 +169,7 @@ export function DashboardContent({
           const errorMessage =
             firstError?.title ||
             firstError?.message ||
-            "Error al cargar categorías de gastos"
+            t("dashboard.errors.expenseCategories")
           console.error(
             "Error al cargar categorías de gastos:",
             JSON.stringify(expenseResult.errors, null, 2)
@@ -186,7 +186,7 @@ export function DashboardContent({
           const errorMessage =
             firstError?.title ||
             firstError?.message ||
-            "Error al cargar categorías de ingresos"
+            t("dashboard.errors.incomeCategories")
           console.error(
             "Error al cargar categorías de ingresos:",
             JSON.stringify(incomeResult.errors, null, 2)
@@ -203,7 +203,7 @@ export function DashboardContent({
           const errorMessage =
             firstError?.title ||
             firstError?.message ||
-            "Error al cargar tendencias"
+            t("dashboard.errors.trends")
           console.error(
             "Error al cargar tendencias:",
             JSON.stringify(trendsResult.errors, null, 2)
@@ -220,7 +220,7 @@ export function DashboardContent({
           const errorMessage =
             firstError?.title ||
             firstError?.message ||
-            "Error al cargar balance por cuenta"
+            t("dashboard.errors.accountBalance")
           console.error(
             "Error al cargar balance por cuenta:",
             JSON.stringify(balanceResult.errors, null, 2)
@@ -231,7 +231,7 @@ export function DashboardContent({
         }
       } catch (error) {
         console.error("Error inesperado al cargar datos del dashboard:", error)
-        toast.error("Error al cargar datos del dashboard")
+        toast.error(t("dashboard.errors.load"))
       }
     })
   }
@@ -564,13 +564,14 @@ export function DashboardContent({
                   if (result.status === "success") {
                     setMonthlyPeriodsAnalytics(result.data.data)
                   } else {
-                    toast.error("Error al cargar presupuestos mensuales", {
+                    toast.error(t("dashboard.errors.monthlyPeriods"), {
                       description:
-                        result.errors[0]?.message || "Error desconocido",
+                        result.errors[0]?.message ||
+                        t("dashboard.errors.unknown"),
                     })
                   }
                 } catch (error) {
-                  toast.error("Error al cargar presupuestos mensuales")
+                  toast.error(t("dashboard.errors.monthlyPeriods"))
                 } finally {
                   setIsLoadingAnalytics(false)
                 }

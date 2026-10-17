@@ -4,6 +4,7 @@ import { findAccount } from "@/app/actions/accounts"
 import { PageContainer } from "@/components/display/containers/page-container"
 import { PageHeader } from "@/components/display/page-header/page-header"
 import { EditAccountForm } from "../components/edit-account-form"
+import { getServerI18n } from "@/utils/i18n/server"
 
 type Props = {
   params: Promise<{
@@ -13,21 +14,23 @@ type Props = {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const account = await findAccount(id)
 
   if (account.status === "error" || !account.data) {
     return {
-      title: "Cuenta no encontrada",
+      title: t("accounts.detail.notFound"),
     }
   }
 
   return {
-    title: `Editar ${account.data.name}`,
+    title: t("accounts.editTitle", { name: account.data.name }),
   }
 }
 
 export default async function EditAccountPage(props: Props) {
   const { id } = await props.params
+  const { t } = await getServerI18n()
   const account = await findAccount(id)
 
   if (account.status === "error" || !account.data) {
@@ -41,9 +44,9 @@ export default async function EditAccountPage(props: Props) {
       <PageHeader
         backTo={{
           href: BACK_TO_HREF,
-          label: "Regresar a cuentas",
+          label: t("accounts.backToList"),
         }}
-        title={`Editar ${account.data.name}`}
+        title={t("accounts.editTitle", { name: account.data.name })}
       />
       <EditAccountForm account={account.data} backToHref={BACK_TO_HREF} />
     </PageContainer>
