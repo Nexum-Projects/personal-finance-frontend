@@ -1,6 +1,6 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import { Edit, Trash2 } from "lucide-react"
@@ -21,16 +21,12 @@ export function DetailTransactionActions({ transaction, categoryType }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { confirmationDialog } = useConfirmationDialogStore()
   const router = useRouter()
-  const pathname = usePathname()
   const { t } = useI18n()
 
-  const basePath = pathname.startsWith("/dashboard/transactions/")
-    ? categoryType === "INCOME"
+  const basePath =
+    categoryType === "INCOME"
       ? "/dashboard/transactions/income"
       : "/dashboard/transactions/expenses"
-    : categoryType === "INCOME"
-      ? "/dashboard/income"
-      : "/dashboard/expenses"
 
   const handleDelete = () => {
     confirmationDialog({
