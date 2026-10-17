@@ -13,6 +13,7 @@ import { formatTransactionDateAsIs } from "@/utils/helpers/format-date-only"
 import type { Transaction } from "@/app/actions/transactions/types"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import type { I18nKey } from "@/utils/i18n/messages"
 
 const COLUMNS = [
   "amountCents",
@@ -25,28 +26,14 @@ const COLUMNS = [
 
 type ReportRecord = Record<(typeof COLUMNS)[number], string>
 
-const HUMANIZED_COLUMNS: ReportRecord = {
-  amountCents: "Monto",
-  description: "Descripción",
-  category: "Categoría",
-  account: "Cuenta",
-  type: "Tipo",
-  transactionDate: "Fecha",
+const COLUMN_LABEL_KEYS: Record<keyof ReportRecord, I18nKey> = {
+  amountCents: "transactions.table.amount",
+  description: "transactions.table.description",
+  category: "transactions.table.category",
+  account: "transactions.table.account",
+  type: "transactions.table.type",
+  transactionDate: "transactions.table.date",
 }
-
-const REPORT_COLUMNS: {
-  id: keyof ReportRecord
-  label: string
-}[] = [
-  { id: "amountCents", label: HUMANIZED_COLUMNS.amountCents },
-  { id: "description", label: HUMANIZED_COLUMNS.description },
-  { id: "category", label: HUMANIZED_COLUMNS.category },
-  { id: "account", label: HUMANIZED_COLUMNS.account },
-  { id: "type", label: HUMANIZED_COLUMNS.type },
-  { id: "transactionDate", label: HUMANIZED_COLUMNS.transactionDate },
-]
-
-const REPORT_NAME = "Reporte de Transacciones"
 
 export function TransactionsExportAction() {
   const searchParams = useSearchParams()
@@ -88,21 +75,21 @@ export function TransactionsExportAction() {
     contentRef,
     promiseResolveRef,
     fullData,
-    isExporting,
     rowsQuantity,
     sortDirection,
     sortedBy,
-    onFullDataChange,
     loadForXlsx,
     loadBeforePrint,
     onReset,
-    onRowsQtyChange,
-    onSortDirectionChange,
-    onSortedByChange,
+    reportName,
+    reportColumns,
+    dialogProps,
   } = useExportAction({
     data: transactions,
     pageSize: limit,
     sort: { direction: order, field: orderBy },
+    columnLabelKeys: COLUMN_LABEL_KEYS,
+    reportNameKey: "export.report.transactions",
   })
 
   const fetchTransactions = useCallback(async () => {
@@ -188,7 +175,7 @@ export function TransactionsExportAction() {
 
   const handlePDFClick = useReactToPrint({
     contentRef,
-    documentTitle: REPORT_NAME,
+    documentTitle: reportName,
     onAfterPrint: () => {
       promiseResolveRef.current = null
     },
@@ -218,59 +205,24 @@ export function TransactionsExportAction() {
     })
 
     exportXLSX({
-      columns: REPORT_COLUMNS,
+      columns: reportColumns,
       rows,
-      documentName: REPORT_NAME,
+      documentName: reportName,
     })
   }
 
   return (
     <>
       <ExportActionsDialog
-        actions={{
-          PDF: {
-            onClick: handlePDFClick,
-            isLoading: isExporting === "PDF",
-            disabled: !!isExporting,
-          },
-          XLSX: {
-            onClick: handleXLSXClick,
-            isLoading: isExporting === "XLSX",
-            disabled: !!isExporting,
-          },
-        }}
-        description={t("export.description")}
-        options={{
-          fullData: {
-            value: fullData,
-            onChange: onFullDataChange,
-          },
-          rowsQuantity: {
-            value: rowsQuantity,
-            onChange: onRowsQtyChange,
-          },
-          sorting: {
-            items: Object.fromEntries(
-              COLUMNS.map((column) => [
-                column,
-                {
-                  label: HUMANIZED_COLUMNS[column],
-                  value: column,
-                },
-              ])
-            ),
-            onSortDirectionChange,
-            onSortedByChange,
-            sortedBy,
-            sortDirection,
-          },
-        }}
-        title={t("export.title")}
-        onOpenChange={handleOpenChange}
+        {...dialogProps({
+          onPDF: handlePDFClick,
+          onXLSX: handleXLSXClick,
+          onOpenChange: handleOpenChange,
+        })}
       />
       <div ref={contentRef}>
         <PagePrint
-          columns={REPORT_COLUMNS.map((column) => ({
+          columns={reportColumns.map((column) => ({
             id: column.id,
             label: column.label,
             align: "left" as const,
@@ -297,7 +249,7 @@ export function TransactionsExportAction() {
               }
             }
           )}
-          title={REPORT_NAME}
+          title={reportName}
         />
       </div>
     </>
