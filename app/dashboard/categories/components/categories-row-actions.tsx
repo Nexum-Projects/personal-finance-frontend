@@ -51,9 +51,7 @@ export function CategoriesRowActions({ category }: Props) {
           return
         }
 
-        const humanizedError = parseApiError(
-          result.errors[0] || "Error al desactivar la categoría"
-        )
+        const humanizedError = parseApiError(result.errors[0])
         toast.error(humanizedError.title, {
           description: humanizedError.description,
         })

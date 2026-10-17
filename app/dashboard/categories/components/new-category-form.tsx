@@ -35,9 +35,7 @@ export function NewCategoryForm({ backToHref }: Props) {
           return
         }
 
-        const humanizedError = parseApiError(
-          result.errors[0] || "Error al crear la categoría"
-        )
+        const humanizedError = parseApiError(result.errors[0])
         toast.error(humanizedError.title, {
           description: humanizedError.description,
         })

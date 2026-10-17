@@ -1,10 +1,9 @@
 "use server"
 
+import { actionError } from "@/app/actions/helpers/action-error"
 import { revalidatePath } from "next/cache"
-import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
-import { parseApiError } from "@/utils/helpers/parse-api-error"
 import type { Category } from "./types"
 
 export interface UpdateCategoryInput {
@@ -29,30 +28,6 @@ export default async function updateCategory(
       data: response.data.data,
     }
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      const responseData = error.response.data
-      const humanizedError = parseApiError(responseData)
-
-      return {
-        status: "error",
-        errors: [
-          {
-            title: humanizedError.title,
-            message: humanizedError.description,
-          },
-        ],
-      }
-    }
-
-    const humanizedError = parseApiError(error)
-    return {
-      status: "error",
-      errors: [
-        {
-          title: humanizedError.title,
-          message: humanizedError.description,
-        },
-      ],
-    }
+    return actionError(error)
   }
 }

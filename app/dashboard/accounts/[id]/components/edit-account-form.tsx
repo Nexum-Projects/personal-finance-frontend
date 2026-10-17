@@ -32,9 +32,7 @@ export function EditAccountForm({ account, backToHref }: Props) {
           return
         }
 
-        const humanizedError = parseApiError(
-          result.errors[0] || "Error al actualizar la cuenta"
-        )
+        const humanizedError = parseApiError(result.errors[0])
         toast.error(humanizedError.title, {
           description: humanizedError.description,
         })

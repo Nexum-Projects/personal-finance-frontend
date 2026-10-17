@@ -1,10 +1,9 @@
 "use server"
 
+import { actionError } from "@/app/actions/helpers/action-error"
 import { revalidatePath } from "next/cache"
-import { isAxiosError } from "axios"
 import baseAxios from "../baseAxios"
 import { ActionResponse } from "../types"
-import { parseApiError } from "@/utils/helpers/parse-api-error"
 import type { Transaction } from "./types"
 import type { TransactionFormValues } from "./schema"
 
@@ -36,31 +35,6 @@ export default async function createTransaction(
       data: response.data.data,
     }
   } catch (error) {
-    if (isAxiosError(error) && error.response) {
-      const responseData = error.response.data
-      //console.log(JSON.stringify(responseData, null, 2))
-      const humanizedError = parseApiError(responseData)
-
-      return {
-        status: "error",
-        errors: [
-          {
-            title: humanizedError.title,
-            message: humanizedError.description,
-          },
-        ],
-      }
-    }
-
-    const humanizedError = parseApiError(error)
-    return {
-      status: "error",
-      errors: [
-        {
-          title: humanizedError.title,
-          message: humanizedError.description,
-        },
-      ],
-    }
+    return actionError(error)
   }
 }
