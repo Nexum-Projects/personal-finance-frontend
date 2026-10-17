@@ -225,7 +225,7 @@ export function AllTransactionsTable({
             entity: t("transactions.title").toLowerCase(),
           })}
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -234,26 +234,14 @@ export function AllTransactionsTable({
           >
             {t("pagination.prev")}
           </Button>
-          <div className="flex items-center gap-1">
-            {Array.from({ length: meta.totalPages }, (_, i) => i + 1).map(
-              (page) => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => handlePageChange(page)}
-                  disabled={isPending}
-                >
-                  {page}
-                </Button>
-              )
-            )}
+          <div className="text-sm text-foreground">
+            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === meta.totalPages || isPending}
+            disabled={currentPage >= meta.totalPages || isPending}
           >
             {t("pagination.next")}
           </Button>
