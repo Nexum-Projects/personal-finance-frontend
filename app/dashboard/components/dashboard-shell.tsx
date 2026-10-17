@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { usePathname } from "next/navigation"
 
 import { Sidebar } from "@/components/dashboard/Sidebar"
 import { AdminSidebar } from "@/components/dashboard/AdminSidebar"
 import { Button } from "@/components/ui/button"
+import { useI18n } from "@/components/i18n/i18n-provider"
 import { UserPreferencesProvider } from "@/components/preferences/user-preferences-provider"
 import type { UserPreferences } from "@/utils/user-preferences"
 
@@ -20,13 +21,25 @@ export function DashboardShell({
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const pathname = usePathname()
   const isAdminRoute = pathname?.startsWith("/dashboard/admin") ?? false
+  const { t } = useI18n()
+
+  useEffect(() => {
+    if (!sidebarOpen) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSidebarOpen(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [sidebarOpen])
 
   return (
     <UserPreferencesProvider preferences={preferences}>
       <div className="flex h-[100dvh] overflow-x-hidden">
         {/* Overlay para móvil */}
         {sidebarOpen && (
-          <div
+          <button
+            type="button"
+            aria-label={t("common.close")}
             className="fixed inset-0 z-40 bg-black/50 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
