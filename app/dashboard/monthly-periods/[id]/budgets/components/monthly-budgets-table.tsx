@@ -1,8 +1,5 @@
 "use client"
 
-import { useState, useTransition } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -19,9 +16,10 @@ import { MonthlyBudgetsRowActions } from "./monthly-budgets-row-actions"
 import { humanizeCategoryType } from "@/utils/helpers/humanize-category-type"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
+import { TablePagination } from "@/components/display/table-pagination"
+import { useTableSearchParams } from "@/hooks/use-table-search-params"
 
 type SortField = "budgetedCents" | "updatedAt"
-type SortDirection = "ASC" | "DESC"
 
 interface MonthlyBudgetsTableProps {
   monthlyPeriodId: string
@@ -38,69 +36,21 @@ export function MonthlyBudgetsTable({
   monthlyPeriodId,
   budgets,
   meta,
-}: MonthlyBudgetsTableProps) {
-  const { preferredCurrency, preferredLanguage, locale, timeZoneIana } = useUserPreferences()
+}: Readonly<MonthlyBudgetsTableProps>) {
+  const { preferredCurrency, preferredLanguage, locale, timeZoneIana } =
+    useUserPreferences()
   const { t } = useI18n()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
-
-  const currentPage = parseInt(searchParams.get("page") || "1", 10)
-  const currentSearch = searchParams.get("search") || ""
-  const currentOrderBy = (searchParams.get("orderBy") || "updatedAt") as SortField
-  const currentOrder = (searchParams.get("order") || "DESC") as SortDirection
-
-  const [search, setSearch] = useState(currentSearch)
-
-  const updateSearchParams = (updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString())
-    
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === "") {
-        params.delete(key)
-      } else {
-        params.set(key, value)
-      }
-    })
-
-    // Reset to page 1 when search or sort changes
-    if (updates.search !== undefined || updates.orderBy !== undefined || updates.order !== undefined) {
-      params.set("page", "1")
-    }
-
-    startTransition(() => {
-      router.push(`/dashboard/monthly-periods/${monthlyPeriodId}/budgets?${params.toString()}`)
-    })
-  }
-
-  const handleSearch = (value: string) => {
-    setSearch(value)
-    updateSearchParams({ search: value || null })
-  }
-
-  const handleSort = (field: SortField) => {
-    const newOrder =
-      currentOrderBy === field && currentOrder === "ASC" ? "DESC" : "ASC"
-    updateSearchParams({
-      orderBy: field,
-      order: newOrder,
-    })
-  }
-
-  const handlePageChange = (newPage: number) => {
-    updateSearchParams({ page: newPage.toString() })
-  }
-
-  const getSortIcon = (field: SortField) => {
-    if (currentOrderBy !== field) {
-      return <ArrowUpDown className="ml-2 h-4 w-4" />
-    }
-    return currentOrder === "ASC" ? (
-      <ArrowUp className="ml-2 h-4 w-4" />
-    ) : (
-      <ArrowDown className="ml-2 h-4 w-4" />
-    )
-  }
+  const {
+    isPending,
+    currentPage,
+    search,
+    handleSearch,
+    handleSort,
+    handlePageChange,
+    getSortIcon,
+  } = useTableSearchParams<SortField>(
+    `/dashboard/monthly-periods/${monthlyPeriodId}/budgets`
+  )
 
   const formatDateTime = (dateString: string): string => {
     try {
@@ -117,7 +67,6 @@ export function MonthlyBudgetsTable({
       return dateString
     }
   }
-
 
   return (
     <div className="space-y-4">
@@ -138,7 +87,9 @@ export function MonthlyBudgetsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{t("monthlyPeriods.budgets.table.category")}</TableHead>
+              <TableHead>
+                {t("monthlyPeriods.budgets.table.category")}
+              </TableHead>
               <TableHead>{t("monthlyPeriods.budgets.table.type")}</TableHead>
               <TableHead>
                 <Button
@@ -177,9 +128,14 @@ export function MonthlyBudgetsTable({
               budgets.map((budget) => {
                 return (
                   <TableRow key={budget.id}>
-                    <TableCell className="font-medium">{budget.category.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {budget.category.name}
+                    </TableCell>
                     <TableCell>
-                      {humanizeCategoryType(budget.category.categoryType, preferredLanguage)}
+                      {humanizeCategoryType(
+                        budget.category.categoryType,
+                        preferredLanguage
+                      )}
                     </TableCell>
                     <TableCell>
                       {formatAmount(budget.budgetedCents, preferredCurrency)}
@@ -210,39 +166,16 @@ export function MonthlyBudgetsTable({
         </Table>
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          {t("pagination.showing", {
-            from: budgets.length > 0 ? (currentPage - 1) * meta.limit + 1 : 0,
-            to: Math.min(currentPage * meta.limit, meta.totalObjects),
-            total: meta.totalObjects,
-            entity: t("monthlyPeriods.tabs.budgets").toLowerCase(),
-          })}
-        </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1 || isPending}
-          >
-            {t("pagination.prev")}
-          </Button>
-          <div className="text-sm text-foreground">
-            {t("pagination.pageOf", { page: currentPage, totalPages: meta.totalPages })}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= meta.totalPages || isPending}
-          >
-            {t("pagination.next")}
-          </Button>
-        </div>
-      </div>
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={meta.totalPages}
+        limit={meta.limit}
+        totalObjects={meta.totalObjects}
+        itemCount={budgets.length}
+        entity={t("monthlyPeriods.tabs.budgets").toLowerCase()}
+        disabled={isPending}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }
-
