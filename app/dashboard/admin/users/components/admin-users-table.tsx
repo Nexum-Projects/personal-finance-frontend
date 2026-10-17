@@ -1,8 +1,6 @@
 "use client"
 
-import { useMemo, useState, useTransition } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
+import { useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -30,6 +28,7 @@ import { cn } from "@/lib/utils"
 import { useUserPreferences } from "@/components/preferences/user-preferences-provider"
 import { useI18n } from "@/components/i18n/i18n-provider"
 import { TablePagination } from "@/components/display/table-pagination"
+import { useTableSearchParams } from "@/hooks/use-table-search-params"
 import { AdminUsersRowActions } from "./admin-users-row-actions"
 
 const BASE_PATH = "/dashboard/admin/users"
@@ -52,21 +51,24 @@ export function AdminUsersTable({
 }: Readonly<AdminUsersTableProps>) {
   const { timeZoneIana, locale } = useUserPreferences()
   const { t, language } = useI18n()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
+  const {
+    searchParams,
+    isPending,
+    currentPage,
+    search,
+    updateSearchParams,
+    handleSearch,
+    handleSort,
+    handlePageChange,
+    getSortIcon,
+  } = useTableSearchParams<SortField>(BASE_PATH, {
+    defaultOrderBy: "",
+    defaultOrder: "ASC",
+  })
 
-  const currentPage = parseInt(searchParams.get("page") || "1", 10)
-  const currentSearch = searchParams.get("search") || ""
-  const currentOrderBy = (searchParams.get("orderBy") || "") as SortField | ""
-  const currentOrder = (searchParams.get("order") || "ASC").toUpperCase() as
-    | "ASC"
-    | "DESC"
   const currentLimit =
     Number.parseInt(searchParams.get("limit") || String(meta.limit), 10) ||
     meta.limit
-
-  const [search, setSearch] = useState(currentSearch)
 
   const formatDateTime = (iso: string) => {
     try {
@@ -96,62 +98,8 @@ export function AdminUsersTable({
     )
   }
 
-  const updateSearchParams = (updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value === null || value === "") {
-        params.delete(key)
-      } else {
-        params.set(key, value)
-      }
-    })
-
-    if (
-      updates.search !== undefined ||
-      updates.orderBy !== undefined ||
-      updates.order !== undefined ||
-      updates.limit !== undefined
-    ) {
-      params.set("page", "1")
-    }
-
-    startTransition(() => {
-      router.push(`${BASE_PATH}?${params.toString()}`)
-    })
-  }
-
-  const handleSearch = (value: string) => {
-    setSearch(value)
-    updateSearchParams({ search: value || null })
-  }
-
-  const handleSort = (field: SortField) => {
-    const newOrder =
-      currentOrderBy === field && currentOrder === "ASC" ? "DESC" : "ASC"
-    updateSearchParams({
-      orderBy: field,
-      order: newOrder,
-    })
-  }
-
-  const handlePageChange = (newPage: number) => {
-    updateSearchParams({ page: newPage.toString() })
-  }
-
   const handleLimitChange = (value: string) => {
     updateSearchParams({ limit: value })
-  }
-
-  const getSortIcon = (field: SortField) => {
-    if (currentOrderBy !== field) {
-      return <ArrowUpDown className="ml-2 h-4 w-4" />
-    }
-    return currentOrder === "ASC" ? (
-      <ArrowUp className="ml-2 h-4 w-4" />
-    ) : (
-      <ArrowDown className="ml-2 h-4 w-4" />
-    )
   }
 
   const safeRole = (role: string): UserRole =>
